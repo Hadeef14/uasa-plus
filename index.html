@@ -54,13 +54,32 @@ main{max-width:900px;margin:auto;padding:20px 14px 40px}
 @keyframes up{to{opacity:0;top:30%}}
 @media(max-width:700px){.stats{grid-template-columns:repeat(2,1fr)}.grid{grid-template-columns:1fr}}
 @media(prefers-reduced-motion:reduce){*{animation:none!important}}
-</style></head><body>
+</style>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+</head><body>
 
 <section id="auth"><div class="box card">
 <div class="logo">UASA<span>+</span></div><p class="c mu">Made by Hadeef</p>
 <div class="tabs"><button class="btn" id="tl" data-a="auth" data-r="l">Login</button><button class="btn g" id="ts" data-a="auth" data-r="s">Sign Up</button></div>
-<form id="lf" novalidate><label for="lu">Username</label><input id="lu" autocomplete="username"><label for="lp">Password</label><input id="lp" type="password" autocomplete="current-password"><button class="btn" style="width:100%">LOGIN</button></form>
-<form id="sf" class="hidden" novalidate><label for="su">Username (3-20 letters, numbers, . - _)</label><input id="su" autocomplete="username"><label for="sp">Password (6+ characters)</label><input id="sp" type="password" autocomplete="new-password"><button class="btn" style="width:100%">CREATE ACCOUNT</button></form>
+
+<form id="lf" novalidate>
+<label for="lu">Username</label>
+<input id="lu" autocomplete="username">
+<label for="lp">Password</label>
+<input id="lp" type="password" autocomplete="current-password">
+<button class="btn" style="width:100%">LOGIN</button>
+</form>
+
+<form id="sf" class="hidden" novalidate>
+<label for="su">Username (3-20 letters, numbers, . - _)</label>
+<input id="su" autocomplete="username">
+<label for="sp">Password (6+ characters)</label>
+<input id="sp" type="password" autocomplete="new-password">
+<button class="btn" style="width:100%">CREATE ACCOUNT</button>
+</form>
+
 <label><input type="checkbox" id="pw" style="width:auto"> Show password</label>
 <div id="am" role="status"></div></div></section>
 
@@ -70,6 +89,12 @@ main{max-width:900px;margin:auto;padding:20px 14px 40px}
 <main id="main"></main></div>
 
 <script>
+
+const SUPABASE_URL="https://bmjnloqqagzwgrwdvbgw.supabase.co";
+const SUPABASE_KEY="sb_publishable_WE5lAYz1a5pAvP3btNaM5Q_7EzA2DN4";
+const supabase=window.supabase.createClient(SUPABASE_URL,SUPABASE_KEY);
+const cloudEmail=n=>n.toLowerCase()+"@uasa.plus";
+
 /* ---------- helpers: Q(question, options, answerIndex) and P(paragraphs) ---------- */
 var Q=(q,options,answer)=>({q,options,answer}),P=(...t)=>t.map(x=>"<p>"+x+"</p>").join("");
 const SUBJ=[["Bahasa Melayu","🇲🇾"],["English","🇬🇧"],["Mathematics","➗"],["Science","🔬"],["Sejarah","📜"]];
@@ -78,30 +103,35 @@ const SUBJ=[["Bahasa Melayu","🇲🇾"],["English","🇬🇧"],["Mathematics","
 const CURRICULUM={
 "Bahasa Melayu":{units:[
 {title:"Kata Ganda",lessons:[{title:"Ganda Penuh, Separa & Berentak",
- learn:P("<b>Ganda penuh</b>: diulang seluruhnya, ada sempang: <b>buku-buku</b>.","<b>Ganda separa</b>: sebahagian diulang: <b>tetamu</b>, <b>lelaki</b>.","<b>Ganda berentak</b>: bunyi berubah: <b>sayur-mayur</b>, <b>warna-warni</b>."),
- questions:[Q("Yang manakah ganda penuh?",["tetamu","rumah-rumah","sayur-mayur"],1),Q("Yang manakah ganda separa?",["lelaki","buku-buku","lauk-pauk"],0),Q("Yang manakah ganda berentak?",["meja-meja","warna-warni","jejari"],1),Q("Ayat yang betul ialah…",["Ramai murid-murid berbaris.","Ramai murid berbaris.","Ramai murid2 berbaris."],1)]}],
- challenge:[Q("Ganda penuh ditulis dengan tanda…",["sempang (-)","koma (,)","titik (.)"],0),Q("Lauk-___ (berentak)",["lauk","pauk","mauk"],1)]},
+learn:P("<b>Ganda penuh</b>: diulang seluruhnya, ada sempang: <b>buku-buku</b>.","<b>Ganda separa</b>: sebahagian diulang: <b>tetamu</b>, <b>lelaki</b>.","<b>Ganda berentak</b>: bunyi berubah: <b>sayur-mayur</b>, <b>warna-warni</b>."),
+questions:[Q("Yang manakah ganda penuh?",["tetamu","rumah-rumah","sayur-mayur"],1),Q("Yang manakah ganda separa?",["lelaki","buku-buku","lauk-pauk"],0),Q("Yang manakah ganda berentak?",["meja-meja","warna-warni","jejari"],1),Q("Ayat yang betul ialah…",["Ramai murid-murid berbaris.","Ramai murid berbaris.","Ramai murid2 berbaris."],1)]}],
+challenge:[Q("Ganda penuh ditulis dengan tanda…",["sempang (-)","koma (,)","titik (.)"],0),Q("Lauk-___ (berentak)",["lauk","pauk","mauk"],1)]},
 {title:"Kata Hubung",lessons:[{title:"Jenis Kata Hubung",
- learn:P("<b>Gabungan</b>: dan, serta. <b>Pilihan</b>: atau. <b>Pertentangan</b>: tetapi, namun.","<b>Sebab</b>: kerana. <b>Tujuan</b>: supaya. <b>Syarat</b>: jika."),
- questions:[Q("Ali ___ Ahmad pergi ke sekolah.",["tetapi","dan","kerana"],1),Q("Awak mahu teh ___ kopi?",["atau","dan","supaya"],0),Q("Belajarlah rajin-rajin ___ kamu lulus.",["kerana","supaya","atau"],1),Q("Dia miskin ___ jujur.",["dan","tetapi","jika"],1)]}],
- challenge:[Q("Dia demam ___ terkena hujan.",["supaya","kerana","atau"],1),Q("Kata hubung syarat ialah…",["jika","dan","tetapi"],0)]}]},
+learn:P("<b>Gabungan</b>: dan, serta. <b>Pilihan</b>: atau. <b>Pertentangan</b>: tetapi, namun.","<b>Sebab</b>: kerana. <b>Tujuan</b>: supaya. <b>Syarat</b>: jika."),
+questions:[Q("Ali ___ Ahmad pergi ke sekolah.",["tetapi","dan","kerana"],1),Q("Awak mahu teh ___ kopi?",["atau","dan","supaya"],0),Q("Belajarlah rajin-rajin ___ kamu lulus.",["kerana","supaya","atau"],1),Q("Dia miskin ___ jujur.",["dan","tetapi","jika"],1)]}],
+challenge:[Q("Dia demam ___ terkena hujan.",["supaya","kerana","atau"],1),Q("Kata hubung syarat ialah…",["jika","dan","tetapi"],0)]}]},
+
 "English":{units:[{title:"Grammar Basics",lessons:[{title:"Nouns, Verbs & Adjectives",
- learn:P("A <b>noun</b> names a person, place or thing: <i>teacher, school</i>.","A <b>verb</b> is an action: <i>run, write</i>.","An <b>adjective</b> describes a noun: <i>tall, happy</i>.","A <b>plural</b> usually adds -s: <i>book → books</i>. Irregular: <i>child → children</i>."),
- questions:[Q("Which word is a noun?",["Run","School","Quickly"],1),Q("Which word is a verb?",["Beautiful","Table","Jump"],2),Q("Choose the adjective: 'The tall boy smiled.'",["tall","boy","smiled"],0),Q("The plural of 'child' is…",["childs","children","childes"],1)]}],
- challenge:[Q("She ___ to school every day.",["go","goes","going"],1),Q("The opposite of 'happy' is…",["sad","glad","big"],0)]}]},
+learn:P("A <b>noun</b> names a person, place or thing: <i>teacher, school</i>.","A <b>verb</b> is an action: <i>run, write</i>.","An <b>adjective</b> describes a noun: <i>tall, happy</i>.","A <b>plural</b> usually adds -s: <i>book → books</i>. Irregular: <i>child → children</i>."),
+questions:[Q("Which word is a noun?",["Run","School","Quickly"],1),Q("Which word is a verb?",["Beautiful","Table","Jump"],2),Q("Choose the adjective: 'The tall boy smiled.'",["tall","boy","smiled"],0),Q("The plural of 'child' is…",["childs","children","childes"],1)]}],
+challenge:[Q("She ___ to school every day.",["go","goes","going"],1),Q("The opposite of 'happy' is…",["sad","glad","big"],0)]}]},
+
 "Mathematics":{units:[{title:"Fractions",lessons:[{title:"Fractions & Percentages",
- learn:P("<b>Mixed → improper</b>: 2 1/3 = (2×3+1)/3 = <b>7/3</b>.","<b>Equivalent</b>: multiply top and bottom by the same number. 2/3 = 4/6.","<b>Percent</b> means out of 100: 50% = 1/2, 25% = 1/4. 25% of 80 = <b>20</b>."),
- questions:[Q("7/4 as a mixed number is…",["1 1/4","1 3/4","2 3/4"],1),Q("Which is equivalent to 2/3?",["3/4","4/6","2/6"],1),Q("25% of 80 =",["25","20","40"],1),Q("1/2 + 1/3 =",["2/5","5/6","1/6"],1)]}],
- challenge:[Q("3/4 as a percentage is…",["75%","34%","60%"],0),Q("3/5 − 1/5 =",["2/5","4/5","2/10"],0)]}]},
+learn:P("<b>Mixed → improper</b>: 2 1/3 = (2×3+1)/3 = <b>7/3</b>.","<b>Equivalent</b>: multiply top and bottom by the same number. 2/3 = 4/6.","<b>Percent</b> means out of 100: 50% = 1/2, 25% = 1/4. 25% of 80 = <b>20</b>."),
+questions:[Q("7/4 as a mixed number is…",["1 1/4","1 3/4","2 3/4"],1),Q("Which is equivalent to 2/3?",["3/4","4/6","2/6"],1),Q("25% of 80 =",["25","20","40"],1),Q("1/2 + 1/3 =",["2/5","5/6","1/6"],1)]}],
+challenge:[Q("3/4 as a percentage is…",["75%","34%","60%"],0),Q("3/5 − 1/5 =",["2/5","4/5","2/10"],0)]}]},
+
 "Science":{units:[{title:"Food Chains",lessons:[{title:"Producers and Consumers",
- learn:P("<b>Producers</b> (green plants) make their own food.","<b>Consumers</b> eat other living things: herbivore (plants), carnivore (animals), omnivore (both).","The arrow points to the <b>eater</b>. The Sun is the original energy source."),
- questions:[Q("In grass → grasshopper → frog → snake, the producer is…",["Snake","Grass","Frog"],1),Q("Arrows in a food chain point to…",["the eater","the food","the Sun"],0),Q("An animal that eats plants and animals is a…",["herbivore","carnivore","omnivore"],2),Q("A goat is a…",["carnivore","herbivore","omnivore"],1)]}],
- challenge:[Q("The original source of energy is the…",["Sun","soil","water"],0),Q("A tiger is a…",["herbivore","omnivore","carnivore"],2)]}]},
+learn:P("<b>Producers</b> (green plants) make their own food.","<b>Consumers</b> eat other living things: herbivore (plants), carnivore (animals), omnivore (both).","The arrow points to the <b>eater</b>. The Sun is the original energy source."),
+questions:[Q("In grass → grasshopper → frog → snake, the producer is…",["Snake","Grass","Frog"],1),Q("Arrows in a food chain point to…",["the eater","the food","the Sun"],0),Q("An animal that eats plants and animals is a…",["herbivore","carnivore","omnivore"],2),Q("A goat is a…",["carnivore","herbivore","omnivore"],1)]}],
+challenge:[Q("The original source of energy is the…",["Sun","soil","water"],0),Q("A tiger is a…",["herbivore","omnivore","carnivore"],2)]}]},
+
 "Sejarah":{units:[{title:"Kesultanan Melayu Melaka",lessons:[{title:"Kegemilangan Melaka",
- learn:P("Melaka diasaskan oleh <b>Parameswara</b> sekitar tahun 1400.","Melaka ialah <b>pusat perdagangan</b> di Selat Melaka.","Tokoh: <b>Tun Perak</b> (Bendahara), <b>Hang Tuah</b> (Laksamana). Undang-undang: <b>Hukum Kanun Melaka</b>."),
- questions:[Q("Melaka diasaskan oleh…",["Hang Tuah","Parameswara","Tun Perak"],1),Q("Laksamana terkenal Melaka ialah…",["Hang Tuah","Tun Perak","Parameswara"],0),Q("Undang-undang Melaka ialah…",["Rukun Negara","Hukum Kanun Melaka","Perlembagaan"],1),Q("Melaka terkenal sebagai pusat…",["perdagangan","perlombongan","pertanian sahaja"],0)]}],
- challenge:[Q("Bendahara Melaka yang terkenal ialah…",["Tun Perak","Hang Jebat","Tunku Abdul Rahman"],0),Q("Portugis menawan Melaka pada tahun…",["1511","1641","1957"],0)]}]}
+learn:P("Melaka diasaskan oleh <b>Parameswara</b> sekitar tahun 1400.","Melaka ialah <b>pusat perdagangan</b> di Selat Melaka.","Tokoh: <b>Tun Perak</b> (Bendahara), <b>Hang Tuah</b> (Laksamana). Undang-undang: <b>Hukum Kanun Melaka</b>."),
+questions:[Q("Melaka diasaskan oleh…",["Hang Tuah","Parameswara","Tun Perak"],1),Q("Laksamana terkenal Melaka ialah…",["Hang Tuah","Tun Perak","Parameswara"],0),Q("Undang-undang Melaka ialah…",["Rukun Negara","Hukum Kanun Melaka","Perlembagaan"],1),Q("Melaka terkenal sebagai pusat…",["perdagangan","perlombongan","pertanian sahaja"],0)]}],
+challenge:[Q("Bendahara Melaka yang terkenal ialah…",["Tun Perak","Hang Jebat","Tunku Abdul Rahman"],0),Q("Portugis menawan Melaka pada tahun…",["1511","1641","1957"],0)]}]}
 };
+
 /* >>> PASTE MORE CONTENT BLOCKS BELOW THIS LINE <<< */
 
 
@@ -112,17 +142,95 @@ const jp=(t,d)=>{try{const v=JSON.parse(t);return v==null?d:v}catch(e){return d}
 const accts=()=>{const a=jp(st.get("uasaAccounts"),{});return a&&typeof a==="object"&&!Array.isArray(a)?a:{}};
 const today=()=>new Date().toDateString(),yest=()=>new Date(Date.now()-864e5).toDateString();
 let USER=null,NAV={s:"",u:0,l:0},R=null;
-const saveU=()=>{const a=accts();a[USER.username]=USER;st.set("uasaAccounts",JSON.stringify(a))};
-async function hp(pw,salt){const b=await crypto.subtle.digest("SHA-256",new TextEncoder().encode(salt+pw));return[...new Uint8Array(b)].map(x=>x.toString(16).padStart(2,"0")).join("")}
+
+const saveU=()=>{
+ if(!USER||!USER.username)return;
+ const a=accts();
+ a[USER.username]=USER;
+ st.set("uasaAccounts",JSON.stringify(a))
+};
+
+async function hp(pw,salt){
+ const b=await crypto.subtle.digest("SHA-256",new TextEncoder().encode(salt+pw));
+ return[...new Uint8Array(b)].map(x=>x.toString(16).padStart(2,"0")).join("")
+}
+
 const shuf=a=>{a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.random()*(i+1)|0;[a[i],a[j]]=[a[j],a[i]]}return a};
 const sq=q=>{const o=shuf(q.options.map((t,i)=>[t,i]));return{q:q.q,options:o.map(x=>x[0]),answer:o.findIndex(x=>x[1]===q.answer)}};
 const lvl=()=>Math.floor(USER.xp/100)+1;
 const streakNow=()=>USER.lastActive&&![today(),yest()].includes(USER.lastActive)?0:USER.streak;
 const bar=p=>`<div class="bar"><i style="width:${Math.round(p)}%"></i></div>`;
-function toast(m){const t=document.createElement("div");t.className="toast";t.setAttribute("role","status");t.textContent=m;document.body.appendChild(t);setTimeout(()=>t.remove(),2400)}
-function pop(n){const d=document.createElement("div");d.className="pop";d.textContent="+"+n+" XP";document.body.appendChild(d);setTimeout(()=>d.remove(),1300)}
-function hdr(){$("hs").textContent="🔥 "+streakNow();$("hx").textContent="⭐ "+USER.xp+" XP"}
-function award(n,key){const b=lvl();USER.xp+=n;USER.progress[key]=1;if(USER.lastActive!==today()){USER.streak=USER.lastActive===yest()?USER.streak+1:1;USER.lastActive=today()}saveU();hdr();if(lvl()>b)toast("🎉 Level "+lvl()+" reached!");if(n)pop(n)}
+
+function toast(m){
+ const t=document.createElement("div");
+ t.className="toast";
+ t.setAttribute("role","status");
+ t.textContent=m;
+ document.body.appendChild(t);
+ setTimeout(()=>t.remove(),2400)
+}
+
+function pop(n){
+ const d=document.createElement("div");
+ d.className="pop";
+ d.textContent="+"+n+" XP";
+ document.body.appendChild(d);
+ setTimeout(()=>d.remove(),1300)
+}
+
+function hdr(){
+ $("hs").textContent="🔥 "+streakNow();
+ $("hx").textContent="⭐ "+USER.xp+" XP"
+}
+
+/* ---------- CLOUD XP + PROGRESS ---------- */
+async function award(n,key){
+ const b=lvl();
+
+ USER.xp+=n;
+ USER.progress[key]=1;
+
+ if(USER.lastActive!==today()){
+  USER.streak=USER.lastActive===yest()?USER.streak+1:1;
+  USER.lastActive=today();
+  st.set("uasaLastActive_"+USER.id,today())
+ }
+
+ saveU();
+ hdr();
+
+ try{
+  const p=await supabase
+   .from("profiles")
+   .update({
+    xp:USER.xp,
+    streak:USER.streak
+   })
+   .eq("id",USER.id);
+
+  if(p.error)throw p.error;
+
+  const q=await supabase
+   .from("progress")
+   .upsert(
+    {
+     user_id:USER.id,
+     lesson_key:key
+    },
+    {
+     onConflict:"user_id,lesson_key"
+    }
+   );
+
+  if(q.error)throw q.error;
+
+ }catch(e){
+  console.warn("Cloud save failed",e)
+ }
+
+ if(lvl()>b)toast("🎉 Level "+lvl()+" reached!");
+ if(n)pop(n)
+}
 
 /* curriculum accessors: units/lessons with original indexes, empty slots skipped */
 const U=s=>Array.from((CURRICULUM[s]||{}).units||[],(x,i)=>x?{...x,i,ls:Array.from(x.lessons||[],(y,j)=>y&&y.questions&&y.questions.length?{...y,j}:null).filter(Boolean)}:null).filter(Boolean);
@@ -136,16 +244,63 @@ const pool=s=>{const o=[];(s?[s]:SUBJ.map(x=>x[0])).forEach(n=>U(n).forEach(u=>{
 /* ---------- views ---------- */
 const view=h=>{$("main").innerHTML=h;scrollTo(0,0)};
 const lk=(a,r,t)=>`<button class="lk" data-a="${a}" data-r="${esc(r)}">${t}</button>`;
-function nav(p){$("nv").innerHTML=[["home","🏠 Home"],["subjects","📚 Subjects"],["leaderboard","🏆 Leaderboard"],["profile","👤 Profile"],["import","📥 Import"]].map(x=>`<button class="${x[0]===p?"on":""}" data-a="page" data-r="${x[0]}">${x[1]}</button>`).join("")+`<button data-a="logout">🚪 Logout</button>`}
+
+function nav(p){
+ $("nv").innerHTML=[
+  ["home","🏠 Home"],
+  ["subjects","📚 Subjects"],
+  ["leaderboard","🏆 Leaderboard"],
+  ["profile","👤 Profile"],
+  ["import","📥 Import"]
+ ].map(x=>`<button class="${x[0]===p?"on":""}" data-a="page" data-r="${x[0]}">${x[1]}</button>`).join("")+
+ `<button data-a="logout">🚪 Logout</button>`
+}
+
 const PAGES={
-home(){const n=SUBJ.reduce((a,s)=>a+sDone(s[0]),0),into=USER.xp%100;
- return`<div class="hero"><h1>Welcome, ${esc(USER.username)}!</h1><p>Learn. Practice. Level up.</p><button class="btn" data-a="page" data-r="subjects">START LEARNING</button><button class="btn" data-a="mix" data-r="">🎲 MIXED QUIZ (all subjects)</button></div>
+home(){
+ const n=SUBJ.reduce((a,s)=>a+sDone(s[0]),0),into=USER.xp%100;
+ return`<div class="hero">
+ <h1>Welcome, ${esc(USER.username)}!</h1>
+ <p>Learn. Practice. Level up.</p>
+ <button class="btn" data-a="page" data-r="subjects">START LEARNING</button>
+ <button class="btn" data-a="mix" data-r="">🎲 MIXED QUIZ (all subjects)</button>
+ </div>
  <div class="stats">${[[USER.xp,"XP"],[lvl(),"Level"],[streakNow(),"Day streak"],[n,"Lessons done"]].map(x=>`<div class="card"><div class="n">${x[0]}</div><small>${x[1]}</small></div>`).join("")}</div>
- <div class="card"><h2>Level progress</h2>${bar(into)}<small>${into} / 100 XP to Level ${lvl()+1}</small></div>`},
-subjects(){return`<h1>📚 Subjects</h1><button class="btn g" data-a="mix" data-r="">🎲 Mixed quiz: all subjects</button><div class="grid" style="margin-top:12px">${SUBJ.map(s=>{const d=sDone(s[0]),t=sTot(s[0]);return`<button class="card tap" data-a="subj" data-r="${esc(s[0])}"><h2>${s[1]} ${esc(s[0])}</h2>${bar(t?d/t*100:0)}<small>${d} / ${t} lessons</small></button>`}).join("")}</div>`},
-leaderboard(){const me=USER.username,m=["🥇","🥈","🥉"],us=Object.values(accts()).sort((a,b)=>(+b.xp||0)-(+a.xp||0));return`<h1>🏆 Leaderboard</h1><div class="card">${us.map((u,i)=>`<div class="lbr ${u.username===me?"me":""}"><span>${m[i]||"#"+(i+1)} ${esc(u.username)}</span><b>${+u.xp||0} XP</b></div>`).join("")}</div>`},
-profile(){return`<h1>👤 ${esc(USER.username)}</h1><div class="card"><p>Level <b>${lvl()}</b> · ${USER.xp} XP · 🔥 ${streakNow()}-day streak</p>${SUBJ.map(s=>{const d=sDone(s[0]),t=sTot(s[0]);return`<div>${s[1]} ${esc(s[0])} <small>${d} / ${t} lessons</small>${bar(t?d/t*100:0)}</div>`}).join("")}</div>`},
-import(){return`<h1>📥 Import questions</h1><div class="card"><p class="mu">Only add verified questions. Saved in this browser only.</p>
+ <div class="card"><h2>Level progress</h2>${bar(into)}<small>${into} / 100 XP to Level ${lvl()+1}</small></div>`
+},
+
+subjects(){
+ return`<h1>📚 Subjects</h1>
+ <button class="btn g" data-a="mix" data-r="">🎲 Mixed quiz: all subjects</button>
+ <div class="grid" style="margin-top:12px">${SUBJ.map(s=>{
+  const d=sDone(s[0]),t=sTot(s[0]);
+  return`<button class="card tap" data-a="subj" data-r="${esc(s[0])}">
+   <h2>${s[1]} ${esc(s[0])}</h2>${bar(t?d/t*100:0)}
+   <small>${d} / ${t} lessons</small>
+  </button>`
+ }).join("")}</div>`
+},
+
+leaderboard(){
+ return`<h1>🏆 Leaderboard</h1>
+ <div class="card" id="lb"><p class="mu">Loading global leaderboard…</p></div>`
+},
+
+profile(){
+ return`<h1>👤 ${esc(USER.username)}</h1>
+ <div class="card">
+ <p>Level <b>${lvl()}</b> · ${USER.xp} XP · 🔥 ${streakNow()}-day streak</p>
+ ${SUBJ.map(s=>{
+  const d=sDone(s[0]),t=sTot(s[0]);
+  return`<div>${s[1]} ${esc(s[0])} <small>${d} / ${t} lessons</small>${bar(t?d/t*100:0)}</div>`
+ }).join("")}
+ </div>`
+},
+
+import(){
+ return`<h1>📥 Import questions</h1>
+ <div class="card">
+ <p class="mu">Only add verified questions. Saved in this browser only.</p>
  <label>Subject<select id="is">${SUBJ.map(s=>`<option>${esc(s[0])}</option>`).join("")}</select></label>
  <label>Unit number<input id="iu" type="number" min="1" max="30" value="1"></label>
  <label>Unit title (optional)<input id="iut"></label>
@@ -153,82 +308,59 @@ import(){return`<h1>📥 Import questions</h1><div class="card"><p class="mu">On
  <label>Lesson title (optional)<input id="it"></label>
  <label>Learn text (optional; blank line = new paragraph)<textarea id="ilr" rows="3"></textarea></label>
  <label>Questions (JSON)<textarea id="ij" rows="6" placeholder='[{"q":"Question?","options":["A","B","C"],"answer":1}]'></textarea></label>
- <button class="btn" data-a="imp">IMPORT</button><p id="im" role="status"></p></div>`}};
-function go(p){R=null;nav(p);view(PAGES[p]())}
+ <button class="btn" data-a="imp">IMPORT</button>
+ <p id="im" role="status"></p>
+ </div>`
+}
+};
 
-function subj(s){R=null;NAV={s,u:0,l:0};nav("subjects");
- view(`<div class="mu">${lk("page","subjects","Subjects")} › ${esc(s)}</div><h1>${esc(s)}</h1><button class="btn g" data-a="mix" data-r="${esc(s)}">🎲 Mixed quiz: ${esc(s)}</button>
- <div class="grid" style="margin-top:12px">${U(s).map(u=>`<button class="card tap" data-a="unit" data-r="${u.i}"><h2>${u.i+1}. ${esc(ut(u))}</h2>${bar(u.ls.length?nDone(s,u)/u.ls.length*100:0)}<small>${nDone(s,u)} / ${u.ls.length} lessons</small>${done(key(s,u.i,"c"))?" 🏅":""}</button>`).join("")||`<div class="card">No content yet. Add some on the Import page.</div>`}</div>`)}
-function unit(i){R=null;NAV.u=i;NAV.l=0;const s=NAV.s,{u}=cur();if(!u)return;
- const steps=u.ls.map((l,x)=>{const d=done(key(s,u.i,l.j)),o=unlocked(s,u,x);return`<button class="node ${d?"done":o?"":"lock"}" data-a="lesson" data-r="${l.j}"><span>${d?"✓":o?x+1:"🔒"}</span><span><b>${esc(l.title)}</b><br><small>${d?"Completed":o?"Ready to start":"Finish Lesson "+x+" first"}</small></span></button>`}).join("");
- const cd=done(key(s,u.i,"c")),co=chOpen(s,u),has=(u.challenge||[]).length>0;
- view(`<div class="mu">${lk("page","subjects","Subjects")} › ${lk("subj",s,esc(s))} › ${esc(ut(u))}</div><h1>${esc(ut(u))}</h1>${bar(u.ls.length?nDone(s,u)/u.ls.length*100:0)}
- <div class="map">${steps}<button class="node ${cd?"done":co&&has?"":"lock"}" data-a="ch"><span>${cd?"✓":co?"🏅":"🔒"}</span><span><b>Unit Challenge</b><br><small>${cd?"Completed":!co?"Finish all lessons to unlock":has?"+50 XP for passing":"Coming soon"}</small></span></button></div>`)}
-function lesson(j){NAV.l=j;const s=NAV.s,{u,idx}=cur();if(idx<0)return;if(!unlocked(s,u,idx))return toast("🔒 Finish Lesson "+idx+" first.");
- const l=u.ls[idx];
- view(`<div class="mu">${lk("page","subjects","Subjects")} › ${lk("subj",s,esc(s))} › ${lk("unit",u.i,esc(ut(u)))}</div><h1>${esc(l.title)}</h1>
- <div class="card learn">${l.learn||"<p>Practice this lesson's questions.</p>"}</div><button class="btn" data-a="start">START ${l.questions.length} QUESTIONS</button><button class="btn g" data-a="unit" data-r="${u.i}">← Lesson map</button>`)}
-function chal(){const s=NAV.s,{u}=cur();if(!u||!chOpen(s,u))return toast("🔒 Finish all lessons first.");
- if(!(u.challenge||[]).length)return toast("Challenge coming soon.");
- view(`<div class="card c"><div style="font-size:52px">🏅</div><h2>${esc(ut(u))} Challenge</h2><p>${u.challenge.length} questions · pass mark 70% · +50 XP (first pass)</p><button class="btn" data-a="startc">START</button><button class="btn g" data-a="unit" data-r="${u.i}">← Back</button></div>`)}
+/* ---------- GLOBAL LEADERBOARD ---------- */
+async function loadLeaderboard(){
+ const box=$("lb");
+ if(!box)return;
 
-/* ---------- quiz ---------- */
-function run(qs,ctx){R={qs:qs.map(sq),i:0,c:0,a:0,ctx};draw()}
-function start(){const{u,idx}=cur();if(idx<0||!unlocked(NAV.s,u,idx))return;const l=u.ls[idx];run(l.questions,{t:l.title,key:key(NAV.s,u.i,l.j),bonus:20,kind:"lesson",back:()=>unit(u.i)})}
-function startc(){const{u}=cur();if(!u||!chOpen(NAV.s,u)||!(u.challenge||[]).length)return;run(u.challenge,{t:"Unit Challenge",key:key(NAV.s,u.i,"c"),bonus:50,kind:"ch",back:()=>unit(u.i)})}
-function mix(s){const p=pool(s);if(p.length<3)return toast("Not enough questions yet.");
- run(shuf(p).slice(0,10),{t:"Mixed Quiz"+(s?" · "+s:""),key:"m|"+(s||"all")+"|"+today(),bonus:0,kind:"mix",back:()=>s?subj(s):go("home")})}
-function draw(){const q=R.qs[R.i];
- view(`<div class="qz"><div class="row"><button class="btn g" data-a="back" aria-label="Quit quiz">✕</button>${bar(R.i/R.qs.length*100)}</div><small>${esc(R.ctx.t)} · Question ${R.i+1} of ${R.qs.length}</small>
- <h2>${esc(q.q)}</h2><div id="ans">${q.options.map((o,k)=>`<button class="ans" data-a="ans" data-r="${k}"><b>${k+1}</b>${esc(o)}</button>`).join("")}</div><div id="fb" role="status"></div>
- <button id="nx" class="btn hidden" data-a="next">${R.i+1<R.qs.length?"CONTINUE":"FINISH"}</button></div>`)}
-function answer(k){if(!R||R.a||!$("ans")||k<0||k>=R.qs[R.i].options.length)return;R.a=1;const q=R.qs[R.i],ok=k===q.answer;if(ok)R.c++;
- document.querySelectorAll(".ans").forEach((b,x)=>{b.disabled=true;b.classList.toggle("ok",x===q.answer);b.classList.toggle("no",x===k&&!ok)});
- $("fb").innerHTML=`<div class="fb">${ok?"✅ Correct!":"❌ Correct answer: "+esc(q.options[q.answer])}</div>`;$("nx").classList.remove("hidden");$("nx").focus()}
-function next(){if(!R||!R.a)return;R.i++;R.a=0;R.i<R.qs.length?draw():finish()}
-function finish(){const{c,qs,ctx}=R,r=c/qs.length,mixed=ctx.kind==="mix",pass=mixed||r>=.7;let xp=0;
- if(pass&&!done(ctx.key)){xp=c*10+ctx.bonus;award(xp,ctx.key)}
- const stars=r===1?3:r>=.9?2:pass?1:0;let nx="";
- if(pass&&ctx.kind==="lesson"){const{u,idx}=cur();nx=idx+1<u.ls.length?`<button class="btn" data-a="lesson" data-r="${u.ls[idx+1].j}">NEXT LESSON</button>`:(u.challenge||[]).length?`<button class="btn" data-a="ch">UNIT CHALLENGE</button>`:""}
- view(`<div class="qz card c"><div class="stars" aria-label="${stars} of 3 stars">${"⭐".repeat(stars)}${"☆".repeat(3-stars)}</div><h2>${pass?"You passed! 🎉":"Almost there"}</h2><p>Score: <b>${c} / ${qs.length}</b></p>
- ${xp?`<div class="n gd">+${xp} XP</div>`:""}<p class="mu">${pass?(xp?"":mixed?"Today's mixed-quiz XP already earned.":"Already completed. No extra XP."):"You need 70% to pass."}</p>
- ${nx}${pass&&!mixed?"":`<button class="btn" data-a="retry">TRY AGAIN</button>`}<button class="btn g" data-a="back">Back</button></div>`)}
+ const {data,error}=await supabase
+  .from("profiles")
+  .select("username,xp")
+  .order("xp",{ascending:false})
+  .limit(100);
 
-/* ---------- import ---------- */
-const t2h=t=>t.split(/\n\s*\n/).map(p=>"<p>"+esc(p.trim()).replace(/\n/g,"<br>")+"</p>").join("");
-function applyImp(){const a=jp(st.get("uasaImported"),[]);(Array.isArray(a)?a:[]).forEach(it=>{if(!it||!CURRICULUM[it.s]||!Array.isArray(it.qs))return;
- const c=CURRICULUM[it.s];c.units=c.units||[];const un=c.units[it.u-1]=c.units[it.u-1]||{};un.lessons=un.lessons||[];if(it.ut)un.title=it.ut;
- if(it.l==="c")un.challenge=it.qs;else un.lessons[it.l-1]={title:it.t||"Lesson "+it.l,learn:it.lr?t2h(it.lr):"",questions:it.qs}})}
-function doImport(){const m=$("im"),qs=jp($("ij").value,null);
- if(!Array.isArray(qs)||!qs.length||qs.some(q=>!(q&&typeof q.q==="string"&&Array.isArray(q.options)&&q.options.length>1&&Number.isInteger(q.answer)&&q.answer>=0&&q.answer<q.options.length)))return m.textContent="Paste a JSON list. Each question needs q, options (2+) and answer (position of the right option, starting at 0).";
- const lv=$("il").value.trim().toLowerCase(),it={s:$("is").value,u:Math.max(1,+$("iu").value|0),l:lv==="c"?"c":Math.max(1,+lv|0),t:$("it").value.trim(),ut:$("iut").value.trim(),lr:$("ilr").value.trim(),qs:qs.map(q=>({q:String(q.q),options:q.options.map(String),answer:q.answer}))};
- const all=jp(st.get("uasaImported"),[]).filter(x=>!(x.s===it.s&&x.u===it.u&&x.l===it.l));all.push(it);st.set("uasaImported",JSON.stringify(all));applyImp();m.textContent="Imported "+qs.length+" questions."}
+ if(error){
+  box.innerHTML="<p>Could not load leaderboard. Check your connection.</p>";
+  console.error(error);
+  return
+ }
 
-/* ---------- auth ---------- */
-const am=m=>{$("am").textContent=m};
-function auth(t){const l=t==="l";$("lf").classList.toggle("hidden",!l);$("sf").classList.toggle("hidden",l);$("tl").classList.toggle("g",!l);$("ts").classList.toggle("g",l);am("")}
-function enter(){const u=accts()[st.get("uasaCurrentUser")];if(!u)return;USER=u;u.progress=u.progress||{};u.xp=+u.xp||0;u.streak=+u.streak||0;
- $("auth").classList.add("hidden");$("app").classList.remove("hidden");hdr();go("home")}
-function logout(){st.del("uasaCurrentUser");USER=null;R=null;$("app").classList.add("hidden");$("auth").classList.remove("hidden");auth("l")}
-$("lf").onsubmit=async e=>{e.preventDefault();try{const a=accts(),n=$("lu").value.trim(),k=Object.keys(a).find(x=>x.toLowerCase()===n.toLowerCase());
- if(!k)return am("Account not found.");const u=a[k],pw=$("lp").value;
- if(!(u.hash?await hp(pw,u.salt)===u.hash:u.password===pw))return am("Incorrect password.");
- if(!u.hash){u.salt=crypto.randomUUID();u.hash=await hp(pw,u.salt);delete u.password;st.set("uasaAccounts",JSON.stringify(a))}
- st.set("uasaCurrentUser",k);e.target.reset();am("");enter()}catch(x){am("Login failed: "+x.message)}};
-$("sf").onsubmit=async e=>{e.preventDefault();try{const n=$("su").value.trim(),pw=$("sp").value,a=accts();
- if(!/^[A-Za-z0-9_.-]{3,20}$/.test(n)||["__proto__","constructor","prototype"].includes(n.toLowerCase()))return am("Username: 3-20 letters, numbers, dots, dashes or underscores.");
- if(pw.length<6)return am("Password needs 6+ characters.");
- if(Object.keys(a).some(k=>k.toLowerCase()===n.toLowerCase()))return am("That username is taken.");
- const salt=crypto.randomUUID();a[n]={username:n,salt,hash:await hp(pw,salt),year:"Year 6",xp:0,streak:0,progress:{},created:new Date().toISOString()};
- st.set("uasaAccounts",JSON.stringify(a));st.set("uasaCurrentUser",n);e.target.reset();am("");enter();toast("🎉 Welcome, "+n+"!")}catch(x){am("Sign up failed: "+x.message)}};
-$("pw").onchange=e=>document.querySelectorAll('input[autocomplete$="password"]').forEach(i=>i.type=e.target.checked?"text":"password");
+ const m=["🥇","🥈","🥉"];
 
-/* ---------- events ---------- */
-const A={auth,page:go,logout,subj,unit:r=>unit(+r),lesson:r=>lesson(+r),ch:chal,start,startc,mix,ans:r=>answer(+r),next,
- back:()=>{const b=R&&R.ctx.back;R=null;b&&b()},retry:()=>R&&run(R.qs,R.ctx),imp:doImport};
-document.addEventListener("click",e=>{const t=e.target.closest("[data-a]");if(t&&A[t.dataset.a]){e.preventDefault();A[t.dataset.a](t.dataset.r)}});
-document.addEventListener("keydown",e=>{if(R&&/^[1-9]$/.test(e.key)&&!/INPUT|TEXTAREA|SELECT/.test(e.target.tagName))answer(+e.key-1)});
+ box.innerHTML=(data||[]).map((u,i)=>
+  `<div class="lbr ${u.username===USER.username?"me":""}">
+   <span>${m[i]||"#"+(i+1)} ${esc(u.username)}</span>
+   <b>${+u.xp||0} XP</b>
+  </div>`
+ ).join("")||"<p>No players yet.</p>"
+}
 
-applyImp();
-if(st.get("uasaCurrentUser"))enter();
-</script></body></html>
+async function go(p){
+ R=null;
+ nav(p);
+ view(PAGES[p]());
+
+ if(p==="leaderboard")await loadLeaderboard()
+}
+
+function subj(s){
+ R=null;
+ NAV={s,u:0,l:0};
+ nav("subjects");
+
+ view(`<div class="mu">${lk("page","subjects","Subjects")} › ${esc(s)}</div>
+ <h1>${esc(s)}</h1>
+ <button class="btn g" data-a="mix" data-r="${esc(s)}">🎲 Mixed quiz: ${esc(s)}</button>
+ <div class="grid" style="margin-top:12px">${U(s).map(u=>
+ `<button class="card tap" data-a="unit" data-r="${u.i}">
+  <h2>${u.i+1}. ${esc(ut(u))}</h2>
+  ${bar(u.ls.length?nDone(s,u)/u.ls.length*100:0)}
+  <small>${nDone(s,u)} / ${u.ls.length} lessons</small>
+  ${done(key(s,u.i,"c"))?" 🏅":""}
+ </button>`).join("")||

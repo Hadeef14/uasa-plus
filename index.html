@@ -3,8 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>UASA+ | Made by Hadeef</title>
+<title>UASA+ — Made by Hadeef</title>
 
 <style>
 * {
@@ -15,40 +14,178 @@ body {
     margin: 0;
     font-family: Arial, sans-serif;
     background: #0f172a;
-    color: white;
+    color: #f8fafc;
 }
 
-header {
-    background: #1e293b;
-    padding: 18px 25px;
+/* ---------- GENERAL ---------- */
+
+button,
+input,
+select {
+    font: inherit;
+}
+
+button {
+    cursor: pointer;
+}
+
+.hidden {
+    display: none !important;
+}
+
+/* ---------- AUTH ---------- */
+
+#authScreen {
+    min-height: 100vh;
     display: flex;
-    justify-content: space-between;
     align-items: center;
-    position: sticky;
-    top: 0;
-    z-index: 10;
+    justify-content: center;
+    padding: 20px;
+    background:
+        radial-gradient(circle at top, #075985, transparent 45%),
+        #0f172a;
+}
+
+.auth-box {
+    width: min(420px, 100%);
+    background: #1e293b;
+    padding: 32px;
+    border-radius: 24px;
+    box-shadow: 0 20px 60px #0008;
 }
 
 .logo {
-    font-size: 28px;
-    font-weight: bold;
+    text-align: center;
+    font-size: 42px;
+    font-weight: 900;
+    margin-bottom: 5px;
 }
 
 .logo span {
     color: #38bdf8;
 }
 
-nav button {
-    background: none;
-    border: none;
+.made {
+    text-align: center;
+    color: #94a3b8;
+    margin-bottom: 30px;
+}
+
+.auth-tabs {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 20px;
+}
+
+.auth-tabs button {
+    flex: 1;
+    padding: 11px;
+    border: 0;
+    border-radius: 10px;
+    background: #334155;
     color: #cbd5e1;
-    margin-left: 12px;
-    cursor: pointer;
-    font-size: 15px;
+}
+
+.auth-tabs button.active {
+    background: #38bdf8;
+    color: #082f49;
+    font-weight: bold;
+}
+
+.auth-form h2 {
+    margin-top: 0;
+}
+
+label {
+    display: block;
+    margin-top: 15px;
+    margin-bottom: 6px;
+    color: #cbd5e1;
+}
+
+input,
+select {
+    width: 100%;
+    padding: 13px;
+    border-radius: 10px;
+    border: 1px solid #475569;
+    background: #0f172a;
+    color: white;
+    outline: none;
+}
+
+input:focus,
+select:focus {
+    border-color: #38bdf8;
+}
+
+.primary {
+    width: 100%;
+    margin-top: 20px;
+    padding: 13px;
+    border: 0;
+    border-radius: 10px;
+    background: #38bdf8;
+    color: #082f49;
+    font-weight: bold;
+}
+
+.message {
+    min-height: 22px;
+    margin-top: 15px;
+    text-align: center;
+    color: #fbbf24;
+}
+
+/* ---------- APP ---------- */
+
+#app {
+    min-height: 100vh;
+}
+
+header {
+    position: sticky;
+    top: 0;
+    z-index: 20;
+    background: #1e293b;
+    border-bottom: 1px solid #334155;
+    padding: 15px 25px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.header-logo {
+    font-size: 27px;
+    font-weight: 900;
+}
+
+.header-logo span {
+    color: #38bdf8;
+}
+
+nav {
+    display: flex;
+    gap: 5px;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+}
+
+nav button {
+    background: transparent;
+    border: 0;
+    color: #cbd5e1;
+    padding: 9px 11px;
+    border-radius: 8px;
 }
 
 nav button:hover {
-    color: #38bdf8;
+    background: #334155;
+    color: white;
+}
+
+.logout {
+    color: #fca5a5 !important;
 }
 
 main {
@@ -65,27 +202,35 @@ main {
     display: block;
 }
 
+/* ---------- HOME ---------- */
+
 .hero {
-    background: linear-gradient(135deg, #0369a1, #2563eb);
-    padding: 40px;
+    padding: 45px;
     border-radius: 25px;
     margin-bottom: 25px;
+    background: linear-gradient(135deg, #0369a1, #2563eb);
 }
 
 .hero h1 {
-    font-size: 42px;
-    margin: 0 0 10px;
+    margin: 0;
+    font-size: 44px;
 }
 
 .hero p {
     color: #dbeafe;
+    font-size: 18px;
+}
+
+.hero button {
+    width: auto;
+    padding-left: 25px;
+    padding-right: 25px;
 }
 
 .stats {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
     gap: 15px;
-    margin-bottom: 25px;
 }
 
 .card {
@@ -104,6 +249,8 @@ main {
     margin-top: 5px;
 }
 
+/* ---------- SUBJECTS ---------- */
+
 .subjects {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
@@ -111,8 +258,8 @@ main {
 }
 
 .subject {
+    transition: transform .15s, background .15s;
     cursor: pointer;
-    transition: .2s;
 }
 
 .subject:hover {
@@ -134,7 +281,10 @@ main {
 .progress-bar {
     height: 100%;
     background: #38bdf8;
+    transition: width .3s;
 }
+
+/* ---------- QUIZ ---------- */
 
 .quiz {
     max-width: 700px;
@@ -145,11 +295,10 @@ main {
     width: 100%;
     padding: 15px;
     margin-top: 10px;
-    background: #334155;
-    border: 1px solid #475569;
-    color: white;
     border-radius: 12px;
-    cursor: pointer;
+    border: 1px solid #475569;
+    background: #334155;
+    color: white;
     text-align: left;
 }
 
@@ -157,25 +306,54 @@ main {
     background: #475569;
 }
 
-.primary {
-    background: #38bdf8;
-    color: #082f49;
-    border: none;
-    padding: 13px 20px;
-    border-radius: 10px;
-    font-weight: bold;
-    cursor: pointer;
+.answer.correct {
+    background: #166534;
+    border-color: #22c55e;
 }
+
+.answer.wrong {
+    background: #991b1b;
+    border-color: #ef4444;
+}
+
+.result {
+    min-height: 28px;
+    margin-top: 15px;
+    font-weight: bold;
+}
+
+/* ---------- LEADERBOARD ---------- */
 
 .leaderboard-row {
     display: flex;
     justify-content: space-between;
-    padding: 15px;
+    padding: 16px;
     border-bottom: 1px solid #334155;
 }
 
+.you {
+    background: #075985;
+    border-radius: 10px;
+}
+
+/* ---------- PROFILE ---------- */
+
 .profile {
-    max-width: 500px;
+    max-width: 600px;
+    margin: auto;
+}
+
+.avatar {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    background: #38bdf8;
+    color: #082f49;
+    display: grid;
+    place-items: center;
+    font-size: 30px;
+    font-weight: bold;
+    margin-bottom: 20px;
 }
 
 footer {
@@ -184,15 +362,17 @@ footer {
     padding: 40px;
 }
 
+/* ---------- MOBILE ---------- */
+
 @media (max-width: 700px) {
 
     header {
         flex-direction: column;
-        gap: 15px;
+        gap: 12px;
     }
 
-    nav button {
-        margin: 5px;
+    nav {
+        justify-content: center;
     }
 
     .stats {
@@ -203,8 +383,12 @@ footer {
         grid-template-columns: 1fr;
     }
 
+    .hero {
+        padding: 30px;
+    }
+
     .hero h1 {
-        font-size: 32px;
+        font-size: 34px;
     }
 }
 </style>
@@ -212,81 +396,275 @@ footer {
 
 <body>
 
-<header>
+<!-- =====================================================
+     AUTHENTICATION
+===================================================== -->
 
-    <div class="logo">
-        UASA<span>+</span>
-    </div>
+<section id="authScreen">
 
-    <nav>
-        <button onclick="showPage('home')">Home</button>
-        <button onclick="showPage('subjects')">Subjects</button>
-        <button onclick="showPage('leaderboard')">Leaderboard</button>
-        <button onclick="showPage('profile')">Profile</button>
-    </nav>
+    <div class="auth-box">
 
-</header>
-
-<main>
-
-<!-- HOME -->
-
-<section id="home" class="page active">
-
-    <div class="hero">
-
-        <h1>Welcome to UASA+</h1>
-
-        <p>
-            Learn. Practice. Level up.
-        </p>
-
-        <button class="primary" onclick="showPage('subjects')">
-            Start Learning
-        </button>
-
-    </div>
-
-    <div class="stats">
-
-        <div class="card">
-            <div class="stat-number" id="xp">0</div>
-            <div class="stat-label">XP</div>
+        <div class="logo">
+            UASA<span>+</span>
         </div>
 
-        <div class="card">
-            <div class="stat-number" id="level">1</div>
-            <div class="stat-label">Level</div>
+        <div class="made">
+            Made by Hadeef
         </div>
 
-        <div class="card">
-            <div class="stat-number" id="streak">0</div>
-            <div class="stat-label">Day Streak</div>
+        <div class="auth-tabs">
+
+            <button
+                id="loginTab"
+                class="active"
+                onclick="showAuth('login')">
+                Login
+            </button>
+
+            <button
+                id="signupTab"
+                onclick="showAuth('signup')">
+                Sign Up
+            </button>
+
         </div>
 
-        <div class="card">
-            <div class="stat-number">0</div>
-            <div class="stat-label">Badges</div>
-        </div>
 
-    </div>
+        <!-- LOGIN -->
 
-    <div class="card">
+        <form id="loginForm" class="auth-form">
 
-        <h2>Daily Progress</h2>
+            <h2>Welcome back 👋</h2>
 
-        <div class="progress">
-            <div class="progress-bar" id="dailyProgress"
-                 style="width: 0%">
-            </div>
-        </div>
+            <label>Username</label>
+
+            <input
+                id="loginUsername"
+                type="text"
+                placeholder="Your username"
+                required
+            >
+
+            <label>Password</label>
+
+            <input
+                id="loginPassword"
+                type="password"
+                placeholder="Your password"
+                required
+            >
+
+            <button class="primary" type="submit">
+                LOGIN
+            </button>
+
+        </form>
+
+
+        <!-- SIGN UP -->
+
+        <form
+            id="signupForm"
+            class="auth-form hidden">
+
+            <h2>Create your account</h2>
+
+            <label>Username</label>
+
+            <input
+                id="signupUsername"
+                type="text"
+                placeholder="Choose a username"
+                minlength="3"
+                required
+            >
+
+            <label>Password</label>
+
+            <input
+                id="signupPassword"
+                type="password"
+                placeholder="Create a password"
+                minlength="6"
+                required
+            >
+
+            <label>Year</label>
+
+            <select id="signupYear">
+
+                <option>Year 6</option>
+                <option>Form 1</option>
+
+            </select>
+
+            <button class="primary" type="submit">
+                CREATE ACCOUNT
+            </button>
+
+        </form>
+
+
+        <div id="authMessage" class="message"></div>
 
     </div>
 
 </section>
 
 
-<!-- SUBJECTS -->
+<!-- =====================================================
+     MAIN APP
+===================================================== -->
+
+<div id="app" class="hidden">
+
+<header>
+
+    <div class="header-logo">
+        UASA<span>+</span>
+    </div>
+
+    <nav>
+
+        <button onclick="showPage('home')">
+            🏠 Home
+        </button>
+
+        <button onclick="showPage('subjects')">
+            📚 Subjects
+        </button>
+
+        <button onclick="showPage('leaderboard')">
+            🏆 Leaderboard
+        </button>
+
+        <button onclick="showPage('profile')">
+            👤 Profile
+        </button>
+
+        <button
+            class="logout"
+            onclick="logout()">
+            🚪 Logout
+        </button>
+
+    </nav>
+
+</header>
+
+
+<main>
+
+<!-- =====================================================
+     HOME
+===================================================== -->
+
+<section id="home" class="page active">
+
+    <div class="hero">
+
+        <h1>
+            Welcome, <span id="welcomeName">Student</span>!
+        </h1>
+
+        <p>
+            Learn. Practice. Level up.
+        </p>
+
+        <button
+            class="primary"
+            onclick="showPage('subjects')">
+            START LEARNING
+        </button>
+
+    </div>
+
+
+    <div class="stats">
+
+        <div class="card">
+            <div
+                class="stat-number"
+                id="xp">
+                0
+            </div>
+
+            <div class="stat-label">
+                XP
+            </div>
+        </div>
+
+
+        <div class="card">
+            <div
+                class="stat-number"
+                id="level">
+                1
+            </div>
+
+            <div class="stat-label">
+                Level
+            </div>
+        </div>
+
+
+        <div class="card">
+            <div
+                class="stat-number"
+                id="streak">
+                0
+            </div>
+
+            <div class="stat-label">
+                Day Streak
+            </div>
+        </div>
+
+
+        <div class="card">
+            <div class="stat-number">
+                🏆
+            </div>
+
+            <div class="stat-label">
+                UASA+
+            </div>
+        </div>
+
+    </div>
+
+
+    <br>
+
+
+    <div class="card">
+
+        <h2>
+            Daily Progress
+        </h2>
+
+        <div class="progress">
+
+            <div
+                id="dailyProgress"
+                class="progress-bar"
+                style="width:0%">
+            </div>
+
+        </div>
+
+        <p id="progressText">
+            0 / 100 XP
+        </p>
+
+    </div>
+
+</section>
+
+
+<!-- =====================================================
+     SUBJECTS
+===================================================== -->
 
 <section id="subjects" class="page">
 
@@ -294,82 +672,68 @@ footer {
 
     <div class="subjects">
 
-        <div class="card subject"
-             onclick="startQuiz('Bahasa Melayu')">
+
+        <div
+            class="card subject"
+            onclick="startQuiz('Bahasa Melayu')">
 
             <h3>🇲🇾 Bahasa Melayu</h3>
 
-            <p>Grammar, comprehension and writing.</p>
-
-            <div class="progress">
-                <div class="progress-bar"
-                     style="width: 20%">
-                </div>
-            </div>
+            <p>
+                Grammar and comprehension.
+            </p>
 
         </div>
 
 
-        <div class="card subject"
-             onclick="startQuiz('English')">
+        <div
+            class="card subject"
+            onclick="startQuiz('English')">
 
             <h3>🇬🇧 English</h3>
 
-            <p>Grammar, vocabulary and comprehension.</p>
-
-            <div class="progress">
-                <div class="progress-bar"
-                     style="width: 30%">
-                </div>
-            </div>
+            <p>
+                Grammar and vocabulary.
+            </p>
 
         </div>
 
 
-        <div class="card subject"
-             onclick="startQuiz('Mathematics')">
+        <div
+            class="card subject"
+            onclick="startQuiz('Mathematics')">
 
             <h3>➗ Mathematics</h3>
 
-            <p>Numbers, operations and problem solving.</p>
-
-            <div class="progress">
-                <div class="progress-bar"
-                     style="width: 15%">
-                </div>
-            </div>
+            <p>
+                Numbers and problem solving.
+            </p>
 
         </div>
 
 
-        <div class="card subject"
-             onclick="startQuiz('Science')">
+        <div
+            class="card subject"
+            onclick="startQuiz('Science')">
 
             <h3>🔬 Science</h3>
 
-            <p>Explore the world of science.</p>
-
-            <div class="progress">
-                <div class="progress-bar"
-                     style="width: 10%">
-                </div>
-            </div>
+            <p>
+                Explore science.
+            </p>
 
         </div>
 
 
-        <div class="card subject"
-             onclick="startQuiz('Sejarah')">
+        <div
+            class="card subject"
+            onclick="startQuiz('Sejarah')">
 
             <h3>📜 Sejarah</h3>
 
-            <p>Learn Malaysian history.</p>
-
-            <div class="progress">
-                <div class="progress-bar"
-                     style="width: 25%">
-                </div>
-            </div>
+            <p>
+                Malaysian history.
+            </p>
 
         </div>
 
@@ -378,7 +742,9 @@ footer {
 </section>
 
 
-<!-- QUIZ -->
+<!-- =====================================================
+     QUIZ
+===================================================== -->
 
 <section id="quiz" class="page">
 
@@ -388,15 +754,21 @@ footer {
 
             <p id="quizSubject"></p>
 
-            <h2 id="question"></h2>
+            <h2 id="question">
+                Question
+            </h2>
 
             <div id="answers"></div>
 
-            <p id="quizResult"></p>
+            <div
+                id="quizResult"
+                class="result">
+            </div>
 
-            <button class="primary"
-                    onclick="showPage('subjects')">
-                Back to Subjects
+            <button
+                class="primary"
+                onclick="showPage('subjects')">
+                BACK TO SUBJECTS
             </button>
 
         </div>
@@ -406,7 +778,9 @@ footer {
 </section>
 
 
-<!-- LEADERBOARD -->
+<!-- =====================================================
+     LEADERBOARD
+===================================================== -->
 
 <section id="leaderboard" class="page">
 
@@ -414,24 +788,8 @@ footer {
 
     <div class="card">
 
-        <div class="leaderboard-row">
-            <span>🥇 Hadeef</span>
-            <strong id="leaderXP">0 XP</strong>
-        </div>
-
-        <div class="leaderboard-row">
-            <span>🥈 Aiman</span>
-            <strong>850 XP</strong>
-        </div>
-
-        <div class="leaderboard-row">
-            <span>🥉 Daniel</span>
-            <strong>720 XP</strong>
-        </div>
-
-        <div class="leaderboard-row">
-            <span>4. Sarah</span>
-            <strong>610 XP</strong>
+        <div
+            id="leaderboardList">
         </div>
 
     </div>
@@ -439,7 +797,9 @@ footer {
 </section>
 
 
-<!-- PROFILE -->
+<!-- =====================================================
+     PROFILE
+===================================================== -->
 
 <section id="profile" class="page">
 
@@ -447,15 +807,43 @@ footer {
 
         <div class="card">
 
-            <h1>👤 Profile</h1>
+            <div
+                class="avatar"
+                id="avatar">
+                H
+            </div>
 
-            <h2>Hadeef</h2>
+            <h1 id="profileName">
+                Hadeef
+            </h1>
 
-            <p>Level <span id="profileLevel">1</span></p>
+            <p>
+                Year:
+                <strong id="profileYear">
+                    Year 6
+                </strong>
+            </p>
 
-            <p>XP: <span id="profileXP">0</span></p>
+            <p>
+                Level:
+                <strong id="profileLevel">
+                    1
+                </strong>
+            </p>
 
-            <p>🔥 Streak: <span id="profileStreak">0</span></p>
+            <p>
+                XP:
+                <strong id="profileXP">
+                    0
+                </strong>
+            </p>
+
+            <p>
+                🔥 Streak:
+                <strong id="profileStreak">
+                    0
+                </strong>
+            </p>
 
         </div>
 
@@ -467,179 +855,774 @@ footer {
 
 
 <footer>
-
     UASA+ — Made by Hadeef
-
 </footer>
+
+</div>
 
 
 <script>
 
-let xp = Number(localStorage.getItem("uasaXP")) || 0;
-
-let streak =
-    Number(localStorage.getItem("uasaStreak")) || 0;
-
+/* =====================================================
+   DATA
+===================================================== */
 
 const quizData = {
 
     "Bahasa Melayu": {
-        question: "Apakah kata nama bagi 'sekolah'?",
+
+        question:
+            "Apakah jenis kata bagi perkataan 'sekolah'?",
+
         answers: [
             ["Kata nama", true],
             ["Kata kerja", false],
             ["Kata adjektif", false]
         ]
+
     },
 
+
     "English": {
-        question: "Which word is a noun?",
+
+        question:
+            "Which word is a noun?",
+
         answers: [
             ["Run", false],
             ["School", true],
             ["Quickly", false]
         ]
+
     },
 
+
     "Mathematics": {
-        question: "What is 12 × 5?",
+
+        question:
+            "What is 12 × 5?",
+
         answers: [
             ["50", false],
             ["60", true],
             ["70", false]
         ]
+
     },
 
+
     "Science": {
-        question: "Which organ pumps blood around the body?",
+
+        question:
+            "Which organ pumps blood around the body?",
+
         answers: [
             ["Lungs", false],
             ["Heart", true],
             ["Stomach", false]
         ]
+
     },
 
+
     "Sejarah": {
-        question: "Apakah ibu negara Malaysia?",
+
+        question:
+            "Apakah ibu negara Malaysia?",
+
         answers: [
             ["Johor Bahru", false],
             ["Kuala Lumpur", true],
             ["Ipoh", false]
         ]
+
     }
 
 };
 
 
+/* =====================================================
+   AUTH HELPERS
+===================================================== */
+
+function getAccounts() {
+
+    return JSON.parse(
+        localStorage.getItem("uasaAccounts") || "{}"
+    );
+
+}
+
+
+function saveAccounts(accounts) {
+
+    localStorage.setItem(
+        "uasaAccounts",
+        JSON.stringify(accounts)
+    );
+
+}
+
+
+function getCurrentUser() {
+
+    return localStorage.getItem(
+        "uasaCurrentUser"
+    );
+
+}
+
+
+/* =====================================================
+   AUTH TABS
+===================================================== */
+
+function showAuth(type) {
+
+    const loginForm =
+        document.getElementById("loginForm");
+
+    const signupForm =
+        document.getElementById("signupForm");
+
+    const loginTab =
+        document.getElementById("loginTab");
+
+    const signupTab =
+        document.getElementById("signupTab");
+
+    document.getElementById("authMessage")
+        .textContent = "";
+
+    if (type === "login") {
+
+        loginForm.classList.remove("hidden");
+        signupForm.classList.add("hidden");
+
+        loginTab.classList.add("active");
+        signupTab.classList.remove("active");
+
+    } else {
+
+        loginForm.classList.add("hidden");
+        signupForm.classList.remove("hidden");
+
+        loginTab.classList.remove("active");
+        signupTab.classList.add("active");
+
+    }
+
+}
+
+
+/* =====================================================
+   SIGN UP
+===================================================== */
+
+document.getElementById("signupForm")
+.addEventListener("submit", function(event) {
+
+    event.preventDefault();
+
+    const username =
+        document.getElementById(
+            "signupUsername"
+        ).value.trim();
+
+    const password =
+        document.getElementById(
+            "signupPassword"
+        ).value;
+
+    const year =
+        document.getElementById(
+            "signupYear"
+        ).value;
+
+    const message =
+        document.getElementById(
+            "authMessage"
+        );
+
+    const accounts = getAccounts();
+
+    if (accounts[username]) {
+
+        message.textContent =
+            "That username already exists.";
+
+        return;
+
+    }
+
+
+    accounts[username] = {
+
+        username: username,
+
+        password: password,
+
+        year: year,
+
+        xp: 0,
+
+        streak: 0,
+
+        createdAt:
+            new Date().toISOString()
+
+    };
+
+
+    saveAccounts(accounts);
+
+
+    localStorage.setItem(
+        "uasaCurrentUser",
+        username
+    );
+
+
+    message.textContent =
+        "Account created!";
+
+
+    this.reset();
+
+
+    openApp();
+
+});
+
+
+/* =====================================================
+   LOGIN
+===================================================== */
+
+document.getElementById("loginForm")
+.addEventListener("submit", function(event) {
+
+    event.preventDefault();
+
+    const username =
+        document.getElementById(
+            "loginUsername"
+        ).value.trim();
+
+    const password =
+        document.getElementById(
+            "loginPassword"
+        ).value;
+
+    const message =
+        document.getElementById(
+            "authMessage"
+        );
+
+    const accounts = getAccounts();
+
+    const account =
+        accounts[username];
+
+
+    if (!account) {
+
+        message.textContent =
+            "Account not found.";
+
+        return;
+
+    }
+
+
+    if (account.password !== password) {
+
+        message.textContent =
+            "Incorrect password.";
+
+        return;
+
+    }
+
+
+    localStorage.setItem(
+        "uasaCurrentUser",
+        username
+    );
+
+
+    this.reset();
+
+    openApp();
+
+});
+
+
+/* =====================================================
+   OPEN APP
+===================================================== */
+
+function openApp() {
+
+    const username =
+        getCurrentUser();
+
+    if (!username) return;
+
+
+    document.getElementById(
+        "authScreen"
+    ).classList.add("hidden");
+
+
+    document.getElementById(
+        "app"
+    ).classList.remove("hidden");
+
+
+    updateUserUI();
+
+    showPage("home");
+
+}
+
+
+/* =====================================================
+   LOGOUT
+===================================================== */
+
+function logout() {
+
+    localStorage.removeItem(
+        "uasaCurrentUser"
+    );
+
+
+    document.getElementById(
+        "app"
+    ).classList.add("hidden");
+
+
+    document.getElementById(
+        "authScreen"
+    ).classList.remove("hidden");
+
+
+    showAuth("login");
+
+}
+
+
+/* =====================================================
+   USER DATA
+===================================================== */
+
+function getUserData() {
+
+    const username =
+        getCurrentUser();
+
+    const accounts =
+        getAccounts();
+
+    return accounts[username];
+
+}
+
+
+function saveUserData(data) {
+
+    const username =
+        getCurrentUser();
+
+    const accounts =
+        getAccounts();
+
+    accounts[username] = data;
+
+    saveAccounts(accounts);
+
+}
+
+
+/* =====================================================
+   UPDATE UI
+===================================================== */
+
+function updateUserUI() {
+
+    const user =
+        getUserData();
+
+    if (!user) return;
+
+
+    const level =
+        Math.floor(user.xp / 100) + 1;
+
+
+    document.getElementById(
+        "welcomeName"
+    ).textContent =
+        user.username;
+
+
+    document.getElementById(
+        "xp"
+    ).textContent =
+        user.xp;
+
+
+    document.getElementById(
+        "level"
+    ).textContent =
+        level;
+
+
+    document.getElementById(
+        "streak"
+    ).textContent =
+        user.streak;
+
+
+    document.getElementById(
+        "profileName"
+    ).textContent =
+        user.username;
+
+
+    document.getElementById(
+        "profileYear"
+    ).textContent =
+        user.year;
+
+
+    document.getElementById(
+        "profileLevel"
+    ).textContent =
+        level;
+
+
+    document.getElementById(
+        "profileXP"
+    ).textContent =
+        user.xp;
+
+
+    document.getElementById(
+        "profileStreak"
+    ).textContent =
+        user.streak;
+
+
+    document.getElementById(
+        "avatar"
+    ).textContent =
+        user.username.charAt(0).toUpperCase();
+
+
+    const progress =
+        Math.min(user.xp % 100, 100);
+
+
+    document.getElementById(
+        "dailyProgress"
+    ).style.width =
+        progress + "%";
+
+
+    document.getElementById(
+        "progressText"
+    ).textContent =
+        progress + " / 100 XP";
+
+
+    updateLeaderboard();
+
+}
+
+
+/* =====================================================
+   NAVIGATION
+===================================================== */
+
 function showPage(page) {
 
     document.querySelectorAll(".page")
-        .forEach(p => p.classList.remove("active"));
+        .forEach(function(section) {
 
-    document.getElementById(page)
-        .classList.add("active");
+            section.classList.remove(
+                "active"
+            );
+
+        });
+
+
+    const selected =
+        document.getElementById(page);
+
+
+    if (selected) {
+
+        selected.classList.add(
+            "active"
+        );
+
+    }
+
 
     window.scrollTo(0, 0);
+
 }
 
+
+/* =====================================================
+   QUIZ
+===================================================== */
 
 function startQuiz(subject) {
 
-    const data = quizData[subject];
+    const data =
+        quizData[subject];
 
-    document.getElementById("quizSubject")
-        .textContent = subject;
 
-    document.getElementById("question")
-        .textContent = data.question;
+    document.getElementById(
+        "quizSubject"
+    ).textContent =
+        subject;
+
+
+    document.getElementById(
+        "question"
+    ).textContent =
+        data.question;
+
 
     const answers =
-        document.getElementById("answers");
+        document.getElementById(
+            "answers"
+        );
+
 
     answers.innerHTML = "";
 
-    document.getElementById("quizResult")
-        .textContent = "";
 
-    data.answers.forEach(answer => {
+    document.getElementById(
+        "quizResult"
+    ).textContent = "";
+
+
+    data.answers.forEach(function(answer) {
 
         const button =
-            document.createElement("button");
+            document.createElement(
+                "button"
+            );
 
-        button.className = "answer";
 
-        button.textContent = answer[0];
+        button.className =
+            "answer";
 
-        button.onclick = function() {
 
-            if (answer[1]) {
+        button.textContent =
+            answer[0];
 
-                xp += 10;
 
-                localStorage.setItem(
-                    "uasaXP",
-                    xp
-                );
+        button.onclick =
+            function() {
 
-                document.getElementById(
-                    "quizResult"
-                ).textContent =
-                    "✅ Correct! +10 XP";
+                if (answer[1]) {
 
-            } else {
+                    button.classList.add(
+                        "correct"
+                    );
 
-                document.getElementById(
-                    "quizResult"
-                ).textContent =
-                    "❌ Not quite. Try again!";
 
-            }
+                    addXP(10);
 
-            updateStats();
 
-        };
+                    document.getElementById(
+                        "quizResult"
+                    ).textContent =
+                        "✅ Correct! +10 XP";
 
-        answers.appendChild(button);
+
+                } else {
+
+                    button.classList.add(
+                        "wrong"
+                    );
+
+
+                    document.getElementById(
+                        "quizResult"
+                    ).textContent =
+                        "❌ Not quite. Try again!";
+
+                }
+
+            };
+
+
+        answers.appendChild(
+            button
+        );
 
     });
 
+
     showPage("quiz");
+
 }
 
 
-function updateStats() {
+/* =====================================================
+   XP
+===================================================== */
 
-    const level =
-        Math.floor(xp / 100) + 1;
+function addXP(amount) {
 
-    document.getElementById("xp")
-        .textContent = xp;
+    const user =
+        getUserData();
 
-    document.getElementById("level")
-        .textContent = level;
 
-    document.getElementById("streak")
-        .textContent = streak;
+    if (!user) return;
 
-    document.getElementById("profileXP")
-        .textContent = xp;
 
-    document.getElementById("profileLevel")
-        .textContent = level;
+    user.xp += amount;
 
-    document.getElementById("profileStreak")
-        .textContent = streak;
 
-    document.getElementById("leaderXP")
-        .textContent = xp + " XP";
+    saveUserData(user);
 
-    document.getElementById("dailyProgress")
-        .style.width =
-        Math.min(xp % 100, 100) + "%";
+
+    updateUserUI();
+
 }
 
 
-updateStats();
+/* =====================================================
+   LEADERBOARD
+===================================================== */
+
+function updateLeaderboard() {
+
+    const accounts =
+        getAccounts();
+
+
+    const players =
+        Object.values(accounts);
+
+
+    players.sort(
+        function(a, b) {
+            return b.xp - a.xp;
+        }
+    );
+
+
+    const list =
+        document.getElementById(
+            "leaderboardList"
+        );
+
+
+    list.innerHTML = "";
+
+
+    players.forEach(
+        function(player, index) {
+
+            const row =
+                document.createElement(
+                    "div"
+                );
+
+
+            row.className =
+                "leaderboard-row";
+
+
+            if (
+                player.username ===
+                getCurrentUser()
+            ) {
+
+                row.classList.add(
+                    "you"
+                );
+
+            }
+
+
+            let medal = "";
+
+
+            if (index === 0)
+                medal = "🥇 ";
+
+            if (index === 1)
+                medal = "🥈 ";
+
+            if (index === 2)
+                medal = "🥉 ";
+
+
+            row.innerHTML = `
+
+                <span>
+                    ${medal}${index + 1}.
+                    ${escapeHTML(player.username)}
+                </span>
+
+                <strong>
+                    ${player.xp} XP
+                </strong>
+
+            `;
+
+
+            list.appendChild(row);
+
+        }
+    );
+
+}
+
+
+/* =====================================================
+   BASIC HTML ESCAPING
+===================================================== */
+
+function escapeHTML(text) {
+
+    const div =
+        document.createElement(
+            "div"
+        );
+
+    div.textContent = text;
+
+    return div.innerHTML;
+
+}
+
+
+/* =====================================================
+   STARTUP
+===================================================== */
+
+if (getCurrentUser()) {
+
+    openApp();
+
+} else {
+
+    document.getElementById(
+        "authScreen"
+    ).classList.remove("hidden");
+
+}
 
 </script>
 

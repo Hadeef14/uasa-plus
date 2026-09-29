@@ -1,10 +1,647 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>UASA+</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>UASA+ | Made by Hadeef</title>
+
+<style>
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #0f172a;
+    color: white;
+}
+
+header {
+    background: #1e293b;
+    padding: 18px 25px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: sticky;
+    top: 0;
+    z-index: 10;
+}
+
+.logo {
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.logo span {
+    color: #38bdf8;
+}
+
+nav button {
+    background: none;
+    border: none;
+    color: #cbd5e1;
+    margin-left: 12px;
+    cursor: pointer;
+    font-size: 15px;
+}
+
+nav button:hover {
+    color: #38bdf8;
+}
+
+main {
+    max-width: 1100px;
+    margin: auto;
+    padding: 30px 20px;
+}
+
+.page {
+    display: none;
+}
+
+.page.active {
+    display: block;
+}
+
+.hero {
+    background: linear-gradient(135deg, #0369a1, #2563eb);
+    padding: 40px;
+    border-radius: 25px;
+    margin-bottom: 25px;
+}
+
+.hero h1 {
+    font-size: 42px;
+    margin: 0 0 10px;
+}
+
+.hero p {
+    color: #dbeafe;
+}
+
+.stats {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 15px;
+    margin-bottom: 25px;
+}
+
+.card {
+    background: #1e293b;
+    border-radius: 18px;
+    padding: 22px;
+}
+
+.stat-number {
+    font-size: 30px;
+    font-weight: bold;
+}
+
+.stat-label {
+    color: #94a3b8;
+    margin-top: 5px;
+}
+
+.subjects {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 15px;
+}
+
+.subject {
+    cursor: pointer;
+    transition: .2s;
+}
+
+.subject:hover {
+    transform: translateY(-4px);
+    background: #263449;
+}
+
+.subject h3 {
+    margin-top: 0;
+}
+
+.progress {
+    height: 8px;
+    background: #334155;
+    border-radius: 20px;
+    overflow: hidden;
+}
+
+.progress-bar {
+    height: 100%;
+    background: #38bdf8;
+}
+
+.quiz {
+    max-width: 700px;
+    margin: auto;
+}
+
+.answer {
+    width: 100%;
+    padding: 15px;
+    margin-top: 10px;
+    background: #334155;
+    border: 1px solid #475569;
+    color: white;
+    border-radius: 12px;
+    cursor: pointer;
+    text-align: left;
+}
+
+.answer:hover {
+    background: #475569;
+}
+
+.primary {
+    background: #38bdf8;
+    color: #082f49;
+    border: none;
+    padding: 13px 20px;
+    border-radius: 10px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.leaderboard-row {
+    display: flex;
+    justify-content: space-between;
+    padding: 15px;
+    border-bottom: 1px solid #334155;
+}
+
+.profile {
+    max-width: 500px;
+}
+
+footer {
+    text-align: center;
+    color: #64748b;
+    padding: 40px;
+}
+
+@media (max-width: 700px) {
+
+    header {
+        flex-direction: column;
+        gap: 15px;
+    }
+
+    nav button {
+        margin: 5px;
+    }
+
+    .stats {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .subjects {
+        grid-template-columns: 1fr;
+    }
+
+    .hero h1 {
+        font-size: 32px;
+    }
+}
+</style>
 </head>
+
 <body>
-    <h1>UASA+ 🚀</h1>
-    <p>Made by Hadeef</p>
+
+<header>
+
+    <div class="logo">
+        UASA<span>+</span>
+    </div>
+
+    <nav>
+        <button onclick="showPage('home')">Home</button>
+        <button onclick="showPage('subjects')">Subjects</button>
+        <button onclick="showPage('leaderboard')">Leaderboard</button>
+        <button onclick="showPage('profile')">Profile</button>
+    </nav>
+
+</header>
+
+<main>
+
+<!-- HOME -->
+
+<section id="home" class="page active">
+
+    <div class="hero">
+
+        <h1>Welcome to UASA+</h1>
+
+        <p>
+            Learn. Practice. Level up.
+        </p>
+
+        <button class="primary" onclick="showPage('subjects')">
+            Start Learning
+        </button>
+
+    </div>
+
+    <div class="stats">
+
+        <div class="card">
+            <div class="stat-number" id="xp">0</div>
+            <div class="stat-label">XP</div>
+        </div>
+
+        <div class="card">
+            <div class="stat-number" id="level">1</div>
+            <div class="stat-label">Level</div>
+        </div>
+
+        <div class="card">
+            <div class="stat-number" id="streak">0</div>
+            <div class="stat-label">Day Streak</div>
+        </div>
+
+        <div class="card">
+            <div class="stat-number">0</div>
+            <div class="stat-label">Badges</div>
+        </div>
+
+    </div>
+
+    <div class="card">
+
+        <h2>Daily Progress</h2>
+
+        <div class="progress">
+            <div class="progress-bar" id="dailyProgress"
+                 style="width: 0%">
+            </div>
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- SUBJECTS -->
+
+<section id="subjects" class="page">
+
+    <h1>📚 Subjects</h1>
+
+    <div class="subjects">
+
+        <div class="card subject"
+             onclick="startQuiz('Bahasa Melayu')">
+
+            <h3>🇲🇾 Bahasa Melayu</h3>
+
+            <p>Grammar, comprehension and writing.</p>
+
+            <div class="progress">
+                <div class="progress-bar"
+                     style="width: 20%">
+                </div>
+            </div>
+
+        </div>
+
+
+        <div class="card subject"
+             onclick="startQuiz('English')">
+
+            <h3>🇬🇧 English</h3>
+
+            <p>Grammar, vocabulary and comprehension.</p>
+
+            <div class="progress">
+                <div class="progress-bar"
+                     style="width: 30%">
+                </div>
+            </div>
+
+        </div>
+
+
+        <div class="card subject"
+             onclick="startQuiz('Mathematics')">
+
+            <h3>➗ Mathematics</h3>
+
+            <p>Numbers, operations and problem solving.</p>
+
+            <div class="progress">
+                <div class="progress-bar"
+                     style="width: 15%">
+                </div>
+            </div>
+
+        </div>
+
+
+        <div class="card subject"
+             onclick="startQuiz('Science')">
+
+            <h3>🔬 Science</h3>
+
+            <p>Explore the world of science.</p>
+
+            <div class="progress">
+                <div class="progress-bar"
+                     style="width: 10%">
+                </div>
+            </div>
+
+        </div>
+
+
+        <div class="card subject"
+             onclick="startQuiz('Sejarah')">
+
+            <h3>📜 Sejarah</h3>
+
+            <p>Learn Malaysian history.</p>
+
+            <div class="progress">
+                <div class="progress-bar"
+                     style="width: 25%">
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- QUIZ -->
+
+<section id="quiz" class="page">
+
+    <div class="quiz">
+
+        <div class="card">
+
+            <p id="quizSubject"></p>
+
+            <h2 id="question"></h2>
+
+            <div id="answers"></div>
+
+            <p id="quizResult"></p>
+
+            <button class="primary"
+                    onclick="showPage('subjects')">
+                Back to Subjects
+            </button>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- LEADERBOARD -->
+
+<section id="leaderboard" class="page">
+
+    <h1>🏆 Leaderboard</h1>
+
+    <div class="card">
+
+        <div class="leaderboard-row">
+            <span>🥇 Hadeef</span>
+            <strong id="leaderXP">0 XP</strong>
+        </div>
+
+        <div class="leaderboard-row">
+            <span>🥈 Aiman</span>
+            <strong>850 XP</strong>
+        </div>
+
+        <div class="leaderboard-row">
+            <span>🥉 Daniel</span>
+            <strong>720 XP</strong>
+        </div>
+
+        <div class="leaderboard-row">
+            <span>4. Sarah</span>
+            <strong>610 XP</strong>
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- PROFILE -->
+
+<section id="profile" class="page">
+
+    <div class="profile">
+
+        <div class="card">
+
+            <h1>👤 Profile</h1>
+
+            <h2>Hadeef</h2>
+
+            <p>Level <span id="profileLevel">1</span></p>
+
+            <p>XP: <span id="profileXP">0</span></p>
+
+            <p>🔥 Streak: <span id="profileStreak">0</span></p>
+
+        </div>
+
+    </div>
+
+</section>
+
+</main>
+
+
+<footer>
+
+    UASA+ — Made by Hadeef
+
+</footer>
+
+
+<script>
+
+let xp = Number(localStorage.getItem("uasaXP")) || 0;
+
+let streak =
+    Number(localStorage.getItem("uasaStreak")) || 0;
+
+
+const quizData = {
+
+    "Bahasa Melayu": {
+        question: "Apakah kata nama bagi 'sekolah'?",
+        answers: [
+            ["Kata nama", true],
+            ["Kata kerja", false],
+            ["Kata adjektif", false]
+        ]
+    },
+
+    "English": {
+        question: "Which word is a noun?",
+        answers: [
+            ["Run", false],
+            ["School", true],
+            ["Quickly", false]
+        ]
+    },
+
+    "Mathematics": {
+        question: "What is 12 × 5?",
+        answers: [
+            ["50", false],
+            ["60", true],
+            ["70", false]
+        ]
+    },
+
+    "Science": {
+        question: "Which organ pumps blood around the body?",
+        answers: [
+            ["Lungs", false],
+            ["Heart", true],
+            ["Stomach", false]
+        ]
+    },
+
+    "Sejarah": {
+        question: "Apakah ibu negara Malaysia?",
+        answers: [
+            ["Johor Bahru", false],
+            ["Kuala Lumpur", true],
+            ["Ipoh", false]
+        ]
+    }
+
+};
+
+
+function showPage(page) {
+
+    document.querySelectorAll(".page")
+        .forEach(p => p.classList.remove("active"));
+
+    document.getElementById(page)
+        .classList.add("active");
+
+    window.scrollTo(0, 0);
+}
+
+
+function startQuiz(subject) {
+
+    const data = quizData[subject];
+
+    document.getElementById("quizSubject")
+        .textContent = subject;
+
+    document.getElementById("question")
+        .textContent = data.question;
+
+    const answers =
+        document.getElementById("answers");
+
+    answers.innerHTML = "";
+
+    document.getElementById("quizResult")
+        .textContent = "";
+
+    data.answers.forEach(answer => {
+
+        const button =
+            document.createElement("button");
+
+        button.className = "answer";
+
+        button.textContent = answer[0];
+
+        button.onclick = function() {
+
+            if (answer[1]) {
+
+                xp += 10;
+
+                localStorage.setItem(
+                    "uasaXP",
+                    xp
+                );
+
+                document.getElementById(
+                    "quizResult"
+                ).textContent =
+                    "✅ Correct! +10 XP";
+
+            } else {
+
+                document.getElementById(
+                    "quizResult"
+                ).textContent =
+                    "❌ Not quite. Try again!";
+
+            }
+
+            updateStats();
+
+        };
+
+        answers.appendChild(button);
+
+    });
+
+    showPage("quiz");
+}
+
+
+function updateStats() {
+
+    const level =
+        Math.floor(xp / 100) + 1;
+
+    document.getElementById("xp")
+        .textContent = xp;
+
+    document.getElementById("level")
+        .textContent = level;
+
+    document.getElementById("streak")
+        .textContent = streak;
+
+    document.getElementById("profileXP")
+        .textContent = xp;
+
+    document.getElementById("profileLevel")
+        .textContent = level;
+
+    document.getElementById("profileStreak")
+        .textContent = streak;
+
+    document.getElementById("leaderXP")
+        .textContent = xp + " XP";
+
+    document.getElementById("dailyProgress")
+        .style.width =
+        Math.min(xp % 100, 100) + "%";
+}
+
+
+updateStats();
+
+</script>
+
 </body>
 </html>

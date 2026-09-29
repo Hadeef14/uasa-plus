@@ -4,1627 +4,321 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>UASA+ — Made by Hadeef</title>
-
 <style>
-* {
-    box-sizing: border-box;
-}
-
-body {
-    margin: 0;
-    font-family: Arial, sans-serif;
-    background: #0f172a;
-    color: #f8fafc;
-}
-
-/* ---------- GENERAL ---------- */
-
-button,
-input,
-select {
-    font: inherit;
-}
-
-button {
-    cursor: pointer;
-}
-
-.hidden {
-    display: none !important;
-}
-
-/* ---------- AUTH ---------- */
-
-#authScreen {
-    min-height: 100vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 20px;
-    background:
-        radial-gradient(circle at top, #075985, transparent 45%),
-        #0f172a;
-}
-
-.auth-box {
-    width: min(420px, 100%);
-    background: #1e293b;
-    padding: 32px;
-    border-radius: 24px;
-    box-shadow: 0 20px 60px #0008;
-}
-
-.logo {
-    text-align: center;
-    font-size: 42px;
-    font-weight: 900;
-    margin-bottom: 5px;
-}
-
-.logo span {
-    color: #38bdf8;
-}
-
-.made {
-    text-align: center;
-    color: #94a3b8;
-    margin-bottom: 30px;
-}
-
-.auth-tabs {
-    display: flex;
-    gap: 8px;
-    margin-bottom: 20px;
-}
-
-.auth-tabs button {
-    flex: 1;
-    padding: 11px;
-    border: 0;
-    border-radius: 10px;
-    background: #334155;
-    color: #cbd5e1;
-}
-
-.auth-tabs button.active {
-    background: #38bdf8;
-    color: #082f49;
-    font-weight: bold;
-}
-
-.auth-form h2 {
-    margin-top: 0;
-}
-
-label {
-    display: block;
-    margin-top: 15px;
-    margin-bottom: 6px;
-    color: #cbd5e1;
-}
-
-input,
-select {
-    width: 100%;
-    padding: 13px;
-    border-radius: 10px;
-    border: 1px solid #475569;
-    background: #0f172a;
-    color: white;
-    outline: none;
-}
-
-input:focus,
-select:focus {
-    border-color: #38bdf8;
-}
-
-.primary {
-    width: 100%;
-    margin-top: 20px;
-    padding: 13px;
-    border: 0;
-    border-radius: 10px;
-    background: #38bdf8;
-    color: #082f49;
-    font-weight: bold;
-}
-
-.message {
-    min-height: 22px;
-    margin-top: 15px;
-    text-align: center;
-    color: #fbbf24;
-}
-
-/* ---------- APP ---------- */
-
-#app {
-    min-height: 100vh;
-}
-
-header {
-    position: sticky;
-    top: 0;
-    z-index: 20;
-    background: #1e293b;
-    border-bottom: 1px solid #334155;
-    padding: 15px 25px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-
-.header-logo {
-    font-size: 27px;
-    font-weight: 900;
-}
-
-.header-logo span {
-    color: #38bdf8;
-}
-
-nav {
-    display: flex;
-    gap: 5px;
-    flex-wrap: wrap;
-    justify-content: flex-end;
-}
-
-nav button {
-    background: transparent;
-    border: 0;
-    color: #cbd5e1;
-    padding: 9px 11px;
-    border-radius: 8px;
-}
-
-nav button:hover {
-    background: #334155;
-    color: white;
-}
-
-.logout {
-    color: #fca5a5 !important;
-}
-
-main {
-    max-width: 1100px;
-    margin: auto;
-    padding: 30px 20px;
-}
-
-.page {
-    display: none;
-}
-
-.page.active {
-    display: block;
-}
-
-/* ---------- HOME ---------- */
-
-.hero {
-    padding: 45px;
-    border-radius: 25px;
-    margin-bottom: 25px;
-    background: linear-gradient(135deg, #0369a1, #2563eb);
-}
-
-.hero h1 {
-    margin: 0;
-    font-size: 44px;
-}
-
-.hero p {
-    color: #dbeafe;
-    font-size: 18px;
-}
-
-.hero button {
-    width: auto;
-    padding-left: 25px;
-    padding-right: 25px;
-}
-
-.stats {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 15px;
-}
-
-.card {
-    background: #1e293b;
-    border-radius: 18px;
-    padding: 22px;
-}
-
-.stat-number {
-    font-size: 30px;
-    font-weight: bold;
-}
-
-.stat-label {
-    color: #94a3b8;
-    margin-top: 5px;
-}
-
-/* ---------- SUBJECTS ---------- */
-
-.subjects {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 15px;
-}
-
-.subject {
-    transition: transform .15s, background .15s;
-    cursor: pointer;
-}
-
-.subject:hover {
-    transform: translateY(-4px);
-    background: #263449;
-}
-
-.subject h3 {
-    margin-top: 0;
-}
-
-.progress {
-    height: 8px;
-    background: #334155;
-    border-radius: 20px;
-    overflow: hidden;
-}
-
-.progress-bar {
-    height: 100%;
-    background: #38bdf8;
-    transition: width .3s;
-}
-
-/* ---------- QUIZ ---------- */
-
-.quiz {
-    max-width: 700px;
-    margin: auto;
-}
-
-.answer {
-    width: 100%;
-    padding: 15px;
-    margin-top: 10px;
-    border-radius: 12px;
-    border: 1px solid #475569;
-    background: #334155;
-    color: white;
-    text-align: left;
-}
-
-.answer:hover {
-    background: #475569;
-}
-
-.answer.correct {
-    background: #166534;
-    border-color: #22c55e;
-}
-
-.answer.wrong {
-    background: #991b1b;
-    border-color: #ef4444;
-}
-
-.result {
-    min-height: 28px;
-    margin-top: 15px;
-    font-weight: bold;
-}
-
-/* ---------- LEADERBOARD ---------- */
-
-.leaderboard-row {
-    display: flex;
-    justify-content: space-between;
-    padding: 16px;
-    border-bottom: 1px solid #334155;
-}
-
-.you {
-    background: #075985;
-    border-radius: 10px;
-}
-
-/* ---------- PROFILE ---------- */
-
-.profile {
-    max-width: 600px;
-    margin: auto;
-}
-
-.avatar {
-    width: 80px;
-    height: 80px;
-    border-radius: 50%;
-    background: #38bdf8;
-    color: #082f49;
-    display: grid;
-    place-items: center;
-    font-size: 30px;
-    font-weight: bold;
-    margin-bottom: 20px;
-}
-
-footer {
-    text-align: center;
-    color: #64748b;
-    padding: 40px;
-}
-
-/* ---------- MOBILE ---------- */
-
-@media (max-width: 700px) {
-
-    header {
-        flex-direction: column;
-        gap: 12px;
-    }
-
-    nav {
-        justify-content: center;
-    }
-
-    .stats {
-        grid-template-columns: repeat(2, 1fr);
-    }
-
-    .subjects {
-        grid-template-columns: 1fr;
-    }
-
-    .hero {
-        padding: 30px;
-    }
-
-    .hero h1 {
-        font-size: 34px;
-    }
-}
+:root{--bg:#0b1220;--panel:#16213a;--panel2:#1d2b4a;--line:#2b3b5e;--text:#f1f5fb;--mute:#93a3c0;--accent:#38bdf8;--accent2:#0c7fb0;--ink:#06283d;--good:#22c55e;--bad:#ef4444;--gold:#fbbf24}
+*{box-sizing:border-box}
+body{margin:0;font-family:"Trebuchet MS","Segoe UI",Arial,sans-serif;background:var(--bg);color:var(--text);line-height:1.5}
+button,input,select,textarea{font:inherit}button{cursor:pointer}a{color:var(--accent)}
+:focus-visible{outline:3px solid var(--gold);outline-offset:2px}
+.hidden{display:none!important}
+h1,h2,h3{line-height:1.2;margin:0 0 8px}
+small,.mute{color:var(--mute)}
+/* auth */
+#authScreen{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:20px;background:radial-gradient(circle at 20% 0,#0c4a6e,transparent 50%),var(--bg)}
+.auth-box{width:min(420px,100%);background:var(--panel);padding:32px;border-radius:24px;box-shadow:0 20px 60px #0009}
+.logo{text-align:center;font-size:44px;font-weight:900;letter-spacing:-1px}.logo span,.header-logo span{color:var(--accent)}
+.made{text-align:center;color:var(--mute);margin-bottom:26px}
+.auth-tabs{display:flex;gap:8px;margin-bottom:18px}
+.auth-tabs button{flex:1;padding:11px;border:0;border-radius:10px;background:var(--panel2);color:#cbd5e1}
+.auth-tabs button.active{background:var(--accent);color:var(--ink);font-weight:bold}
+label{display:block;margin:14px 0 6px;color:#cbd5e1}
+input,select,textarea{width:100%;padding:13px;border-radius:10px;border:1px solid var(--line);background:var(--bg);color:#fff}
+textarea{font-family:monospace}
+.primary{width:100%;margin-top:18px;padding:14px;border:0;border-radius:14px;background:var(--accent);color:var(--ink);font-weight:800;box-shadow:0 4px 0 var(--accent2);letter-spacing:.3px}
+.primary:active:not(:disabled){transform:translateY(3px);box-shadow:0 1px 0 var(--accent2)}
+.primary:disabled{opacity:.45;cursor:not-allowed}
+.ghost{background:transparent;border:1px solid var(--line);color:var(--text);padding:10px 16px;border-radius:12px}
+.ghost:hover{border-color:var(--accent)}
+.message{min-height:22px;margin-top:14px;text-align:center;color:var(--gold)}
+/* header */
+header{position:sticky;top:0;z-index:20;background:#101a30ee;backdrop-filter:blur(8px);border-bottom:1px solid var(--line);padding:10px 24px;display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}
+.header-logo{font-size:26px;font-weight:900}
+.chips{display:flex;gap:8px}.chip{background:var(--panel2);border-radius:20px;padding:4px 12px;font-weight:bold;font-size:15px}
+nav{display:flex;gap:4px;flex-wrap:wrap;justify-content:flex-end}
+nav button{background:transparent;border:0;color:#cbd5e1;padding:9px 12px;border-radius:9px}
+nav button:hover{background:var(--panel2)}nav button.on{background:var(--panel2);color:var(--accent);font-weight:bold}
+nav .logout{color:#fca5a5}
+main{max-width:1000px;margin:auto;padding:26px 16px 40px}
+.page{display:none}.page.active{display:block}
+/* cards / grids */
+.hero{padding:40px;border-radius:24px;margin-bottom:20px;background:linear-gradient(135deg,#0369a1,#2540b8)}
+.hero h1{font-size:40px}.hero p{color:#dbeafe;font-size:18px;margin:0}
+.hero .primary{width:auto;padding:13px 26px;background:#fff;box-shadow:0 4px 0 #b6c7e8}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+.card{background:var(--panel);border-radius:18px;padding:20px;border:1px solid var(--line)}
+.stat-number{font-size:30px;font-weight:bold}.stat-label{color:var(--mute)}
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+.grid.units{grid-template-columns:repeat(2,1fr)}
+.tap{cursor:pointer;transition:transform .15s,border-color .15s}
+.tap:hover{transform:translateY(-3px);border-color:var(--accent)}
+.card p{margin:0;color:var(--mute)}
+.progress{height:10px;background:var(--line);border-radius:20px;overflow:hidden;margin-top:12px}
+.progress-bar{height:100%;background:var(--accent);border-radius:20px;transition:width .4s}
+.progress-bar.good{background:var(--good)}
+.split{display:flex;gap:16px;align-items:center}
+.ring{--p:0;flex:none;width:60px;height:60px;border-radius:50%;background:conic-gradient(var(--accent) calc(var(--p)*1%),var(--line) 0);display:grid;place-items:center}
+.ring span{width:46px;height:46px;border-radius:50%;background:var(--panel);display:grid;place-items:center;font-size:24px}
+.ring.n span{font-size:17px;font-weight:800}
+.crumbs{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px;color:var(--mute)}
+.badge{display:inline-block;font-size:13px;padding:2px 10px;border-radius:20px;background:var(--panel2);color:var(--mute)}
+.badge.done{background:#14532d;color:#bbf7d0}
+.empty{text-align:center;padding:34px 18px;border:2px dashed var(--line);border-radius:16px;color:var(--mute)}
+.empty h3{color:var(--text)}
+/* lesson map */
+.map{max-width:560px;margin:20px auto 0}
+.step{position:relative;display:flex;gap:18px;align-items:center;padding-bottom:28px}
+.step:not(:last-child)::after{content:"";position:absolute;left:36px;top:76px;width:6px;height:28px;margin-left:-3px;background:var(--line);border-radius:3px}
+.step.done:not(:last-child)::after{background:var(--good)}
+.step.locked strong,.step.soon strong{color:var(--mute)}
+.node{flex:none;width:72px;height:72px;border-radius:50%;border:0;font-size:26px;font-weight:800;background:var(--accent);color:var(--ink);box-shadow:0 6px 0 var(--accent2);transition:transform .1s}
+.node:active{transform:translateY(4px);box-shadow:0 2px 0 var(--accent2)}
+.node.done{background:var(--good);box-shadow:0 6px 0 #15803d;color:#052e16}
+.node.locked{background:var(--panel2);color:var(--mute);box-shadow:0 6px 0 #0e1730;cursor:not-allowed}
+.node.soon{background:var(--panel2);color:var(--text);box-shadow:0 6px 0 #0e1730;border:2px dashed var(--line)}
+.node.current{animation:pulse 1.8s infinite}
+.node.big{width:84px;height:84px;font-size:34px;background:var(--gold);box-shadow:0 6px 0 #b7830b}
+.node.big.locked{background:var(--panel2);box-shadow:0 6px 0 #0e1730}
+@keyframes pulse{0%,100%{box-shadow:0 6px 0 var(--accent2),0 0 0 0 #38bdf866}50%{box-shadow:0 6px 0 var(--accent2),0 0 0 14px #38bdf800}}
+/* learn / quiz */
+.learn{font-size:18px;max-width:68ch;margin-bottom:6px}
+.stepper{display:flex;gap:8px;margin-bottom:14px;flex-wrap:wrap}
+.quiz{max-width:680px;margin:auto}
+.qtop{display:flex;align-items:center;gap:12px;margin-bottom:18px}
+.qtop .progress{flex:1;margin:0}
+.qtitle{font-size:22px;margin:6px 0 4px}
+.answer{display:flex;gap:12px;align-items:center;width:100%;padding:15px;margin-top:10px;border-radius:14px;border:2px solid var(--line);background:var(--panel);color:#fff;text-align:left;box-shadow:0 3px 0 var(--line)}
+.answer:hover:not(:disabled){background:var(--panel2);border-color:var(--accent)}
+.answer b{flex:none;width:28px;height:28px;border-radius:8px;background:var(--panel2);display:grid;place-items:center;font-size:14px}
+.answer.correct{background:#14532d;border-color:var(--good)}.answer.wrong{background:#7f1d1d;border-color:var(--bad)}
+.feedback{margin-top:16px;padding:14px 16px;border-radius:14px;font-weight:bold}
+.feedback.ok{background:#14532d;color:#bbf7d0}.feedback.no{background:#7f1d1d;color:#fecaca}
+.result{text-align:center}
+.stars{font-size:44px;letter-spacing:6px}
+.big-num{font-size:44px;font-weight:900;color:var(--gold)}
+/* leaderboard / profile */
+.lb{display:flex;justify-content:space-between;align-items:center;padding:14px;border-bottom:1px solid var(--line)}
+.lb.you{background:#0c4a6e;border-radius:12px}
+.lb.top{font-size:18px;font-weight:bold}
+.profile{max-width:620px;margin:auto}
+.avatar{width:84px;height:84px;border-radius:50%;background:var(--accent);color:var(--ink);display:grid;place-items:center;font-size:34px;font-weight:bold;margin-bottom:14px}
+.subrow{margin-top:14px}.subrow .progress{margin-top:6px}
+/* feedback overlays */
+.xppop{position:fixed;left:50%;top:40%;z-index:60;transform:translateX(-50%);font-size:40px;font-weight:900;color:var(--gold);text-shadow:0 4px 20px #000;animation:rise 1.3s ease-out forwards;pointer-events:none}
+@keyframes rise{from{opacity:1;transform:translate(-50%,0)}to{opacity:0;transform:translate(-50%,-90px)}}
+.toast{position:fixed;left:50%;bottom:24px;z-index:60;transform:translateX(-50%);background:var(--panel2);border:1px solid var(--accent);padding:12px 18px;border-radius:14px;max-width:90vw}
+footer{text-align:center;color:#64748b;padding:30px}
+@media(max-width:700px){header{justify-content:center}nav{justify-content:center}.stats{grid-template-columns:repeat(2,1fr)}.grid,.grid.units{grid-template-columns:1fr}.hero{padding:26px}.hero h1{font-size:30px}main{padding:18px 12px 40px}.step{gap:14px}}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
 </style>
 </head>
-
 <body>
 
-<!-- =====================================================
-     AUTHENTICATION
-===================================================== -->
-
 <section id="authScreen">
-
-    <div class="auth-box">
-
-        <div class="logo">
-            UASA<span>+</span>
-        </div>
-
-        <div class="made">
-            Made by Hadeef
-        </div>
-
-        <div class="auth-tabs">
-
-            <button
-                id="loginTab"
-                class="active"
-                onclick="showAuth('login')">
-                Login
-            </button>
-
-            <button
-                id="signupTab"
-                onclick="showAuth('signup')">
-                Sign Up
-            </button>
-
-        </div>
-
-
-        <!-- LOGIN -->
-
-        <form id="loginForm" class="auth-form">
-
-            <h2>Welcome back 👋</h2>
-
-            <label>Username</label>
-
-            <input
-                id="loginUsername"
-                type="text"
-                placeholder="Your username"
-                required
-            >
-
-            <label>Password</label>
-
-            <input
-                id="loginPassword"
-                type="password"
-                placeholder="Your password"
-                required
-            >
-
-            <button class="primary" type="submit">
-                LOGIN
-            </button>
-
-        </form>
-
-
-        <!-- SIGN UP -->
-
-        <form
-            id="signupForm"
-            class="auth-form hidden">
-
-            <h2>Create your account</h2>
-
-            <label>Username</label>
-
-            <input
-                id="signupUsername"
-                type="text"
-                placeholder="Choose a username"
-                minlength="3"
-                required
-            >
-
-            <label>Password</label>
-
-            <input
-                id="signupPassword"
-                type="password"
-                placeholder="Create a password"
-                minlength="6"
-                required
-            >
-
-            <label>Year</label>
-
-            <select id="signupYear">
-
-                <option>Year 6</option>
-                <option>Form 1</option>
-
-            </select>
-
-            <button class="primary" type="submit">
-                CREATE ACCOUNT
-            </button>
-
-        </form>
-
-
-        <div id="authMessage" class="message"></div>
-
+<div class="auth-box">
+    <div class="logo">UASA<span>+</span></div>
+    <div class="made">Made by Hadeef</div>
+    <div class="auth-tabs">
+        <button id="loginTab" class="active" data-act="auth" data-arg="login">Login</button>
+        <button id="signupTab" data-act="auth" data-arg="signup">Sign Up</button>
     </div>
-
+    <form id="loginForm">
+        <h2>Welcome back 👋</h2>
+        <label for="loginUsername">Username</label>
+        <input id="loginUsername" type="text" placeholder="Your username" autocomplete="username" required>
+        <label for="loginPassword">Password</label>
+        <input id="loginPassword" type="password" placeholder="Your password" autocomplete="current-password" required>
+        <button class="primary" type="submit">LOGIN</button>
+    </form>
+    <form id="signupForm" class="hidden">
+        <h2>Create your account</h2>
+        <label for="signupUsername">Username</label>
+        <input id="signupUsername" type="text" placeholder="Choose a username" minlength="3" autocomplete="username" required>
+        <label for="signupPassword">Password</label>
+        <input id="signupPassword" type="password" placeholder="Create a password" minlength="6" autocomplete="new-password" required>
+        <label for="signupYear">Year</label>
+        <select id="signupYear"><option>Year 6</option><option>Form 1</option></select>
+        <button class="primary" type="submit">CREATE ACCOUNT</button>
+    </form>
+    <div id="authMessage" class="message" role="status"></div>
+</div>
 </section>
-
-
-<!-- =====================================================
-     MAIN APP
-===================================================== -->
 
 <div id="app" class="hidden">
-
 <header>
-
-    <div class="header-logo">
-        UASA<span>+</span>
-    </div>
-
+    <div class="header-logo">UASA<span>+</span></div>
+    <div class="chips" aria-label="Your stats"><span class="chip" id="hdrStreak">🔥 0</span><span class="chip" id="hdrXP">⭐ 0 XP</span></div>
     <nav>
-
-        <button onclick="showPage('home')">
-            🏠 Home
-        </button>
-
-        <button onclick="showPage('subjects')">
-            📚 Subjects
-        </button>
-
-        <button onclick="showPage('leaderboard')">
-            🏆 Leaderboard
-        </button>
-
-        <button onclick="showPage('profile')">
-            👤 Profile
-        </button>
-
-        <button
-            class="logout"
-            onclick="logout()">
-            🚪 Logout
-        </button>
-
+        <button data-page="home" data-act="page" data-arg="home">🏠 Home</button>
+        <button data-page="subjects" data-act="page" data-arg="subjects">📚 Subjects</button>
+        <button data-page="leaderboard" data-act="page" data-arg="leaderboard">🏆 Leaderboard</button>
+        <button data-page="profile" data-act="page" data-arg="profile">👤 Profile</button>
+        <button data-page="import" data-act="page" data-arg="import">📥 Import</button>
+        <button class="logout" data-act="logout">🚪 Logout</button>
     </nav>
-
 </header>
-
-
 <main>
-
-<!-- =====================================================
-     HOME
-===================================================== -->
-
-<section id="home" class="page active">
-
-    <div class="hero">
-
-        <h1>
-            Welcome, <span id="welcomeName">Student</span>!
-        </h1>
-
-        <p>
-            Learn. Practice. Level up.
-        </p>
-
-        <button
-            class="primary"
-            onclick="showPage('subjects')">
-            START LEARNING
-        </button>
-
-    </div>
-
-
-    <div class="stats">
-
+    <section id="home" class="page active">
+        <div class="hero">
+            <h1>Welcome, <span id="welcomeName">Student</span>!</h1>
+            <p>Learn. Practice. Level up.</p><br>
+            <button class="primary" data-act="page" data-arg="subjects">START LEARNING</button>
+        </div>
+        <div class="stats">
+            <div class="card"><div class="stat-number" id="xp">0</div><div class="stat-label">XP</div></div>
+            <div class="card"><div class="stat-number" id="level">1</div><div class="stat-label">Level</div></div>
+            <div class="card"><div class="stat-number" id="streak">0</div><div class="stat-label">Day Streak</div></div>
+            <div class="card"><div class="stat-number" id="lessonsDone">0</div><div class="stat-label">Lessons done</div></div>
+        </div>
+        <br>
         <div class="card">
-            <div
-                class="stat-number"
-                id="xp">
-                0
-            </div>
-
-            <div class="stat-label">
-                XP
-            </div>
+            <h2>Daily Progress</h2>
+            <div class="progress"><div id="dailyProgress" class="progress-bar" style="width:0%"></div></div>
+            <p id="progressText">0 / 100 XP</p>
         </div>
+    </section>
 
+    <section id="subjects" class="page">
+        <h1>📚 Subjects</h1>
+        <div class="grid" id="subjectGrid"></div>
+    </section>
 
+    <section id="learn" class="page"><div id="learnView"></div></section>
+
+    <section id="leaderboard" class="page">
+        <h1>🏆 Leaderboard</h1>
+        <div class="card"><div id="leaderboardList"></div></div>
+    </section>
+
+    <section id="import" class="page">
+        <h1>📥 Import questions</h1>
         <div class="card">
-            <div
-                class="stat-number"
-                id="level">
-                1
-            </div>
-
-            <div class="stat-label">
-                Level
-            </div>
+            <p>Only add verified questions you have permission to use. Saved in this browser only.</p>
+            <label for="impSubject">Subject</label><select id="impSubject"></select>
+            <label for="impUnit">Unit</label><select id="impUnit"></select>
+            <label for="impUnitTitle">Unit title (optional)</label><input id="impUnitTitle" type="text">
+            <label for="impLesson">Lesson</label><select id="impLesson"></select>
+            <label for="impTitle">Lesson title (optional)</label><input id="impTitle" type="text">
+            <label for="impLearn">Learn content (optional, plain text; blank line starts a new paragraph)</label><textarea id="impLearn" rows="4"></textarea>
+            <label for="impSource">Default source (optional, used when a question has no source)</label><input id="impSource" type="text" placeholder="e.g. KPM UASA">
+            <label for="impYear">Default source year (optional)</label><input id="impYear" type="text" inputmode="numeric" placeholder="e.g. 2024">
+            <label for="impJson">Questions (JSON)</label>
+            <textarea id="impJson" rows="8" placeholder='[{"q":"Question?","options":["A","B","C"],"answer":1,"source":"KPM UASA","sourceYear":"2024","topic":"Topic name"}]'></textarea>
+            <button class="primary" data-act="import">IMPORT</button>
+            <div id="importMsg" class="message" role="status"></div>
         </div>
-
-
-        <div class="card">
-            <div
-                class="stat-number"
-                id="streak">
-                0
-            </div>
-
-            <div class="stat-label">
-                Day Streak
-            </div>
-        </div>
-
-
-        <div class="card">
-            <div class="stat-number">
-                🏆
-            </div>
-
-            <div class="stat-label">
-                UASA+
-            </div>
-        </div>
-
-    </div>
-
-
-    <br>
-
-
-    <div class="card">
-
-        <h2>
-            Daily Progress
-        </h2>
-
-        <div class="progress">
-
-            <div
-                id="dailyProgress"
-                class="progress-bar"
-                style="width:0%">
-            </div>
-
-        </div>
-
-        <p id="progressText">
-            0 / 100 XP
-        </p>
-
-    </div>
-
-</section>
-
-
-<!-- =====================================================
-     SUBJECTS
-===================================================== -->
-
-<section id="subjects" class="page">
-
-    <h1>📚 Subjects</h1>
-
-    <div class="subjects">
-
-
-        <div
-            class="card subject"
-            onclick="startQuiz('Bahasa Melayu')">
-
-            <h3>🇲🇾 Bahasa Melayu</h3>
-
-            <p>
-                Grammar and comprehension.
-            </p>
-
-        </div>
-
-
-        <div
-            class="card subject"
-            onclick="startQuiz('English')">
-
-            <h3>🇬🇧 English</h3>
-
-            <p>
-                Grammar and vocabulary.
-            </p>
-
-        </div>
-
-
-        <div
-            class="card subject"
-            onclick="startQuiz('Mathematics')">
-
-            <h3>➗ Mathematics</h3>
-
-            <p>
-                Numbers and problem solving.
-            </p>
-
-        </div>
-
-
-        <div
-            class="card subject"
-            onclick="startQuiz('Science')">
-
-            <h3>🔬 Science</h3>
-
-            <p>
-                Explore science.
-            </p>
-
-        </div>
-
-
-        <div
-            class="card subject"
-            onclick="startQuiz('Sejarah')">
-
-            <h3>📜 Sejarah</h3>
-
-            <p>
-                Malaysian history.
-            </p>
-
-        </div>
-
-    </div>
-
-</section>
-
-
-<!-- =====================================================
-     QUIZ
-===================================================== -->
-
-<section id="quiz" class="page">
-
-    <div class="quiz">
-
-        <div class="card">
-
-            <p id="quizSubject"></p>
-
-            <h2 id="question">
-                Question
-            </h2>
-
-            <div id="answers"></div>
-
-            <div
-                id="quizResult"
-                class="result">
-            </div>
-
-            <button
-                class="primary"
-                onclick="showPage('subjects')">
-                BACK TO SUBJECTS
-            </button>
-
-        </div>
-
-    </div>
-
-</section>
-
-
-<!-- =====================================================
-     LEADERBOARD
-===================================================== -->
-
-<section id="leaderboard" class="page">
-
-    <h1>🏆 Leaderboard</h1>
-
-    <div class="card">
-
-        <div
-            id="leaderboardList">
-        </div>
-
-    </div>
-
-</section>
-
-
-<!-- =====================================================
-     PROFILE
-===================================================== -->
-
-<section id="profile" class="page">
-
-    <div class="profile">
-
-        <div class="card">
-
-            <div
-                class="avatar"
-                id="avatar">
-                H
-            </div>
-
-            <h1 id="profileName">
-                Hadeef
-            </h1>
-
-            <p>
-                Year:
-                <strong id="profileYear">
-                    Year 6
-                </strong>
-            </p>
-
-            <p>
-                Level:
-                <strong id="profileLevel">
-                    1
-                </strong>
-            </p>
-
-            <p>
-                XP:
-                <strong id="profileXP">
-                    0
-                </strong>
-            </p>
-
-            <p>
-                🔥 Streak:
-                <strong id="profileStreak">
-                    0
-                </strong>
-            </p>
-
-        </div>
-
-    </div>
-
-</section>
-
+    </section>
+
+    <section id="profile" class="page">
+        <div class="profile"><div class="card">
+            <div class="avatar" id="avatar">H</div>
+            <h1 id="profileName">Hadeef</h1>
+            <p>Year: <strong id="profileYear">Year 6</strong></p>
+            <p>Level: <strong id="profileLevel">1</strong> · XP: <strong id="profileXP">0</strong></p>
+            <p>🔥 Streak: <strong id="profileStreak">0</strong></p>
+            <div id="profileSubjects"></div>
+        </div></div>
+    </section>
 </main>
-
-
-<footer>
-    UASA+ — Made by Hadeef
-</footer>
-
+<footer>UASA+ — Made by Hadeef</footer>
 </div>
 
-
 <script>
-
 /* =====================================================
-   DATA
+   CURRICULUM STRUCTURE (data is empty until verified content is added)
+   Subject → 10 Units → 15 Lessons → Learn → 10 Questions → Unit Challenge
+
+   CURRICULUM["English"] = { units: [ {
+       title: "Unit title",
+       lessons: [ {
+           title: "Lesson title",
+           learn: "<p>Teaching content (trusted HTML)</p>",
+           questions: [ { q:"Question?", options:["A","B","C"], answer:1,
+                          source:"…", sourceYear:"2024", topic:"…" } ]   // 10 items
+       } ],                                                              // 15 items
+       challenge: [ { q:"...", options:[...], answer:0 } ]
+   } ] };
+   Or use the Import page, which fills the same structure.
 ===================================================== */
+const UNIT_COUNT = 10, LESSON_COUNT = 15, QUESTIONS_PER_LESSON = 10;
+const PASS_RATIO = 0.7, XP_CORRECT = 10, XP_LESSON = 20, XP_CHALLENGE = 50, XP_PER_LEVEL = 100;
 
+const SUBJECTS = [
+    {name:"Bahasa Melayu", icon:"🇲🇾", desc:"Grammar and comprehension."},
+    {name:"English",       icon:"🇬🇧", desc:"Grammar and vocabulary."},
+    {name:"Mathematics",   icon:"➗", desc:"Numbers and problem solving."},
+    {name:"Science",       icon:"🔬", desc:"Explore science."},
+    {name:"Sejarah",       icon:"📜", desc:"Malaysian history."}
+];
+const CURRICULUM = {};
+
+/* Quick Practice: the original one-question quizzes, kept as they were */
 const quizData = {
-
-    "Bahasa Melayu": {
-
-        question:
-            "Apakah jenis kata bagi perkataan 'sekolah'?",
-
-        answers: [
-            ["Kata nama", true],
-            ["Kata kerja", false],
-            ["Kata adjektif", false]
-        ]
-
-    },
-
-
-    "English": {
-
-        question:
-            "Which word is a noun?",
-
-        answers: [
-            ["Run", false],
-            ["School", true],
-            ["Quickly", false]
-        ]
-
-    },
-
-
-    "Mathematics": {
-
-        question:
-            "What is 12 × 5?",
-
-        answers: [
-            ["50", false],
-            ["60", true],
-            ["70", false]
-        ]
-
-    },
-
-
-    "Science": {
-
-        question:
-            "Which organ pumps blood around the body?",
-
-        answers: [
-            ["Lungs", false],
-            ["Heart", true],
-            ["Stomach", false]
-        ]
-
-    },
-
-
-    "Sejarah": {
-
-        question:
-            "Apakah ibu negara Malaysia?",
-
-        answers: [
-            ["Johor Bahru", false],
-            ["Kuala Lumpur", true],
-            ["Ipoh", false]
-        ]
-
-    }
-
+    "Bahasa Melayu":{question:"Apakah jenis kata bagi perkataan 'sekolah'?",answers:[["Kata nama",true],["Kata kerja",false],["Kata adjektif",false]]},
+    "English":{question:"Which word is a noun?",answers:[["Run",false],["School",true],["Quickly",false]]},
+    "Mathematics":{question:"What is 12 × 5?",answers:[["50",false],["60",true],["70",false]]},
+    "Science":{question:"Which organ pumps blood around the body?",answers:[["Lungs",false],["Heart",true],["Stomach",false]]},
+    "Sejarah":{question:"Apakah ibu negara Malaysia?",answers:[["Johor Bahru",false],["Kuala Lumpur",true],["Ipoh",false]]}
 };
 
+/* Safe accessors: missing curriculum data falls back to placeholders */
+function getUnit(s,u){
+    const c=(CURRICULUM[s]&&CURRICULUM[s].units&&CURRICULUM[s].units[u-1])||{};
+    return {title:c.title||"Unit "+u, lessons:c.lessons||[], challenge:c.challenge||[]};
+}
+function getLesson(s,u,l){
+    const x=getUnit(s,u).lessons[l-1]||{};
+    return {title:x.title||"Lesson "+l, learn:x.learn||"", questions:x.questions||[]};
+}
+const ready = les => !!les.learn && les.questions.length > 0;
 
 /* =====================================================
-   AUTH HELPERS
+   HELPERS
 ===================================================== */
+const $ = id => document.getElementById(id);
+const esc = t => String(t==null?"":t).replace(/[&<>"']/g, c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const levelFromXP = xp => Math.floor(xp / XP_PER_LEVEL) + 1;
+const subjectIndex = name => SUBJECTS.findIndex(x=>x.name===name);
+function safeParse(text,fallback){try{const v=JSON.parse(text);return v==null?fallback:v}catch(e){return fallback}}
 
-function getAccounts() {
-
-    return JSON.parse(
-        localStorage.getItem("uasaAccounts") || "{}"
-    );
-
+function toast(msg){
+    const t=document.createElement("div");
+    t.className="toast";t.setAttribute("role","status");t.textContent=msg;
+    document.body.appendChild(t);setTimeout(()=>t.remove(),2200);
+}
+function xpPop(n){
+    const d=document.createElement("div");
+    d.className="xppop";d.textContent="+"+n+" XP";
+    document.body.appendChild(d);setTimeout(()=>d.remove(),1400);
 }
 
-
-function saveAccounts(accounts) {
-
-    localStorage.setItem(
-        "uasaAccounts",
-        JSON.stringify(accounts)
-    );
-
+/* ---------- LocalStorage accounts (prototype auth, existing data preserved) ---------- */
+function getAccounts(){return safeParse(localStorage.getItem("uasaAccounts"),{})}
+function saveAccounts(a){localStorage.setItem("uasaAccounts",JSON.stringify(a))}
+function getCurrentUser(){return localStorage.getItem("uasaCurrentUser")}
+function getUserData(){
+    const u=getAccounts()[getCurrentUser()];
+    if(!u)return null;
+    u.progress=u.progress||{};u.xp=+u.xp||0;u.streak=+u.streak||0;   // fill fields older accounts lack
+    return u;
 }
+function saveUserData(u){const a=getAccounts();a[u.username]=u;saveAccounts(a)}
 
+/* ---------- Progress ---------- */
+const doneKey = (s,u,l) => [s,u,l].join("|");            // l is 1..15 or "c" for the Unit Challenge
+function isDone(k){const u=getUserData();return !!(u&&u.progress[k])}
+function countDone(s,u){let n=0;for(let l=1;l<=LESSON_COUNT;l++)if(isDone(doneKey(s,u,l)))n++;return n}
+function subjectDone(s){let n=0;for(let u=1;u<=UNIT_COUNT;u++)n+=countDone(s,u);return n}
+const lessonUnlocked = l => l===1 || isDone(doneKey(NAV.s,NAV.u,l-1));   // needs previous lesson completed
+const challengeUnlocked = () => countDone(NAV.s,NAV.u)===LESSON_COUNT;
 
-function getCurrentUser() {
-
-    return localStorage.getItem(
-        "uasaCurrentUser"
-    );
-
+function updateStreak(user){
+    const today=new Date().toDateString();
+    if(user.lastActive===today)return;
+    const y=new Date(Date.now()-864e5).toDateString();
+    user.streak=user.lastActive===y?user.streak+1:1;
+    user.lastActive=today;
 }
-
-
-/* =====================================================
-   AUTH TABS
-===================================================== */
-
-function showAuth(type) {
-
-    const loginForm =
-        document.getElementById("loginForm");
-
-    const signupForm =
-        document.getElementById("signupForm");
-
-    const loginTab =
-        document.getElementById("loginTab");
-
-    const signupTab =
-        document.getElementById("signupTab");
-
-    document.getElementById("authMessage")
-        .textContent = "";
-
-    if (type === "login") {
-
-        loginForm.classList.remove("hidden");
-        signupForm.classList.add("hidden");
-
-        loginTab.classList.add("active");
-        signupTab.classList.remove("active");
-
-    } else {
-
-        loginForm.classList.add("hidden");
-        signupForm.classList.remove("hidden");
-
-        loginTab.classList.remove("active");
-        signupTab.classList.add("active");
-
-    }
-
-}
-
-
-/* =====================================================
-   SIGN UP
-===================================================== */
-
-document.getElementById("signupForm")
-.addEventListener("submit", function(event) {
-
-    event.preventDefault();
-
-    const username =
-        document.getElementById(
-            "signupUsername"
-        ).value.trim();
-
-    const password =
-        document.getElementById(
-            "signupPassword"
-        ).value;
-
-    const year =
-        document.getElementById(
-            "signupYear"
-        ).value;
-
-    const message =
-        document.getElementById(
-            "authMessage"
-        );
-
-    const accounts = getAccounts();
-
-    if (accounts[username]) {
-
-        message.textContent =
-            "That username already exists.";
-
-        return;
-
-    }
-
-
-    accounts[username] = {
-
-        username: username,
-
-        password: password,
-
-        year: year,
-
-        xp: 0,
-
-        streak: 0,
-
-        createdAt:
-            new Date().toISOString()
-
-    };
-
-
-    saveAccounts(accounts);
-
-
-    localStorage.setItem(
-        "uasaCurrentUser",
-        username
-    );
-
-
-    message.textContent =
-        "Account created!";
-
-
-    this.reset();
-
-
-    openApp();
-
-});
-
-
-/* =====================================================
-   LOGIN
-===================================================== */
-
-document.getElementById("loginForm")
-.addEventListener("submit", function(event) {
-
-    event.preventDefault();
-
-    const username =
-        document.getElementById(
-            "loginUsername"
-        ).value.trim();
-
-    const password =
-        document.getElementById(
-            "loginPassword"
-        ).value;
-
-    const message =
-        document.getElementById(
-            "authMessage"
-        );
-
-    const accounts = getAccounts();
-
-    const account =
-        accounts[username];
-
-
-    if (!account) {
-
-        message.textContent =
-            "Account not found.";
-
-        return;
-
-    }
-
-
-    if (account.password !== password) {
-
-        message.textContent =
-            "Incorrect password.";
-
-        return;
-
-    }
-
-
-    localStorage.setItem(
-        "uasaCurrentUser",
-        username
-    );
-
-
-    this.reset();
-
-    openApp();
-
-});
-
-
-/* =====================================================
-   OPEN APP
-===================================================== */
-
-function openApp() {
-
-    const username =
-        getCurrentUser();
-
-    if (!username) return;
-
-
-    document.getElementById(
-        "authScreen"
-    ).classList.add("hidden");
-
-
-    document.getElementById(
-        "app"
-    ).classList.remove("hidden");
-
-
-    updateUserUI();
-
-    showPage("home");
-
-}
-
-
-/* =====================================================
-   LOGOUT
-===================================================== */
-
-function logout() {
-
-    localStorage.removeItem(
-        "uasaCurrentUser"
-    );
-
-
-    document.getElementById(
-        "app"
-    ).classList.add("hidden");
-
-
-    document.getElementById(
-        "authScreen"
-    ).classList.remove("hidden");
-
-
-    showAuth("login");
-
-}
-
-
-/* =====================================================
-   USER DATA
-===================================================== */
-
-function getUserData() {
-
-    const username =
-        getCurrentUser();
-
-    const accounts =
-        getAccounts();
-
-    return accounts[username];
-
-}
-
-
-function saveUserData(data) {
-
-    const username =
-        getCurrentUser();
-
-    const accounts =
-        getAccounts();
-
-    accounts[username] = data;
-
-    saveAccounts(accounts);
-
-}
-
-
-/* =====================================================
-   UPDATE UI
-===================================================== */
-
-function updateUserUI() {
-
-    const user =
-        getUserData();
-
-    if (!user) return;
-
-
-    const level =
-        Math.floor(user.xp / 100) + 1;
-
-
-    document.getElementById(
-        "welcomeName"
-    ).textContent =
-        user.username;
-
-
-    document.getElementById(
-        "xp"
-    ).textContent =
-        user.xp;
-
-
-    document.getElementById(
-        "level"
-    ).textContent =
-        level;
-
-
-    document.getElementById(
-        "streak"
-    ).textContent =
-        user.streak;
-
-
-    document.getElementById(
-        "profileName"
-    ).textContent =
-        user.username;
-
-
-    document.getElementById(
-        "profileYear"
-    ).textContent =
-        user.year;
-
-
-    document.getElementById(
-        "profileLevel"
-    ).textContent =
-        level;
-
-
-    document.getElementById(
-        "profileXP"
-    ).textContent =
-        user.xp;
-
-
-    document.getElementById(
-        "profileStreak"
-    ).textContent =
-        user.streak;
-
-
-    document.getElementById(
-        "avatar"
-    ).textContent =
-        user.username.charAt(0).toUpperCase();
-
-
-    const progress =
-        Math.min(user.xp % 100, 100);
-
-
-    document.getElementById(
-        "dailyProgress"
-    ).style.width =
-        progress + "%";
-
-
-    document.getElementById(
-        "progressText"
-    ).textContent =
-        progress + " / 100 XP";
-
-
-    updateLeaderboard();
-
-}
-
-
-/* =====================================================
-   NAVIGATION
-===================================================== */
-
-function showPage(page) {
-
-    document.querySelectorAll(".page")
-        .forEach(function(section) {
-
-            section.classList.remove(
-                "active"
-            );
-
-        });
-
-
-    const selected =
-        document.getElementById(page);
-
-
-    if (selected) {
-
-        selected.classList.add(
-            "active"
-        );
-
-    }
-
-
-    window.scrollTo(0, 0);
-
-}
-
-
-/* =====================================================
-   QUIZ
-===================================================== */
-
-function startQuiz(subject) {
-
-    const data =
-        quizData[subject];
-
-
-    document.getElementById(
-        "quizSubject"
-    ).textContent =
-        subject;
-
-
-    document.getElementById(
-        "question"
-    ).textContent =
-        data.question;
-
-
-    const answers =
-        document.getElementById(
-            "answers"
-        );
-
-
-    answers.innerHTML = "";
-
-
-    document.getElementById(
-        "quizResult"
-    ).textContent = "";
-
-
-    data.answers.forEach(function(answer) {
-
-        const button =
-            document.createElement(
-                "button"
-            );
-
-
-        button.className =
-            "answer";
-
-
-        button.textContent =
-            answer[0];
-
-
-        button.onclick =
-            function() {
-
-                if (answer[1]) {
-
-                    button.classList.add(
-                        "correct"
-                    );
-
-
-                    addXP(10);
-
-
-                    document.getElementById(
-                        "quizResult"
-                    ).textContent =
-                        "✅ Correct! +10 XP";
-
-
-                } else {
-
-                    button.classList.add(
-                        "wrong"
-                    );
-
-
-                    document.getElementById(
-                        "quizResult"
-                    ).textContent =
-                        "❌ Not quite. Try again!";
-
-                }
-
-            };
-
-
-        answers.appendChild(
-            button
-        );
-
-    });
-
-
-    showPage("quiz");
-
-}
-
-
-/* =====================================================
-   XP
-===================================================== */
-
-function addXP(amount) {
-
-    const user =
-        getUserData();
-
-
-    if (!user) return;
-
-
-    user.xp += amount;
-
-
-    saveUserData(user);
-
-
-    updateUserUI();
-
-}
-
-
-/* =====================================================
-   LEADERBOARD
-===================================================== */
-
-function updateLeaderboard() {
-
-    const accounts =
-        getAccounts();
-
-
-    const players =
-        Object.values(accounts);
-
-
-    players.sort(
-        function(a, b) {
-            return b.xp - a.xp;
-        }
-    );
-
-
-    const list =
-        document.getElementById(
-            "leaderboardList"
-        );
-
-
-    list.innerHTML = "";
-
-
-    players.forEach(
-        function(player, index) {
-
-            const row =
-                document.createElement(
-                    "div"
-                );
-
-
-            row.className =
-                "leaderboard-row";
-
-
-            if (
-                player.username ===
-                getCurrentUser()
-            ) {
-
-                row.classList.add(
-                    "you"
-                );
-
-            }
-
-
-            let medal = "";
-
-
-            if (index === 0)
-                medal = "🥇 ";
-
-            if (index === 1)
-                medal = "🥈 ";
-
-            if (index === 2)
-                medal = "🥉 ";
-
-
-            row.innerHTML = `
-
-                <span>
-                    ${medal}${index + 1}.
-                    ${escapeHTML(player.username)}
-                </span>
-
-                <strong>
-                    ${player.xp} XP
-                </strong>
-
-            `;
-
-
-            list.appendChild(row);
-
-        }
-    );
-
-}
-
-
-/* =====================================================
-   BASIC HTML ESCAPING
-===================================================== */
-
-function escapeHTML(text) {
-
-    const div =
-        document.createElement(
-            "div"
-        );
-
-    div.textContent = text;
-
-    return div.innerHTML;
-
-}
-
-
-/* =====================================================
-   STARTUP
-===================================================== */
-
-if (getCurrentUser()) {
-
-    openApp();
-
-} else {
-
-    document.getElementById(
-        "authScreen"
-    ).classList.remove("hidden");
-
-}
-
-</script>
-
-</body>
-</html>
+/* A streak shown on screen is 0 if the last activity was before yesterday */
+function shownStreak(u){
+    if(!u.lastActive)return u.streak;
+    const t=new Date().toDateString(), y=new Date(Date.now()-864e5).toDateString();

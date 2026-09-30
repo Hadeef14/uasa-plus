@@ -77,6 +77,8 @@ main{max-width:900px;margin:auto;padding:20px 14px 40px}
 <input id="su" autocomplete="username">
 <label for="sp">Password (6+ characters)</label>
 <input id="sp" type="password" autocomplete="new-password">
+<label for="sy">Year</label>
+<select id="sy"><option>Year 4</option><option>Year 5</option><option>Year 6</option><option>Form 1</option></select>
 <button class="btn" style="width:100%">CREATE ACCOUNT</button>
 </form>
 
@@ -289,7 +291,7 @@ leaderboard(){
 profile(){
  return`<h1>👤 ${esc(USER.username)}</h1>
  <div class="card">
- <p>Level <b>${lvl()}</b> · ${USER.xp} XP · 🔥 ${streakNow()}-day streak</p>
+ <p>${esc(USER.year||"")} · Level <b>${lvl()}</b> · ${USER.xp} XP · 🔥 ${streakNow()}-day streak</p>
  ${SUBJ.map(s=>{
   const d=sDone(s[0]),t=sTot(s[0]);
   return`<div>${s[1]} ${esc(s[0])} <small>${d} / ${t} lessons</small>${bar(t?d/t*100:0)}</div>`
@@ -493,19 +495,20 @@ function authTab(r){
  authMsg("");
 }
 async function loadUser(au){
- let r=await sb.from("profiles").select("username,xp,streak").eq("id",au.id).maybeSingle();
+ let r=await sb.from("profiles").select("username,xp,streak,year").eq("id",au.id).maybeSingle();
  if(r.error)throw r.error;
  let p=r.data;
  if(!p){
   const name=(au.email||"user").split("@")[0];
-  const ins=await sb.from("profiles").upsert({id:au.id,username:name,xp:0,streak:0},{onConflict:"id"});
+  const yr=(au.user_metadata&&au.user_metadata.year)||"Year 6";
+  const ins=await sb.from("profiles").upsert({id:au.id,username:name,year:yr,xp:0,streak:0},{onConflict:"id"});
   if(ins.error)throw ins.error;
-  p={username:name,xp:0,streak:0};
+  p={username:name,year:yr,xp:0,streak:0};
  }
  const g=await sb.from("progress").select("lesson_key").eq("user_id",au.id);
  const prog={};(g.data||[]).forEach(x=>prog[x.lesson_key]=1);
  const loc=accts()[p.username];if(loc&&loc.progress)Object.assign(prog,loc.progress);
- USER={id:au.id,username:p.username,xp:+p.xp||0,streak:+p.streak||0,lastActive:st.get("uasaLastActive_"+au.id),progress:prog};
+ USER={id:au.id,username:p.username,year:p.year||"",xp:+p.xp||0,streak:+p.streak||0,lastActive:st.get("uasaLastActive_"+au.id),progress:prog};
 }
 function enter(){$("auth").classList.add("hidden");$("app").classList.remove("hidden");hdr();go("home")}
 async function logout(){
@@ -514,11 +517,11 @@ async function logout(){
 }
 async function signup(){
  if(!sb){authMsg("Could not load Supabase. Check your internet and refresh.");return}
- const n=$("su").value.trim(),pw=$("sp").value;
+ const n=$("su").value.trim(),pw=$("sp").value,yr=$("sy").value;
  if(!/^[A-Za-z0-9_.-]{3,20}$/.test(n)){authMsg("Username must be 3 to 20 letters, numbers, dots, dashes or underscores.");return}
  if(pw.length<6){authMsg("Password must be at least 6 characters.");return}
  authMsg("Creating account…");
- const{data,error}=await sb.auth.signUp({email:cloudEmail(n),password:pw});
+ const{data,error}=await sb.auth.signUp({email:cloudEmail(n),password:pw,options:{data:{year:yr}}});
  if(error){authMsg(/registered|exists/i.test(error.message)?"That username is taken. Try another, or log in.":"Sign up failed: "+error.message);return}
  let au=data.user;
  if(!data.session){
@@ -526,7 +529,7 @@ async function signup(){
   if(s.error){authMsg("Account created but it needs email confirmation. In Supabase, turn off Confirm email.");return}
   au=s.data.user;
  }
- const ins=await sb.from("profiles").upsert({id:au.id,username:n,xp:0,streak:0},{onConflict:"id"});
+ const ins=await sb.from("profiles").upsert({id:au.id,username:n,year:yr,xp:0,streak:0},{onConflict:"id"});
  if(ins.error){authMsg("Account made, but saving your profile failed: "+ins.error.message);return}
  await loadUser(au);enter();toast("🎉 Welcome, "+n+"!");
 }

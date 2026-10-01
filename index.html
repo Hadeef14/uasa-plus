@@ -118,6 +118,22 @@ async function testServer2(){
 }
 
 testServer2();
+server2Health();
+
+async function server2Health(){
+ const {data,error}=await sb2
+  .from("schools")
+  .select("id,name,code")
+  .limit(1);
+
+ if(error){
+  console.error("❌ Server 2:",error);
+  return false;
+ }
+
+ console.log("✅ Server 2 ONLINE",data);
+ return true;
+}
 
 /* ---------- helpers: Q(question, options, answerIndex) and P(paragraphs) ---------- */
 var Q=(q,options,answer)=>({q,options,answer}),P=(...t)=>t.map(x=>"<p>"+x+"</p>").join("");

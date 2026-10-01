@@ -142,7 +142,20 @@ const $=id=>document.getElementById(id),esc=t=>String(t==null?"":t).replace(/[&<
 const mem={},st={get:k=>{try{const v=localStorage.getItem(k);if(v!==null)return v}catch(e){}return k in mem?mem[k]:null},set:(k,v)=>{mem[k]=v;try{localStorage.setItem(k,v)}catch(e){}},del:k=>{delete mem[k];try{localStorage.removeItem(k)}catch(e){}}};
 const jp=(t,d)=>{try{const v=JSON.parse(t);return v==null?d:v}catch(e){return d}};
 const accts=()=>{const a=jp(st.get("uasaAccounts"),{});return a&&typeof a==="object"&&!Array.isArray(a)?a:{}};
-const today=()=>new Date().toDateString(),yest=()=>new Date(Date.now()-864e5).toDateString();
+
+/* ---------- Malaysia date helpers ---------- */
+const KL_TIMEZONE="Asia/Kuala_Lumpur";
+const dayKey=(offset=0)=>{
+ const d=new Date(Date.now()+offset*864e5);
+ return new Intl.DateTimeFormat("en-CA",{
+  timeZone:KL_TIMEZONE,
+  year:"numeric",
+  month:"2-digit",
+  day:"2-digit"
+ }).format(d);
+};
+const today=()=>dayKey(0),yest=()=>dayKey(-1);
+
 let USER=null,NAV={s:"",u:0,l:0},R=null;
 
 const saveU=()=>{
@@ -195,7 +208,6 @@ async function award(n,key){
  if(USER.lastActive!==today()){
   USER.streak=USER.lastActive===yest()?USER.streak+1:1;
   USER.lastActive=today();
-  st.set("uasaLastActive_"+USER.id,today())
  }
 
  saveU();
@@ -206,7 +218,8 @@ async function award(n,key){
    .from("profiles")
    .update({
     xp:USER.xp,
-    streak:USER.streak
+    streak:USER.streak,
+    last_active:USER.lastActive
    })
    .eq("id",USER.id);
 
@@ -494,84 +507,224 @@ function authTab(r){
  $("tl").className="btn"+(l?"":" g");$("ts").className="btn"+(l?" g":"");
  authMsg("");
 }
+
 async function loadUser(au){
- let r=await sb.from("profiles").select("username,xp,streak,year").eq("id",au.id).maybeSingle();
+ let r=await sb
+  .from("profiles")
+  .select("username,xp,streak,year,last_active")
+  .eq("id",au.id)
+  .maybeSingle();
+
  if(r.error)throw r.error;
+
  let p=r.data;
+
  if(!p){
   const name=(au.email||"user").split("@")[0];
   const yr=(au.user_metadata&&au.user_metadata.year)||"Year 6";
-  const ins=await sb.from("profiles").upsert({id:au.id,username:name,year:yr,xp:0,streak:0},{onConflict:"id"});
+
+  const ins=await sb
+   .from("profiles")
+   .upsert({
+    id:au.id,
+    username:name,
+    year:yr,
+    xp:0,
+    streak:0,
+    last_active:null
+   },{onConflict:"id"});
+
   if(ins.error)throw ins.error;
-  p={username:name,year:yr,xp:0,streak:0};
+
+  p={
+   username:name,
+   year:yr,
+   xp:0,
+   streak:0,
+   last_active:null
+  };
  }
+
  const g=await sb.from("progress").select("lesson_key").eq("user_id",au.id);
  const prog={};(g.data||[]).forEach(x=>prog[x.lesson_key]=1);
- const loc=accts()[p.username];if(loc&&loc.progress)Object.assign(prog,loc.progress);
- USER={id:au.id,username:p.username,year:p.year||"",xp:+p.xp||0,streak:+p.streak||0,lastActive:st.get("uasaLastActive_"+au.id),progress:prog};
+
+ const loc=accts()[p.username];
+ if(loc&&loc.progress)Object.assign(prog,loc.progress);
+
+ USER={
+  id:au.id,
+  username:p.username,
+  year:p.year||"",
+  xp:+p.xp||0,
+  streak:+p.streak||0,
+  lastActive:p.last_active||null,
+  progress:prog
+ };
 }
-function enter(){$("auth").classList.add("hidden");$("app").classList.remove("hidden");hdr();go("home")}
+
+function enter(){
+ $("auth").classList.add("hidden");
+ $("app").classList.remove("hidden");
+ hdr();
+ go("home")
+}
+
 async function logout(){
  try{await sb.auth.signOut()}catch(e){}
  USER=null;R=null;$("app").classList.add("hidden");$("auth").classList.remove("hidden");authTab("l");
 }
+
 async function signup(){
  if(!sb){authMsg("Could not load Supabase. Check your internet and refresh.");return}
+
  const n=$("su").value.trim(),pw=$("sp").value,yr=$("sy").value;
- if(!/^[A-Za-z0-9_.-]{3,20}$/.test(n)){authMsg("Username must be 3 to 20 letters, numbers, dots, dashes or underscores.");return}
- if(pw.length<6){authMsg("Password must be at least 6 characters.");return}
+
+ if(!/^[A-Za-z0-9_.-]{3,20}$/.test(n)){
+  authMsg("Username must be 3 to 20 letters, numbers, dots, dashes or underscores.");
+  return
+ }
+
+ if(pw.length<6){
+  authMsg("Password must be at least 6 characters.");
+  return
+ }
+
  authMsg("Creating account…");
- const{data,error}=await sb.auth.signUp({email:cloudEmail(n),password:pw,options:{data:{year:yr}}});
- if(error){authMsg(/registered|exists/i.test(error.message)?"That username is taken. Try another, or log in.":"Sign up failed: "+error.message);return}
+
+ const{data,error}=await sb.auth.signUp({
+  email:cloudEmail(n),
+  password:pw,
+  options:{data:{year:yr}}
+ });
+
+ if(error){
+  authMsg(/registered|exists/i.test(error.message)?"That username is taken. Try another, or log in.":"Sign up failed: "+error.message);
+  return
+ }
+
  let au=data.user;
+
  if(!data.session){
-  const s=await sb.auth.signInWithPassword({email:cloudEmail(n),password:pw});
-  if(s.error){authMsg("Account created but it needs email confirmation. In Supabase, turn off Confirm email.");return}
+  const s=await sb.auth.signInWithPassword({
+   email:cloudEmail(n),
+   password:pw
+  });
+
+  if(s.error){
+   authMsg("Account created but it needs email confirmation. In Supabase, turn off Confirm email.");
+   return
+  }
+
   au=s.data.user;
  }
- const ins=await sb.from("profiles").upsert({id:au.id,username:n,year:yr,xp:0,streak:0},{onConflict:"id"});
- if(ins.error){authMsg("Account made, but saving your profile failed: "+ins.error.message);return}
- await loadUser(au);enter();toast("🎉 Welcome, "+n+"!");
+
+ const ins=await sb
+  .from("profiles")
+  .upsert({
+   id:au.id,
+   username:n,
+   year:yr,
+   xp:0,
+   streak:0,
+   last_active:null
+  },{onConflict:"id"});
+
+ if(ins.error){
+  authMsg("Account made, but saving your profile failed: "+ins.error.message);
+  return
+ }
+
+ await loadUser(au);
+ enter();
+ toast("🎉 Welcome, "+n+"!");
 }
+
 async function login(){
  if(!sb){authMsg("Could not load Supabase. Check your internet and refresh.");return}
+
  const n=$("lu").value.trim(),pw=$("lp").value;
- if(!n||!pw){authMsg("Enter your username and password.");return}
+
+ if(!n||!pw){
+  authMsg("Enter your username and password.");
+  return
+ }
+
  authMsg("Logging in…");
- const{data,error}=await sb.auth.signInWithPassword({email:cloudEmail(n),password:pw});
- if(error){authMsg("Wrong username or password.");return}
- await loadUser(data.user);enter();
+
+ const{data,error}=await sb.auth.signInWithPassword({
+  email:cloudEmail(n),
+  password:pw
+ });
+
+ if(error){
+  authMsg("Wrong username or password.");
+  return
+ }
+
+ await loadUser(data.user);
+ enter();
 }
+
 [["lf",login],["sf",signup]].forEach(([id,fn])=>$(id).addEventListener("submit",async e=>{
  e.preventDefault();
  const b=e.target.querySelector("button");b.disabled=true;
  try{await fn()}catch(err){authMsg("Something went wrong: "+(err.message||err))}
  b.disabled=false;
 }));
-$("pw").addEventListener("change",e=>{$("lp").type=$("sp").type=e.target.checked?"text":"password"});
+
+$("pw").addEventListener("change",e=>{
+ $("lp").type=$("sp").type=e.target.checked?"text":"password"
+});
 
 /* ---------- one click handler for every data-a button ---------- */
 document.addEventListener("click",e=>{
- const t=e.target.closest("[data-a]");if(!t)return;
+ const t=e.target.closest("[data-a]");
+ if(!t)return;
+
  const r=t.dataset.r,F={
-  auth:()=>authTab(r),page:()=>go(r),logout:logout,mix:()=>startMix(r),subj:()=>subj(r),
-  unit:()=>unit(+r),les:()=>lesson(+r),startLes:startLes,startCh:startCh,ans:()=>answer(+r),
-  next:next,imp:doImport,retry:()=>R&&quiz(R.raw,R.ctx),back:()=>R&&R.ctx.back()
+  auth:()=>authTab(r),
+  page:()=>go(r),
+  logout:logout,
+  mix:()=>startMix(r),
+  subj:()=>subj(r),
+  unit:()=>unit(+r),
+  les:()=>lesson(+r),
+  startLes:startLes,
+  startCh:startCh,
+  ans:()=>answer(+r),
+  next:next,
+  imp:doImport,
+  retry:()=>R&&quiz(R.raw,R.ctx),
+  back:()=>R&&R.ctx.back()
  };
+
  if(F[t.dataset.a])F[t.dataset.a]();
 });
+
 document.addEventListener("keydown",e=>{
- if(R&&$("an")&&/^[1-9]$/.test(e.key)&&!/INPUT|TEXTAREA|SELECT/.test(e.target.tagName))answer(+e.key-1);
+ if(R&&$("an")&&/^[1-9]$/.test(e.key)&&!/INPUT|TEXTAREA|SELECT/.test(e.target.tagName))
+  answer(+e.key-1);
 });
 
 /* ---------- start ---------- */
 (async()=>{
  applyImp();
- if(!sb){authMsg("Could not load the Supabase library. Check your internet and refresh.");return}
+
+ if(!sb){
+  authMsg("Could not load the Supabase library. Check your internet and refresh.");
+  return
+ }
+
  try{
   const{data}=await sb.auth.getSession();
-  if(data.session){await loadUser(data.session.user);enter()}
- }catch(e){console.warn(e)}
+
+  if(data.session){
+   await loadUser(data.session.user);
+   enter()
+  }
+ }catch(e){
+  console.warn(e)
+ }
 })();
 
 </script>

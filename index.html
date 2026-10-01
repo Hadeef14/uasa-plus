@@ -56,6 +56,7 @@ main{max-width:900px;margin:auto;padding:20px 14px 40px}
 @media(prefers-reduced-motion:reduce){*{animation:none!important}}
 </style>
 
+<script>window.addEventListener("error",function(e){var m=document.getElementById("am");if(m)m.textContent="Page error: "+e.message+" (line "+e.lineno+")"});</script>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 </head><body>
@@ -64,7 +65,7 @@ main{max-width:900px;margin:auto;padding:20px 14px 40px}
 <div class="logo">UASA<span>+</span></div><p class="c mu">Made by Hadeef</p>
 <div class="tabs"><button class="btn" id="tl" data-a="auth" data-r="l">Login</button><button class="btn g" id="ts" data-a="auth" data-r="s">Sign Up</button></div>
 
-<form id="lf" novalidate>
+<form id="lf" novalidate onsubmit="return false">
 <label for="lu">Username</label>
 <input id="lu" autocomplete="username">
 <label for="lp">Password</label>
@@ -72,7 +73,7 @@ main{max-width:900px;margin:auto;padding:20px 14px 40px}
 <button class="btn" style="width:100%">LOGIN</button>
 </form>
 
-<form id="sf" class="hidden" novalidate>
+<form id="sf" class="hidden" novalidate onsubmit="return false">
 <label for="su">Username (3-20 letters, numbers, . - _)</label>
 <input id="su" autocomplete="username">
 <label for="sp">Password (6+ characters)</label>
@@ -142,7 +143,8 @@ const $=id=>document.getElementById(id),esc=t=>String(t==null?"":t).replace(/[&<
 const mem={},st={get:k=>{try{const v=localStorage.getItem(k);if(v!==null)return v}catch(e){}return k in mem?mem[k]:null},set:(k,v)=>{mem[k]=v;try{localStorage.setItem(k,v)}catch(e){}},del:k=>{delete mem[k];try{localStorage.removeItem(k)}catch(e){}}};
 const jp=(t,d)=>{try{const v=JSON.parse(t);return v==null?d:v}catch(e){return d}};
 const accts=()=>{const a=jp(st.get("uasaAccounts"),{});return a&&typeof a==="object"&&!Array.isArray(a)?a:{}};
-const today=()=>new Date().toDateString(),yest=()=>new Date(Date.now()-864e5).toDateString();
+const ymd=d=>d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0");
+const today=()=>ymd(new Date()),yest=()=>{const d=new Date();d.setDate(d.getDate()-1);return ymd(d)};
 let USER=null,NAV={s:"",u:0,l:0},R=null;
 
 const saveU=()=>{
@@ -185,18 +187,25 @@ function hdr(){
  $("hx").textContent="⭐ "+USER.xp+" XP"
 }
 
+/* ---------- STREAK: +1 for each new day you finish any quiz (lesson, challenge or mixed) ---------- */
+async function touchStreak(){
+ if(USER.lastActive===today())return;
+ USER.streak=USER.lastActive===yest()?USER.streak+1:1;
+ USER.lastActive=today();
+ st.set("uasaLastActive_"+USER.id,USER.lastActive);
+ saveU();hdr();
+ try{
+  let r=await sb.from("profiles").update({streak:USER.streak,last_active:USER.lastActive}).eq("id",USER.id);
+  if(r.error){r=await sb.from("profiles").update({streak:USER.streak}).eq("id",USER.id);if(r.error)throw r.error}
+ }catch(e){console.warn("Streak save failed",e)}
+}
+
 /* ---------- CLOUD XP + PROGRESS ---------- */
 async function award(n,key){
  const b=lvl();
 
  USER.xp+=n;
  USER.progress[key]=1;
-
- if(USER.lastActive!==today()){
-  USER.streak=USER.lastActive===yest()?USER.streak+1:1;
-  USER.lastActive=today();
-  st.set("uasaLastActive_"+USER.id,today())
- }
 
  saveU();
  hdr();
@@ -362,3 +371,220 @@ function subj(s){
  <div class="grid" style="margin-top:12px">${U(s).map(u=>
  `<button class="card tap" data-a="unit" data-r="${u.i}">
   <h2>${u.i+1}. ${esc(ut(u))}</h2>
+  ${bar(u.ls.length?nDone(s,u)/u.ls.length*100:0)}
+  <small>${nDone(s,u)} / ${u.ls.length} lessons</small>
+  ${done(key(s,u.i,"c"))?" 🏅":""}
+ </button>`).join("")||"<p class='mu'>No lessons yet. Add some on the Import page.</p>"}</div>`);
+}
+
+/* Lesson map: locked until the previous lesson is done */
+function unit(i){
+ R=null;NAV.u=i;NAV.l=0;nav("subjects");
+ const s=NAV.s,u=U(s).find(x=>x.i===i);
+ if(!u){subj(s);return}
+ const d=nDone(s,u),hasCh=(u.challenge||[]).length>0,cDone=done(key(s,i,"c")),cOpen=chOpen(s,u)&&hasCh;
+ view(`<div class="mu">${lk("page","subjects","Subjects")} › ${lk("subj",s,esc(s))} › ${esc(ut(u))}</div>
+ <h1>${esc(ut(u))}</h1>${bar(u.ls.length?d/u.ls.length*100:0)}<small>${d} / ${u.ls.length} lessons</small>
+ <div class="map">${u.ls.map((l,x)=>{
+  const dn=done(key(s,i,l.j)),op=unlocked(s,u,x);
+  return`<button class="node ${dn?"done":op?"":"lock"}" data-a="les" data-r="${l.j}" ${op?"":'aria-disabled="true"'}>
+   <span>${dn?"✓":op?x+1:"🔒"}</span>
+   <span><b>${esc(l.title||"Lesson "+(l.j+1))}</b><br><small>${dn?"Completed":op?"Ready":"Finish the previous lesson first"}</small></span></button>`
+ }).join("")}
+ ${hasCh?`<button class="node ${cDone?"done":cOpen?"":"lock"}" data-a="startCh" ${cOpen?"":'aria-disabled="true"'}>
+   <span>${cDone?"✓":cOpen?"🏅":"🔒"}</span>
+   <span><b>Unit Challenge</b><br><small>${cDone?"Completed":cOpen?"+50 XP for passing":"Finish all lessons to unlock"}</small></span></button>`:""}
+ </div>`);
+}
+
+function lesson(j){
+ const s=NAV.s,u=U(s).find(x=>x.i===NAV.u),x=u?u.ls.findIndex(l=>l.j===j):-1;
+ if(x<0)return;
+ if(!unlocked(s,u,x)){toast("🔒 Finish the previous lesson first.");return}
+ NAV.l=j;const l=u.ls[x];
+ view(`<div class="mu">${lk("page","subjects","Subjects")} › ${lk("subj",s,esc(s))} › ${lk("unit",u.i,esc(ut(u)))}</div>
+ <h1>${esc(l.title||"Lesson "+(j+1))} ${done(key(s,u.i,j))?"✓":""}</h1>
+ <div class="card learn">${l.learn||"<p>Practice this lesson's questions.</p>"}</div>
+ <button class="btn" data-a="startLes">START ${l.questions.length} QUESTIONS</button>
+ <button class="btn g" data-a="unit" data-r="${u.i}">← Back</button>`);
+}
+
+/* ---------- quiz ---------- */
+function startLes(){
+ const s=NAV.s,u=U(s).find(x=>x.i===NAV.u),x=u?u.ls.findIndex(l=>l.j===NAV.l):-1;
+ if(x<0||!unlocked(s,u,x))return;
+ const l=u.ls[x];
+ quiz(l.questions,{title:l.title||"Lesson",key:key(s,u.i,l.j),bonus:20,kind:"lesson",back:()=>unit(u.i)});
+}
+function startCh(){
+ const s=NAV.s,u=U(s).find(x=>x.i===NAV.u);
+ if(!u||!chOpen(s,u)||!(u.challenge||[]).length){toast("🔒 Finish all lessons first.");return}
+ quiz(u.challenge,{title:"Unit Challenge",key:key(s,u.i,"c"),bonus:50,kind:"challenge",back:()=>unit(u.i)});
+}
+function startMix(s){
+ const p=pool(s||"");
+ if(!p.length){toast("No questions yet.");return}
+ quiz(shuf(p).slice(0,10),{title:s?"Mixed: "+s:"Mixed quiz",key:null,bonus:0,kind:"mix",back:()=>s?subj(s):go("home")});
+}
+function quiz(qs,ctx){R={raw:qs,qs:qs.map(sq),i:0,c:0,a:false,ctx};draw()}
+
+function draw(){
+ const q=R.qs[R.i];
+ view(`<div class="qz"><div class="row"><button class="btn g" data-a="back" aria-label="Quit quiz">✕</button>${bar(R.i/R.qs.length*100)}</div>
+ <small>${esc(R.ctx.title)} · Question ${R.i+1} of ${R.qs.length}</small>
+ <h2>${esc(q.q)}</h2>
+ <div id="an">${q.options.map((o,k)=>`<button class="ans" data-a="ans" data-r="${k}"><b>${k+1}</b><span>${esc(o)}</span></button>`).join("")}</div>
+ <div id="fb" role="status"></div>
+ <button id="nx" class="btn hidden" data-a="next">${R.i+1<R.qs.length?"CONTINUE":"FINISH"}</button></div>`);
+}
+function answer(k){
+ if(!R||R.a||!$("an"))return;
+ const q=R.qs[R.i];if(k<0||k>=q.options.length)return;
+ R.a=true;const ok=k===q.answer;if(ok)R.c++;
+ document.querySelectorAll("#an .ans").forEach((b,x)=>{b.disabled=true;if(x===q.answer)b.classList.add("ok");else if(x===k)b.classList.add("no")});
+ $("fb").innerHTML=`<div class="fb">${ok?"✅ Correct!":"❌ Not quite. Correct answer: "+esc(q.options[q.answer])}</div>`;
+ $("nx").classList.remove("hidden");$("nx").focus();
+}
+function next(){
+ if(!R||!R.a)return;
+ R.i++;R.a=false;
+ R.i<R.qs.length?draw():finish();
+}
+/* XP is paid only on the first pass of a lesson or challenge */
+function finish(){
+ const{c,qs,ctx}=R,ratio=c/qs.length,pass=ratio>=.7;let xp=0;touchStreak();
+ if(ctx.key&&pass&&!done(ctx.key)){xp=c*10+ctx.bonus;award(xp,ctx.key)}
+ const stars=ratio===1?3:ratio>=.9?2:pass?1:0;
+ let nb="";
+ if(pass&&ctx.kind==="lesson"){
+  const s=NAV.s,u=U(s).find(x=>x.i===NAV.u),x=u.ls.findIndex(l=>l.j===NAV.l),n=u.ls[x+1];
+  nb=n?`<button class="btn" data-a="les" data-r="${n.j}">NEXT LESSON</button>`
+   :(chOpen(s,u)&&(u.challenge||[]).length?`<button class="btn" data-a="startCh">UNIT CHALLENGE</button>`:"");
+ }
+ const msg=ctx.kind==="mix"?"Nice practice!":pass?"You passed! 🎉":"Almost there. You need 70% to pass.";
+ const note=ctx.key&&pass&&!xp?"Already completed. No extra XP.":ctx.kind==="mix"?"Mixed quizzes are practice only.":"";
+ view(`<div class="qz card c"><div class="stars">${"⭐".repeat(stars)}${"☆".repeat(3-stars)}</div>
+ <h2>${msg}</h2><p>Score: <b>${c} / ${qs.length}</b></p>${xp?`<div class="n gd">+${xp} XP</div>`:""}<p class="mu">${note}</p>
+ ${nb}${pass||ctx.kind==="mix"?"":`<button class="btn" data-a="retry">TRY AGAIN</button>`}
+ <button class="btn g" data-a="back">Back</button></div>`);
+}
+
+/* ---------- import (saved in this browser) ---------- */
+const okQ=q=>q&&typeof q.q==="string"&&q.q.trim()&&Array.isArray(q.options)&&q.options.length>1&&q.options.every(o=>typeof o==="string"&&o.trim())&&Number.isInteger(q.answer)&&q.answer>=0&&q.answer<q.options.length;
+function applyImp(){
+ const a=jp(st.get("uasaImported"),[]);
+ (Array.isArray(a)?a:[]).forEach(it=>{
+  if(!it||!SUBJ.some(x=>x[0]===it.s)||!Array.isArray(it.qs))return;
+  const c=CURRICULUM[it.s]=CURRICULUM[it.s]||{units:[]};
+  const un=c.units[it.u-1]=c.units[it.u-1]||{title:"",lessons:[]};
+  un.lessons=un.lessons||[];
+  if(it.ut)un.title=it.ut;
+  if(it.l==="c")un.challenge=it.qs;
+  else un.lessons[it.l-1]={title:it.lt||"Lesson "+it.l,learn:it.lr?P(...it.lr.split(/\n\s*\n/).map(esc)):"",questions:it.qs};
+ });
+}
+function doImport(){
+ const m=$("im"),s=$("is").value,u=parseInt($("iu").value,10),lv=$("il").value.trim().toLowerCase(),qs=jp($("ij").value,null);
+ if(!(u>=1&&u<=30)){m.textContent="Unit number must be 1 to 30.";return}
+ const isC=lv==="c",l=parseInt(lv,10);
+ if(!isC&&!(l>=1&&l<=30)){m.textContent="Lesson must be a number (1 to 30) or c.";return}
+ if(!Array.isArray(qs)||!qs.length||!qs.every(okQ)){m.textContent="Paste a JSON list. Each question needs q, options (2 or more) and answer (position of the right option, starting at 0).";return}
+ const it={s,u,l:isC?"c":l,ut:$("iut").value.trim(),lt:$("it").value.trim(),lr:$("ilr").value.trim(),qs};
+ const all=jp(st.get("uasaImported"),[]).filter(x=>!(x.s===it.s&&x.u===it.u&&x.l===it.l));
+ all.push(it);st.set("uasaImported",JSON.stringify(all));applyImp();
+ m.textContent="Imported "+qs.length+" questions.";
+}
+
+/* ---------- auth (Supabase) ---------- */
+const authMsg=t=>{$("am").textContent=t};
+function authTab(r){
+ const l=r==="l";
+ $("lf").classList.toggle("hidden",!l);$("sf").classList.toggle("hidden",l);
+ $("tl").className="btn"+(l?"":" g");$("ts").className="btn"+(l?" g":"");
+ authMsg("");
+}
+async function loadUser(au){
+ let r=await sb.from("profiles").select("*").eq("id",au.id).maybeSingle();
+ if(r.error)throw r.error;
+ let p=r.data;
+ if(!p){
+  const name=(au.email||"user").split("@")[0];
+  const yr=(au.user_metadata&&au.user_metadata.year)||"Year 6";
+  const ins=await sb.from("profiles").upsert({id:au.id,username:name,year:yr,xp:0,streak:0},{onConflict:"id"});
+  if(ins.error)throw ins.error;
+  p={username:name,year:yr,xp:0,streak:0};
+ }
+ const g=await sb.from("progress").select("lesson_key").eq("user_id",au.id);
+ const prog={};(g.data||[]).forEach(x=>prog[x.lesson_key]=1);
+ const loc=accts()[p.username];if(loc&&loc.progress)Object.assign(prog,loc.progress);
+ const ls=st.get("uasaLastActive_"+au.id);
+ const la=p.last_active||(ls?(/^\d{4}-\d\d-\d\d$/.test(ls)?ls:(isNaN(new Date(ls))?null:ymd(new Date(ls)))):null);
+ USER={id:au.id,username:p.username,year:p.year||"",xp:+p.xp||0,streak:+p.streak||0,lastActive:la,progress:prog};
+}
+function enter(){$("auth").classList.add("hidden");$("app").classList.remove("hidden");hdr();go("home")}
+async function logout(){
+ try{await sb.auth.signOut()}catch(e){}
+ USER=null;R=null;$("app").classList.add("hidden");$("auth").classList.remove("hidden");authTab("l");
+}
+async function signup(){
+ if(!sb){authMsg("Could not load Supabase. Check your internet and refresh.");return}
+ const n=$("su").value.trim(),pw=$("sp").value,yr=$("sy").value;
+ if(!/^[A-Za-z0-9_.-]{3,20}$/.test(n)){authMsg("Username must be 3 to 20 letters, numbers, dots, dashes or underscores.");return}
+ if(pw.length<6){authMsg("Password must be at least 6 characters.");return}
+ authMsg("Creating account…");
+ const{data,error}=await sb.auth.signUp({email:cloudEmail(n),password:pw,options:{data:{year:yr}}});
+ if(error){authMsg(/registered|exists/i.test(error.message)?"That username is taken. Try another, or log in.":"Sign up failed: "+error.message);return}
+ let au=data.user;
+ if(!data.session){
+  const s=await sb.auth.signInWithPassword({email:cloudEmail(n),password:pw});
+  if(s.error){authMsg("Account created but it needs email confirmation. In Supabase, turn off Confirm email.");return}
+  au=s.data.user;
+ }
+ const ins=await sb.from("profiles").upsert({id:au.id,username:n,year:yr,xp:0,streak:0},{onConflict:"id"});
+ if(ins.error){authMsg("Account made, but saving your profile failed: "+ins.error.message);return}
+ await loadUser(au);enter();toast("🎉 Welcome, "+n+"!");
+}
+async function login(){
+ if(!sb){authMsg("Could not load Supabase. Check your internet and refresh.");return}
+ const n=$("lu").value.trim(),pw=$("lp").value;
+ if(!n||!pw){authMsg("Enter your username and password.");return}
+ authMsg("Logging in…");
+ const{data,error}=await sb.auth.signInWithPassword({email:cloudEmail(n),password:pw});
+ if(error){authMsg("Wrong username or password.");return}
+ await loadUser(data.user);enter();
+}
+[["lf",login],["sf",signup]].forEach(([id,fn])=>$(id).addEventListener("submit",async e=>{
+ e.preventDefault();
+ const b=e.target.querySelector("button");b.disabled=true;
+ try{await fn()}catch(err){authMsg("Something went wrong: "+(err.message||err))}
+ b.disabled=false;
+}));
+$("pw").addEventListener("change",e=>{$("lp").type=$("sp").type=e.target.checked?"text":"password"});
+
+/* ---------- one click handler for every data-a button ---------- */
+document.addEventListener("click",e=>{
+ const t=e.target.closest("[data-a]");if(!t)return;
+ const r=t.dataset.r,F={
+  auth:()=>authTab(r),page:()=>go(r),logout:logout,mix:()=>startMix(r),subj:()=>subj(r),
+  unit:()=>unit(+r),les:()=>lesson(+r),startLes:startLes,startCh:startCh,ans:()=>answer(+r),
+  next:next,imp:doImport,retry:()=>R&&quiz(R.raw,R.ctx),back:()=>R&&R.ctx.back()
+ };
+ if(F[t.dataset.a])F[t.dataset.a]();
+});
+document.addEventListener("keydown",e=>{
+ if(R&&$("an")&&/^[1-9]$/.test(e.key)&&!/INPUT|TEXTAREA|SELECT/.test(e.target.tagName))answer(+e.key-1);
+});
+
+/* ---------- start ---------- */
+(async()=>{
+ applyImp();
+ if(!sb){authMsg("Could not load the Supabase library. Check your internet and refresh.");return}
+ try{
+  const{data}=await sb.auth.getSession();
+  if(data.session){await loadUser(data.session.user);enter()}
+ }catch(e){console.warn(e)}
+})();
+
+</script>
+</body>
+</html>

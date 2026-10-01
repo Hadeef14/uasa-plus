@@ -95,7 +95,29 @@ main{max-width:900px;margin:auto;padding:20px 14px 40px}
 const SUPABASE_URL="https://bmjnloqqagzwgrwdvbgw.supabase.co";
 const SUPABASE_KEY="sb_publishable_WE5lAYz1a5pAvP3btNaM5Q_7EzA2DN4";
 const sb=window.supabase?window.supabase.createClient(SUPABASE_URL,SUPABASE_KEY):null;
-const cloudEmail=n=>n.toLowerCase()+"@uasa.plus";
+
+const SUPABASE2_URL="https://qyqtzqmagimuvlwssirz.supabase.co";
+const SUPABASE2_KEY="sb_publishable_MdWMg-CgPJO6ThTDkrGz4g_ugsNnTEt";
+const sb=window.supabase?window.supabase.createClient(SUPABASE_URL,SUPABASE_KEY):null;
+
+const SUPABASE2_URL="https://qyqtzqmagimuvlwssirz.supabase.co";
+const SUPABASE2_KEY="sb_publishable_MdWMg-CgPJO6ThTDkrGz4g_ugsNnTEt";
+const sb2=window.supabase?window.supabase.createClient(SUPABASE2_URL,SUPABASE2_KEY):null;
+
+async function testServer2(){
+ const {data,error}=await sb2
+  .from("schools")
+  .select("id,name,code");
+
+ if(error){
+  console.error("Server 2 ERROR:",error);
+  return;
+ }
+
+ console.log("✅ Server 2 connected:",data);
+}
+
+testServer2();
 
 /* ---------- helpers: Q(question, options, answerIndex) and P(paragraphs) ---------- */
 var Q=(q,options,answer)=>({q,options,answer}),P=(...t)=>t.map(x=>"<p>"+x+"</p>").join("");

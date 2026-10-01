@@ -56,7 +56,6 @@ main{max-width:900px;margin:auto;padding:20px 14px 40px}
 @media(prefers-reduced-motion:reduce){*{animation:none!important}}
 </style>
 
-<script>window.addEventListener("error",function(e){var m=document.getElementById("am");if(m)m.textContent="Page error: "+e.message+" (line "+e.lineno+")"});</script>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 </head><body>
@@ -65,7 +64,7 @@ main{max-width:900px;margin:auto;padding:20px 14px 40px}
 <div class="logo">UASA<span>+</span></div><p class="c mu">Made by Hadeef</p>
 <div class="tabs"><button class="btn" id="tl" data-a="auth" data-r="l">Login</button><button class="btn g" id="ts" data-a="auth" data-r="s">Sign Up</button></div>
 
-<form id="lf" novalidate onsubmit="return false">
+<form id="lf" novalidate>
 <label for="lu">Username</label>
 <input id="lu" autocomplete="username">
 <label for="lp">Password</label>
@@ -73,7 +72,7 @@ main{max-width:900px;margin:auto;padding:20px 14px 40px}
 <button class="btn" style="width:100%">LOGIN</button>
 </form>
 
-<form id="sf" class="hidden" novalidate onsubmit="return false">
+<form id="sf" class="hidden" novalidate>
 <label for="su">Username (3-20 letters, numbers, . - _)</label>
 <input id="su" autocomplete="username">
 <label for="sp">Password (6+ characters)</label>
@@ -143,8 +142,7 @@ const $=id=>document.getElementById(id),esc=t=>String(t==null?"":t).replace(/[&<
 const mem={},st={get:k=>{try{const v=localStorage.getItem(k);if(v!==null)return v}catch(e){}return k in mem?mem[k]:null},set:(k,v)=>{mem[k]=v;try{localStorage.setItem(k,v)}catch(e){}},del:k=>{delete mem[k];try{localStorage.removeItem(k)}catch(e){}}};
 const jp=(t,d)=>{try{const v=JSON.parse(t);return v==null?d:v}catch(e){return d}};
 const accts=()=>{const a=jp(st.get("uasaAccounts"),{});return a&&typeof a==="object"&&!Array.isArray(a)?a:{}};
-const ymd=d=>d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0");
-const today=()=>ymd(new Date()),yest=()=>{const d=new Date();d.setDate(d.getDate()-1);return ymd(d)};
+const today=()=>new Date().toDateString(),yest=()=>new Date(Date.now()-864e5).toDateString();
 let USER=null,NAV={s:"",u:0,l:0},R=null;
 
 const saveU=()=>{
@@ -187,25 +185,18 @@ function hdr(){
  $("hx").textContent="⭐ "+USER.xp+" XP"
 }
 
-/* ---------- STREAK: +1 for each new day you finish any quiz (lesson, challenge or mixed) ---------- */
-async function touchStreak(){
- if(USER.lastActive===today())return;
- USER.streak=USER.lastActive===yest()?USER.streak+1:1;
- USER.lastActive=today();
- st.set("uasaLastActive_"+USER.id,USER.lastActive);
- saveU();hdr();
- try{
-  let r=await sb.from("profiles").update({streak:USER.streak,last_active:USER.lastActive}).eq("id",USER.id);
-  if(r.error){r=await sb.from("profiles").update({streak:USER.streak}).eq("id",USER.id);if(r.error)throw r.error}
- }catch(e){console.warn("Streak save failed",e)}
-}
-
 /* ---------- CLOUD XP + PROGRESS ---------- */
 async function award(n,key){
  const b=lvl();
 
  USER.xp+=n;
  USER.progress[key]=1;
+
+ if(USER.lastActive!==today()){
+  USER.streak=USER.lastActive===yest()?USER.streak+1:1;
+  USER.lastActive=today();
+  st.set("uasaLastActive_"+USER.id,today())
+ }
 
  saveU();
  hdr();
@@ -452,7 +443,7 @@ function next(){
 }
 /* XP is paid only on the first pass of a lesson or challenge */
 function finish(){
- const{c,qs,ctx}=R,ratio=c/qs.length,pass=ratio>=.7;let xp=0;touchStreak();
+ const{c,qs,ctx}=R,ratio=c/qs.length,pass=ratio>=.7;let xp=0;
  if(ctx.key&&pass&&!done(ctx.key)){xp=c*10+ctx.bonus;award(xp,ctx.key)}
  const stars=ratio===1?3:ratio>=.9?2:pass?1:0;
  let nb="";
@@ -504,7 +495,7 @@ function authTab(r){
  authMsg("");
 }
 async function loadUser(au){
- let r=await sb.from("profiles").select("*").eq("id",au.id).maybeSingle();
+ let r=await sb.from("profiles").select("username,xp,streak,year").eq("id",au.id).maybeSingle();
  if(r.error)throw r.error;
  let p=r.data;
  if(!p){
@@ -517,9 +508,7 @@ async function loadUser(au){
  const g=await sb.from("progress").select("lesson_key").eq("user_id",au.id);
  const prog={};(g.data||[]).forEach(x=>prog[x.lesson_key]=1);
  const loc=accts()[p.username];if(loc&&loc.progress)Object.assign(prog,loc.progress);
- const ls=st.get("uasaLastActive_"+au.id);
- const la=p.last_active||(ls?(/^\d{4}-\d\d-\d\d$/.test(ls)?ls:(isNaN(new Date(ls))?null:ymd(new Date(ls)))):null);
- USER={id:au.id,username:p.username,year:p.year||"",xp:+p.xp||0,streak:+p.streak||0,lastActive:la,progress:prog};
+ USER={id:au.id,username:p.username,year:p.year||"",xp:+p.xp||0,streak:+p.streak||0,lastActive:st.get("uasaLastActive_"+au.id),progress:prog};
 }
 function enter(){$("auth").classList.add("hidden");$("app").classList.remove("hidden");hdr();go("home")}
 async function logout(){

@@ -19,6 +19,7 @@ textarea{font-family:monospace}
 .btn{padding:12px 18px;margin:6px 6px 0 0;border:0;border-radius:12px;background:var(--ac);color:var(--ak);font-weight:800;box-shadow:0 3px 0 #0005}
 .btn:active{transform:translateY(2px)}
 .btn.g{background:none;border:1px solid var(--ln);color:var(--tx);box-shadow:none}
+.btn:disabled{opacity:.5;cursor:not-allowed}
 .card{background:var(--pn);border:1px solid var(--ln);border-radius:16px;padding:18px;margin-bottom:12px}
 .tap{width:100%;text-align:left;color:var(--tx)}.tap:hover{border-color:var(--ac)}
 #auth{min-height:100vh;display:grid;place-items:center;padding:20px}
@@ -35,10 +36,6 @@ main{max-width:900px;margin:auto;padding:20px 14px 40px}
 .stats,.grid{display:grid;gap:12px;grid-template-columns:repeat(4,1fr)}.grid{grid-template-columns:repeat(2,1fr)}
 .n{font-size:28px;font-weight:800}.gd{color:var(--gd)}
 .bar{height:10px;background:var(--ln);border-radius:9px;overflow:hidden;margin:8px 0;flex:1}.bar i{display:block;height:100%;background:var(--ac)}
-.map{max-width:520px;margin:16px auto}
-.node{display:flex;gap:14px;align-items:center;width:100%;padding:12px;margin:8px 0;border:2px solid var(--ln);border-radius:16px;background:var(--pn);color:var(--tx);text-align:left}
-.node>span:first-child{flex:none;width:48px;height:48px;border-radius:50%;display:grid;place-items:center;font-weight:800;background:var(--ac);color:var(--ak)}
-.node.done>span:first-child{background:var(--gd);color:#fff}.node.lock{opacity:.55}.node.lock>span:first-child{background:var(--p2);color:var(--mu)}
 .lk{background:none;border:0;color:var(--ac);padding:0;text-decoration:underline}
 .learn{font-size:18px;max-width:66ch}
 .qz{max-width:640px;margin:auto}.row{display:flex;gap:12px;align-items:center}.row .btn{margin:0}
@@ -93,6 +90,8 @@ main{max-width:900px;margin:auto;padding:20px 14px 40px}
 <input id="sp" type="password" autocomplete="new-password">
 <label for="sy">Year</label>
 <select id="sy"><option>Year 4</option><option>Year 5</option><option>Year 6</option></select>
+<label for="sc">School code</label>
+<input id="sc" placeholder="e.g. SKBD" autocapitalize="characters">
 <button class="btn" style="width:100%">CREATE ACCOUNT</button>
 </form>
 <label><input type="checkbox" id="pw" style="width:auto"> Show password</label>
@@ -113,8 +112,6 @@ async function testServer2(){const{data,error}=await sb2.from("schools").select(
 testServer2();
 var Q=(q,options,answer)=>({q,options,answer}),P=(...t)=>t.map(x=>"<p>"+x+"</p>").join("");
 const SUBJ=[["Bahasa Melayu","🇲🇾"],["English","🇬🇧"],["Mathematics","➗"],["Science","🔬"],["Sejarah","📜"]];
-
-/* ---------- FULL YEAR 6 CURRICULUM: 15 UNITS PER SUBJECT ---------- */
 const CURRICULUM={
 "Bahasa Melayu":{units:[
 {title:"Unit 1: Saling Menyayangi",lessons:[{title:"Kasih Sayang Keluarga",learn:P("<b>Kasih sayang</b> dalam keluarga penting.","Nilai: hormat ibu bapa, sayang adik-beradik."),questions:[Q("Nilai dalam keluarga?",["Kasih sayang","Egoisme","Kebencian"],0),Q("Jasa ibu tidak terbalas?",["Pengorbanan ibu tidak dapat dibalas","Ibu bekerja keras","Ibu suka marah"],0),Q("Cara bantu ibu bapa?",["Membantu kerja rumah","Menonton TV","Bermain"],0),Q("Fauzan anak cakna bermaksud?",["Anak prihatin","Anak malas","Anak nakal"],0)]}],challenge:[Q("Keluarga bahagia bermula dengan?",["Saling menyayangi","Harta","Pangkat"],0),Q("Mengapa hormat ibu bapa?",["Kerana berjasa","Kerana kaya","Kerana terkenal"],0)]},
@@ -202,7 +199,6 @@ const CURRICULUM={
 {title:"Unit 15: Malaysia Moden",lessons:[{title:"Negara Maju",learn:P("Wawasan 2020 dan aspirasi negara."),questions:[Q("Wawasan 2020 oleh?",["Dr. Mahathir","Tunku","Tun Razak"],0),Q("Bertujuan?",["Negara maju","Mundur","Baharu"],0),Q("Visi Malaysia?",["Negara maju","Pertanian","Perindustrian"],0),Q("Malaysia hari ini?",["Negara membangun","Mundur","Perang"],0)]}],challenge:[Q("Sertai ASEAN?",["1967","1957","1970"],0),Q("Jalur bendera?",["14","13","12"],0)]}
 ]}
 };
-
 const $=id=>document.getElementById(id),esc=t=>String(t==null?"":t).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
 const mem={},st={get:k=>{try{const v=localStorage.getItem(k);if(v!==null)return v}catch(e){}return k in mem?mem[k]:null},set:(k,v)=>{mem[k]=v;try{localStorage.setItem(k,v)}catch(e){}},del:k=>{delete mem[k];try{localStorage.removeItem(k)}catch(e){}}};
 const jp=(t,d)=>{try{const v=JSON.parse(t);return v==null?d:v}catch(e){return d}};
@@ -222,11 +218,15 @@ function pop(n){const d=document.createElement("div");d.className="pop";d.textCo
 function hdr(){$("hs").textContent="🔥 "+streakNow();$("hx").textContent="⭐ "+USER.xp+" XP"}
 async function award(n,key){
  const b=lvl();
- USER.xp+=n;if(key)USER.progress[key]=1;
- if(USER.lastActive!==today()){USER.streak=USER.lastActive===yest()?USER.streak+1:1;USER.lastActive=today();st.set("uasaLastActive_"+USER.id,today())}
+ USER.xp+=n;
+ if(key)USER.progress[key]=1;
+ if(USER.lastActive!==today()){
+  USER.streak=USER.lastActive===yest()?USER.streak+1:1;
+  USER.lastActive=today();
+ }
  saveU();hdr();
  try{
-  const p=await sb.from("profiles").update({xp:USER.xp,streak:USER.streak}).eq("id",USER.id);
+  const p=await sb.from("profiles").update({xp:USER.xp,streak:USER.streak,last_active:USER.lastActive}).eq("id",USER.id);
   if(p.error)throw p.error;
   if(key){
    const q=await sb.from("progress").upsert({user_id:USER.id,lesson_key:key},{onConflict:"user_id,lesson_key"});
@@ -253,14 +253,19 @@ return`<div class="hero"><h1>Welcome, ${esc(USER.username)}!</h1><p>Learn. Pract
 <div class="stats">${[[USER.xp,"XP"],[lvl(),"Level"],[streakNow(),"Day streak"],[n,"Lessons done"]].map(x=>`<div class="card"><div class="n">${x[0]}</div><small>${x[1]}</small></div>`).join("")}</div>
 <div class="card"><h2>Level progress</h2>${bar(into)}<small>${into} / 100 XP to Level ${lvl()+1}</small></div>`},
 subjects(){return`<h1>📚 Subjects</h1><button class="btn g" data-a="mix" data-r="">🎲 Mixed quiz: all subjects</button><div class="grid" style="margin-top:12px">${SUBJ.map(s=>{const d=sDone(s[0]),t=sTot(s[0]);return`<button class="card tap" data-a="subj" data-r="${esc(s[0])}"><h2>${s[1]} ${esc(s[0])}</h2>${bar(t?d/t*100:0)}<small>${d} / ${t} lessons</small></button>`}).join("")}</div>`},
-leaderboard(){return`<h1>🏆 Leaderboard</h1><div class="card" id="lb"><p class="mu">Loading global leaderboard…</p></div>`},
+leaderboard(){return`<h1>🏆 Leaderboard</h1><div class="card" id="lb"><p class="mu">Loading…</p></div>`},
 profile(){return`<h1>👤 ${esc(USER.username)}</h1><div class="card"><p>${esc(USER.year||"")} · Level <b>${lvl()}</b> · ${USER.xp} XP · 🔥 ${streakNow()}-day streak</p>${SUBJ.map(s=>{const d=sDone(s[0]),t=sTot(s[0]);return`<div>${s[1]} ${esc(s[0])} <small>${d} / ${t} lessons</small>${bar(t?d/t*100:0)}</div>`}).join("")}</div>`},
 import(){return`<h1>📥 Import questions</h1><div class="card"><p class="mu">Only add verified questions. Saved in this browser only.</p><label>Subject<select id="is">${SUBJ.map(s=>`<option>${esc(s[0])}</option>`).join("")}</select></label><label>Unit number<input id="iu" type="number" min="1" max="30" value="1"></label><label>Unit title (optional)<input id="iut"></label><label>Lesson number (type c for the Unit Challenge)<input id="il" value="1"></label><label>Lesson title (optional)<input id="it"></label><label>Learn text (optional; blank line = new paragraph)<textarea id="ilr" rows="3"></textarea></label><label>Questions (JSON)<textarea id="ij" rows="6" placeholder='[{"q":"Question?","options":["A","B","C"],"answer":1}]'></textarea></label><button class="btn" data-a="imp">IMPORT</button><p id="im" role="status"></p></div>`}
 };
 async function loadLeaderboard(){
  const box=$("lb");if(!box)return;
- const{data,error}=await sb.from("profiles").select("username,xp").order("xp",{ascending:false}).limit(100);
- if(error){box.innerHTML="<p>Could not load leaderboard. Check your connection.</p>";console.error(error);return}
+ box.innerHTML="<p class='mu'>Loading…</p>";
+ if(!USER.schoolId){
+  box.innerHTML="<p class='mu'>You didn't link a school at signup, so no leaderboard for you yet.</p>";
+  return
+ }
+ const{data,error}=await sb.from("profiles").select("username,xp").eq("school_id",USER.schoolId).order("xp",{ascending:false}).limit(100);
+ if(error){box.innerHTML="<p>Could not load leaderboard.</p>";console.error(error);return}
  const m=["🥇","🥈","🥉"];
  box.innerHTML=(data||[]).map((u,i)=>`<div class="lbr ${u.username===USER.username?"me":""}"><span>${m[i]||"#"+(i+1)} ${esc(u.username)}</span><b>${+u.xp||0} XP</b></div>`).join("")||"<p>No players yet.</p>"
 }
@@ -289,21 +294,18 @@ function unit(i){
   const cls=dn?"done":isCur?"current":op?"ready":"locked";
   const icon=dn?"✓":isCur?"★":op?String(x+1):"🔒";
   const dx=offsets[x%offsets.length];
-  nodes+=`<button class="path-node ${cls}" style="--dx:${dx}px" data-a="les" data-r="${l.j}" ${op?"":'aria-disabled="true"'} aria-label="Lesson ${x+1}">${icon}</button>`
+  nodes+=`<button class="path-node ${cls}" style="--dx:${dx}px" data-a="les" data-r="${l.j}" ${op?"":'aria-disabled="true"'}>${icon}</button>`
  });
  const chestState=chestDone?"done":!allDone?"locked":"current";
  const chestIcon=chestDone?"✓":allDone?"🎁":"🔒";
- const chest=`<button class="chest ${chestState}" style="--dx:0px" data-a="chest" data-r="${i}" ${allDone&&!chestDone?"":'aria-disabled="true"'} aria-label="Reward chest: +25 XP">${chestIcon}</button>`;
+ const chest=`<button class="chest ${chestState}" style="--dx:0px" data-a="chest" data-r="${i}" ${allDone&&!chestDone?"":'aria-disabled="true"'}>${chestIcon}</button>`;
  let chBtn="";
  if(hasCh){
   const cDone=done(key(s,i,"c")),cOpen=chOpen(s,u);
   chBtn=`<button class="btn g" style="margin-top:20px" data-a="startCh" ${cOpen?"":'aria-disabled="true"'}>${cDone?"🏅 Replay Challenge":"🏅 Unit Challenge (+50 XP)"}</button>`
  }
  view(`<div class="mu">${lk("page","subjects","Subjects")} › ${lk("subj",s,esc(s))}</div>
- <div class="unit-banner">
-  <div class="unit-banner-label">${esc(s.toUpperCase())}</div>
-  <h1>${esc(ut(u))}</h1>
- </div>
+ <div class="unit-banner"><div class="unit-banner-label">${esc(s.toUpperCase())}</div><h1>${esc(ut(u))}</h1></div>
  <div class="path">${nodes}${chest}${chBtn}</div>
  <p class="mu" style="text-align:center">${d} / ${u.ls.length} lessons complete</p>`)
 }
@@ -322,7 +324,14 @@ function lesson(j){
  if(x<0)return;
  if(!unlocked(s,u,x)){toast("🔒 Finish the previous lesson first.");return}
  NAV.l=j;const l=u.ls[x];
- view(`<div class="mu">${lk("page","subjects","Subjects")} › ${lk("subj",s,esc(s))} › ${lk("unit",u.i,esc(ut(u)))}</div><h1>${esc(l.title||"Lesson "+(j+1))} ${done(key(s,u.i,j))?"✓":""}</h1><div class="card learn">${l.learn||"<p>Practice this lesson's questions.</p>"}</div><button class="btn" data-a="startLes">START ${l.questions.length} QUESTIONS</button><button class="btn g" data-a="unit" data-r="${u.i}">← Back</button>`)
+ const already=done(key(s,u.i,j));
+ const btns=already
+  ?`<button class="btn g" data-a="unit" data-r="${u.i}">← Back to map</button><button class="btn" data-a="startLes">REPLAY ${l.questions.length} QUESTIONS</button>`
+  :`<button class="btn" data-a="startLes">START ${l.questions.length} QUESTIONS</button><button class="btn g" data-a="unit" data-r="${u.i}">← Back</button>`;
+ view(`<div class="mu">${lk("page","subjects","Subjects")} › ${lk("subj",s,esc(s))} › ${lk("unit",u.i,esc(ut(u)))}</div>
+ <h1>${esc(l.title||"Lesson "+(j+1))} ${already?"✓":""}</h1>
+ <div class="card learn">${l.learn||"<p>Practice this lesson's questions.</p>"}</div>
+ ${btns}`)
 }
 function startLes(){
  const s=NAV.s,u=U(s).find(x=>x.i===NAV.u),x=u?u.ls.findIndex(l=>l.j===NAV.l):-1;
@@ -394,7 +403,7 @@ function doImport(){
 const authMsg=t=>{$("am").textContent=t};
 function authTab(r){const l=r==="l";$("lf").classList.toggle("hidden",!l);$("sf").classList.toggle("hidden",l);$("tl").className="btn"+(l?"":" g");$("ts").className="btn"+(l?" g":"");authMsg("")}
 async function loadUser(au){
- let r=await sb.from("profiles").select("username,xp,streak,year").eq("id",au.id).maybeSingle();
+ let r=await sb.from("profiles").select("username,xp,streak,year,school_id,last_active").eq("id",au.id).maybeSingle();
  if(r.error)throw r.error;
  let p=r.data;
  if(!p){
@@ -402,20 +411,26 @@ async function loadUser(au){
   const yr=(au.user_metadata&&au.user_metadata.year)||"Year 6";
   const ins=await sb.from("profiles").upsert({id:au.id,username:name,year:yr,xp:0,streak:0},{onConflict:"id"});
   if(ins.error)throw ins.error;
-  p={username:name,year:yr,xp:0,streak:0}
+  p={username:name,year:yr,xp:0,streak:0,school_id:null,last_active:null}
  }
  const g=await sb.from("progress").select("lesson_key").eq("user_id",au.id);
  const prog={};(g.data||[]).forEach(x=>prog[x.lesson_key]=1);
  const loc=accts()[p.username];if(loc&&loc.progress)Object.assign(prog,loc.progress);
- USER={id:au.id,username:p.username,year:p.year||"",xp:+p.xp||0,streak:+p.streak||0,lastActive:st.get("uasaLastActive_"+au.id),progress:prog}
+ USER={id:au.id,username:p.username,year:p.year||"",xp:+p.xp||0,streak:+p.streak||0,lastActive:p.last_active||null,progress:prog,schoolId:p.school_id||null}
 }
 function enter(){$("auth").classList.add("hidden");$("app").classList.remove("hidden");hdr();go("home")}
 async function logout(){try{await sb.auth.signOut()}catch(e){}USER=null;R=null;$("app").classList.add("hidden");$("auth").classList.remove("hidden");authTab("l")}
 async function signup(){
  if(!sb){authMsg("Could not load Supabase. Check your internet and refresh.");return}
- const n=$("su").value.trim(),pw=$("sp").value,yr=$("sy").value;
+ const n=$("su").value.trim(),pw=$("sp").value,yr=$("sy").value,code=$("sc").value.trim().toUpperCase();
  if(!/^[A-Za-z0-9_.-]{3,20}$/.test(n)){authMsg("Username must be 3 to 20 letters, numbers, dots, dashes or underscores.");return}
  if(pw.length<6){authMsg("Password must be at least 6 characters.");return}
+ let schoolId=null;
+ if(code){
+  const s=await sb.from("schools").select("id").eq("code",code).maybeSingle();
+  if(s.error||!s.data){authMsg("Unknown school code: "+code);return}
+  schoolId=s.data.id;
+ }
  authMsg("Creating account…");
  const{data,error}=await sb.auth.signUp({email:cloudEmail(n),password:pw,options:{data:{year:yr}}});
  if(error){authMsg(/registered|exists/i.test(error.message)?"That username is taken. Try another, or log in.":"Sign up failed: "+error.message);return}
@@ -425,9 +440,10 @@ async function signup(){
   if(s.error){authMsg("Account created but it needs email confirmation. In Supabase, turn off Confirm email.");return}
   au=s.data.user
  }
- const ins=await sb.from("profiles").upsert({id:au.id,username:n,year:yr,xp:0,streak:0},{onConflict:"id"});
+ const ins=await sb.from("profiles").upsert({id:au.id,username:n,year:yr,xp:0,streak:0,school_id:schoolId},{onConflict:"id"});
  if(ins.error){authMsg("Account made, but saving your profile failed: "+ins.error.message);return}
- await loadUser(au);enter();toast("🎉 Welcome, "+n+"!")
+ await loadUser(au);enter();
+ toast(schoolId?"🎉 Welcome, "+n+"!":"🎉 Welcome, "+n+"! (no school linked)")
 }
 async function login(){
  if(!sb){authMsg("Could not load Supabase. Check your internet and refresh.");return}

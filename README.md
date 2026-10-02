@@ -1,2 +1,3 @@
 # UASA+
-Hi, Im a dev that makes UASA easier
+Hi, Im a dev that makes UASA easier.
+My journey was to make kids improve grade and more. But, it wasnt the end......

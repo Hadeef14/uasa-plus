@@ -35,6 +35,10 @@ main{max-width:900px;margin:auto;padding:20px 14px 40px}
 .stats,.grid{display:grid;gap:12px;grid-template-columns:repeat(4,1fr)}.grid{grid-template-columns:repeat(2,1fr)}
 .n{font-size:28px;font-weight:800}.gd{color:var(--gd)}
 .bar{height:10px;background:var(--ln);border-radius:9px;overflow:hidden;margin:8px 0;flex:1}.bar i{display:block;height:100%;background:var(--ac)}
+.map{max-width:520px;margin:16px auto}
+.node{display:flex;gap:14px;align-items:center;width:100%;padding:12px;margin:8px 0;border:2px solid var(--ln);border-radius:16px;background:var(--pn);color:var(--tx);text-align:left}
+.node>span:first-child{flex:none;width:48px;height:48px;border-radius:50%;display:grid;place-items:center;font-weight:800;background:var(--ac);color:var(--ak)}
+.node.done>span:first-child{background:var(--gd);color:#fff}.node.lock{opacity:.55}.node.lock>span:first-child{background:var(--p2);color:var(--mu)}
 .lk{background:none;border:0;color:var(--ac);padding:0;text-decoration:underline}
 .learn{font-size:18px;max-width:66ch}
 .qz{max-width:640px;margin:auto}.row{display:flex;gap:12px;align-items:center}.row .btn{margin:0}
@@ -51,25 +55,6 @@ main{max-width:900px;margin:auto;padding:20px 14px 40px}
 @keyframes up{to{opacity:0;top:30%}}
 @media(max-width:700px){.stats{grid-template-columns:repeat(2,1fr)}.grid{grid-template-columns:1fr}}
 @media(prefers-reduced-motion:reduce){*{animation:none!important}}
-.unit-banner{background:linear-gradient(135deg,var(--ac),#7c3aed);color:#fff;border-radius:16px;padding:18px 20px;margin-bottom:24px;position:relative;overflow:hidden}
-.unit-banner::after{content:"";position:absolute;inset:0;background:linear-gradient(135deg,transparent,rgba(255,255,255,.15));pointer-events:none}
-.unit-banner-label{font-size:12px;font-weight:800;letter-spacing:.1em;opacity:.85;margin-bottom:4px}
-.unit-banner h1{margin:0;font-size:22px;color:#fff}
-.path{max-width:400px;margin:0 auto;display:flex;flex-direction:column;align-items:center;gap:14px;padding:8px 0 20px}
-.path-node{width:76px;height:76px;border-radius:50%;border:0;cursor:pointer;display:grid;place-items:center;font-size:30px;font-weight:900;color:#fff;background:var(--p2);transform:translateX(var(--dx,0px));transition:transform .12s;position:relative;box-shadow:0 6px 0 rgba(0,0,0,.35);flex:none}
-.path-node:active:not([aria-disabled="true"]){transform:translateX(var(--dx,0px)) translateY(4px);box-shadow:0 2px 0 rgba(0,0,0,.35)}
-.path-node.done{background:linear-gradient(180deg,#34d399,#059669);box-shadow:0 6px 0 #065f46}
-.path-node.ready{background:linear-gradient(180deg,#60a5fa,#2563eb);box-shadow:0 6px 0 #1e40af}
-.path-node.current{background:linear-gradient(180deg,#f472b6,#db2777);box-shadow:0 6px 0 #9d174d,0 0 0 8px rgba(244,114,182,.2);animation:pathPulse 2s ease-in-out infinite}
-.path-node.locked{background:var(--p2);color:var(--mu);box-shadow:0 4px 0 rgba(0,0,0,.3);cursor:not-allowed}
-.chest{width:110px;height:82px;border:0;cursor:pointer;border-radius:14px;display:grid;place-items:center;font-size:38px;color:#fff;background:linear-gradient(180deg,#a16207,#78350f);transform:translateX(var(--dx,0px));box-shadow:0 8px 0 #422006;transition:transform .12s;flex:none;position:relative;margin-top:6px}
-.chest:active:not([aria-disabled="true"]){transform:translateX(var(--dx,0px)) translateY(4px);box-shadow:0 4px 0 #422006}
-.chest.done{background:linear-gradient(180deg,#fbbf24,#b45309);box-shadow:0 8px 0 #78350f}
-.chest.locked{background:linear-gradient(180deg,#334155,#1e293b);color:#64748b;box-shadow:0 8px 0 #0f172a;cursor:not-allowed}
-.chest.current{animation:chestPulse 2s ease-in-out infinite}
-.chest::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(255,255,255,.2),transparent 40%);border-radius:14px;pointer-events:none}
-@keyframes pathPulse{0%,100%{box-shadow:0 6px 0 #9d174d,0 0 0 8px rgba(244,114,182,.2)}50%{box-shadow:0 6px 0 #9d174d,0 0 0 18px rgba(244,114,182,0)}}
-@keyframes chestPulse{0%,100%{transform:translateX(var(--dx,0px)) scale(1)}50%{transform:translateX(var(--dx,0px)) scale(1.04)}}
 </style>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </head><body>
@@ -260,7 +245,7 @@ const pool=s=>{const o=[];(s?[s]:SUBJ.map(x=>x[0])).forEach(n=>U(n).forEach(u=>{
 const view=h=>{$("main").innerHTML=h;scrollTo(0,0)};
 const lk=(a,r,t)=>`<button class="lk" data-a="${a}" data-r="${esc(r)}">${t}</button>`;
 function nav(p){
- $("nv").innerHTML=[["home","🏠 Home"],["subjects","📚 Subjects"],["leaderboard","🏆 Leaderboard"],["profile","👤 Profile"],["import","📥 Import"]].map(x=>`<button class="${x[0]===p?"on":""}" data-a="page" data-r="${x[0]}">${x[1]}</button>`).join("")+`<button data-a="logout">🚪 Logout</button>`
+ $("nv").innerHTML=[["home","🏠 Home"],["subjects","📚 Subjects"],["leaderboard","🏆 Leaderboard"],["profile","👤 Profile"]].map(x=>`<button class="${x[0]===p?"on":""}" data-a="page" data-r="${x[0]}">${x[1]}</button>`).join("")+`<button data-a="logout">🚪 Logout</button>`
 }
 const PAGES={
 home(){const n=SUBJ.reduce((a,s)=>a+sDone(s[0]),0),into=USER.xp%100;
@@ -269,8 +254,7 @@ return`<div class="hero"><h1>Welcome, ${esc(USER.username)}!</h1><p>Learn. Pract
 <div class="card"><h2>Level progress</h2>${bar(into)}<small>${into} / 100 XP to Level ${lvl()+1}</small></div>`},
 subjects(){return`<h1>📚 Subjects</h1><button class="btn g" data-a="mix" data-r="">🎲 Mixed quiz: all subjects</button><div class="grid" style="margin-top:12px">${SUBJ.map(s=>{const d=sDone(s[0]),t=sTot(s[0]);return`<button class="card tap" data-a="subj" data-r="${esc(s[0])}"><h2>${s[1]} ${esc(s[0])}</h2>${bar(t?d/t*100:0)}<small>${d} / ${t} lessons</small></button>`}).join("")}</div>`},
 leaderboard(){return`<h1>🏆 Leaderboard</h1><div class="card" id="lb"><p class="mu">Loading global leaderboard…</p></div>`},
-profile(){return`<h1>👤 ${esc(USER.username)}</h1><div class="card"><p>${esc(USER.year||"")} · Level <b>${lvl()}</b> · ${USER.xp} XP · 🔥 ${streakNow()}-day streak</p>${SUBJ.map(s=>{const d=sDone(s[0]),t=sTot(s[0]);return`<div>${s[1]} ${esc(s[0])} <small>${d} / ${t} lessons</small>${bar(t?d/t*100:0)}</div>`}).join("")}</div>`},
-import(){return`<h1>📥 Import questions</h1><div class="card"><p class="mu">Only add verified questions.</p><label>Subject<select id="is">${SUBJ.map(s=>`<option>${esc(s[0])}</option>`).join("")}</select></label><label>Unit number<input id="iu" type="number" min="1" max="30" value="1"></label><label>Unit title (optional)<input id="iut"></label><label>Lesson number (type c for the Unit Challenge)<input id="il" value="1"></label><label>Lesson title (optional)<input id="it"></label><label>Learn text (optional)<textarea id="ilr" rows="3"></textarea></label><label>Questions (JSON)<textarea id="ij" rows="6" placeholder='[{"q":"Question?","options":["A","B","C"],"answer":1}]'></textarea></label><button class="btn" data-a="imp">IMPORT</button><p id="im" role="status"></p></div>`}
+profile(){return`<h1>👤 ${esc(USER.username)}</h1><div class="card"><p>${esc(USER.year||"")} · Level <b>${lvl()}</b> · ${USER.xp} XP · 🔥 ${streakNow()}-day streak</p>${SUBJ.map(s=>{const d=sDone(s[0]),t=sTot(s[0]);return`<div>${s[1]} ${esc(s[0])} <small>${d} / ${t} lessons</small>${bar(t?d/t*100:0)}</div>`}).join("")}</div>`}
 };
 async function loadLeaderboard(){
  const box=$("lb");if(!box)return;
@@ -291,33 +275,24 @@ function unit(i){
  const d=nDone(s,u),hasCh=(u.challenge||[]).length>0;
  const chestKey=key(s,i,"chest"),chestDone=done(chestKey);
  const allDone=d===u.ls.length;
- let currentIdx=-1;
- for(let x=0;x<u.ls.length;x++){
-  if(done(key(s,i,u.ls[x].j)))continue;
-  if(unlocked(s,u,x))currentIdx=x;
-  break
- }
- const offsets=[0,26,38,26,0,-26,-38,-26];
- let nodes="";
- u.ls.forEach((l,x)=>{
-  const dn=done(key(s,i,l.j)),op=unlocked(s,u,x),isCur=x===currentIdx;
-  const cls=dn?"done":isCur?"current":op?"ready":"locked";
-  const icon=dn?"✓":isCur?"★":op?String(x+1):"🔒";
-  const dx=offsets[x%offsets.length];
-  nodes+=`<button class="path-node ${cls}" style="--dx:${dx}px" data-a="les" data-r="${l.j}" ${op?"":'aria-disabled="true"'}>${icon}</button>`
- });
- const chestState=chestDone?"done":!allDone?"locked":"current";
- const chestIcon=chestDone?"✓":allDone?"🎁":"🔒";
- const chest=`<button class="chest ${chestState}" style="--dx:0px" data-a="chest" data-r="${i}" ${allDone&&!chestDone?"":'aria-disabled="true"'}>${chestIcon}</button>`;
- let chBtn="";
- if(hasCh){
-  const cDone=done(key(s,i,"c")),cOpen=chOpen(s,u);
-  chBtn=`<button class="btn g" style="margin-top:20px" data-a="startCh" ${cOpen?"":'aria-disabled="true"'}>${cDone?"🏅 Replay Challenge":"🏅 Unit Challenge (+50 XP)"}</button>`
- }
  view(`<div class="mu">${lk("page","subjects","Subjects")} › ${lk("subj",s,esc(s))}</div>
- <div class="unit-banner"><div class="unit-banner-label">${esc(s.toUpperCase())}</div><h1>${esc(ut(u))}</h1></div>
- <div class="path">${nodes}${chest}${chBtn}</div>
- <p class="mu" style="text-align:center">${d} / ${u.ls.length} lessons complete</p>`)
+ <h1>${esc(ut(u))}</h1>
+ ${bar(u.ls.length?d/u.ls.length*100:0)}
+ <small>${d} / ${u.ls.length} lessons</small>
+ <div class="map" style="margin-top:16px">
+ ${u.ls.map((l,x)=>{
+  const dn=done(key(s,i,l.j)),op=unlocked(s,u,x);
+  return`<button class="node ${dn?"done":op?"":"lock"}" data-a="les" data-r="${l.j}" ${op?"":'aria-disabled="true"'}>
+   <span>${dn?"✓":op?x+1:"🔒"}</span>
+   <span><b>${esc(l.title||"Lesson "+(l.j+1))}</b><br><small>${dn?"Completed":op?"Ready":"Finish the previous lesson first"}</small></span></button>`
+ }).join("")}
+ ${hasCh?`<button class="node ${chestDone?"done":!allDone?"lock":""}" data-a="chest" data-r="${i}" ${allDone&&!chestDone?"":'aria-disabled="true"'}>
+  <span>${chestDone?"✓":allDone?"🎁":"🔒"}</span>
+  <span><b>Reward Chest</b><br><small>${chestDone?"Opened":allDone?"+25 XP - tap to open":"Finish all lessons to unlock"}</small></span></button>`:""}
+ ${hasCh?`<button class="node ${done(key(s,i,"c"))?"done":chOpen(s,u)?"":"lock"}" data-a="startCh" ${chOpen(s,u)?"":'aria-disabled="true"'}>
+  <span>${done(key(s,i,"c"))?"✓":chOpen(s,u)?"🏅":"🔒"}</span>
+  <span><b>Unit Challenge</b><br><small>${done(key(s,i,"c"))?"Completed":chOpen(s,u)?"+50 XP for passing":"Finish all lessons to unlock"}</small></span></button>`:""}
+ </div>`)
 }
 function claimChest(idx){
  const s=NAV.s,u=U(s).find(x=>x.i===idx);
@@ -435,30 +410,6 @@ function finish(){
  const note=ctx.key&&pass&&!xp?"Already completed. No extra XP.":ctx.kind==="mix"?"Mixed quizzes are practice only.":"";
  view(`<div class="qz card c"><div class="stars">${"⭐".repeat(stars)}${"☆".repeat(3-stars)}</div><h2>${msg}</h2><p>Score: <b>${c} / ${qs.length}</b></p>${xp?`<div class="n gd">+${xp} XP</div>`:""}<p class="mu">${note}</p>${nb}${pass||ctx.kind==="mix"?"":`<button class="btn" data-a="retry">TRY AGAIN</button>`}<button class="btn g" data-a="back">Back</button></div>`)
 }
-const okQ=q=>q&&(q.w&&typeof q.w==="string"||typeof q.q==="string"&&q.q.trim()&&Array.isArray(q.options)&&q.options.length>1&&q.options.every(o=>typeof o==="string"&&o.trim())&&Number.isInteger(q.answer)&&q.answer>=0&&q.answer<q.options.length);
-function applyImp(){
- const a=jp(st.get("uasaImported"),[]);
- (Array.isArray(a)?a:[]).forEach(it=>{
-  if(!it||!SUBJ.some(x=>x[0]===it.s)||!Array.isArray(it.qs))return;
-  const c=CURRICULUM[it.s]=CURRICULUM[it.s]||{units:[]};
-  const un=c.units[it.u-1]=c.units[it.u-1]||{title:"",lessons:[]};
-  un.lessons=un.lessons||[];
-  if(it.ut)un.title=it.ut;
-  if(it.l==="c")un.challenge=it.qs;
-  else un.lessons[it.l-1]={title:it.lt||"Lesson "+it.l,learn:it.lr?P(...it.lr.split(/\n\s*\n/).map(esc)):"",questions:it.qs}
- })
-}
-function doImport(){
- const m=$("im"),s=$("is").value,u=parseInt($("iu").value,10),lv=$("il").value.trim().toLowerCase(),qs=jp($("ij").value,null);
- if(!(u>=1&&u<=30)){m.textContent="Unit number must be 1 to 30.";return}
- const isC=lv==="c",l=parseInt(lv,10);
- if(!isC&&!(l>=1&&l<=30)){m.textContent="Lesson must be a number (1 to 30) or c.";return}
- if(!Array.isArray(qs)||!qs.length||!qs.every(okQ)){m.textContent="Paste a JSON list.";return}
- const it={s,u,l:isC?"c":l,ut:$("iut").value.trim(),lt:$("it").value.trim(),lr:$("ilr").value.trim(),qs};
- const all=jp(st.get("uasaImported"),[]).filter(x=>!(x.s===it.s&&x.u===it.u&&x.l===it.l));
- all.push(it);st.set("uasaImported",JSON.stringify(all));applyImp();
- m.textContent="Imported "+qs.length+" questions."
-}
 const authMsg=t=>{$("am").textContent=t};
 function authTab(r){const l=r==="l";$("lf").classList.toggle("hidden",!l);$("sf").classList.toggle("hidden",l);$("tl").className="btn"+(l?"":" g");$("ts").className="btn"+(l?" g":"");authMsg("")}
 async function loadUser(au){
@@ -518,7 +469,7 @@ document.addEventListener("click",e=>{
  const r=t.dataset.r,F={
   auth:()=>authTab(r),page:()=>go(r),logout:logout,mix:()=>startMix(r),subj:()=>subj(r),
   unit:()=>unit(+r),les:()=>lesson(+r),startLes:startLes,startCh:startCh,ans:()=>answer(+r),
-  next:next,imp:doImport,retry:()=>R&&quiz(R.raw,R.ctx),back:()=>R&&R.ctx.back(),
+  next:next,retry:()=>R&&quiz(R.raw,R.ctx),back:()=>R&&R.ctx.back(),
   chest:()=>claimChest(+r),submitW:submitW
  };
  if(F[t.dataset.a])F[t.dataset.a]()
@@ -527,7 +478,6 @@ document.addEventListener("keydown",e=>{
  if(R&&$("an")&&/^[1-9]$/.test(e.key)&&!/INPUT|TEXTAREA|SELECT/.test(e.target.tagName))answer(+e.key-1)
 });
 (async()=>{
- applyImp();
  if(!sb){authMsg("Could not load Supabase library.");return}
  try{
   const{data}=await sb.auth.getSession();

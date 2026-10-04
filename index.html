@@ -26,7 +26,7 @@ textarea{font-family:monospace}
 .tabs{display:flex;gap:8px;margin:14px 0}.tabs .btn{flex:1;margin:0}
 #am{min-height:24px;text-align:center;color:var(--gl)}
 header{position:sticky;top:env(safe-area-inset-top,0px);z-index:9;display:flex;flex-wrap:wrap;gap:8px;justify-content:space-between;align-items:center;padding:10px 16px;background:var(--pn);border-bottom:1px solid var(--ln)}
-.hl{font-size:24px;font-weight:900}.chip{background:var(--p2);border-radius:20px;padding:3px 12px;font-weight:700;margin-right:6px}
+.hl{font-size:24px;font-weight:900}.chip{background:var(--p2);border-radius:20px;padding:3px 12px;font-weight:700;margin-right:6px}.chip#theme{border:0;color:var(--tx);font-size:15px}.save-ok{color:var(--gd)}.save-bad{color:var(--bd)}
 header nav{display:flex;flex-wrap:wrap;gap:2px}header nav button{background:none;border:0;color:var(--tx);padding:8px 10px;border-radius:8px}
 header nav button.on{background:var(--p2);color:var(--ac);font-weight:700}
 main{max-width:900px;margin:auto;padding:20px 14px 40px}
@@ -82,7 +82,7 @@ main{max-width:900px;margin:auto;padding:20px 14px 40px}
 <label><input type="checkbox" id="pw" style="width:auto"> Show password</label>
 <div id="am" role="status"></div></div></section>
 <div id="app" class="hidden">
-<header><div class="hl">UASA<span>+</span></div><div><span class="chip" id="hs"></span><span class="chip" id="hx"></span></div>
+<header><div class="hl">UASA<span>+</span></div><div><span class="chip" id="hs"></span><span class="chip" id="hx"></span><span class="chip" id="cs">☁️ Saved</span><button class="chip" id="theme" type="button" aria-label="Toggle theme">🌙</button></div>
 <nav id="nv"></nav></header>
 <main id="main"></main></div>
 <script>
@@ -223,22 +223,63 @@ const streakNow=()=>USER.lastActive&&![today(),yest()].includes(USER.lastActive)
 const bar=p=>`<div class="bar"><i style="width:${Math.round(p)}%"></i></div>`;
 function toast(m){const t=document.createElement("div");t.className="toast";t.setAttribute("role","status");t.textContent=m;document.body.appendChild(t);setTimeout(()=>t.remove(),2400)}
 function pop(n){const d=document.createElement("div");d.className="pop";d.textContent="+"+n+" XP";document.body.appendChild(d);setTimeout(()=>d.remove(),1300)}
-function hdr(){$("hs").textContent="🔥 "+streakNow();$("hx").textContent="⭐ "+USER.xp+" XP"}
+function setSaveState(state){
+ const el=$("cs");if(!el)return;
+ const m={
+  saving:["☁️ Saving…",""],
+  saved:["☁️ Saved","save-ok"],
+  error:["⚠️ Not saved","save-bad"]
+ };
+ const [txt,cl]=m[state]||m.saved;
+ el.textContent=txt;el.className="chip "+cl;
+}
+function hdr(){$("hs").textContent="🔥 "+streakNow();$("hx").textContent="⭐ "+USER.xp+" XP";setSaveState("saved")}
 async function award(n,key){
- const b=lvl();
- USER.xp+=n;if(key)USER.progress[key]=1;
- if(USER.lastActive!==today()){USER.streak=USER.lastActive===yest()?USER.streak+1:1;USER.lastActive=today();st.set("uasaLastActive_"+USER.id,today())}
- hdr();
+ const beforeXp=USER.xp,beforeStreak=USER.streak,beforeDate=USER.lastActive;
+ const nextXp=beforeXp+n;
+ const activeToday=beforeDate===today();
+ const nextStreak=activeToday?beforeStreak:(beforeDate===yest()?beforeStreak+1:1);
+ const nextDate=activeToday?beforeDate:today();
+ setSaveState("saving");
+
  try{
-  const p=await sb.from("profiles").update({xp:USER.xp,streak:USER.streak}).eq("id",USER.id);
+  const p=await sb.from("profiles").update({
+   xp:nextXp,
+   streak:nextStreak,
+   last_active:nextDate
+  }).eq("id",USER.id);
   if(p.error)throw p.error;
+
   if(key){
-   const q=await sb.from("progress").upsert({user_id:USER.id,lesson_key:key},{onConflict:"user_id,lesson_key"});
-   if(q.error)throw q.error
+   // The real table has no lesson_key column. Store the stable lesson key
+   // in the existing subject column and load it back as USER.progress.
+   const q=await sb.from("progress").insert({
+    user_id:USER.id,
+    subject:key,
+    xp:n
+   });
+   if(q.error)throw q.error;
   }
- }catch(e){console.warn("Cloud save failed",e)}
- if(lvl()>b)toast("🎉 Level "+lvl()+" reached!");
- if(n)pop(n)
+
+  USER.xp=nextXp;
+  USER.streak=nextStreak;
+  USER.lastActive=nextDate;
+  if(key)USER.progress[key]=1;
+  st.set("uasaLastActive_"+USER.id,nextDate);
+  hdr();
+  setSaveState("saved");
+
+  if(lvl()>Math.floor(beforeXp/100)+1)toast("🎉 Level "+lvl()+" reached!");
+  if(n)pop(n);
+ }catch(e){
+  USER.xp=beforeXp;
+  USER.streak=beforeStreak;
+  USER.lastActive=beforeDate;
+  hdr();
+  setSaveState("error");
+  toast("⚠️ Cloud save failed. Your XP was not counted.");
+  console.error("Cloud save failed",e);
+ }
 }
 const U=s=>Array.from((CURRICULUM[s]||{}).units||[],(x,i)=>x?{...x,i,ls:Array.from(x.lessons||[],(y,j)=>y&&y.questions&&y.questions.length?{...y,j}:null).filter(Boolean)}:null).filter(Boolean);
 const key=(s,u,l)=>s+"|"+u+"|"+l,done=k=>!!(USER&&USER.progress&&USER.progress[k]),ut=u=>u.title||"Unit "+(u.i+1);
@@ -405,20 +446,51 @@ function finish(){
 }
 const authMsg=t=>{$("am").textContent=t};
 function authTab(r){const l=r==="l";$("lf").classList.toggle("hidden",!l);$("sf").classList.toggle("hidden",l);$("tl").className="btn"+(l?"":" g");$("ts").className="btn"+(l?" g":"");authMsg("")}
+
+function applyTheme(){
+ const t=st.get("uasaTheme")||"auto";
+ if(t==="dark")document.documentElement.dataset.theme="dark";
+ else if(t==="light")document.documentElement.dataset.theme="light";
+ else delete document.documentElement.dataset.theme;
+ const b=$("theme");
+ if(b)b.textContent=(t==="dark"?"☀️":t==="light"?"🌙":"🌓");
+}
+function toggleTheme(){
+ const cur=st.get("uasaTheme")||"auto";
+ const next=cur==="auto"?"dark":cur==="dark"?"light":"auto";
+ st.set("uasaTheme",next);applyTheme();
+}
 async function loadUser(au){
- let r=await sb.from("profiles").select("username,xp,streak,year").eq("id",au.id).maybeSingle();
+ let r=await sb.from("profiles").select("username,xp,streak,year,last_active").eq("id",au.id).maybeSingle();
  if(r.error)throw r.error;
  let p=r.data;
  if(!p){
   const name=(au.email||"user").split("@")[0];
   const yr=(au.user_metadata&&au.user_metadata.year)||"Year 6";
-  const ins=await sb.from("profiles").upsert({id:au.id,username:name,year:yr,xp:0,streak:0},{onConflict:"id"});
+  const ins=await sb.from("profiles").upsert({
+   id:au.id,username:name,year:yr,xp:0,streak:0,last_active:null
+  },{onConflict:"id"});
   if(ins.error)throw ins.error;
-  p={username:name,year:yr,xp:0,streak:0}
+  p={username:name,year:yr,xp:0,streak:0,last_active:null}
  }
- const g=await sb.from("progress").select("lesson_key").eq("user_id",au.id);
- const prog={};(g.data||[]).forEach(x=>prog[x.lesson_key]=1);
- USER={id:au.id,username:p.username,year:p.year||"",xp:+p.xp||0,streak:+p.streak||0,lastActive:st.get("uasaLastActive_"+au.id),progress:prog}
+ const g=await sb.from("progress").select("subject").eq("user_id",au.id);
+ if(g.error)throw g.error;
+ const prog={};
+ (g.data||[]).forEach(x=>{
+  // New UASA+ rows store the lesson key in subject.
+  // Ignore older rows that contain only a normal subject name.
+  if(typeof x.subject==="string" && x.subject.includes("|"))prog[x.subject]=1;
+ });
+ USER={
+  id:au.id,
+  username:p.username,
+  year:p.year||"",
+  xp:+p.xp||0,
+  streak:+p.streak||0,
+  lastActive:p.last_active||null,
+  progress:prog
+ };
+ if(USER.lastActive)st.set("uasaLastActive_"+au.id,USER.lastActive);
 }
 function enter(){$("auth").classList.add("hidden");$("app").classList.remove("hidden");hdr();go("home")}
 async function logout(){try{await sb.auth.signOut()}catch(e){}USER=null;R=null;$("app").classList.add("hidden");$("auth").classList.remove("hidden");authTab("l")}
@@ -436,7 +508,7 @@ async function signup(){
   if(s.error){authMsg("Turn off Confirm email in Supabase.");return}
   au=s.data.user
  }
- const ins=await sb.from("profiles").upsert({id:au.id,username:n,year:yr,xp:0,streak:0},{onConflict:"id"});
+ const ins=await sb.from("profiles").upsert({id:au.id,username:n,year:yr,xp:0,streak:0,last_active:null},{onConflict:"id"});
  if(ins.error){authMsg("Profile failed: "+ins.error.message);return}
  await loadUser(au);enter();toast("🎉 Welcome, "+n+"!")
 }
@@ -456,6 +528,8 @@ async function login(){
  b.disabled=false
 }));
 $("pw").addEventListener("change",e=>{$("lp").type=$("sp").type=e.target.checked?"text":"password"});
+applyTheme();
+$("theme")?.addEventListener("click",toggleTheme);
 document.addEventListener("click",e=>{
  const t=e.target.closest("[data-a]");if(!t)return;
  const r=t.dataset.r,F={

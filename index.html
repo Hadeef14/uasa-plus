@@ -673,7 +673,7 @@ async function loadReview(){
  if(!items.length){box.innerHTML='<div class="card"><p class="mu">Finish a lesson first, then come back here to review it.</p></div>';return}
  const doneCount=items.filter(x=>x.reviewed).length;
  box.innerHTML=`<div class="card"><b>${doneCount}</b> / ${items.length} lessons reviewed <small class="mu">· ${USER.streakFreezes||0} freeze${(USER.streakFreezes||0)===1?"":"s"} (max 3)</small></div>
- ${items.map(x=>`<button class="card tap" data-a="rv" data-r="${esc(x.k)}" data-s="${esc(x.s)}" data-u="${x.u}" data-l="${x.l}">
+ ${items.map(x=>`<button class="card tap" data-a="rv" data-r="${esc(x.k)}" data-s="${esc(x.s)}" data-u="${esc(x.u)}" data-l="${esc(x.l)}">
   <b>${x.icon} ${esc(x.s)}</b>${!x.reviewed?'<span class="rvbadge">+5 XP</span>':""}<br>
   <small class="mu">${esc(x.u)} · ${esc(x.l)}${x.reviewed?" · ✅ reviewed":""}</small>
  </button>`).join("")}`;
@@ -780,10 +780,9 @@ async function answer(k){
  document.querySelectorAll("#an .ans").forEach((b,x)=>{b.disabled=true;if(x===q.answer)b.classList.add("ok");else if(x===k)b.classList.add("no")});
  const correctLetter="ABCD"[q.answer]||q.answer+1;
  const correctText=q.options[q.answer];
- $("fb").innerHTML=`<div class="fb">${ok?"✅ Correct!":"❌ Not quite. Correct answer: "+correctLetter+") "+esc(correctText)}</div><div class="fb why" id="whyBox">💡 Loading explanation…</div>`;
+ $("fb").innerHTML=`<div class="fb">${ok?"✅ Correct!":"❌ Not quite. Correct answer: "+correctLetter+") "+esc(correctText)}</div>${ok?"":`<div class="fb why" id="whyBox">💡 Loading explanation…</div>`}`;
  $("nx").classList.remove("hidden");$("nx").focus();
- if(ok){$("whyBox").classList.add("hidden");return}
- await loadWhy(q,correctLetter,correctText,k);
+ if(!ok)await loadWhy(q,correctLetter,correctText,k);
 }
 async function loadWhy(q,correctLetter,correctText,wrongIdx){
  const box=$("whyBox");if(!box)return;
@@ -795,10 +794,10 @@ async function loadWhy(q,correctLetter,correctText,wrongIdx){
   if(res.error)throw res.error;
   const why=(res.data&&res.data.why)||"";
   if(why){st.set(cacheKey,why);box.innerHTML="💡 <b>Why:</b> "+esc(why)}
-  else box.classList.add("hidden");
+  else box.innerHTML="💡 <b>Why:</b> <span class='mu'>Explanation not available right now.</span>";
  }catch(e){
   console.error("why failed",e);
-  box.classList.add("hidden");
+  box.innerHTML="💡 <b>Why:</b> <span class='mu'>Explanation not available right now.</span>";
  }
 }
 async function submitW(){

@@ -566,7 +566,7 @@ const today=()=>dayKey(0),yest=()=>dayKey(-1);
 let USER=null,NAV={s:"",u:0,l:0},R=null;
 const shuf=a=>{a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.random()*(i+1)|0;[a[i],a[j]]=[a[j],a[i]]}return a};
 const sq=q=>{if(q.w)return q;const o=shuf(q.options.map((t,i)=>[t,i]));return{q:q.q,img:q.img,options:o.map(x=>x[0]),answer:o.findIndex(x=>x[1]===q.answer)}};
-const lvl=()=>Math.floor(USER.xp/100)+1;
+const lvl=()=>Math.floor(USER.xp/350)+1;
 const streakNow=()=>USER.lastActive&&![today(),yest()].includes(USER.lastActive)?0:USER.streak;
 const bar=p=>`<div class="bar"><i style="width:${Math.round(p)}%"></i></div>`;
 function toast(m){const t=document.createElement("div");t.className="toast";t.setAttribute("role","status");t.textContent=m;document.body.appendChild(t);setTimeout(()=>t.remove(),2400)}
@@ -596,7 +596,7 @@ async function award(n,key){
   if(key)USER.progress[key]=1;
   st.set("uasaLastActive_"+USER.id,nextDate);
   hdr();
-  if(lvl()>Math.floor(beforeXp/100)+1)toast("🎉 Level "+lvl()+" reached!");
+  if(lvl()>Math.floor(beforeXp/350)+1)toast("🎉 Level "+lvl()+" reached!");
   if(n)pop(n);
  }catch(e){
   USER.xp=beforeXp;USER.streak=beforeStreak;USER.lastActive=beforeDate;
@@ -620,11 +620,11 @@ function nav(p){
  $("nv").innerHTML=items.map(x=>`<button class="${x[0]===p?"on":""}" data-a="page" data-r="${x[0]}">${x[1]}</button>`).join("")+`<button data-a="logout">🚪 Logout</button>`
 }
 const PAGES={
-home(){const n=SUBJ.reduce((a,s)=>a+sDone(s[0]),0),into=USER.xp%100;
+home(){const n=SUBJ.reduce((a,s)=>a+sDone(s[0]),0),into=USER.xp%350;
 return`<div class="hero"><h1>Welcome, ${esc(USER.display_name||USER.username)}!</h1><p>Learn. Practice. Level up.</p><button class="btn" data-a="page" data-r="subjects">START LEARNING</button><button class="btn" data-a="mix" data-r="">🎲 MIXED QUIZ</button>
 <button class="btn g" style="background:#ffffff22;color:#fff;border-color:#ffffff66" data-a="daily">${USER.dailyDone===today()?"✅ DAILY DONE":"🎯 DAILY CHALLENGE"}</button></div>
 <div class="stats">${[[USER.xp,"XP"],[lvl(),"Level"],[streakNow(),"Day streak"],[n,"Lessons done"]].map(x=>`<div class="card"><div class="n">${x[0]}</div><small>${x[1]}</small></div>`).join("")}</div>
-<div class="card"><h2>Level progress</h2>${bar(into)}<small>${into} / 100 XP to Level ${lvl()+1}</small></div>`},
+<div class="card"><h2>Level progress</h2>${bar(into/3.5)}<small>${into} / 350 XP to Level ${lvl()+1}</small></div>`},
 subjects(){return`<h1>📚 Subjects</h1><button class="btn g" data-a="mix" data-r="">🎲 Mixed quiz: all subjects</button><div class="grid" style="margin-top:12px">${SUBJ.map(s=>{const d=sDone(s[0]),t=sTot(s[0]);return`<button class="card tap" data-a="subj" data-r="${esc(s[0])}"><h2>${s[1]} ${esc(s[0])}</h2>${bar(t?d/t*100:0)}<small>${d} / ${t} lessons</small></button>`}).join("")}</div>`},
 leaderboard(){return`<h1>🏆 Leaderboard</h1><div class="card" id="lb"><p class="mu">Loading global leaderboard…</p></div>`},
 profile(){return`<h1>👤 ${esc(USER.display_name||USER.username)}</h1>

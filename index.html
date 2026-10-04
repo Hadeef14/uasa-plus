@@ -904,8 +904,22 @@ async function saveProfile(){
  const optOut=$("elb")?$("elb").checked:false;
  const cc=$("ecc")?$("ecc").value.trim().toUpperCase():"";
  setSaveState("saving");$("pmsg").textContent="Saving…";
+ if(cc){
+  const check=await sb.from("classes").select("code").eq("code",cc).maybeSingle();
+  if(!check.data){
+   setSaveState("error");
+   $("pmsg").textContent="Class code '"+cc+"' not found. Ask your teacher.";
+   return
+  }
+ }
  const r=await sb.from("profiles").update({display_name:name,year,leaderboard_opt_out:optOut,class_code:cc||null}).eq("id",USER.id);
- if(r.error){setSaveState("error");$("pmsg").textContent="Could not save: "+r.error.message;return}
+ if(r.error){
+  setSaveState("error");
+  $("pmsg").textContent=r.error.message.includes("does not exist")
+   ?"That class code does not exist."
+   :"Could not save: "+r.error.message;
+  return
+ }
  USER.display_name=name;USER.year=year;USER.leaderboardOptOut=optOut;USER.classCode=cc;
  setSaveState("saved");$("pmsg").textContent="✓ Saved";
  setTimeout(()=>go("profile"),600);

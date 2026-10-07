@@ -7,7 +7,6 @@
 :root{--bg:#f4f7fc;--pn:#fff;--p2:#e6edf8;--ln:#cbd6ea;--tx:#0f1b33;--mu:#55657f;--ac:#0369a1;--ak:#fff;--gd:#15803d;--bd:#b91c1c;--gl:#b45309;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
 @media(prefers-color-scheme:dark){:root:not([data-theme=light]){--bg:#0b1220;--pn:#16213a;--p2:#1d2b4a;--ln:#2b3b5e;--tx:#f1f5fb;--mu:#93a3c0;--ac:#38bdf8;--ak:#06283d;--gd:#22c55e;--bd:#ef4444;--gl:#fbbf24}}
 :root[data-theme=dark]{--bg:#0b1220;--pn:#16213a;--p2:#1d2b4a;--ln:#2b3b5e;--tx:#f1f5fb;--mu:#93a3c0;--ac:#38bdf8;--ak:#06283d;--gd:#22c55e;--bd:#ef4444;--gl:#fbbf24}
-html{scroll-padding-top:env(safe-area-inset-top,0px)}
 *{box-sizing:border-box}
 body{margin:0;font:16px/1.5 system-ui,"Trebuchet MS",Arial,sans-serif;background:var(--bg);color:var(--tx)}
 button,input,select,textarea{font:inherit}button{cursor:pointer}
@@ -65,6 +64,8 @@ main{max-width:900px;margin:auto;padding:20px 14px 40px}
 .tbl tbody tr:hover td{background:var(--p2)}
 .essay{background:var(--p2);padding:12px;border-radius:10px;margin:8px 0;white-space:pre-wrap;font-size:14px;line-height:1.6;word-break:break-word}
 .rvbadge{background:var(--gl);color:#fff;font-size:11px;font-weight:800;padding:2px 8px;border-radius:20px;margin-left:6px;vertical-align:middle}
+.hearts{color:var(--bd);font-weight:900;letter-spacing:-2px}
+.hearts .empty{opacity:.3}
 </style>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </head><body>
@@ -92,7 +93,7 @@ main{max-width:900px;margin:auto;padding:20px 14px 40px}
 <label><input type="checkbox" id="pw" style="width:auto"> Show password</label>
 <div id="am" role="status"></div></div></section>
 <div id="app" class="hidden">
-<header><div class="hl">UASA<span>+</span></div><div><span class="chip" id="hs"></span><span class="chip" id="hx"></span><span class="chip" id="cs">☁️ Saved</span><button class="chip" id="theme" type="button" aria-label="Toggle theme">🌙</button></div>
+<header><div class="hl">UASA<span>+</span></div><div><span class="chip" id="hs"></span><span class="chip" id="hx"></span><span class="chip hearts" id="hh">❤️❤️❤️❤️❤️</span><span class="chip" id="cs">☁️ Saved</span><button class="chip" id="theme" type="button" aria-label="Toggle theme">🌙</button></div>
 <nav id="nv"></nav></header>
 <main id="main"></main></div>
 <script>
@@ -563,7 +564,6 @@ Q("Faedah hubungan antarabangsa?",["Kerjasama ekonomi, pendidikan, keselamatan",
 };
 const $=id=>document.getElementById(id),esc=t=>String(t==null?"":t).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
 const mem={},st={get:k=>{try{const v=localStorage.getItem(k);if(v!==null)return v}catch(e){}return k in mem?mem[k]:null},set:(k,v)=>{mem[k]=v;try{localStorage.setItem(k,v)}catch(e){}},del:k=>{delete mem[k];try{localStorage.removeItem(k)}catch(e){}}};
-const jp=(t,d)=>{try{const v=JSON.parse(t);return v==null?d:v}catch(e){return d}};
 const KL_TIMEZONE="Asia/Kuala_Lumpur";
 const dayKey=(offset=0)=>{const d=new Date(Date.now()+offset*864e5);return new Intl.DateTimeFormat("en-CA",{timeZone:KL_TIMEZONE,year:"numeric",month:"2-digit",day:"2-digit"}).format(d)};
 const today=()=>dayKey(0),yest=()=>dayKey(-1);
@@ -581,27 +581,50 @@ function setSaveState(state){
  const [txt,cl]=m[state]||m.saved;
  el.textContent=txt;el.className="chip "+cl;
 }
-function hdr(){$("hs").textContent="🔥 "+streakNow();$("hx").textContent="⭐ "+USER.xp+" XP";setSaveState("saved")}
+function heartsUI(){
+ const h=USER.hearts??5;
+ let s="";
+ for(let i=0;i<5;i++)s+=i<h?"❤️":'<span class="empty">🤍</span>';
+ $("hh").innerHTML=s;
+}
+function hdr(){$("hs").textContent="🔥 "+streakNow();$("hx").textContent="⭐ "+USER.xp+" XP";heartsUI();setSaveState("saved")}
 async function refreshUserStats(){
- const r=await sb.from("profiles").select("xp,streak,last_active,streak_freezes").eq("id",USER.id).single();
+ const r=await sb.from("profiles").select("xp,streak,last_active,streak_freezes,hearts,daily_xp,daily_xp_date").eq("id",USER.id).single();
  if(r.error)throw r.error;
  const beforeXp=USER.xp;
  USER.xp=+r.data.xp||0;
  USER.streak=+r.data.streak||0;
  USER.lastActive=r.data.last_active;
  USER.streakFreezes=+r.data.streak_freezes||0;
+ USER.hearts=r.data.hearts??5;
+ USER.dailyXp=r.data.daily_xp||0;
+ USER.dailyXpDate=r.data.daily_xp_date||today();
  hdr();
  const delta=USER.xp-beforeXp;
  if(delta>0){pop(delta);if(lvl()>Math.floor(beforeXp/350)+1)toast("🎉 Level "+lvl()+" reached!")}
+}
+async function refreshHearts(){
+ try{
+  const r=await sb.rpc("refill_hearts");
+  if(!r.error&&typeof r.data==="number"){USER.hearts=r.data;heartsUI()}
+ }catch(e){}
+}
+async function loseHeart(){
+ try{
+  const r=await sb.rpc("deduct_heart");
+  if(!r.error&&typeof r.data==="number"){USER.hearts=r.data;heartsUI()}
+ }catch(e){}
 }
 async function award(score,maxScore,bonus,key){
  setSaveState("saving");
  try{
   if(key){
    const r=await sb.from("progress").insert({user_id:USER.id,lesson_key:key,score:score|0,max_score:maxScore|0,bonus:bonus|0});
-   if(r.error)throw r.error;
+   if(r.error&&r.error.code!=="23505")throw r.error;
    USER.progress[key]=1;
   }
+  const xpGain=(score|0)*10+(bonus|0);
+  if(xpGain>0){try{await sb.rpc("bump_daily_xp",{amount:xpGain})}catch(e){}}
   await refreshUserStats();
   st.set("uasaLastActive_"+USER.id,USER.lastActive);
   setSaveState("saved");
@@ -628,8 +651,10 @@ function nav(p){
 }
 const PAGES={
 home(){const n=SUBJ.reduce((a,s)=>a+sDone(s[0]),0),into=USER.xp%350;
+const goal=50,prog=Math.min(USER.dailyXp||0,goal),pct=prog/goal*100;
 return`<div class="hero"><h1>Welcome, ${esc(USER.display_name||USER.username)}!</h1><p>Learn. Practice. Level up.</p><button class="btn" data-a="page" data-r="subjects">START LEARNING</button><button class="btn" data-a="mix" data-r="">🎲 MIXED QUIZ</button>
 <button class="btn g" style="background:#ffffff22;color:#fff;border-color:#ffffff66" data-a="daily">${USER.dailyDone===today()?"✅ DAILY DONE":"🎯 DAILY CHALLENGE"}</button></div>
+<div class="card"><h2>📅 Daily Goal</h2>${bar(pct)}<small>${prog} / ${goal} XP today${prog>=goal?" — goal reached! 🎉":""}</small></div>
 <div class="stats">${[[USER.xp,"XP"],[lvl(),"Level"],[streakNow()+(USER.streakFreezes?" ❄️"+USER.streakFreezes:""),"Day streak"],[n,"Lessons done"]].map(x=>`<div class="card"><div class="n">${x[0]}</div><small>${x[1]}</small></div>`).join("")}</div>
 <div class="card"><h2>Level progress</h2>${bar(into/3.5)}<small>${into} / 350 XP to Level ${lvl()+1}</small></div>`},
 subjects(){return`<h1>📚 Subjects</h1><button class="btn g" data-a="mix" data-r="">🎲 Mixed quiz: all subjects</button><div class="grid" style="margin-top:12px">${SUBJ.map(s=>{const d=sDone(s[0]),t=sTot(s[0]);return`<button class="card tap" data-a="subj" data-r="${esc(s[0])}"><h2>${s[1]} ${esc(s[0])}</h2>${bar(t?d/t*100:0)}<small>${d} / ${t} lessons</small></button>`}).join("")}</div>`},
@@ -682,6 +707,7 @@ async function startReview(k,s,u,l){
  const parts=k.split("|");const si=SUBJ.findIndex(x=>x[0]===s);if(si<0)return;
  const unit=U(s).find(x=>x.i===+parts[1]);if(!unit)return;
  const les=unit.ls.find(x=>x.j===+parts[2]);if(!les)return;
+ if((USER.hearts??5)<=0){toast("💔 No hearts. Wait or try again later.");return}
  quiz(les.questions,{title:"✨ Review: "+l,key:null,bonus:0,kind:"review",reviewKey:k,back:()=>go("review")});
 }
 async function completeReview(k){
@@ -737,11 +763,13 @@ function startLes(){
 function startCh(){
  const s=NAV.s,u=U(s).find(x=>x.i===NAV.u);
  if(!u||!chOpen(s,u)||!(u.challenge||[]).length){toast("🔒 Finish all lessons first.");return}
+ if((USER.hearts??5)<=0){toast("💔 No hearts. Wait or try again later.");return}
  quiz(u.challenge,{title:"Unit Challenge",key:key(s,u.i,"c"),bonus:50,kind:"challenge",back:()=>unit(u.i)})
 }
 function startMix(s){
  const p=pool(s||"");
  if(!p.length){toast("No questions yet.");return}
+ if((USER.hearts??5)<=0){toast("💔 No hearts. Wait or try again later.");return}
  quiz(shuf(p).slice(0,10),{title:s?"Mixed: "+s:"Mixed quiz",key:null,bonus:0,kind:"mix",back:()=>s?subj(s):go("home")})
 }
 function quiz(qs,ctx){R={raw:qs,qs:qs.map(sq),i:0,c:0,a:false,ctx};draw()}
@@ -777,6 +805,8 @@ async function answer(k){
  if(!R||R.a||!$("an"))return;
  const q=R.qs[R.i];if(k<0||k>=q.options.length)return;
  R.a=true;const ok=k===q.answer;if(ok)R.c++;
+ const practice=R.ctx.kind==="mix"||R.ctx.kind==="daily"||R.ctx.kind==="review"||R.ctx.kind==="challenge";
+ if(!ok&&practice){await loseHeart()}
  document.querySelectorAll("#an .ans").forEach((b,x)=>{b.disabled=true;if(x===q.answer)b.classList.add("ok");else if(x===k)b.classList.add("no")});
  const correctLetter="ABCD"[q.answer]||q.answer+1;
  const correctText=q.options[q.answer];
@@ -880,6 +910,7 @@ async function startDaily(){
  if(USER.dailyDone===today()){toast("✅ You already did today's challenge!");return}
  const p=poolForYear(USER.year);
  if(!p.length){toast("No questions yet.");return}
+ if((USER.hearts??5)<=0){toast("💔 No hearts. Wait or try again later.");return}
  const qs=seededShuffle(p,today()).slice(0,10);
  quiz(qs,{title:"🎯 Daily Challenge — "+today(),key:null,bonus:0,kind:"daily",back:()=>go("home")})
 }
@@ -1074,7 +1105,7 @@ function toggleTheme(){
  st.set("uasaTheme",next);applyTheme();
 }
 async function loadUser(au){
- let r=await sb.from("profiles").select("username,display_name,role,xp,streak,year,last_active,leaderboard_opt_out,streak_freezes,class_code").eq("id",au.id).maybeSingle();
+ let r=await sb.from("profiles").select("username,display_name,role,xp,streak,year,last_active,leaderboard_opt_out,streak_freezes,class_code,hearts,daily_xp,daily_xp_date").eq("id",au.id).maybeSingle();
  if(r.error)throw r.error;
  let p=r.data;
  if(!p){
@@ -1088,12 +1119,14 @@ async function loadUser(au){
  if(g.error)throw g.error;
  const prog={};
  (g.data||[]).forEach(x=>{if(x.lesson_key)prog[x.lesson_key]=1;});
- USER={id:au.id,username:p.username,display_name:p.display_name||p.username,role:p.role||"student",year:p.year||"",classCode:p.class_code||"",xp:+p.xp||0,streak:+p.streak||0,lastActive:p.last_active||null,leaderboardOptOut:!!p.leaderboard_opt_out,streakFreezes:+p.streak_freezes||0,progress:prog,dailyDone:null};
+ USER={id:au.id,username:p.username,display_name:p.display_name||p.username,role:p.role||"student",year:p.year||"",classCode:p.class_code||"",xp:+p.xp||0,streak:+p.streak||0,lastActive:p.last_active||null,leaderboardOptOut:!!p.leaderboard_opt_out,streakFreezes:+p.streak_freezes||0,hearts:p.hearts??5,dailyXp:p.daily_xp||0,dailyXpDate:p.daily_xp_date||null,progress:prog,dailyDone:null};
  if(USER.lastActive)st.set("uasaLastActive_"+au.id,USER.lastActive);
  try{
   const d=await sb.from("daily_completions").select("day").eq("user_id",au.id).eq("day",today()).maybeSingle();
   if(d.data)USER.dailyDone=today();
  }catch(e){}
+ await refreshHearts();
+ await refreshUserStats();
 }
 function enter(){$("auth").classList.add("hidden");$("app").classList.remove("hidden");hdr();go("home")}
 async function logout(){try{await sb.auth.signOut()}catch(e){}USER=null;R=null;$("app").classList.add("hidden");$("auth").classList.remove("hidden");authTab("l")}
@@ -1155,6 +1188,7 @@ document.addEventListener("keydown",e=>{
  if(!sb){authMsg("Could not load Supabase library.");return}
  try{
   const{data}=await sb.auth.getSession();
+  if(session={data.session}){}
   if(data.session){await loadUser(data.session.user);enter()}
  }catch(e){console.warn(e)}
 })();

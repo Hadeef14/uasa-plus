@@ -1187,8 +1187,7 @@ document.addEventListener("keydown",e=>{
 (async()=>{
  if(!sb){authMsg("Could not load Supabase library.");return}
  try{
-  const{data}=await sb.auth.getSession();
-  if(session={data.session}){}
+  const{data}=await sb.auth.getSession()
   if(data.session){await loadUser(data.session.user);enter()}
  }catch(e){console.warn(e)}
 })();

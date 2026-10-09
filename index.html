@@ -78,6 +78,25 @@ main{max-width:900px;margin:auto;padding:20px 14px 40px}
 <label for="lp">Password</label>
 <input id="lp" type="password" autocomplete="current-password">
 <button class="btn" style="width:100%">LOGIN</button>
+<button type="button" class="lk" style="margin-top:12px;display:block" data-a="showForgot">Forgot password?</button>
+</form>
+<form id="ff" class="hidden" novalidate>
+<p class="mu" style="margin-top:0">Enter your username. If you saved a recovery email at signup, we'll send a 6-digit code.</p>
+<label for="fu">Username</label>
+<input id="fu" autocomplete="username">
+<button class="btn" style="width:100%">SEND CODE</button>
+<button type="button" class="lk" style="margin-top:8px" data-a="showLogin">← Back to login</button>
+</form>
+<form id="cf" class="hidden" novalidate>
+<p class="mu" style="margin-top:0">Check your email for the 6-digit code.</p>
+<label for="cu">Username</label>
+<input id="cu" autocomplete="username">
+<label for="cc">6-digit code</label>
+<input id="cc" inputmode="numeric" maxlength="6" autocomplete="one-time-code">
+<label for="cn">New password (6+ characters)</label>
+<input id="cn" type="password" autocomplete="new-password">
+<button class="btn" style="width:100%">SET NEW PASSWORD</button>
+<button type="button" class="lk" style="margin-top:8px" data-a="showLogin">← Back to login</button>
 </form>
 <form id="sf" class="hidden" novalidate>
 <label for="su">Username (3-20 letters, numbers, . - _)</label>
@@ -88,6 +107,8 @@ main{max-width:900px;margin:auto;padding:20px 14px 40px}
 <select id="sy"><option>Year 4</option><option>Year 5</option><option>Year 6</option></select>
 <label for="sc">Class code (optional)</label>
 <input id="sc" maxlength="6" placeholder="e.g. K7M2PQ" autocomplete="off">
+<label for="sr">Recovery email (for password reset)</label>
+<input id="sr" type="email" placeholder="yourname@gmail.com" autocomplete="email">
 <button class="btn" style="width:100%">CREATE ACCOUNT</button>
 </form>
 <label><input type="checkbox" id="pw" style="width:auto"> Show password</label>
@@ -669,6 +690,9 @@ profile(){return`<h1>👤 ${esc(USER.display_name||USER.username)}</h1>
  <select id="eyr">${["Year 4","Year 5","Year 6"].map(y=>`<option${y===USER.year?" selected":""}>${y}</option>`).join("")}</select>
  <label for="ecc">Class code</label>
  <input id="ecc" maxlength="6" value="${esc(USER.classCode||"")}" placeholder="e.g. K7M2PQ" autocomplete="off">
+ <label for="ere">Recovery email</label>
+ <input id="ere" type="email" value="${esc(USER.recoveryEmail||"")}" placeholder="yourname@gmail.com" autocomplete="email">
+ <small class="mu">Used for "Forgot password" — leave blank if you don't want it.</small>
  <label><input type="checkbox" id="elb" style="width:auto"${USER.leaderboardOptOut?" checked":""}> Hide me from the leaderboard</label>
  <button class="btn" data-a="saveProfile">SAVE PROFILE</button>
  <span id="pmsg" class="mu" style="margin-left:10px"></span>
@@ -934,6 +958,8 @@ async function saveProfile(){
  const year=$("eyr")?$("eyr").value:USER.year;
  const optOut=$("elb")?$("elb").checked:false;
  const cc=$("ecc")?$("ecc").value.trim().toUpperCase():"";
+ const re=$("ere")?$("ere").value.trim().toLowerCase():"";
+ if(re && !/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(re)){$("pmsg").textContent="Recovery email doesn't look right.";return}
  setSaveState("saving");$("pmsg").textContent="Saving…";
  if(cc){
   const check=await sb.from("classes").select("code").eq("code",cc).maybeSingle();
@@ -943,7 +969,7 @@ async function saveProfile(){
    return
   }
  }
- const r=await sb.from("profiles").update({display_name:name,year,leaderboard_opt_out:optOut,class_code:cc||null}).eq("id",USER.id);
+ const r=await sb.from("profiles").update({display_name:name,year,leaderboard_opt_out:optOut,class_code:cc||null,recovery_email:re||null}).eq("id",USER.id);
  if(r.error){
   setSaveState("error");
   $("pmsg").textContent=r.error.message.includes("does not exist")
@@ -951,7 +977,7 @@ async function saveProfile(){
    :"Could not save: "+r.error.message;
   return
  }
- USER.display_name=name;USER.year=year;USER.leaderboardOptOut=optOut;USER.classCode=cc;
+ USER.display_name=name;USER.year=year;USER.leaderboardOptOut=optOut;USER.classCode=cc;USER.recoveryEmail=re;
  setSaveState("saved");$("pmsg").textContent="✓ Saved";
  setTimeout(()=>go("profile"),600);
 }
@@ -1090,7 +1116,18 @@ async function resetStudent(uid){
  openStudent(uid);
 }
 const authMsg=t=>{$("am").textContent=t};
-function authTab(r){const l=r==="l";$("lf").classList.toggle("hidden",!l);$("sf").classList.toggle("hidden",l);$("tl").className="btn"+(l?"":" g");$("ts").className="btn"+(l?" g":"");authMsg("")}
+function authTab(r){
+ const showLogin=r==="l", showSignup=r==="s", showForgot=r==="f", showConfirm=r==="c";
+ $("lf").classList.toggle("hidden",!showLogin);
+ $("sf").classList.toggle("hidden",!showSignup);
+ $("ff").classList.toggle("hidden",!showForgot);
+ $("cf").classList.toggle("hidden",!showConfirm);
+ $("tl").className="btn"+(showLogin?"":" g");
+ $("ts").className="btn"+(showSignup?"":" g");
+ const tabs=$("tl")&&$("tl").parentElement;
+ if(tabs)tabs.classList.toggle("hidden",showForgot||showConfirm);
+ authMsg("");
+}
 function applyTheme(){
  const t=st.get("uasaTheme")||"auto";
  if(t==="dark")document.documentElement.dataset.theme="dark";
@@ -1105,7 +1142,7 @@ function toggleTheme(){
  st.set("uasaTheme",next);applyTheme();
 }
 async function loadUser(au){
- let r=await sb.from("profiles").select("username,display_name,role,xp,streak,year,last_active,leaderboard_opt_out,streak_freezes,class_code,hearts,daily_xp,daily_xp_date").eq("id",au.id).maybeSingle();
+ let r=await sb.from("profiles").select("username,display_name,role,xp,streak,year,last_active,leaderboard_opt_out,streak_freezes,class_code,hearts,daily_xp,daily_xp_date,recovery_email").eq("id",au.id).maybeSingle();
  if(r.error)throw r.error;
  let p=r.data;
  if(!p){
@@ -1119,7 +1156,7 @@ async function loadUser(au){
  if(g.error)throw g.error;
  const prog={};
  (g.data||[]).forEach(x=>{if(x.lesson_key)prog[x.lesson_key]=1;});
- USER={id:au.id,username:p.username,display_name:p.display_name||p.username,role:p.role||"student",year:p.year||"",classCode:p.class_code||"",xp:+p.xp||0,streak:+p.streak||0,lastActive:p.last_active||null,leaderboardOptOut:!!p.leaderboard_opt_out,streakFreezes:+p.streak_freezes||0,hearts:p.hearts??5,dailyXp:p.daily_xp||0,dailyXpDate:p.daily_xp_date||null,progress:prog,dailyDone:null};
+ USER={id:au.id,username:p.username,display_name:p.display_name||p.username,role:p.role||"student",year:p.year||"",classCode:p.class_code||"",recoveryEmail:p.recovery_email||"",xp:+p.xp||0,streak:+p.streak||0,lastActive:p.last_active||null,leaderboardOptOut:!!p.leaderboard_opt_out,streakFreezes:+p.streak_freezes||0,hearts:p.hearts??5,dailyXp:p.daily_xp||0,dailyXpDate:p.daily_xp_date||null,progress:prog,dailyDone:null};
  if(USER.lastActive)st.set("uasaLastActive_"+au.id,USER.lastActive);
  try{
   const d=await sb.from("daily_completions").select("day").eq("user_id",au.id).eq("day",today()).maybeSingle();
@@ -1137,6 +1174,8 @@ async function signup(){
  if(pw.length<6){authMsg("Password must be at least 6 characters.");return}
  authMsg("Creating account…");
  const cc=$("sc")?$("sc").value.trim().toUpperCase():"";
+ const re=$("sr")?$("sr").value.trim().toLowerCase():"";
+ if(re && !/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(re)){authMsg("That recovery email doesn't look right.");return}
  const{data,error}=await sb.auth.signUp({email:cloudEmail(n),password:pw,options:{data:{year:yr}}});
  if(error){authMsg(/registered|exists/i.test(error.message)?"That username is taken.":"Sign up failed: "+error.message);return}
  let au=data.user;
@@ -1145,7 +1184,7 @@ async function signup(){
   if(s.error){authMsg("Turn off Confirm email in Supabase.");return}
   au=s.data.user
  }
- const ins=await sb.from("profiles").upsert({id:au.id,username:n,display_name:n,year:yr,class_code:cc||null,xp:0,streak:0,last_active:null},{onConflict:"id"});
+ const ins=await sb.from("profiles").upsert({id:au.id,username:n,display_name:n,year:yr,class_code:cc||null,recovery_email:re||null,xp:0,streak:0,last_active:null},{onConflict:"id"});
  if(ins.error){authMsg("Profile failed: "+ins.error.message);return}
  await loadUser(au);enter();toast("🎉 Welcome, "+n+"!")
 }
@@ -1158,7 +1197,43 @@ async function login(){
  if(error){authMsg("Wrong username or password.");return}
  await loadUser(data.user);enter()
 }
-[["lf",login],["sf",signup]].forEach(([id,fn])=>$(id).addEventListener("submit",async e=>{
+async function requestReset(){
+ const n=$("fu").value.trim().toLowerCase();
+ if(!n){authMsg("Enter your username.");return}
+ authMsg("Sending…");
+ try{
+  const res=await sb.functions.invoke("request-password-reset",{body:{username:n}});
+  if(res.error)throw res.error;
+  if(res.data&&res.data.error){authMsg(res.data.error);return}
+  $("cu").value=n;
+  authMsg("");
+  authTab("c");
+  toast("📧 Check your email for the code");
+ }catch(e){
+  authMsg("Could not send code: "+(e.message||e));
+ }
+}
+async function confirmReset(){
+ const n=$("cu").value.trim().toLowerCase();
+ const code=$("cc").value.trim();
+ const np=$("cn").value;
+ if(!n||!code){authMsg("Enter your username and code.");return}
+ if(np.length<6){authMsg("New password must be at least 6 characters.");return}
+ authMsg("Resetting…");
+ try{
+  const res=await sb.functions.invoke("confirm-password-reset",{body:{username:n,code,new_password:np}});
+  if(res.error)throw res.error;
+  if(res.data&&res.data.error){authMsg(res.data.error);return}
+  authMsg("");
+  toast("✅ Password changed! Log in now.");
+  $("lu").value=n;
+  $("lp").value="";
+  authTab("l");
+ }catch(e){
+  authMsg("Could not reset: "+(e.message||e));
+ }
+}
+[["lf",login],["sf",signup],["ff",requestReset],["cf",confirmReset]].forEach(([id,fn])=>$(id).addEventListener("submit",async e=>{
  e.preventDefault();
  const b=e.target.querySelector("button");b.disabled=true;
  try{await fn()}catch(err){authMsg("Error: "+(err.message||err))}
@@ -1171,6 +1246,7 @@ document.addEventListener("click",e=>{
  const t=e.target.closest("[data-a]");if(!t)return;
  const r=t.dataset.r,F={
   auth:()=>authTab(r),page:()=>go(r),logout:logout,mix:()=>startMix(r),subj:()=>subj(r),
+  showForgot:()=>authTab("f"),showLogin:()=>authTab("l"),
   unit:()=>unit(+r),les:()=>lesson(+r),startLes:startLes,startCh:startCh,ans:()=>answer(+r),
   next:next,retry:()=>R&&quiz(R.raw,R.ctx),back:()=>R&&R.ctx.back(),
   chest:()=>claimChest(+r),submitW:submitW,
@@ -1187,7 +1263,7 @@ document.addEventListener("keydown",e=>{
 (async()=>{
  if(!sb){authMsg("Could not load Supabase library.");return}
  try{
-  const{data}=await sb.auth.getSession()
+  const{data}=await sb.auth.getSession();
   if(data.session){await loadUser(data.session.user);enter()}
  }catch(e){console.warn(e)}
 })();

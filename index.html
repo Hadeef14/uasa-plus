@@ -1,26 +1,37 @@
 <!DOCTYPE html>
 <html lang="en"><head><meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="UASA+ — free practice app for Malaysian primary students (Year 4–6). Lessons, quizzes, daily challenges, streaks and more. Made by Hadeef.">
+<meta name="color-scheme" content="light dark">
+<meta name="theme-color" id="tc" content="#f4f7fc">
+<meta property="og:type" content="website">
+<meta property="og:title" content="UASA+ — Made by Hadeef">
+<meta property="og:description" content="Learn. Practice. Level up. Free UASA practice for Malaysian primary students.">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E🎓%3C/text%3E%3C/svg%3E">
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
 <title>UASA+ — Made by Hadeef</title>
 <style>
-:root{--bg:#f4f7fc;--pn:#fff;--p2:#e6edf8;--ln:#cbd6ea;--tx:#0f1b33;--mu:#55657f;--ac:#0369a1;--ak:#fff;--gd:#15803d;--bd:#b91c1c;--gl:#b45309;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
-@media(prefers-color-scheme:dark){:root:not([data-theme=light]){--bg:#0b1220;--pn:#16213a;--p2:#1d2b4a;--ln:#2b3b5e;--tx:#f1f5fb;--mu:#93a3c0;--ac:#38bdf8;--ak:#06283d;--gd:#22c55e;--bd:#ef4444;--gl:#fbbf24}}
-:root[data-theme=dark]{--bg:#0b1220;--pn:#16213a;--p2:#1d2b4a;--ln:#2b3b5e;--tx:#f1f5fb;--mu:#93a3c0;--ac:#38bdf8;--ak:#06283d;--gd:#22c55e;--bd:#ef4444;--gl:#fbbf24}
+:root{--bg:#f4f7fc;--pn:#fff;--p2:#e6edf8;--ln:#cbd6ea;--tx:#0f1b33;--mu:#55657f;--ac:#0369a1;--ak:#fff;--gd:#15803d;--bd:#b91c1c;--gl:#b45309;box-sizing:border-box;color-scheme:light;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media(prefers-color-scheme:dark){:root:not([data-theme=light]){--bg:#0b1220;--pn:#16213a;--p2:#1d2b4a;--ln:#2b3b5e;--tx:#f1f5fb;--mu:#93a3c0;--ac:#38bdf8;--ak:#06283d;--gd:#22c55e;--bd:#ef4444;--gl:#fbbf24;color-scheme:dark}}
+:root[data-theme=dark]{--bg:#0b1220;--pn:#16213a;--p2:#1d2b4a;--ln:#2b3b5e;--tx:#f1f5fb;--mu:#93a3c0;--ac:#38bdf8;--ak:#06283d;--gd:#22c55e;--bd:#ef4444;--gl:#fbbf24;color-scheme:dark}
+:root[data-theme=light]{color-scheme:light}
 *{box-sizing:border-box}
-body{margin:0;font:16px/1.5 system-ui,"Trebuchet MS",Arial,sans-serif;background:var(--bg);color:var(--tx)}
-button,input,select,textarea{font:inherit}button{cursor:pointer}
+body{margin:0;font:16px/1.5 system-ui,"Trebuchet MS",Arial,sans-serif;background:var(--bg);color:var(--tx);-webkit-tap-highlight-color:transparent}
+::selection{background:var(--ac);color:var(--ak)}
+button,input,select,textarea{font:inherit}button{cursor:pointer;touch-action:manipulation}
+button:disabled{opacity:.55;cursor:not-allowed;transform:none}
 :focus-visible{outline:3px solid var(--gl);outline-offset:2px}
+main:focus{outline:none}
 .hidden{display:none!important}
 h1,h2{line-height:1.2;margin:0 0 8px}small,.mu,label{color:var(--mu)}label{display:block;margin-top:10px}
 input,select,textarea{width:100%;padding:12px;margin:4px 0 8px;border-radius:10px;border:1px solid var(--ln);background:var(--pn);color:var(--tx)}
 textarea{font-family:monospace}
-.btn{padding:12px 18px;margin:6px 6px 0 0;border:0;border-radius:12px;background:var(--ac);color:var(--ak);font-weight:800;box-shadow:0 3px 0 #0005}
+.btn{padding:12px 18px;margin:6px 6px 0 0;border:0;border-radius:12px;background:var(--ac);color:var(--ak);font-weight:800;box-shadow:0 3px 0 #0005;transition:transform .12s ease,box-shadow .12s ease,background .2s ease}
 .btn:active{transform:translateY(2px)}
 .btn.g{background:none;border:1px solid var(--ln);color:var(--tx);box-shadow:none}
 .card{background:var(--pn);border:1px solid var(--ln);border-radius:16px;padding:18px;margin-bottom:12px}
 .tap{width:100%;text-align:left;color:var(--tx)}.tap:hover{border-color:var(--ac)}
-#auth{min-height:100vh;display:grid;place-items:center;padding:20px}
+#auth{min-height:100dvh;display:grid;place-items:center;padding:20px}
 .box{width:min(400px,100%)}.logo{font-size:44px;font-weight:900;text-align:center}.logo span,.hl span{color:var(--ac)}
 .tabs{display:flex;gap:8px;margin:14px 0}.tabs .btn{flex:1;margin:0}
 #am{min-height:24px;text-align:center;color:var(--gl)}
@@ -41,7 +52,8 @@ main{max-width:900px;margin:auto;padding:20px 14px 40px}
 .lk{background:none;border:0;color:var(--ac);padding:0;text-decoration:underline}
 .learn{font-size:18px;max-width:66ch}
 .qz{max-width:640px;margin:auto}.row{display:flex;gap:12px;align-items:center}.row .btn{margin:0}
-.ans{display:flex;gap:12px;align-items:center;width:100%;padding:14px;margin-top:10px;border:2px solid var(--ln);border-radius:14px;background:var(--pn);color:var(--tx);text-align:left}
+.ans{display:flex;gap:12px;align-items:center;width:100%;padding:14px;margin-top:10px;border:2px solid var(--ln);border-radius:14px;background:var(--pn);color:var(--tx);text-align:left;transition:border-color .15s ease,background .15s ease}
+.ans:hover:not(:disabled){border-color:var(--ac)}
 .ans b{flex:none;width:28px;height:28px;border-radius:8px;background:var(--p2);display:grid;place-items:center}
 .ans.ok{background:var(--gd);color:#fff;border-color:var(--gd)}.ans.no{background:var(--bd);color:#fff;border-color:var(--bd)}
 .fb{margin:14px 0;padding:12px;border-radius:12px;font-weight:700;background:var(--p2)}
@@ -56,7 +68,7 @@ main{max-width:900px;margin:auto;padding:20px 14px 40px}
 .pop{top:40%;font-size:40px;font-weight:900;color:var(--gl);animation:up 1.2s forwards;pointer-events:none}
 @keyframes up{to{opacity:0;top:30%}}
 @media(max-width:700px){.stats{grid-template-columns:repeat(2,1fr)}.grid{grid-template-columns:1fr}}
-@media(prefers-reduced-motion:reduce){*{animation:none!important}}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important;scroll-behavior:auto!important}}
 .tbl{width:100%;border-collapse:collapse}
 .tbl th,.tbl td{padding:10px 8px;text-align:left;border-bottom:1px solid var(--ln)}
 .tbl th{color:var(--mu);font-weight:600;font-size:13px;letter-spacing:.03em;text-transform:uppercase}
@@ -69,6 +81,7 @@ main{max-width:900px;margin:auto;padding:20px 14px 40px}
 </style>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </head><body>
+<noscript><div class="card" style="max-width:420px;margin:40px auto;text-align:center"><h1>UASA+</h1><p>This app needs JavaScript to run. Please enable JavaScript and reload the page.</p></div></noscript>
 <section id="auth"><div class="box card">
 <div class="logo">UASA<span>+</span></div><p class="c mu">Made by Hadeef</p>
 <div class="tabs"><button class="btn" id="tl" data-a="auth" data-r="l">Login</button><button class="btn g" id="ts" data-a="auth" data-r="s">Sign Up</button></div>
@@ -92,7 +105,7 @@ main{max-width:900px;margin:auto;padding:20px 14px 40px}
 <label for="cu">Username</label>
 <input id="cu" autocomplete="username">
 <label for="cc">6-digit code</label>
-<input id="cc" inputmode="numeric" maxlength="6" autocomplete="one-time-code">
+<input id="cc" inputmode="numeric" maxlength="6" autocomplete="one-time-code" spellcheck="false">
 <label for="cn">New password (6+ characters)</label>
 <input id="cn" type="password" autocomplete="new-password">
 <button class="btn" style="width:100%">SET NEW PASSWORD</button>
@@ -106,17 +119,17 @@ main{max-width:900px;margin:auto;padding:20px 14px 40px}
 <label for="sy">Year</label>
 <select id="sy"><option>Year 4</option><option>Year 5</option><option>Year 6</option></select>
 <label for="sc">Class code (optional)</label>
-<input id="sc" maxlength="6" placeholder="e.g. K7M2PQ" autocomplete="off">
+<input id="sc" maxlength="6" placeholder="e.g. K7M2PQ" autocomplete="off" autocapitalize="characters" spellcheck="false">
 <label for="sr">Recovery email (for password reset)</label>
 <input id="sr" type="email" placeholder="yourname@gmail.com" autocomplete="email">
 <button class="btn" style="width:100%">CREATE ACCOUNT</button>
 </form>
-<label><input type="checkbox" id="pw" style="width:auto"> Show password</label>
+<label><input type="checkbox" id="pw" style="width:auto"> Show passwords</label>
 <div id="am" role="status"></div></div></section>
 <div id="app" class="hidden">
-<header><div class="hl">UASA<span>+</span></div><div><span class="chip" id="hs"></span><span class="chip" id="hx"></span><span class="chip hearts" id="hh">❤️❤️❤️❤️❤️</span><span class="chip" id="cs">☁️ Saved</span><button class="chip" id="theme" type="button" aria-label="Toggle theme">🌙</button></div>
-<nav id="nv"></nav></header>
-<main id="main"></main></div>
+<header><div class="hl">UASA<span>+</span></div><div><span class="chip" id="hs"></span><span class="chip" id="hx"></span><span class="chip hearts" id="hh" role="img" aria-label="Hearts"></span><span class="chip" id="cs" role="status">☁️ Saved</span><button class="chip" id="theme" type="button" aria-label="Theme: auto. Tap to change.">🌓</button></div>
+<nav id="nv" aria-label="Main"></nav></header>
+<main id="main" tabindex="-1"></main></div>
 <script>
 const SUPABASE_URL="https://bmjnloqqagzwgrwdvbgw.supabase.co";
 const SUPABASE_KEY="sb_publishable_WE5lAYz1a5pAvP3btNaM5Q_7EzA2DN4";
@@ -606,9 +619,9 @@ function heartsUI(){
  const h=USER.hearts??5;
  let s="";
  for(let i=0;i<5;i++)s+=i<h?"❤️":'<span class="empty">🤍</span>';
- $("hh").innerHTML=s;
+ const el=$("hh");el.innerHTML=s;el.setAttribute("aria-label",h+" of 5 hearts");
 }
-function hdr(){$("hs").textContent="🔥 "+streakNow();$("hx").textContent="⭐ "+USER.xp+" XP";heartsUI();setSaveState("saved")}
+function hdr(){const hs=$("hs"),hx=$("hx");hs.textContent="🔥 "+streakNow();hs.setAttribute("aria-label",streakNow()+" day streak");hx.textContent="⭐ "+USER.xp+" XP";hx.setAttribute("aria-label",USER.xp+" XP");heartsUI();setSaveState("saved")}
 async function refreshUserStats(){
  const r=await sb.from("profiles").select("xp,streak,last_active,streak_freezes,hearts,daily_xp,daily_xp_date").eq("id",USER.id).single();
  if(r.error)throw r.error;
@@ -663,12 +676,12 @@ const unlocked=(s,u,x)=>x===0||done(key(s,u.i,u.ls[x-1].j)),chOpen=(s,u)=>u.ls.l
 const pool=s=>{const o=[];(s?[s]:SUBJ.map(x=>x[0])).forEach(n=>U(n).forEach(u=>{u.ls.forEach(l=>o.push(...l.questions.filter(q=>!q.w)));o.push(...(u.challenge||[]).filter(q=>!q.w))}));return o};
 const unitYear=t=>{const m=/Unit (\d+)/.exec(t||"");if(!m)return 0;const n=+m[1];return n<=5?4:n<=10?5:6};
 const poolForYear=y=>{const n={"Year 4":4,"Year 5":5,"Year 6":6}[y]||6;const o=[];SUBJ.forEach(s=>U(s[0]).forEach(u=>{const uy=unitYear(u.title);if(uy!==0&&uy!==n)return;u.ls.forEach(l=>o.push(...l.questions.filter(q=>!q.w)));o.push(...(u.challenge||[]).filter(q=>!q.w))}));return o};
-const view=h=>{$("main").innerHTML=h;scrollTo(0,0)};
+const view=h=>{const m=$("main");m.innerHTML=h;scrollTo(0,0);try{m.focus({preventScroll:true})}catch(e){m.focus()}};
 const lk=(a,r,t)=>`<button class="lk" data-a="${a}" data-r="${esc(r)}">${t}</button>`;
 function nav(p){
  const items=[["home","🏠 Home"],["subjects","📚 Subjects"],["review","✨ Review"],["leaderboard","🏆 Leaderboard"],["profile","👤 Profile"]];
  if(USER&&USER.role==="teacher")items.push(["teacher","🎓 Teacher"]);
- $("nv").innerHTML=items.map(x=>`<button class="${x[0]===p?"on":""}" data-a="page" data-r="${x[0]}">${x[1]}</button>`).join("")+`<button data-a="logout">🚪 Logout</button>`
+ $("nv").innerHTML=items.map(x=>`<button class="${x[0]===p?"on":""}" data-a="page" data-r="${x[0]}"${x[0]===p?' aria-current="page"':""}>${x[1]}</button>`).join("")+`<button data-a="logout">🚪 Logout</button>`
 }
 const PAGES={
 home(){const n=SUBJ.reduce((a,s)=>a+sDone(s[0]),0),into=USER.xp%350;
@@ -689,7 +702,7 @@ profile(){return`<h1>👤 ${esc(USER.display_name||USER.username)}</h1>
  <label for="eyr">Year</label>
  <select id="eyr">${["Year 4","Year 5","Year 6"].map(y=>`<option${y===USER.year?" selected":""}>${y}</option>`).join("")}</select>
  <label for="ecc">Class code</label>
- <input id="ecc" maxlength="6" value="${esc(USER.classCode||"")}" placeholder="e.g. K7M2PQ" autocomplete="off">
+ <input id="ecc" maxlength="6" value="${esc(USER.classCode||"")}" placeholder="e.g. K7M2PQ" autocomplete="off" autocapitalize="characters" spellcheck="false">
  <label for="ere">Recovery email</label>
  <input id="ere" type="email" value="${esc(USER.recoveryEmail||"")}" placeholder="yourname@gmail.com" autocomplete="email">
  <small class="mu">Used for "Forgot password" — leave blank if you don't want it.</small>
@@ -1133,9 +1146,12 @@ function applyTheme(){
  if(t==="dark")document.documentElement.dataset.theme="dark";
  else if(t==="light")document.documentElement.dataset.theme="light";
  else delete document.documentElement.dataset.theme;
+ const dark=t==="dark"||(t==="auto"&&window.matchMedia&&matchMedia("(prefers-color-scheme: dark)").matches);
+ const tc=$("tc");if(tc)tc.setAttribute("content",dark?"#0b1220":"#f4f7fc");
  const b=$("theme");
- if(b)b.textContent=(t==="dark"?"☀️":t==="light"?"🌙":"🌓");
+ if(b){b.textContent=(t==="dark"?"☀️":t==="light"?"🌙":"🌓");b.setAttribute("aria-label","Theme: "+t+". Tap to change.")}
 }
+if(window.matchMedia){const mq=matchMedia("(prefers-color-scheme: dark)");mq.addEventListener?.("change",()=>{(st.get("uasaTheme")||"auto")==="auto"&&applyTheme()})}
 function toggleTheme(){
  const cur=st.get("uasaTheme")||"auto";
  const next=cur==="auto"?"dark":cur==="dark"?"light":"auto";
@@ -1239,7 +1255,7 @@ async function confirmReset(){
  try{await fn()}catch(err){authMsg("Error: "+(err.message||err))}
  b.disabled=false
 }));
-$("pw").addEventListener("change",e=>{$("lp").type=$("sp").type=e.target.checked?"text":"password"});
+$("pw").addEventListener("change",e=>{const ty=e.target.checked?"text":"password";["lp","sp","cn"].forEach(id=>{const el=$(id);if(el)el.type=ty})});
 applyTheme();
 $("theme")?.addEventListener("click",toggleTheme);
 document.addEventListener("click",e=>{

@@ -93,7 +93,7 @@ main{max-width:900px;margin:auto;padding:20px 14px 40px}
 <input id="cu" autocomplete="username">
 <label for="cc">6-digit code</label>
 <input id="cc" inputmode="numeric" maxlength="6" autocomplete="one-time-code">
-<label for="cn">New password (6+ characters)</label>
+<label for="cn">New password (8+ characters)</label>
 <input id="cn" type="password" autocomplete="new-password">
 <button class="btn" style="width:100%">SET NEW PASSWORD</button>
 <button type="button" class="lk" style="margin-top:8px" data-a="showLogin">← Back to login</button>
@@ -101,7 +101,7 @@ main{max-width:900px;margin:auto;padding:20px 14px 40px}
 <form id="sf" class="hidden" novalidate>
 <label for="su">Username (3-20 letters, numbers, . - _)</label>
 <input id="su" autocomplete="username">
-<label for="sp">Password (6+ characters)</label>
+<label for="sp">Password (8+ characters)</label>
 <input id="sp" type="password" autocomplete="new-password">
 <label for="sy">Year</label>
 <select id="sy"><option>Year 4</option><option>Year 5</option><option>Year 6</option></select>
@@ -1171,7 +1171,7 @@ async function signup(){
  if(!sb){authMsg("Could not load Supabase.");return}
  const n=$("su").value.trim(),pw=$("sp").value,yr=$("sy").value;
  if(!/^[A-Za-z0-9_.-]{3,20}$/.test(n)){authMsg("Username must be 3 to 20 letters, numbers, dots, dashes or underscores.");return}
- if(pw.length<6){authMsg("Password must be at least 6 characters.");return}
+ if(pw.length<8){authMsg("Password must be at least 8 characters.");return}
  authMsg("Creating account…");
  const cc=$("sc")?$("sc").value.trim().toUpperCase():"";
  const re=$("sr")?$("sr").value.trim().toLowerCase():"";
@@ -1218,7 +1218,7 @@ async function confirmReset(){
  const code=$("cc").value.trim();
  const np=$("cn").value;
  if(!n||!code){authMsg("Enter your username and code.");return}
- if(np.length<6){authMsg("New password must be at least 6 characters.");return}
+ if(np.length<8){authMsg("New password must be at least 8 characters.");return}
  authMsg("Resetting…");
  try{
   const res=await sb.functions.invoke("confirm-password-reset",{body:{username:n,code,new_password:np}});

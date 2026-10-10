@@ -909,7 +909,7 @@ async function award(score,maxScore,bonus,key){
   console.error("Cloud save failed",e);
  }
 }
-const yearNum=()=>{"Year 4":4,"Year 5":5,"Year 6":6}[(USER&&USER.year)||""]||0;
+const yearNum=()=>({"Year 4":4,"Year 5":5,"Year 6":6}[(USER&&USER.year)||""]||0);
 const unitYear=t=>{const m=/Unit (\d+)/.exec(t||"");if(!m)return 0;const n=+m[1];return n<=5?4:n<=10?5:6};
 const U=s=>{const n=yearNum();return Array.from((CURRICULUM[s]||{}).units||[],(x,i)=>x?{...x,i,ls:Array.from(x.lessons||[],(y,j)=>y&&y.questions&&y.questions.length?{...y,j}:null).filter(Boolean)}:null).filter(Boolean).filter(u=>{const uy=unitYear(u.title);return n===0||uy===0||uy===n})};
 const key=(s,u,l)=>s+"|"+u+"|"+l,done=k=>!!(USER&&USER.progress&&USER.progress[k]),ut=u=>u.title||"Unit "+(u.i+1);

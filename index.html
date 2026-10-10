@@ -585,6 +585,59 @@ Q("Faedah hubungan antarabangsa?",["Kerjasama ekonomi, pendidikan, keselamatan",
 };
 const $=id=>document.getElementById(id),esc=t=>String(t==null?"":t).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
 const mem={},st={get:k=>{try{const v=localStorage.getItem(k);if(v!==null)return v}catch(e){}return k in mem?mem[k]:null},set:(k,v)=>{mem[k]=v;try{localStorage.setItem(k,v)}catch(e){}},del:k=>{delete mem[k];try{localStorage.removeItem(k)}catch(e){}}};
+const jget=(k,d)=>{try{const v=st.get(k);return v==null?d:JSON.parse(v)}catch(e){return d}};
+const jset=(k,v)=>{try{st.set(k,JSON.stringify(v))}catch(e){}};
+
+let ONLINE=navigator.onLine;
+window.addEventListener("online",()=>{ONLINE=true;toast("🌐 Back online");flushQueue()});
+window.addEventListener("offline",()=>{ONLINE=false;toast("📴 Offline — progress will sync later")});
+
+const queueKey=()=>"uasaQueue_"+(USER?USER.id:"guest");
+function queueEvent(ev){const q=jget(queueKey(),[]);q.push(ev);jset(queueKey(),q)}
+async function flushQueue(){
+ if(!USER||!ONLINE)return;
+ const q=jget(queueKey(),[]);if(!q.length)return;
+ const failed=[];
+ for(const ev of q){
+  try{
+   if(ev.type==="progress"){const r=await sb.from("progress").insert(ev.data);if(r.error&&r.error.code!=="23505")throw r.error}
+   else if(ev.type==="daily"){const r=await sb.from("daily_completions").insert(ev.data);if(r.error&&r.error.code!=="23505")throw r.error}
+   else if(ev.type==="review"){const r=await sb.from("reviews").insert(ev.data);if(r.error&&r.error.code!=="23505")throw r.error}
+  }catch(e){console.warn("queue flush failed:",ev.type,e);failed.push(ev)}
+ }
+ jset(queueKey(),failed);
+ if(failed.length===0){toast("☁️ Progress synced");try{await refreshUserStats()}catch(e){}}
+}
+function cacheUser(){if(!USER)return;try{st.set("uasaCache_"+USER.id,JSON.stringify({...USER,progress:{...USER.progress}}))}catch(e){}}
+
+const missKey=()=>"uasaMistakes_"+(USER?USER.id:"guest");
+const getMistakes=()=>jget(missKey(),[]);
+const saveMistakes=m=>jset(missKey(),m.slice(-100));
+const qidOf=q=>(q.q||q.w||"").slice(0,200);
+function recordMistake(q){
+ if(!USER)return;
+ const m=getMistakes(),id=qidOf(q);
+ const ex=m.find(x=>x.id===id);
+ if(ex){ex.wrong=(ex.wrong||0)+1;ex.right=0;ex.last=Date.now()}
+ else{m.push({id,q:q.q,options:q.options.slice(),answer:q.answer,img:q.img||null,wrong:1,right:0,last:Date.now()})}
+ saveMistakes(m);
+}
+function recordCorrect(q){
+ const m=getMistakes(),id=qidOf(q);
+ const i=m.findIndex(x=>x.id===id);
+ if(i===-1)return null;
+ m[i].right=(m[i].right||0)+1;
+ if(m[i].right>=2){m.splice(i,1);saveMistakes(m);return "removed"}
+ saveMistakes(m);return "progress";
+}
+function startMistakesReview(){
+ const m=getMistakes();
+ if(!m.length){toast("No mistakes to review 🎉");return}
+ if((USER.hearts??5)<=0){toast("💔 No hearts. Wait or try again later.");return}
+ const qs=shuf(m).slice(0,10).map(x=>({q:x.q,options:x.options,answer:x.answer,img:x.img}));
+ quiz(qs,{title:"📝 Mistakes review",key:null,bonus:0,kind:"mistakes",back:()=>go("home")});
+}
+
 const KL_TIMEZONE="Asia/Kuala_Lumpur";
 const dayKey=(offset=0)=>{const d=new Date(Date.now()+offset*864e5);return new Intl.DateTimeFormat("en-CA",{timeZone:KL_TIMEZONE,year:"numeric",month:"2-digit",day:"2-digit"}).format(d)};
 const today=()=>dayKey(0),yest=()=>dayKey(-1);
@@ -598,7 +651,7 @@ function toast(m){const t=document.createElement("div");t.className="toast";t.se
 function pop(n){const d=document.createElement("div");d.className="pop";d.textContent="+"+n+" XP";document.body.appendChild(d);setTimeout(()=>d.remove(),1300)}
 function setSaveState(state){
  const el=$("cs");if(!el)return;
- const m={saving:["☁️ Saving…",""],saved:["☁️ Saved","save-ok"],error:["⚠️ Not saved","save-bad"]};
+ const m={saving:["☁️ Saving…",""],saved:["☁️ Saved","save-ok"],error:["⚠️ Not saved","save-bad"],offline:["📴 Offline — will sync",""]};
  const [txt,cl]=m[state]||m.saved;
  el.textContent=txt;el.className="chip "+cl;
 }
@@ -608,21 +661,28 @@ function heartsUI(){
  for(let i=0;i<5;i++)s+=i<h?"❤️":'<span class="empty">🤍</span>';
  $("hh").innerHTML=s;
 }
-function hdr(){$("hs").textContent="🔥 "+streakNow();$("hx").textContent="⭐ "+USER.xp+" XP";heartsUI();setSaveState("saved")}
+function hdr(){$("hs").textContent="🔥 "+streakNow();$("hx").textContent="⭐ "+USER.xp+" XP";heartsUI();setSaveState(ONLINE?"saved":"offline")}
 async function refreshUserStats(){
- const r=await sb.from("profiles").select("xp,streak,last_active,streak_freezes,hearts,daily_xp,daily_xp_date").eq("id",USER.id).single();
- if(r.error)throw r.error;
- const beforeXp=USER.xp;
- USER.xp=+r.data.xp||0;
- USER.streak=+r.data.streak||0;
- USER.lastActive=r.data.last_active;
- USER.streakFreezes=+r.data.streak_freezes||0;
- USER.hearts=r.data.hearts??5;
- USER.dailyXp=r.data.daily_xp||0;
- USER.dailyXpDate=r.data.daily_xp_date||today();
- hdr();
- const delta=USER.xp-beforeXp;
- if(delta>0){pop(delta);if(lvl()>Math.floor(beforeXp/350)+1)toast("🎉 Level "+lvl()+" reached!")}
+ if(!ONLINE){cacheUser();return}
+ try{
+  const r=await sb.from("profiles").select("xp,streak,last_active,streak_freezes,hearts,daily_xp,daily_xp_date").eq("id",USER.id).single();
+  if(r.error)throw r.error;
+  const beforeXp=USER.xp;
+  USER.xp=+r.data.xp||0;
+  USER.streak=+r.data.streak||0;
+  USER.lastActive=r.data.last_active;
+  USER.streakFreezes=+r.data.streak_freezes||0;
+  USER.hearts=r.data.hearts??5;
+  USER.dailyXp=r.data.daily_xp||0;
+  USER.dailyXpDate=r.data.daily_xp_date||today();
+  hdr();
+  cacheUser();
+  const delta=USER.xp-beforeXp;
+  if(delta>0){pop(delta);if(lvl()>Math.floor(beforeXp/350)+1)toast("🎉 Level "+lvl()+" reached!")}
+ }catch(e){
+  console.warn("stats refresh failed:",e);
+  cacheUser();
+ }
 }
 async function refreshHearts(){
  try{
@@ -637,22 +697,30 @@ async function loseHeart(){
  }catch(e){}
 }
 async function award(score,maxScore,bonus,key){
+ if(key)USER.progress[key]=1;
+ const xpGain=(score|0)*10+(bonus|0);
+ if(xpGain>0){USER.xp+=xpGain;USER.dailyXp=(USER.dailyXp||0)+xpGain;hdr();pop(xpGain)}
+ cacheUser();
+ const payload={user_id:USER.id,lesson_key:key,score:score|0,max_score:maxScore|0,bonus:bonus|0};
+ if(!ONLINE){
+  if(key)queueEvent({type:"progress",data:payload,ts:Date.now()});
+  setSaveState("offline");
+  return;
+ }
  setSaveState("saving");
  try{
   if(key){
-   const r=await sb.from("progress").insert({user_id:USER.id,lesson_key:key,score:score|0,max_score:maxScore|0,bonus:bonus|0});
+   const r=await sb.from("progress").insert(payload);
    if(r.error&&r.error.code!=="23505")throw r.error;
-   USER.progress[key]=1;
   }
-  const xpGain=(score|0)*10+(bonus|0);
   if(xpGain>0){try{await sb.rpc("bump_daily_xp",{amount:xpGain})}catch(e){}}
   await refreshUserStats();
   st.set("uasaLastActive_"+USER.id,USER.lastActive);
   setSaveState("saved");
  }catch(e){
-  setSaveState("error");
-  toast("⚠️ Cloud save failed.");
-  console.error("Cloud save failed",e);
+  console.error("award failed, queueing:",e);
+  if(key)queueEvent({type:"progress",data:payload,ts:Date.now()});
+  setSaveState("offline");
  }
 }
 const U=s=>Array.from((CURRICULUM[s]||{}).units||[],(x,i)=>x?{...x,i,ls:Array.from(x.lessons||[],(y,j)=>y&&y.questions&&y.questions.length?{...y,j}:null).filter(Boolean)}:null).filter(Boolean);
@@ -676,10 +744,13 @@ const goal=50,prog=Math.min(USER.dailyXp||0,goal),pct=prog/goal*100;
 return`<div class="hero"><h1>Welcome, ${esc(USER.display_name||USER.username)}!</h1><p>Learn. Practice. Level up.</p><button class="btn" data-a="page" data-r="subjects">START LEARNING</button><button class="btn" data-a="mix" data-r="">🎲 MIXED QUIZ</button>
 <button class="btn g" style="background:#ffffff22;color:#fff;border-color:#ffffff66" data-a="daily">${USER.dailyDone===today()?"✅ DAILY DONE":"🎯 DAILY CHALLENGE"}</button></div>
 <div class="card"><h2>📅 Daily Goal</h2>${bar(pct)}<small>${prog} / ${goal} XP today${prog>=goal?" — goal reached! 🎉":""}</small></div>
+${(()=>{const m=getMistakes();return m.length?`<div class="card" style="border-color:var(--gl)"><h2>📝 Review mistakes</h2><p class="mu">You have <b>${m.length}</b> question${m.length===1?'':'s'} to practise. Get each right twice to clear it.</p><button class="btn" data-a="reviewMistakes">START REVIEW</button></div>`:"";})()}
 <div class="stats">${[[USER.xp,"XP"],[lvl(),"Level"],[streakNow()+(USER.streakFreezes?" ❄️"+USER.streakFreezes:""),"Day streak"],[n,"Lessons done"]].map(x=>`<div class="card"><div class="n">${x[0]}</div><small>${x[1]}</small></div>`).join("")}</div>
 <div class="card"><h2>Level progress</h2>${bar(into/3.5)}<small>${into} / 350 XP to Level ${lvl()+1}</small></div>`},
 subjects(){return`<h1>📚 Subjects</h1><button class="btn g" data-a="mix" data-r="">🎲 Mixed quiz: all subjects</button><div class="grid" style="margin-top:12px">${SUBJ.map(s=>{const d=sDone(s[0]),t=sTot(s[0]);return`<button class="card tap" data-a="subj" data-r="${esc(s[0])}"><h2>${s[1]} ${esc(s[0])}</h2>${bar(t?d/t*100:0)}<small>${d} / ${t} lessons</small></button>`}).join("")}</div>`},
-review(){return`<h1>✨ Review</h1><p class="mu">Repeat a lesson you've finished. <b>+5 XP</b> the first time you review each one.</p><div id="rv"><p class="mu">Loading…</p></div>`},
+review(){const m=getMistakes();return`<h1>✨ Review</h1>
+${m.length?`<div class="card" style="border-color:var(--gl)"><h2>📝 Mistakes to fix</h2><p class="mu">You have <b>${m.length}</b> question${m.length===1?'':'s'} you got wrong. Get each right twice to clear it.</p><button class="btn" data-a="reviewMistakes">START MISTAKES REVIEW</button></div>`:""}
+<p class="mu">Repeat a lesson you've finished. <b>+5 XP</b> the first time you review each one.</p><div id="rv"><p class="mu">Loading…</p></div>`},
 leaderboard(){return`<h1>🏆 Leaderboard</h1><div class="card" id="lb"><p class="mu">Loading global leaderboard…</p></div>`},
 profile(){return`<h1>👤 ${esc(USER.display_name||USER.username)}</h1>
 <div class="card">
@@ -735,11 +806,16 @@ async function startReview(k,s,u,l){
  quiz(les.questions,{title:"✨ Review: "+l,key:null,bonus:0,kind:"review",reviewKey:k,back:()=>go("review")});
 }
 async function completeReview(k){
+ const payload={user_id:USER.id,lesson_key:k};
+ if(!ONLINE){queueEvent({type:"review",data:payload,ts:Date.now()});return}
  try{
-  const r=await sb.from("reviews").insert({user_id:USER.id,lesson_key:k});
+  const r=await sb.from("reviews").insert(payload);
   if(r.error&&r.error.code!=="23505")throw r.error;
   await refreshUserStats();
- }catch(e){console.error("review save failed",e)}
+ }catch(e){
+  console.error("review save failed, queueing:",e);
+  queueEvent({type:"review",data:payload,ts:Date.now()});
+ }
 }
 async function go(p){R=null;nav(p);view(PAGES[p]());if(p==="leaderboard")await loadLeaderboard();if(p==="teacher")await loadTeacher();if(p==="review")await loadReview()}
 function subj(s){
@@ -829,8 +905,14 @@ async function answer(k){
  if(!R||R.a||!$("an"))return;
  const q=R.qs[R.i];if(k<0||k>=q.options.length)return;
  R.a=true;const ok=k===q.answer;if(ok)R.c++;
- const practice=R.ctx.kind==="mix"||R.ctx.kind==="daily"||R.ctx.kind==="review"||R.ctx.kind==="challenge";
+ const practice=R.ctx.kind==="mix"||R.ctx.kind==="daily"||R.ctx.kind==="review"||R.ctx.kind==="challenge"||R.ctx.kind==="mistakes";
  if(!ok&&practice){await loseHeart()}
+ if(ok&&R.ctx.kind==="mistakes"){
+  const res=recordCorrect(q);
+  if(res==="removed")toast("✅ Mastered! Removed from review");
+ }else if(!ok){
+  recordMistake(q);
+ }
  document.querySelectorAll("#an .ans").forEach((b,x)=>{b.disabled=true;if(x===q.answer)b.classList.add("ok");else if(x===k)b.classList.add("no")});
  const correctLetter="ABCD"[q.answer]||q.answer+1;
  const correctText=q.options[q.answer];
@@ -918,9 +1000,9 @@ async function finish(){
   const s=NAV.s,u=U(s).find(x=>x.i===NAV.u),x=u.ls.findIndex(l=>l.j===NAV.l),n=u.ls[x+1];
   nb=n?`<button class="btn" data-a="les" data-r="${n.j}">NEXT LESSON</button>`:(chOpen(s,u)&&(u.challenge||[]).length?`<button class="btn" data-a="startCh">UNIT CHALLENGE</button>`:"")
  }
- const msg=ctx.kind==="review"?(pass?"✨ Review complete! +5 XP":"You need 70% to complete the review."):ctx.kind==="daily"?(pass?"🎯 Daily challenge complete!":"You need 70% to complete the daily."):ctx.kind==="mix"?"Nice practice!":pass?"You passed! 🎉":"Almost there. You need 70% to pass.";
- const note=ctx.key&&pass&&!xp?"Already completed. No extra XP.":ctx.kind==="mix"?"Mixed quizzes are practice only.":ctx.kind==="review"?"Reviews award +5 XP the first time per lesson.":"";
- view(`<div class="qz card c"><div class="stars">${"⭐".repeat(stars)}${"☆".repeat(3-stars)}</div><h2>${msg}</h2><p>Score: <b>${c} / ${qs.length}</b></p>${xp?`<div class="n gd">+${xp} XP</div>`:""}<p class="mu">${note}</p>${nb}${pass||ctx.kind==="mix"||ctx.kind==="daily"||ctx.kind==="review"?"":`<button class="btn" data-a="retry">TRY AGAIN</button>`}<button class="btn g" data-a="back">Back</button></div>`)
+ const msg=ctx.kind==="review"?(pass?"✨ Review complete! +5 XP":"You need 70% to complete the review."):ctx.kind==="mistakes"?(pass?"📝 Mistakes reviewed!":"You need 70% to complete the mistakes review."):ctx.kind==="daily"?(pass?"🎯 Daily challenge complete!":"You need 70% to complete the daily."):ctx.kind==="mix"?"Nice practice!":pass?"You passed! 🎉":"Almost there. You need 70% to pass.";
+ const note=ctx.key&&pass&&!xp?"Already completed. No extra XP.":ctx.kind==="mix"?"Mixed quizzes are practice only.":ctx.kind==="review"?"Reviews award +5 XP the first time per lesson.":ctx.kind==="mistakes"?"Questions you get right twice are removed from the list.":"";
+ view(`<div class="qz card c"><div class="stars">${"⭐".repeat(stars)}${"☆".repeat(3-stars)}</div><h2>${msg}</h2><p>Score: <b>${c} / ${qs.length}</b></p>${xp?`<div class="n gd">+${xp} XP</div>`:""}<p class="mu">${note}</p>${nb}${pass||ctx.kind==="mix"||ctx.kind==="daily"||ctx.kind==="review"||ctx.kind==="mistakes"?"":`<button class="btn" data-a="retry">TRY AGAIN</button>`}<button class="btn g" data-a="back">Back</button></div>`)
 }
 function seededShuffle(arr,seedStr){
  let seed=2166136261>>>0;
@@ -939,17 +1021,23 @@ async function startDaily(){
  quiz(qs,{title:"🎯 Daily Challenge — "+today(),key:null,bonus:0,kind:"daily",back:()=>go("home")})
 }
 async function awardDaily(score,total){
+ const payload={user_id:USER.id,day:today(),score,total};
+ USER.dailyDone=today();cacheUser();
+ if(!ONLINE){
+  queueEvent({type:"daily",data:payload,ts:Date.now()});
+  setSaveState("offline");
+  return;
+ }
  setSaveState("saving");
  try{
-  const r=await sb.from("daily_completions").insert({user_id:USER.id,day:today(),score,total});
+  const r=await sb.from("daily_completions").insert(payload);
   if(r.error&&r.error.code!=="23505")throw r.error;
-  USER.dailyDone=today();
   await refreshUserStats();
   setSaveState("saved");
  }catch(e){
-  console.error("daily save failed",e);
-  setSaveState("error");
-  toast("⚠️ Could not save daily result.");
+  console.error("daily save failed, queueing:",e);
+  queueEvent({type:"daily",data:payload,ts:Date.now()});
+  setSaveState("offline");
  }
 }
 async function saveProfile(){
@@ -1142,28 +1230,44 @@ function toggleTheme(){
  st.set("uasaTheme",next);applyTheme();
 }
 async function loadUser(au){
- let r=await sb.from("profiles").select("username,display_name,role,xp,streak,year,last_active,leaderboard_opt_out,streak_freezes,class_code,hearts,daily_xp,daily_xp_date,recovery_email").eq("id",au.id).maybeSingle();
- if(r.error)throw r.error;
- let p=r.data;
- if(!p){
-  const name=(au.email||"user").split("@")[0];
-  const yr=(au.user_metadata&&au.user_metadata.year)||"Year 6";
-  const ins=await sb.from("profiles").upsert({id:au.id,username:name,display_name:name,year:yr,xp:0,streak:0,last_active:null},{onConflict:"id"});
-  if(ins.error)throw ins.error;
-  p={username:name,display_name:name,role:"student",year:yr,class_code:"",xp:0,streak:0,last_active:null}
+ if(!ONLINE){
+  const cached=st.get("uasaCache_"+au.id);
+  if(cached){
+   try{USER=JSON.parse(cached);USER.id=au.id;toast("📴 Offline — using saved data");return}catch(e){}
+  }
  }
- const g=await sb.from("progress").select("lesson_key").eq("user_id",au.id);
- if(g.error)throw g.error;
- const prog={};
- (g.data||[]).forEach(x=>{if(x.lesson_key)prog[x.lesson_key]=1;});
- USER={id:au.id,username:p.username,display_name:p.display_name||p.username,role:p.role||"student",year:p.year||"",classCode:p.class_code||"",recoveryEmail:p.recovery_email||"",xp:+p.xp||0,streak:+p.streak||0,lastActive:p.last_active||null,leaderboardOptOut:!!p.leaderboard_opt_out,streakFreezes:+p.streak_freezes||0,hearts:p.hearts??5,dailyXp:p.daily_xp||0,dailyXpDate:p.daily_xp_date||null,progress:prog,dailyDone:null};
- if(USER.lastActive)st.set("uasaLastActive_"+au.id,USER.lastActive);
  try{
-  const d=await sb.from("daily_completions").select("day").eq("user_id",au.id).eq("day",today()).maybeSingle();
-  if(d.data)USER.dailyDone=today();
- }catch(e){}
- await refreshHearts();
- await refreshUserStats();
+  let r=await sb.from("profiles").select("username,display_name,role,xp,streak,year,last_active,leaderboard_opt_out,streak_freezes,class_code,hearts,daily_xp,daily_xp_date,recovery_email").eq("id",au.id).maybeSingle();
+  if(r.error)throw r.error;
+  let p=r.data;
+  if(!p){
+   const name=(au.email||"user").split("@")[0];
+   const yr=(au.user_metadata&&au.user_metadata.year)||"Year 6";
+   const ins=await sb.from("profiles").upsert({id:au.id,username:name,display_name:name,year:yr,xp:0,streak:0,last_active:null},{onConflict:"id"});
+   if(ins.error)throw ins.error;
+   p={username:name,display_name:name,role:"student",year:yr,class_code:"",xp:0,streak:0,last_active:null}
+  }
+  const g=await sb.from("progress").select("lesson_key").eq("user_id",au.id);
+  if(g.error)throw g.error;
+  const prog={};
+  (g.data||[]).forEach(x=>{if(x.lesson_key)prog[x.lesson_key]=1;});
+  USER={id:au.id,username:p.username,display_name:p.display_name||p.username,role:p.role||"student",year:p.year||"",classCode:p.class_code||"",recoveryEmail:p.recovery_email||"",xp:+p.xp||0,streak:+p.streak||0,lastActive:p.last_active||null,leaderboardOptOut:!!p.leaderboard_opt_out,streakFreezes:+p.streak_freezes||0,hearts:p.hearts??5,dailyXp:p.daily_xp||0,dailyXpDate:p.daily_xp_date||null,progress:prog,dailyDone:null};
+  if(USER.lastActive)st.set("uasaLastActive_"+au.id,USER.lastActive);
+  try{
+   const d=await sb.from("daily_completions").select("day").eq("user_id",au.id).eq("day",today()).maybeSingle();
+   if(d.data)USER.dailyDone=today();
+  }catch(e){}
+  await refreshHearts();
+  await refreshUserStats();
+  cacheUser();
+  flushQueue();
+ }catch(e){
+  const cached=st.get("uasaCache_"+au.id);
+  if(cached){
+   try{USER=JSON.parse(cached);USER.id=au.id;toast("📴 Could not reach server — using saved data");return}catch(ce){}
+  }
+  throw e;
+ }
 }
 function enter(){$("auth").classList.add("hidden");$("app").classList.remove("hidden");hdr();go("home")}
 async function logout(){try{await sb.auth.signOut()}catch(e){}USER=null;R=null;$("app").classList.add("hidden");$("auth").classList.remove("hidden");authTab("l")}
@@ -1253,13 +1357,17 @@ document.addEventListener("click",e=>{
   daily:startDaily,student:()=>openStudent(r),
   saveProfile:saveProfile,resetStudent:()=>resetStudent(r),
   createClass:createClass,report:generateReport,
-  rv:()=>startReview(r,t.dataset.s,t.dataset.u,t.dataset.l)
+  rv:()=>startReview(r,t.dataset.s,t.dataset.u,t.dataset.l),
+  reviewMistakes:startMistakesReview
  };
  if(F[t.dataset.a])F[t.dataset.a]()
 });
 document.addEventListener("keydown",e=>{
  if(R&&$("an")&&/^[1-9]$/.test(e.key)&&!/INPUT|TEXTAREA|SELECT/.test(e.target.tagName))answer(+e.key-1)
 });
+if("serviceWorker" in navigator && location.protocol!=="file:"){
+ navigator.serviceWorker.register("./sw.js").catch(e=>console.warn("SW register failed:",e));
+}
 (async()=>{
  if(!sb){authMsg("Could not load Supabase library.");return}
  try{

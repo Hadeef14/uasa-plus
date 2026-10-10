@@ -2,6 +2,12 @@
 <html lang="en"><head><meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E🎓%3C/text%3E%3C/svg%3E">
+<link rel="manifest" href="manifest.json">
+<link rel="apple-touch-icon" href="icon-192.png">
+<meta name="theme-color" content="#0369a1">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="UASA+">
 <title>UASA+ — Made by Hadeef</title>
 <style>
 :root{--bg:#f4f7fc;--pn:#fff;--p2:#e6edf8;--ln:#cbd6ea;--tx:#0f1b33;--mu:#55657f;--ac:#0369a1;--ak:#fff;--gd:#15803d;--bd:#b91c1c;--gl:#b45309;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
@@ -923,6 +929,7 @@ home(){const n=SUBJ.reduce((a,s)=>a+sDone(s[0]),0),into=USER.xp%350;
 const goal=50,prog=Math.min(USER.dailyXp||0,goal),pct=prog/goal*100;
 return`<div class="hero"><h1>Welcome, ${esc(USER.display_name||USER.username)}!</h1><p>Learn. Practice. Level up.</p><button class="btn" data-a="page" data-r="subjects">START LEARNING</button><button class="btn" data-a="mix" data-r="">🎲 MIXED QUIZ</button>
 <button class="btn g" style="background:#ffffff22;color:#fff;border-color:#ffffff66" data-a="daily">${USER.dailyDone===today()?"✅ DAILY DONE":"🎯 DAILY CHALLENGE"}</button></div>
+<div id="installBox" class="hidden card" style="border-color:var(--ac)"><h2>📱 Install UASA+</h2><p class="mu" style="margin:4px 0">Add to your home screen — works offline.</p><button class="btn" id="installBtn">INSTALL APP</button></div>
 <div class="card"><h2>📅 Daily Goal</h2>${bar(pct)}<small>${prog} / ${goal} XP today${prog>=goal?" — goal reached! 🎉":""}</small></div>
 <div class="stats">${[[USER.xp,"XP"],[lvl(),"Level"],[streakNow()+(USER.streakFreezes?" ❄️"+USER.streakFreezes:""),"Day streak"],[n,"Lessons done"]].map(x=>`<div class="card"><div class="n">${x[0]}</div><small>${x[1]}</small></div>`).join("")}</div>
 <div class="card"><h2>Level progress</h2>${bar(into/3.5)}<small>${into} / 350 XP to Level ${lvl()+1}</small></div>`},
@@ -1508,6 +1515,25 @@ document.addEventListener("click",e=>{
 document.addEventListener("keydown",e=>{
  if(R&&$("an")&&/^[1-9]$/.test(e.key)&&!/INPUT|TEXTAREA|SELECT/.test(e.target.tagName))answer(+e.key-1)
 });
+let deferredInstall=null;
+window.addEventListener("beforeinstallprompt",e=>{
+ e.preventDefault();
+ deferredInstall=e;
+ const b=$("installBox");
+ if(b)b.classList.remove("hidden");
+});
+document.addEventListener("click",e=>{
+ if(e.target.id!=="installBtn"||!deferredInstall)return;
+ deferredInstall.prompt();
+ deferredInstall.userChoice.then(c=>{
+  if(c.outcome==="accepted"){const b=$("installBox");if(b)b.classList.add("hidden");}
+  deferredInstall=null;
+ });
+});
+window.addEventListener("appinstalled",()=>{
+ const b=$("installBox");if(b)b.classList.add("hidden");
+ toast("🎉 UASA+ installed!");
+});
 (async()=>{
  if(!sb){authMsg("Could not load Supabase library.");return}
  try{
@@ -1515,6 +1541,11 @@ document.addEventListener("keydown",e=>{
   if(data.session){await loadUser(data.session.user);enter()}
  }catch(e){console.warn(e)}
 })();
+if("serviceWorker" in navigator){
+ window.addEventListener("load",()=>{
+  navigator.serviceWorker.register("sw.js").catch(e=>console.warn("SW failed",e));
+ });
+}
 </script>
 </body>
 </html>

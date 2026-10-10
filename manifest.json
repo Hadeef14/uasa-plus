@@ -1,0 +1,41 @@
+{
+  "name": "UASA+ — Made by Hadeef",
+  "short_name": "UASA+",
+  "description": "Learn. Practice. Level up. UASA prep for Years 4-6.",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#f4f7fc",
+  "theme_color": "#0369a1",
+  "lang": "en",
+  "categories": ["education", "kids"],
+  "icons": [
+    { "src": "icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "icon-maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ],
+  "screenshots": [
+    {
+      "src": "shot-home.png",
+      "sizes": "1080x1920",
+      "type": "image/png",
+      "form_factor": "narrow",
+      "label": "Home dashboard with XP and daily goal"
+    },
+    {
+      "src": "shot-subjects.png",
+      "sizes": "1080x1920",
+      "type": "image/png",
+      "form_factor": "narrow",
+      "label": "Subjects: BM, English, Maths, Science, Sejarah"
+    },
+    {
+      "src": "shot-quiz.png",
+      "sizes": "1080x1920",
+      "type": "image/png",
+      "form_factor": "narrow",
+      "label": "Quiz screen with instant feedback"
+    }
+  ]
+}

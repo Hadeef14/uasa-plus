@@ -37,15 +37,12 @@ self.addEventListener("fetch", (event) => {
   const req = event.request;
   const url = new URL(req.url);
 
-  // 1. Never intercept Supabase auth/API/functions
   if (url.hostname.endsWith("supabase.co") || url.hostname.endsWith("supabase.in")) {
     return;
   }
 
-  // 2. Only handle GET
   if (req.method !== "GET") return;
 
-  // 3. CDN (jsdelivr, google fonts): cache-first
   if (
     url.hostname === "cdn.jsdelivr.net" ||
     url.hostname === "fonts.googleapis.com" ||
@@ -66,7 +63,6 @@ self.addEventListener("fetch", (event) => {
     return;
   }
 
-  // 4. Same-origin: network-first, fall back to cache, then index.html
   if (url.origin === self.location.origin) {
     event.respondWith(
       fetch(req)

@@ -2,15 +2,28 @@
 <html lang="en"><head><meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E🎓%3C/text%3E%3C/svg%3E">
+
+<!-- PWA -->
+<link rel="manifest" href="manifest.json">
+<link rel="apple-touch-icon" href="icon-192.png">
+<link rel="apple-touch-icon" sizes="192x192" href="icon-192.png">
 <meta name="theme-color" content="#f4ede0">
-<title>UASA+ — Made by Hadeef</title>
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="UASA+">
+<meta name="application-name" content="UASA+">
+<meta name="description" content="Learn, practice and level up for UASA.">
+
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght,SOFT,WONK@0,9..144,400..900,0..100,0..1&family=Geist:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;700;800&display=swap" rel="stylesheet">
+<title>UASA+ — Made by Hadeef</title>
 <style>
 :root{
   --paper:#f4ede0;--paper-2:#ebe2d1;--paper-3:#ddd0b7;
   --ink:#1a1614;--ink-2:#3d3630;--muted:#7a6f63;
+  --ink-on-accent:#1a1614;
   --line:#c9b998;--line-strong:#1a1614;
   --saffron:#f59e0b;--saffron-deep:#c2410c;
   --jade:#059669;--jade-deep:#065f46;
@@ -100,7 +113,7 @@ header{position:sticky;top:env(safe-area-inset-top,0px);z-index:9;display:flex;f
 .hl{font-family:'Fraunces',serif;font-size:26px;font-weight:900;font-variation-settings:'opsz' 96,'SOFT' 40,'WONK' 1;letter-spacing:-.05em}
 .hl span{color:var(--saffron);display:inline-block;transform:rotate(-8deg) translateY(-2px);text-shadow:2px 2px 0 var(--ink)}
 .chip{display:inline-flex;align-items:center;gap:4px;background:var(--pn);border:2px solid var(--ink);border-radius:99px;padding:4px 12px;font-family:'JetBrains Mono',monospace;font-weight:700;font-size:12px;margin-right:6px;color:var(--ink);box-shadow:0 2px 0 var(--ink-2)}
-.chip#theme{cursor:pointer;padding:4px 10px;font-size:14px;background:var(--saffron);color:#fff}
+.chip#theme{cursor:pointer;padding:4px 10px;font-size:14px;background:var(--saffron);color:var(--ink-on-accent)}
 .save-ok{background:color-mix(in srgb,var(--jade) 20%,var(--pn));border-color:var(--jade);color:var(--jade-deep)}
 .save-bad{background:color-mix(in srgb,var(--clay) 20%,var(--pn));border-color:var(--clay);color:var(--clay-deep)}
 header nav{display:flex;flex-wrap:wrap;gap:18px;width:100%;margin-top:6px}
@@ -118,10 +131,11 @@ main{max-width:920px;margin:auto;padding:28px 18px 80px;animation:viewIn .35s va
 .hero h1{color:var(--paper);font-size:clamp(28px,5vw,42px);margin-bottom:8px;padding-bottom:0}
 .hero h1::after{display:none}
 .hero p{color:color-mix(in srgb,var(--paper) 75%,transparent);margin:0 0 22px;font-weight:500;font-size:15px}
-.hero .btn{background:var(--saffron);color:var(--ink);border-color:var(--saffron);box-shadow:0 4px 0 color-mix(in srgb,var(--saffron) 50%,#000)}
+.hero .btn{background:var(--saffron);color:var(--ink-on-accent);border-color:var(--saffron);box-shadow:0 4px 0 color-mix(in srgb,var(--saffron) 50%,#000)}
 .hero .btn:hover{box-shadow:0 5px 0 color-mix(in srgb,var(--saffron) 50%,#000)}
 .hero .btn.g{background:transparent;color:var(--paper);border-color:var(--paper);box-shadow:0 4px 0 color-mix(in srgb,var(--paper) 60%,transparent)}
 .hero .btn.g:hover{box-shadow:0 5px 0 color-mix(in srgb,var(--paper) 60%,transparent)}
+.hero-haru{position:absolute;top:14px;right:60px;opacity:.92;width:72px;height:72px}
 .stats,.grid{display:grid;gap:14px;grid-template-columns:repeat(4,1fr)}
 .grid{grid-template-columns:repeat(2,1fr)}
 .stats .card,.grid .card{padding:18px 20px}
@@ -134,26 +148,26 @@ main{max-width:920px;margin:auto;padding:28px 18px 80px;animation:viewIn .35s va
 .node{display:flex;gap:16px;align-items:center;width:100%;padding:16px;margin:12px 0;border:2px solid var(--ink);border-radius:var(--r-lg);background:var(--pn);color:var(--ink);text-align:left;box-shadow:var(--press-sm);transition:transform .12s var(--ease-spring),box-shadow .12s var(--ease-spring)}
 .node:not([aria-disabled="true"]):hover{transform:translateY(-3px);box-shadow:0 7px 0 var(--ink-2)}
 .node:not([aria-disabled="true"]):active{transform:translateY(3px);box-shadow:0 0 0 var(--ink-2)}
-.node>span:first-child{flex:none;width:54px;height:54px;border-radius:50%;border:2px solid var(--ink);display:grid;place-items:center;font-family:'JetBrains Mono',monospace;font-weight:800;font-size:16px;background:var(--saffron);color:var(--ink);box-shadow:0 3px 0 var(--ink-2)}
+.node>span:first-child{flex:none;width:54px;height:54px;border-radius:50%;border:2px solid var(--ink);display:grid;place-items:center;font-family:'JetBrains Mono',monospace;font-weight:800;font-size:16px;background:var(--saffron);color:var(--ink-on-accent);box-shadow:0 3px 0 var(--ink-2)}
 .node.done>span:first-child{background:var(--jade);color:#fff}
 .node.lock{opacity:.55;background:var(--paper-2)}
 .node.lock>span:first-child{background:var(--paper-2);color:var(--ink);border-style:dashed;box-shadow:none}
 .node b{font-weight:700;font-size:15px;line-height:1.3}
 .node small{font-size:12px;color:var(--muted);font-family:'JetBrains Mono',monospace}
 .lk{background:none;border:0;color:var(--ink);padding:0;font-weight:700;border-bottom:2px solid var(--saffron);text-decoration:none;padding-bottom:1px;transition:background .1s ease}
-.lk:hover{background:var(--saffron);color:var(--ink)}
+.lk:hover{background:var(--saffron);color:var(--ink-on-accent)}
 .learn{font-size:17px;max-width:66ch;line-height:1.75}
-.learn b{background:var(--saffron);padding:1px 5px;border-radius:3px;font-weight:800;color:var(--ink)}
+.learn b{background:var(--saffron);padding:1px 5px;border-radius:3px;font-weight:800;color:var(--ink-on-accent)}
 .learn i{background:var(--jade);color:#fff;padding:1px 5px;border-radius:3px;font-style:normal;font-weight:700}
 .qz{max-width:680px;margin:auto}
 .row{display:flex;gap:14px;align-items:center}
 .row .btn{margin:0}
 .qz h2{font-size:23px;line-height:1.32;margin:22px 0 10px}
 .qz>small{display:inline-block;background:var(--ink);color:var(--paper);padding:4px 10px;border-radius:99px;font-size:10px;letter-spacing:.16em;margin-bottom:8px;font-family:'JetBrains Mono',monospace;text-transform:uppercase}
-.ans{display:flex;gap:14px;align-items:center;width:100%;padding:17px 20px;margin-top:12px;border:2px solid var(--ink);border-radius:var(--r-md);background:var(--pn);color:var(--ink);text-align:left;font-weight:600;font-size:16px;min-height:68px;box-shadow:var(--press-sm);transition:transform .12s var(--ease-spring),box-shadow .12s var(--ease-spring),background .15s ease,opacity .3s ease,filter .3s ease;font-family:'Geist',sans-serif}
+.ans{display:flex;gap:14px;align-items:center;width:100%;padding:17px 20px;margin-top:12px;border:2px solid var(--ink);border-radius:var(--r-md);background:var(--pn);color:var(--ink);text-align:left;font-weight:600;font-size:16px;min-height:68px;box-shadow:var(--press-sm);transition:transform .12s var(--ease-spring),box-shadow .12s var(--ease-spring),background .15s ease,color .15s ease,opacity .3s ease,filter .3s ease;font-family:'Geist',sans-serif}
 .ans b{flex:none;width:38px;height:38px;border-radius:50%;border:2px solid var(--ink);background:var(--paper-2);display:grid;place-items:center;font-family:'JetBrains Mono',monospace;font-weight:800;font-size:15px}
-.ans:not(:disabled):hover{background:var(--saffron);transform:translateY(-3px);box-shadow:0 7px 0 var(--ink-2)}
-.ans:not(:disabled):hover b{background:#fff}
+.ans:not(:disabled):hover{background:var(--saffron);color:var(--ink-on-accent);transform:translateY(-3px);box-shadow:0 7px 0 var(--ink-2)}
+.ans:not(:disabled):hover b{background:#fff;color:var(--ink-on-accent)}
 .ans:not(:disabled):active{transform:translateY(3px);box-shadow:0 0 0 var(--ink-2)}
 .ans.ok{background:var(--jade);color:#fff;border-color:var(--ink)}
 .ans.ok b{background:#fff;color:var(--jade);border-color:var(--ink)}
@@ -177,7 +191,7 @@ main{max-width:920px;margin:auto;padding:28px 18px 80px;animation:viewIn .35s va
 @keyframes popIn{from{transform:scale(0) rotate(-180deg);opacity:0}}
 .lbr{display:flex;justify-content:space-between;padding:14px 6px;border-bottom:1px dashed var(--line);font-weight:600;font-family:'JetBrains Mono',monospace;font-size:13px}
 .lbr:last-child{border-bottom:0}
-.lbr.me{background:var(--saffron);border-radius:var(--r-xs);padding:14px 14px;border-bottom:0;font-weight:800;color:var(--ink);box-shadow:0 3px 0 var(--ink-2)}
+.lbr.me{background:var(--saffron);border-radius:var(--r-xs);padding:14px 14px;border-bottom:0;font-weight:800;color:var(--ink-on-accent);box-shadow:0 3px 0 var(--ink-2)}
 .toast,.pop{position:fixed;left:50%;transform:translateX(-50%);z-index:50}
 .toast{bottom:28px;background:var(--ink);color:var(--paper);border:2px solid var(--ink);padding:14px 22px;border-radius:4px;max-width:90vw;box-shadow:0 5px 0 var(--saffron);font-weight:700;font-size:14px;font-family:'JetBrains Mono',monospace;letter-spacing:.02em;animation:toastIn .3s var(--ease-spring);position:fixed}
 .toast::before,.toast::after{content:"";position:absolute;top:50%;transform:translateY(-50%);width:10px;height:10px;border-radius:50%;background:var(--paper);border:2px solid var(--ink)}
@@ -190,18 +204,32 @@ main{max-width:920px;margin:auto;padding:28px 18px 80px;animation:viewIn .35s va
 .tbl th,.tbl td{padding:12px 10px;text-align:left;border-bottom:1px solid var(--line)}
 .tbl th{color:var(--muted);font-weight:700;font-size:11px;letter-spacing:.14em;text-transform:uppercase;font-family:'JetBrains Mono',monospace}
 .tbl tbody tr{cursor:pointer;transition:background .1s ease}
-.tbl tbody tr:hover td{background:var(--saffron);color:var(--ink)}
+.tbl tbody tr:hover td{background:var(--saffron);color:var(--ink-on-accent)}
 .essay{background:var(--paper-2);border-left:4px solid var(--saffron);padding:14px 16px;border-radius:var(--r-xs);margin:10px 0;white-space:pre-wrap;font-family:'JetBrains Mono',monospace;font-size:13px;line-height:1.75;word-break:break-word}
-.rvbadge{background:var(--saffron);color:var(--ink);border:1.5px solid var(--ink);font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:800;padding:2px 8px;border-radius:99px;margin-left:8px;letter-spacing:.04em;vertical-align:middle;display:inline-block;transform:rotate(-3deg)}
+.rvbadge{background:var(--saffron);color:var(--ink-on-accent);border:1.5px solid var(--ink);font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:800;padding:2px 8px;border-radius:99px;margin-left:8px;letter-spacing:.04em;vertical-align:middle;display:inline-block;transform:rotate(-3deg)}
 .hearts{color:var(--clay);font-weight:900;letter-spacing:-2px}
 .hearts .empty{opacity:.22}
+.tabbar{display:none}
+#installBanner{position:fixed;left:50%;bottom:calc(16px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);z-index:40;display:flex;align-items:center;gap:10px;padding:10px 12px 10px 16px;background:var(--ink);color:var(--paper);border:2px solid var(--ink);border-radius:99px;box-shadow:0 5px 0 var(--saffron),0 12px 28px -12px rgba(0,0,0,.5);max-width:min(560px,calc(100vw - 24px));animation:ibIn .4s var(--ease-spring)}
+@keyframes ibIn{from{opacity:0;transform:translate(-50%,24px)}}
+.ib-txt{font-family:'JetBrains Mono',monospace;font-size:12px;font-weight:700;letter-spacing:.02em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.ib-btn{background:var(--saffron);color:var(--ink-on-accent);border:2px solid var(--ink);border-radius:99px;padding:6px 14px;font-family:'JetBrains Mono',monospace;font-weight:800;font-size:11px;letter-spacing:.1em;box-shadow:0 2px 0 color-mix(in srgb,var(--saffron) 50%,#000);transition:transform .1s var(--ease-spring)}
+.ib-btn:hover{transform:translateY(-1px)}
+.ib-btn:active{transform:translateY(2px);box-shadow:none}
+.ib-x{background:none;border:0;color:var(--paper);font-size:14px;padding:4px 6px;opacity:.7;line-height:1}
+.ib-x:hover{opacity:1}
 @media(max-width:700px){
   header nav{display:none}
+  .tabbar{display:flex;position:fixed;bottom:0;left:0;right:0;background:var(--paper);border-top:2px solid var(--ink);padding:8px 6px calc(8px + env(safe-area-inset-bottom,0px));z-index:20;justify-content:space-around}
+  .tabbar button{flex:1;background:none;border:0;color:var(--muted);padding:8px 4px;display:flex;flex-direction:column;align-items:center;gap:2px;font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;border-radius:10px;transition:color .15s ease,background .15s ease}
+  .tabbar button .ti{font-size:20px;line-height:1}
+  .tabbar button.on{color:var(--ink);background:var(--saffron)}
   main{padding-bottom:100px!important}
   h1{font-size:26px}
   .stats{grid-template-columns:repeat(2,1fr)}
   .grid{grid-template-columns:1fr}
   .hero{padding:26px 22px;box-shadow:5px 5px 0 var(--saffron)}
+  .hero-haru{width:56px;height:56px;top:12px;right:20px}
   header{padding:10px 14px;gap:6px}
   .hl{font-size:21px}
   .chip{font-size:11px;padding:3px 10px}
@@ -211,15 +239,16 @@ main{max-width:920px;margin:auto;padding:28px 18px 80px;animation:viewIn .35s va
   .ans b{width:34px;height:34px;font-size:14px}
   .node>span:first-child{width:48px;height:48px;font-size:14px}
   .logo{font-size:48px}
+  #installBanner{bottom:calc(88px + env(safe-area-inset-bottom,0px))}
 }
 @media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
-::selection{background:var(--saffron);color:var(--ink)}
+::selection{background:var(--saffron);color:var(--ink-on-accent)}
 ::-webkit-scrollbar{width:10px;height:10px}
 ::-webkit-scrollbar-track{background:var(--paper-2)}
 ::-webkit-scrollbar-thumb{background:var(--ink);border-radius:99px;border:2px solid var(--paper-2)}
 ::-webkit-scrollbar-thumb:hover{background:var(--saffron)}
 </style>
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.49.1"></script>
 </head><body>
 <section id="auth"><div class="box card">
 <div class="logo">UASA<span>+</span></div><p class="tagline">Made by Hadeef</p>
@@ -268,7 +297,14 @@ main{max-width:920px;margin:auto;padding:28px 18px 80px;animation:viewIn .35s va
 <div id="app" class="hidden">
 <header><div class="hl">UASA<span>+</span></div><div><span class="chip" id="hs"></span><span class="chip" id="hx"></span><span class="chip hearts" id="hh">❤️❤️❤️❤️❤️</span><span class="chip" id="cs">☁️ Saved</span><button class="chip" id="theme" type="button" aria-label="Toggle theme">🌙</button></div>
 <nav id="nv"></nav></header>
-<main id="main"></main></div>
+<nav id="tb" class="tabbar"></nav>
+<main id="main"></main>
+<div id="installBanner" class="hidden" role="dialog" aria-label="Install UASA+">
+  <span class="ib-txt">📱 Install UASA+ for offline use</span>
+  <button class="ib-btn" id="installBtn">INSTALL</button>
+  <button class="ib-x" id="installX" aria-label="Dismiss">✕</button>
+</div>
+</div>
 <script>
 const SUPABASE_URL="https://bmjnloqqagzwgrwdvbgw.supabase.co";
 const SUPABASE_KEY="sb_publishable_WE5lAYz1a5pAvP3btNaM5Q_7EzA2DN4";
@@ -820,13 +856,18 @@ const lk=(a,r,t)=>`<button class="lk" data-a="${a}" data-r="${esc(r)}">${t}</but
 function nav(p){
  const items=[["home","🏠 Home"],["subjects","📚 Subjects"],["review","✨ Review"],["leaderboard","🏆 Leaderboard"],["profile","👤 Profile"]];
  if(USER&&USER.role==="teacher")items.push(["teacher","🎓 Teacher"]);
- $("nv").innerHTML=items.map(x=>`<button class="${x[0]===p?"on":""}" data-a="page" data-r="${x[0]}">${x[1]}</button>`).join("")+`<button data-a="logout">🚪 Logout</button>`
+ $("nv").innerHTML=items.map(x=>`<button class="${x[0]===p?"on":""}" data-a="page" data-r="${x[0]}">${x[1]}</button>`).join("")+`<button data-a="logout">🚪 Logout</button>`;
+ const tb=$("tb");
+ if(tb){
+  const tabs=[["home","🏠","Home"],["subjects","📚","Learn"],["review","✨","Review"],["leaderboard","🏆","Board"],["profile","👤","Me"]];
+  tb.innerHTML=tabs.map(x=>`<button class="${x[0]===p?"on":""}" data-a="page" data-r="${x[0]}"><span class="ti">${x[1]}</span>${x[2]}</button>`).join("");
+ }
 }
 const PAGES={
 home(){const n=SUBJ.reduce((a,s)=>a+sDone(s[0]),0),into=USER.xp%350;
 const goal=50,prog=Math.min(USER.dailyXp||0,goal),pct=prog/goal*100;
 return`<div class="hero"><h1>Welcome, ${esc(USER.display_name||USER.username)}!</h1><p>Learn. Practice. Level up.</p><button class="btn" data-a="page" data-r="subjects">START LEARNING</button><button class="btn" data-a="mix" data-r="">🎲 MIXED QUIZ</button>
-<button class="btn g" style="background:#ffffff22;color:#fff;border-color:#ffffff66" data-a="daily">${USER.dailyDone===today()?"✅ DAILY DONE":"🎯 DAILY CHALLENGE"}</button></div>
+<button class="btn g" data-a="daily">${USER.dailyDone===today()?"✅ DAILY DONE":"🎯 DAILY CHALLENGE"}</button></div>
 <div class="card"><h2>📅 Daily Goal</h2>${bar(pct)}<small>${prog} / ${goal} XP today${prog>=goal?" — goal reached! 🎉":""}</small></div>
 <div class="stats">${[[USER.xp,"XP"],[lvl(),"Level"],[streakNow()+(USER.streakFreezes?" ❄️"+USER.streakFreezes:""),"Day streak"],[n,"Lessons done"]].map(x=>`<div class="card"><div class="n">${x[0]}</div><small>${x[1]}</small></div>`).join("")}</div>
 <div class="card"><h2>Level progress</h2>${bar(into/3.5)}<small>${into} / 350 XP to Level ${lvl()+1}</small></div>`},
@@ -1419,6 +1460,52 @@ document.addEventListener("keydown",e=>{
   if(data.session){await loadUser(data.session.user);enter()}
  }catch(e){console.warn(e)}
 })();
+
+/* ---------- PWA: service worker + install prompt ---------- */
+
+if ("serviceWorker" in navigator) {
+  window.addEventListener("load", () => {
+    navigator.serviceWorker.register("sw.js").catch((err) => {
+      console.warn("SW registration failed:", err);
+    });
+  });
+}
+
+let _installEvt = null;
+const installBanner = document.getElementById("installBanner");
+const installBtn = document.getElementById("installBtn");
+const installX = document.getElementById("installX");
+
+window.addEventListener("beforeinstallprompt", (e) => {
+  e.preventDefault();
+  _installEvt = e;
+  if (installBanner && localStorage.getItem("uasaInstallDismissed") !== "1") {
+    installBanner.classList.remove("hidden");
+  }
+});
+
+installBtn?.addEventListener("click", async () => {
+  if (!_installEvt) return;
+  _installEvt.prompt();
+  const choice = await _installEvt.userChoice;
+  if (choice.outcome === "accepted") {
+    installBanner?.classList.add("hidden");
+    _installEvt = null;
+  } else {
+    installBanner?.classList.add("hidden");
+  }
+});
+
+installX?.addEventListener("click", () => {
+  installBanner?.classList.add("hidden");
+  try { localStorage.setItem("uasaInstallDismissed", "1"); } catch (e) {}
+});
+
+window.addEventListener("appinstalled", () => {
+  installBanner?.classList.add("hidden");
+  _installEvt = null;
+  if (typeof toast === "function") toast("🎉 UASA+ installed!");
+});
 </script>
 </body>
 </html>

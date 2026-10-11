@@ -29,7 +29,6 @@
   --tx:var(--ink);--mu:var(--muted);--ak:#fff;
   --r-xs:6px;--r-sm:10px;--r-md:14px;--r-lg:20px;--r-xl:28px;
   --press-sm:0 3px 0 var(--ink-2);
-  --press:0 4px 0 var(--ink-2);
   --ease-spring:cubic-bezier(.34,1.56,.64,1);
   --ease-soft:cubic-bezier(.4,0,.2,1);
   padding-top:env(safe-area-inset-top,0px);
@@ -46,7 +45,7 @@
     --teal:#2dd4bf;--teal-deep:#134e4a;
     --clay:#f87171;--clay-deep:#450a0a;
     --bg:var(--paper);--pn:#1c1712;--p2:#2a231b;--ln:#3d3225;--tx:#f5ede0;--mu:#a89880;
-    --press-sm:0 3px 0 #000;--press:0 4px 0 #000;
+    --press-sm:0 3px 0 #000;
   }
 }
 :root[data-theme=dark]{
@@ -59,33 +58,15 @@
   --teal:#2dd4bf;--teal-deep:#134e4a;
   --clay:#f87171;--clay-deep:#450a0a;
   --bg:var(--paper);--pn:#1c1712;--p2:#2a231b;--ln:#3d3225;--tx:#f5ede0;--mu:#a89880;
-  --press-sm:0 3px 0 #000;--press:0 4px 0 #000;
+  --press-sm:0 3px 0 #000;
 }
 *{box-sizing:border-box}
 html{-webkit-text-size-adjust:100%}
-body{
-  margin:0;font:16px/1.55 'Geist',system-ui,-apple-system,sans-serif;
-  background:var(--paper);color:var(--ink);
-  -webkit-font-smoothing:antialiased;overscroll-behavior-y:none;
-  background-image:
-    radial-gradient(circle at 20% 30%,rgba(201,185,152,.18) 0,transparent 40%),
-    radial-gradient(circle at 80% 70%,rgba(201,185,152,.14) 0,transparent 40%);
-  background-attachment:fixed;
-}
-body.focus-mode::before{
-  content:"";position:fixed;inset:0;
-  background:color-mix(in srgb,var(--paper) 55%,transparent);
-  backdrop-filter:blur(3px);
-  z-index:5;pointer-events:none;
-  animation:focusIn .3s ease;
-}
+body{margin:0;font:16px/1.55 'Geist',system-ui,-apple-system,sans-serif;background:var(--paper);color:var(--ink);-webkit-font-smoothing:antialiased;overscroll-behavior-y:none;background-image:radial-gradient(circle at 20% 30%,rgba(201,185,152,.18) 0,transparent 40%),radial-gradient(circle at 80% 70%,rgba(201,185,152,.14) 0,transparent 40%);background-attachment:fixed}
+body.focus-mode::before{content:"";position:fixed;inset:0;background:color-mix(in srgb,var(--paper) 55%,transparent);backdrop-filter:blur(3px);z-index:5;pointer-events:none;animation:focusIn .3s ease}
 body.focus-mode .qz{position:relative;z-index:6}
 @keyframes focusIn{from{opacity:0}}
-h1,h2,h3,.logo,.hl,.n,.stars,.ticket-num{
-  font-family:'Fraunces',Georgia,serif;font-weight:800;
-  font-variation-settings:'opsz' 96,'SOFT' 60,'WONK' 1;
-  letter-spacing:-.03em;line-height:1.1;
-}
+h1,h2,h3,.logo,.hl,.n,.stars,.ticket-num{font-family:'Fraunces',Georgia,serif;font-weight:800;font-variation-settings:'opsz' 96,'SOFT' 60,'WONK' 1;letter-spacing:-.03em;line-height:1.1}
 h1{font-size:clamp(30px,5.5vw,44px);margin:0 0 16px;padding-bottom:14px;position:relative;font-variation-settings:'opsz' 144,'SOFT' 40,'WONK' 1}
 h1::after{content:"";position:absolute;left:0;bottom:0;width:60px;height:5px;background:var(--saffron);border-radius:99px;box-shadow:4px 4px 0 var(--ink)}
 h2{font-size:clamp(21px,3.5vw,27px);margin:0 0 10px}
@@ -95,153 +76,50 @@ button{cursor:pointer}
 .hidden{display:none!important}
 small,.mu,label{color:var(--muted)}
 label{display:block;margin-top:16px;font-weight:700;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);font-family:'JetBrains Mono',monospace}
-input,select,textarea{
-  width:100%;padding:14px 16px;margin:6px 0 8px;
-  border-radius:var(--r-sm);border:2px solid var(--ink);
-  background:var(--pn);color:var(--ink);font-weight:500;font-size:15px;
-  transition:border-color .12s ease,box-shadow .12s ease;
-}
-input:focus,select:focus,textarea:focus{
-  outline:none;border-color:var(--ink);
-  box-shadow:inset 0 -3px 0 var(--accent),0 0 0 4px color-mix(in srgb,var(--accent) 20%,transparent);
-}
+input,select,textarea{width:100%;padding:14px 16px;margin:6px 0 8px;border-radius:var(--r-sm);border:2px solid var(--ink);background:var(--pn);color:var(--ink);font-weight:500;font-size:15px;transition:border-color .12s ease,box-shadow .12s ease}
+input:focus,select:focus,textarea:focus{outline:none;border-color:var(--ink);box-shadow:inset 0 -3px 0 var(--accent),0 0 0 4px color-mix(in srgb,var(--accent) 20%,transparent)}
 textarea{font-family:'JetBrains Mono',monospace;font-size:13px;line-height:1.7}
-.btn{
-  display:inline-block;padding:14px 22px 15px;margin:8px 8px 0 0;
-  border:2px solid var(--ink);border-radius:var(--r-sm);
-  background:var(--accent);color:#fff;
-  font-family:'Geist',sans-serif;font-weight:800;font-size:14px;
-  letter-spacing:.01em;box-shadow:0 3px 0 var(--accent-deep);
-  transition:transform .08s var(--ease-soft),box-shadow .08s var(--ease-soft),background .15s ease;
-  text-decoration:none;position:relative;
-}
+.btn{display:inline-block;padding:14px 22px 15px;margin:8px 8px 0 0;border:2px solid var(--ink);border-radius:var(--r-sm);background:var(--accent);color:#fff;font-family:'Geist',sans-serif;font-weight:800;font-size:14px;letter-spacing:.01em;box-shadow:0 3px 0 var(--accent-deep);transition:transform .08s var(--ease-soft),box-shadow .08s var(--ease-soft),background .15s ease;text-decoration:none;position:relative}
 .btn:hover{background:color-mix(in srgb,var(--accent) 92%,#fff);transform:translateY(-1px);box-shadow:0 5px 0 var(--accent-deep)}
 .btn:active{transform:translateY(3px);box-shadow:0 0 0 var(--accent-deep)}
 .btn.g{background:var(--pn);color:var(--ink);box-shadow:var(--press-sm)}
 .btn.g:hover{background:var(--paper-2);box-shadow:0 5px 0 var(--ink-2)}
 .btn.g:active{transform:translateY(3px);box-shadow:0 0 0 var(--ink-2)}
-.card{
-  background:var(--pn);border:2px solid var(--ink);border-radius:var(--r-lg);
-  padding:22px;margin-bottom:16px;box-shadow:var(--press-sm);
-  transition:transform .15s var(--ease-spring),box-shadow .15s var(--ease-spring);
-}
+.card{background:var(--pn);border:2px solid var(--ink);border-radius:var(--r-lg);padding:22px;margin-bottom:16px;box-shadow:var(--press-sm);transition:transform .15s var(--ease-spring),box-shadow .15s var(--ease-spring)}
 .card h2{display:flex;align-items:center;gap:10px;font-size:21px;margin:0 0 12px}
-.card h2::before{
-  content:"";flex:none;width:10px;height:10px;border-radius:50%;
-  background:var(--saffron);border:2px solid var(--ink);
-}
+.card h2::before{content:"";flex:none;width:10px;height:10px;border-radius:50%;background:var(--saffron);border:2px solid var(--ink)}
 .tap{width:100%;text-align:left;color:var(--ink);cursor:pointer}
 .tap:hover{transform:translateY(-3px);box-shadow:0 6px 0 var(--ink-2)}
 .tap:active{transform:translateY(3px);box-shadow:0 0 0 var(--ink-2)}
-#auth{
-  min-height:100vh;display:grid;place-items:center;padding:24px;position:relative;
-  background:
-    radial-gradient(circle at 15% 20%,color-mix(in srgb,var(--saffron) 20%,transparent),transparent 35%),
-    radial-gradient(circle at 85% 85%,color-mix(in srgb,var(--teal) 15%,transparent),transparent 40%),
-    radial-gradient(circle at 50% 50%,color-mix(in srgb,var(--clay) 8%,transparent),transparent 60%),
-    var(--paper);
-}
-#auth::before{
-  content:"";position:absolute;inset:0;
-  background-image:radial-gradient(circle,var(--line) 1px,transparent 1px);
-  background-size:24px 24px;opacity:.35;pointer-events:none;
-}
+#auth{min-height:100vh;display:grid;place-items:center;padding:24px;position:relative;background:radial-gradient(circle at 15% 20%,color-mix(in srgb,var(--saffron) 20%,transparent),transparent 35%),radial-gradient(circle at 85% 85%,color-mix(in srgb,var(--teal) 15%,transparent),transparent 40%),radial-gradient(circle at 50% 50%,color-mix(in srgb,var(--clay) 8%,transparent),transparent 60%),var(--paper)}
+#auth::before{content:"";position:absolute;inset:0;background-image:radial-gradient(circle,var(--line) 1px,transparent 1px);background-size:24px 24px;opacity:.35;pointer-events:none}
 .box{width:min(440px,100%);position:relative;z-index:1}
-.logo{
-  font-family:'Fraunces',serif;font-size:58px;font-weight:900;
-  font-variation-settings:'opsz' 144,'SOFT' 30,'WONK' 1;
-  letter-spacing:-.05em;text-align:center;line-height:1;color:var(--ink);
-}
-.logo span{
-  display:inline-block;color:var(--saffron);
-  transform:rotate(-8deg) translateY(-6px);
-  text-shadow:2px 2px 0 var(--ink);
-}
-.tagline{
-  text-align:center;margin:8px 0 0;
-  font-family:'JetBrains Mono',monospace;font-size:10px;
-  letter-spacing:.24em;text-transform:uppercase;color:var(--muted);
-}
-.tabs{
-  display:flex;gap:6px;margin:22px 0 16px;
-  background:var(--paper-2);padding:6px;
-  border-radius:var(--r-sm);border:2px solid var(--ink);
-}
-.tabs .btn{
-  flex:1;margin:0;padding:10px;border-radius:6px;border:0;box-shadow:none;
-  background:transparent;color:var(--muted);font-weight:700;
-}
+.logo{font-family:'Fraunces',serif;font-size:58px;font-weight:900;font-variation-settings:'opsz' 144,'SOFT' 30,'WONK' 1;letter-spacing:-.05em;text-align:center;line-height:1;color:var(--ink)}
+.logo span{display:inline-block;color:var(--saffron);transform:rotate(-8deg) translateY(-6px);text-shadow:2px 2px 0 var(--ink)}
+.tagline{text-align:center;margin:8px 0 0;font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.24em;text-transform:uppercase;color:var(--muted)}
+.tabs{display:flex;gap:6px;margin:22px 0 16px;background:var(--paper-2);padding:6px;border-radius:var(--r-sm);border:2px solid var(--ink)}
+.tabs .btn{flex:1;margin:0;padding:10px;border-radius:6px;border:0;box-shadow:none;background:transparent;color:var(--muted);font-weight:700}
 .tabs .btn:not(.g){background:var(--ink);color:var(--paper)}
 .tabs .btn:hover{transform:none;box-shadow:none}
-#am{
-  min-height:24px;text-align:center;color:var(--saffron-deep);
-  font-weight:700;font-size:13px;margin-top:10px;
-  font-family:'JetBrains Mono',monospace;
-}
-header{
-  position:sticky;top:env(safe-area-inset-top,0px);z-index:9;
-  display:flex;flex-wrap:wrap;gap:10px;
-  justify-content:space-between;align-items:center;
-  padding:12px 20px;background:var(--paper);
-  border-bottom:2px solid var(--ink);
-  view-transition-name:header;
-}
-.hl{
-  font-family:'Fraunces',serif;font-size:26px;font-weight:900;
-  font-variation-settings:'opsz' 96,'SOFT' 40,'WONK' 1;
-  letter-spacing:-.05em;
-}
-.hl span{
-  color:var(--saffron);display:inline-block;
-  transform:rotate(-8deg) translateY(-2px);
-  text-shadow:2px 2px 0 var(--ink);
-}
-.chip{
-  display:inline-flex;align-items:center;gap:4px;
-  background:var(--pn);border:2px solid var(--ink);
-  border-radius:99px;padding:4px 12px;
-  font-family:'JetBrains Mono',monospace;
-  font-weight:700;font-size:12px;margin-right:6px;color:var(--ink);
-  box-shadow:0 2px 0 var(--ink-2);
-}
-.chip#theme{
-  cursor:pointer;padding:4px 10px;font-size:14px;
-  background:var(--saffron);color:#fff;
-}
+#am{min-height:24px;text-align:center;color:var(--saffron-deep);font-weight:700;font-size:13px;margin-top:10px;font-family:'JetBrains Mono',monospace}
+header{position:sticky;top:env(safe-area-inset-top,0px);z-index:9;display:flex;flex-wrap:wrap;gap:10px;justify-content:space-between;align-items:center;padding:12px 20px;background:var(--paper);border-bottom:2px solid var(--ink);view-transition-name:header}
+.hl{font-family:'Fraunces',serif;font-size:26px;font-weight:900;font-variation-settings:'opsz' 96,'SOFT' 40,'WONK' 1;letter-spacing:-.05em}
+.hl span{color:var(--saffron);display:inline-block;transform:rotate(-8deg) translateY(-2px);text-shadow:2px 2px 0 var(--ink)}
+.chip{display:inline-flex;align-items:center;gap:4px;background:var(--pn);border:2px solid var(--ink);border-radius:99px;padding:4px 12px;font-family:'JetBrains Mono',monospace;font-weight:700;font-size:12px;margin-right:6px;color:var(--ink);box-shadow:0 2px 0 var(--ink-2)}
+.chip#theme{cursor:pointer;padding:4px 10px;font-size:14px;background:var(--saffron);color:#fff}
 .save-ok{background:color-mix(in srgb,var(--jade) 20%,var(--pn));border-color:var(--jade);color:var(--jade-deep)}
 .save-bad{background:color-mix(in srgb,var(--clay) 20%,var(--pn));border-color:var(--clay);color:var(--clay-deep)}
 header nav{display:flex;flex-wrap:wrap;gap:18px;width:100%;margin-top:6px}
-header nav button{
-  background:none;border:0;color:var(--ink);padding:4px 0;
-  font-weight:600;font-size:14px;position:relative;font-family:'Geist',sans-serif;
-}
-header nav button::after{
-  content:"";position:absolute;left:0;right:0;bottom:-3px;height:3px;
-  background:var(--saffron);transform:scaleX(0);transform-origin:left;
-  transition:transform .25s var(--ease-spring);border-radius:2px;
-}
+header nav button{background:none;border:0;color:var(--ink);padding:4px 0;font-weight:600;font-size:14px;position:relative;font-family:'Geist',sans-serif}
+header nav button::after{content:"";position:absolute;left:0;right:0;bottom:-3px;height:3px;background:var(--saffron);transform:scaleX(0);transform-origin:left;transition:transform .25s var(--ease-spring);border-radius:2px}
 header nav button:hover::after{transform:scaleX(.6)}
 header nav button.on{font-weight:800}
 header nav button.on::after{transform:scaleX(1);height:4px}
 main{max-width:920px;margin:auto;padding:28px 18px 80px;animation:viewIn .35s var(--ease-spring)}
 @keyframes viewIn{from{opacity:0;transform:translateY(8px)}}
-.hero{
-  padding:34px 30px;border-radius:var(--r-xl);margin-bottom:22px;
-  background:var(--ink);color:var(--paper);
-  border:2px solid var(--ink);box-shadow:8px 8px 0 var(--saffron);
-  position:relative;overflow:hidden;isolation:isolate;
-  view-transition-name:hero;
-}
-.hero::before{
-  content:"";position:absolute;inset:0;
-  background-image:radial-gradient(circle,rgba(255,255,255,.08) 1.5px,transparent 1.5px);
-  background-size:14px 14px;pointer-events:none;z-index:-1;
-}
-.hero::after{
-  content:"✦";position:absolute;top:14px;right:20px;
-  color:var(--saffron);font-size:24px;transform:rotate(15deg);
-  animation:twinkle 4s ease infinite;
-}
+.hero{padding:34px 30px;border-radius:var(--r-xl);margin-bottom:22px;background:var(--ink);color:var(--paper);border:2px solid var(--ink);box-shadow:8px 8px 0 var(--saffron);position:relative;overflow:hidden;isolation:isolate;view-transition-name:hero}
+.hero::before{content:"";position:absolute;inset:0;background-image:radial-gradient(circle,rgba(255,255,255,.08) 1.5px,transparent 1.5px);background-size:14px 14px;pointer-events:none;z-index:-1}
+.hero::after{content:"✦";position:absolute;top:14px;right:20px;color:var(--saffron);font-size:24px;transform:rotate(15deg);animation:twinkle 4s ease infinite}
 @keyframes twinkle{0%,100%{transform:rotate(15deg) scale(1);opacity:.9}50%{transform:rotate(15deg) scale(1.3);opacity:1}}
 .hero h1{color:var(--paper);font-size:clamp(28px,5vw,42px);margin-bottom:8px;padding-bottom:0}
 .hero h1::after{display:none}
@@ -254,11 +132,7 @@ main{max-width:920px;margin:auto;padding:28px 18px 80px;animation:viewIn .35s va
 .stats,.grid{display:grid;gap:14px;grid-template-columns:repeat(4,1fr)}
 .grid{grid-template-columns:repeat(2,1fr)}
 .stats .card,.grid .card{padding:18px 20px}
-.n{
-  font-family:'Fraunces',serif;
-  font-variation-settings:'opsz' 144,'SOFT' 40,'WONK' 1;
-  font-size:36px;font-weight:900;letter-spacing:-.05em;line-height:1;color:var(--ink);
-}
+.n{font-family:'Fraunces',serif;font-variation-settings:'opsz' 144,'SOFT' 40,'WONK' 1;font-size:36px;font-weight:900;letter-spacing:-.05em;line-height:1;color:var(--ink)}
 .gd{color:var(--jade)}
 .home-bento{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:16px}
 .home-bento .card{margin-bottom:0;padding:16px}
@@ -268,60 +142,22 @@ main{max-width:920px;margin:auto;padding:28px 18px 80px;animation:viewIn .35s va
 .streak-hero .flame{display:inline-block;animation:flame 2s ease-in-out infinite;transform-origin:bottom center}
 @keyframes flame{0%,100%{transform:scale(1) rotate(-2deg)}50%{transform:scale(1.12) rotate(2deg)}}
 .streak-hero[data-streak="0"] .flame{opacity:.3;animation:none}
-.streak-hero[data-streak="7"] .flame{filter:hue-rotate(-10deg) saturate(1.4)}
-.streak-hero[data-streak="30"] .flame{filter:hue-rotate(-30deg) saturate(2)}
 .bar{height:16px;background:var(--paper-2);border:2px solid var(--ink);border-radius:99px;overflow:hidden;margin:14px 0;flex:1;position:relative}
-.bar i{
-  display:block;height:100%;background:var(--saffron);border-radius:99px;
-  transition:width .6s var(--ease-spring);
-  background-image:
-    linear-gradient(90deg,transparent 0 8px,rgba(255,255,255,.25) 8px 10px,transparent 10px 100%),
-    linear-gradient(180deg,rgba(255,255,255,.35),transparent 40%);
-}
-.bar::after{
-  content:"";position:absolute;inset:0;pointer-events:none;opacity:.35;
-  background-image:linear-gradient(90deg,
-    transparent 0,transparent calc(25% - 1px),var(--ink) calc(25% - 1px),
-    var(--ink) calc(25% + 1px),transparent calc(25% + 1px),
-    transparent calc(50% - 1px),var(--ink) calc(50% - 1px),
-    var(--ink) calc(50% + 1px),transparent calc(50% + 1px),
-    transparent calc(75% - 1px),var(--ink) calc(75% - 1px),
-    var(--ink) calc(75% + 1px),transparent calc(75% + 1px));
-}
+.bar i{display:block;height:100%;background:var(--saffron);border-radius:99px;transition:width .6s var(--ease-spring);background-image:linear-gradient(90deg,transparent 0 8px,rgba(255,255,255,.25) 8px 10px,transparent 10px 100%),linear-gradient(180deg,rgba(255,255,255,.35),transparent 40%)}
+.bar::after{content:"";position:absolute;inset:0;pointer-events:none;opacity:.35;background-image:linear-gradient(90deg,transparent 0,transparent calc(25% - 1px),var(--ink) calc(25% - 1px),var(--ink) calc(25% + 1px),transparent calc(25% + 1px),transparent calc(50% - 1px),var(--ink) calc(50% - 1px),var(--ink) calc(50% + 1px),transparent calc(50% + 1px),transparent calc(75% - 1px),var(--ink) calc(75% - 1px),var(--ink) calc(75% + 1px),transparent calc(75% + 1px))}
 .ring{--pct:0;--size:80px;--thick:8px;--ring-color:var(--accent);position:relative;width:var(--size);height:var(--size);display:inline-grid;place-items:center;flex:none}
 .ring svg{width:100%;height:100%;transform:rotate(-90deg);overflow:visible}
 .ring circle{fill:none;stroke-width:var(--thick);stroke-linecap:round}
 .ring .track{stroke:var(--paper-3)}
-.ring .fill{
-  stroke:var(--ring-color);
-  stroke-dasharray:calc(2 * 3.14159 * 34);
-  stroke-dashoffset:calc(2 * 3.14159 * 34 * (1 - var(--pct) / 100));
-  transition:stroke-dashoffset .8s var(--ease-spring);
-}
-.ring::after{
-  content:attr(data-label);position:absolute;
-  font-family:'JetBrains Mono',monospace;font-weight:800;
-  font-size:calc(var(--size) / 5);color:var(--ink);letter-spacing:-.04em;
-}
+.ring .fill{stroke:var(--ring-color);stroke-dasharray:calc(2 * 3.14159 * 34);stroke-dashoffset:calc(2 * 3.14159 * 34 * (1 - var(--pct) / 100));transition:stroke-dashoffset .8s var(--ease-spring)}
+.ring::after{content:attr(data-label);position:absolute;font-family:'JetBrains Mono',monospace;font-weight:800;font-size:calc(var(--size) / 5);color:var(--ink);letter-spacing:-.04em}
 .ring.done .fill{stroke:var(--jade)}
 .ring.done::after{color:var(--jade)}
 .map{max-width:560px;margin:24px auto}
-.node{
-  display:flex;gap:16px;align-items:center;width:100%;
-  padding:16px;margin:12px 0;
-  border:2px solid var(--ink);border-radius:var(--r-lg);
-  background:var(--pn);color:var(--ink);text-align:left;
-  box-shadow:var(--press-sm);
-  transition:transform .12s var(--ease-spring),box-shadow .12s var(--ease-spring);
-}
+.node{display:flex;gap:16px;align-items:center;width:100%;padding:16px;margin:12px 0;border:2px solid var(--ink);border-radius:var(--r-lg);background:var(--pn);color:var(--ink);text-align:left;box-shadow:var(--press-sm);transition:transform .12s var(--ease-spring),box-shadow .12s var(--ease-spring)}
 .node:not([aria-disabled="true"]):hover{transform:translateY(-3px);box-shadow:0 7px 0 var(--ink-2)}
 .node:not([aria-disabled="true"]):active{transform:translateY(3px);box-shadow:0 0 0 var(--ink-2)}
-.node>span:first-child{
-  flex:none;width:54px;height:54px;border-radius:50%;
-  border:2px solid var(--ink);display:grid;place-items:center;
-  font-family:'JetBrains Mono',monospace;font-weight:800;font-size:16px;
-  background:var(--saffron);color:var(--ink);box-shadow:0 3px 0 var(--ink-2);
-}
+.node>span:first-child{flex:none;width:54px;height:54px;border-radius:50%;border:2px solid var(--ink);display:grid;place-items:center;font-family:'JetBrains Mono',monospace;font-weight:800;font-size:16px;background:var(--saffron);color:var(--ink);box-shadow:0 3px 0 var(--ink-2)}
 .node.done>span:first-child{background:var(--jade);color:#fff}
 .node.lock{opacity:.55;background:var(--paper-2)}
 .node.lock>span:first-child{background:var(--paper-2);color:var(--ink);border-style:dashed;box-shadow:none}
@@ -336,28 +172,9 @@ main{max-width:920px;margin:auto;padding:28px 18px 80px;animation:viewIn .35s va
 .row{display:flex;gap:14px;align-items:center}
 .row .btn{margin:0}
 .qz h2{font-size:23px;line-height:1.32;margin:22px 0 10px}
-.qz>small{
-  display:inline-block;background:var(--ink);color:var(--paper);
-  padding:4px 10px;border-radius:99px;font-size:10px;
-  letter-spacing:.16em;margin-bottom:8px;
-  font-family:'JetBrains Mono',monospace;text-transform:uppercase;
-}
-.ans{
-  display:flex;gap:14px;align-items:center;width:100%;
-  padding:17px 20px;margin-top:12px;
-  border:2px solid var(--ink);border-radius:var(--r-md);
-  background:var(--pn);color:var(--ink);
-  text-align:left;font-weight:600;font-size:16px;min-height:68px;
-  box-shadow:var(--press-sm);
-  transition:transform .12s var(--ease-spring),box-shadow .12s var(--ease-spring),background .15s ease,opacity .3s ease,filter .3s ease;
-  font-family:'Geist',sans-serif;
-}
-.ans b{
-  flex:none;width:38px;height:38px;border-radius:50%;
-  border:2px solid var(--ink);background:var(--paper-2);
-  display:grid;place-items:center;
-  font-family:'JetBrains Mono',monospace;font-weight:800;font-size:15px;
-}
+.qz>small{display:inline-block;background:var(--ink);color:var(--paper);padding:4px 10px;border-radius:99px;font-size:10px;letter-spacing:.16em;margin-bottom:8px;font-family:'JetBrains Mono',monospace;text-transform:uppercase}
+.ans{display:flex;gap:14px;align-items:center;width:100%;padding:17px 20px;margin-top:12px;border:2px solid var(--ink);border-radius:var(--r-md);background:var(--pn);color:var(--ink);text-align:left;font-weight:600;font-size:16px;min-height:68px;box-shadow:var(--press-sm);transition:transform .12s var(--ease-spring),box-shadow .12s var(--ease-spring),background .15s ease,opacity .3s ease,filter .3s ease;font-family:'Geist',sans-serif}
+.ans b{flex:none;width:38px;height:38px;border-radius:50%;border:2px solid var(--ink);background:var(--paper-2);display:grid;place-items:center;font-family:'JetBrains Mono',monospace;font-weight:800;font-size:15px}
 .ans:not(:disabled):hover{background:var(--saffron);transform:translateY(-3px);box-shadow:0 7px 0 var(--ink-2)}
 .ans:not(:disabled):hover b{background:#fff}
 .ans:not(:disabled):active{transform:translateY(3px);box-shadow:0 0 0 var(--ink-2)}
@@ -367,13 +184,7 @@ main{max-width:920px;margin:auto;padding:28px 18px 80px;animation:viewIn .35s va
 .ans.no b{background:#fff;color:var(--clay);border-color:var(--ink)}
 .ans.dimmed{opacity:.15;filter:blur(1px)}
 @keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-6px)}75%{transform:translateX(6px)}}
-.fb{
-  margin:18px 0;padding:16px 18px;border-radius:var(--r-md);
-  border:2px solid var(--ink);font-weight:700;font-size:15px;
-  background:var(--paper-2);color:var(--ink);
-  box-shadow:var(--press-sm);animation:slideIn .25s var(--ease-spring);
-  font-family:'Geist',sans-serif;
-}
+.fb{margin:18px 0;padding:16px 18px;border-radius:var(--r-md);border:2px solid var(--ink);font-weight:700;font-size:15px;background:var(--paper-2);color:var(--ink);box-shadow:var(--press-sm);animation:slideIn .25s var(--ease-spring);font-family:'Geist',sans-serif}
 @keyframes slideIn{from{opacity:0;transform:translateY(-6px)}}
 .fb.ok{background:var(--jade);color:#fff}
 .fb.no{background:var(--clay);color:#fff}
@@ -388,11 +199,7 @@ main{max-width:920px;margin:auto;padding:28px 18px 80px;animation:viewIn .35s va
 .stars span:nth-child(3){animation-delay:.3s}
 @keyframes popIn{from{transform:scale(0) rotate(-180deg);opacity:0}}
 .flip-card{transform-style:preserve-3d;animation:flipCard .8s var(--ease-spring) both;transform-origin:center 40%}
-@keyframes flipCard{
-  0%{transform:perspective(1400px) rotateX(-95deg) translateY(-20px);opacity:0}
-  60%{transform:perspective(1400px) rotateX(8deg) translateY(0);opacity:1}
-  100%{transform:perspective(1400px) rotateX(0) translateY(0);opacity:1}
-}
+@keyframes flipCard{0%{transform:perspective(1400px) rotateX(-95deg) translateY(-20px);opacity:0}60%{transform:perspective(1400px) rotateX(8deg) translateY(0);opacity:1}100%{transform:perspective(1400px) rotateX(0) translateY(0);opacity:1}}
 .retry-row{margin-top:20px;padding:20px;border:2px dashed var(--clay);border-radius:var(--r-lg);background:color-mix(in srgb,var(--clay) 6%,var(--pn));text-align:center}
 .retry-row p{font-family:'Fraunces',serif;font-size:18px;font-weight:700;color:var(--clay-deep);margin:0 0 12px}
 .retry-row .btn{font-size:16px;padding:16px 28px}
@@ -400,24 +207,12 @@ main{max-width:920px;margin:auto;padding:28px 18px 80px;animation:viewIn .35s va
 .lbr:last-child{border-bottom:0}
 .lbr.me{background:var(--saffron);border-radius:var(--r-xs);padding:14px 14px;border-bottom:0;font-weight:800;color:var(--ink);box-shadow:0 3px 0 var(--ink-2)}
 .toast,.pop{position:fixed;left:50%;transform:translateX(-50%);z-index:50}
-.toast{
-  bottom:28px;background:var(--ink);color:var(--paper);
-  border:2px solid var(--ink);padding:14px 22px;border-radius:4px;
-  max-width:90vw;box-shadow:0 5px 0 var(--saffron);
-  font-weight:700;font-size:14px;font-family:'JetBrains Mono',monospace;
-  letter-spacing:.02em;animation:toastIn .3s var(--ease-spring);position:fixed;
-}
+.toast{bottom:28px;background:var(--ink);color:var(--paper);border:2px solid var(--ink);padding:14px 22px;border-radius:4px;max-width:90vw;box-shadow:0 5px 0 var(--saffron);font-weight:700;font-size:14px;font-family:'JetBrains Mono',monospace;letter-spacing:.02em;animation:toastIn .3s var(--ease-spring);position:fixed}
 .toast::before,.toast::after{content:"";position:absolute;top:50%;transform:translateY(-50%);width:10px;height:10px;border-radius:50%;background:var(--paper);border:2px solid var(--ink)}
 .toast::before{left:-6px}
 .toast::after{right:-6px}
 @keyframes toastIn{from{opacity:0;transform:translate(-50%,16px)}}
-.pop{
-  top:40%;font-family:'Fraunces',serif;
-  font-variation-settings:'opsz' 144,'SOFT' 20,'WONK' 1;
-  font-size:60px;font-weight:900;color:var(--saffron);
-  -webkit-text-stroke:3px var(--ink);paint-order:stroke;
-  animation:up 1.3s forwards var(--ease-spring);pointer-events:none;
-}
+.pop{top:40%;font-family:'Fraunces',serif;font-variation-settings:'opsz' 144,'SOFT' 20,'WONK' 1;font-size:60px;font-weight:900;color:var(--saffron);-webkit-text-stroke:3px var(--ink);paint-order:stroke;animation:up 1.3s forwards var(--ease-spring);pointer-events:none}
 @keyframes up{to{opacity:0;top:22%}}
 .tbl{width:100%;border-collapse:collapse;font-size:14px}
 .tbl th,.tbl td{padding:12px 10px;text-align:left;border-bottom:1px solid var(--line)}
@@ -445,10 +240,7 @@ main{max-width:920px;margin:auto;padding:28px 18px 80px;animation:viewIn .35s va
 .tap-hint{position:absolute;bottom:10px;right:14px;font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--muted);letter-spacing:.1em;text-transform:uppercase}
 #wc{display:inline-block;font-family:'JetBrains Mono',monospace;font-size:12px;font-weight:700;padding:4px 12px;border-radius:99px;background:var(--paper-2);border:1.5px solid var(--line);margin:4px 0 12px}
 #wc::before{content:"📝 "}
-#wt{
-  background:linear-gradient(var(--pn),var(--pn)),repeating-linear-gradient(transparent 0 27px,var(--paper-3) 27px 28px);
-  background-blend-mode:multiply;background-size:100% 100%,100% 28px;padding:14px 16px;line-height:28px;border-radius:var(--r-sm);
-}
+#wt{background:linear-gradient(var(--pn),var(--pn)),repeating-linear-gradient(transparent 0 27px,var(--paper-3) 27px 28px);background-blend-mode:multiply;background-size:100% 100%,100% 28px;padding:14px 16px;line-height:28px;border-radius:var(--r-sm)}
 .badge-shelf{display:flex;gap:12px;overflow-x:auto;padding:8px 0 14px;margin:0 -4px;scroll-snap-type:x mandatory}
 .badge-shelf::-webkit-scrollbar{height:6px}
 .badge{flex:none;width:92px;scroll-snap-align:start;text-align:center}
@@ -457,27 +249,18 @@ main{max-width:920px;margin:auto;padding:28px 18px 80px;animation:viewIn .35s va
 .badge.locked .badge-art{filter:grayscale(1);opacity:.35;border-style:dashed}
 .badge-name{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.06em;text-transform:uppercase;font-weight:700;color:var(--muted)}
 .badge:not(.locked) .badge-name{color:var(--ink)}
+.empty{text-align:center;padding:36px 20px;border:2px dashed var(--line);border-radius:var(--r-lg);background:var(--paper-2)}
+.empty .empty-art{width:96px;height:96px;margin:0 auto 14px;display:block}
+.empty h3{font-family:'Fraunces',serif;font-size:20px;font-weight:800;margin:0 0 6px}
+.empty p{color:var(--muted);margin:0;font-size:14px}
 .tabbar{display:none}
 @media(max-width:700px){
   header nav{display:none}
-  .tabbar{
-    display:flex;position:fixed;bottom:0;left:0;right:0;
-    background:var(--paper);border-top:2px solid var(--ink);
-    padding:8px 6px calc(8px + env(safe-area-inset-bottom,0px));
-    z-index:20;justify-content:space-around;
-  }
-  .tabbar button{
-    flex:1;background:none;border:0;color:var(--muted);padding:8px 4px;
-    display:flex;flex-direction:column;align-items:center;gap:2px;
-    font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:700;
-    letter-spacing:.04em;text-transform:uppercase;border-radius:10px;
-    transition:color .15s ease,background .15s ease;
-  }
+  .tabbar{display:flex;position:fixed;bottom:0;left:0;right:0;background:var(--paper);border-top:2px solid var(--ink);padding:8px 6px calc(8px + env(safe-area-inset-bottom,0px));z-index:20;justify-content:space-around}
+  .tabbar button{flex:1;background:none;border:0;color:var(--muted);padding:8px 4px;display:flex;flex-direction:column;align-items:center;gap:2px;font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;border-radius:10px;transition:color .15s ease,background .15s ease}
   .tabbar button .ti{font-size:20px;line-height:1}
   .tabbar button.on{color:var(--ink);background:var(--saffron)}
   main{padding-bottom:100px!important}
-}
-@media(max-width:700px){
   h1{font-size:26px}
   .stats{grid-template-columns:repeat(2,1fr)}
   .grid{grid-template-columns:1fr}
@@ -548,62 +331,39 @@ const SUBJ=[["Bahasa Melayu","🇲🇾"],["English","🇬🇧"],["Mathematics","
 const CURRICULUM={
 "Bahasa Melayu":{units:[
 {title:"Unit 16: UASA BM Tahun 4",lessons:[
-{title:"Bahagian A — 20 Objektif",learn:P("<b>Bahagian A</b>: 20 soalan objektif. Pilih A, B, C atau D."),questions:[
-Q("Aminah ______ buku cerita di dalam biliknya.",["membaca","berlari","duduk","tertawa"],0),Q("______ itu sedang menjual kuih di pasar malam.",["Dia","Kami","Mereka","Saya"],0),Q("Kucing saya sangat ______ kerana bulunya berwarna putih.",["cantik","tinggi","laju","panas"],0),Q("Ibu membeli dua ______ ikan di pasar.",["ekor","buah","biji","helai"],0),Q("Ayah pergi ke ______ untuk bekerja setiap pagi.",["pejabat","pasar","sekolah","taman"],0),Q("Sekolah saya terletak di ______ Kuala Lumpur.",["Bandar","dalam","atas","bawah"],0),Q("Murid-murid sedang ______ bola sepak di padang.",["bermain","membaca","menulis","menyanyi"],0),Q("'Wah, cantiknya baju kamu!' — ayat ini ialah ayat?",["Seru","Tanya","Perintah","Berita"],0),Q("Ali dan Ahmad ______ ke sekolah bersama-sama.",["berjalan","berlari","melompat","terbang"],0),Q("Buku itu ______ oleh Siti semalam.",["dibaca","membaca","terbaca","pembaca"],0),Q("______ murid-murid berdiri di hadapan kelas?",["Mengapa","Bagaimana","Apakah","Bilakah"],0),Q("Saya suka makan nasi lemak ______ ibu.",["masakan","memasak","memasakkan","dimasak"],0),Q("Encik Tan menanam sayur di ______ rumahnya.",["belakang","belakangnya","ke belakang","di belakang"],0),Q("Pasukan bola sepak sekolah saya ______ dalam perlawanan itu.",["menang","kalahkan","dimenangi","memenangkan"],0),Q("Anjing itu ______ dengan kuat apabila melihat orang asing.",["menyalak","menyalakkan","disalak","termenyalak"],0),Q("'Jangan bermain di tepi jalan!' — ayat ini ialah ayat?",["Perintah","Tanya","Seru","Berita"],0),Q("Farah ______ murid yang rajin di dalam kelas.",["ialah","adalah","merupakan","ada"],0),Q("Buku-buku itu telah disusun ______ rak.",["di atas","di dalam","di tepi","di bawah"],0),Q("______ cuaca hari ini sangat panas!",["Wah","Aduh","Eh","Oh"],0),Q("Sekolah itu ditubuhkan ______ tahun 1985.",["pada","di","ke","dari"],0)]},
-{title:"Bahagian B — 2 Subjektif",learn:P("<b>Bahagian B</b>: 2 soalan. Baca petikan dengan teliti."),questions:[
-Q("Petikan: 'Aina bangun awal setiap pagi. Dia mandi dan bersarapan sebelum ke sekolah. Aina suka bersarapan dengan roti dan susu. Selepas pulang dari sekolah, dia mengulang kaji pelajaran.'\n\nApakah yang Aina buat dahulu?",["Mandi","Bersarapan","Bangun awal","Mengulang kaji"],2),Q("Petikan yang sama. Apakah makanan Aina ketika bersarapan?",["Nasi lemak","Roti dan susu","Mee goreng","Roti canai"],1)]},
-{title:"Bahagian C — 1 Subjektif",learn:P("<b>Bahagian C</b>: 1 soalan. Baca petikan panjang."),questions:[
-Q("Petikan: 'Kampung Pinang Sebatang dilanda ribut taufan berserta hujan lebat pada hari Jumaat. Banyak pokok tumbang dan laluan air tersumbat. Encik Vijay dan Abang Musa bergotong-royong membersihkan longkang agar air dapat mengalir lancar.'\n\nApakah yang menyebabkan banyak pokok tumbang?",["Hujan lebat","Ribut taufan","Gempa bumi","Banjir"],1),Q("Mengapa mereka membersihkan longkang?",["Agar air mengalir lancar","Agar kampung cantik","Agar boleh bermain","Agar jiran kagum"],0),Q("Apakah nilai yang ditunjukkan?",["Bergotong-royong","Bersaing","Mementingkan diri","Bermalas-malasan"],0)]},
-{title:"Bahagian D — Karangan (20 markah)",learn:P("<b>Bahagian D</b>: 1 karangan. Tulis 50–80 patah perkataan."),questions:[
-W("Tulis karangan tentang 'Keluarga Saya'. Ceritakan ahli keluarga, aktiviti bersama dan perasaan anda.","",50,80,"-","-","Keluarga Saya"),W("Tulis karangan tentang 'Cita-cita Saya'. Nyatakan cita-cita anda dan sebab anda memilihnya.","",50,80,"-","-","Cita-cita Saya"),W("Tulis karangan tentang 'Hari Sukan Sekolah Saya'.","",50,80,"-","-","Hari Sukan")]}]},
+{title:"Bahagian A — 20 Objektif",learn:P("<b>Bahagian A</b>: 20 soalan objektif. Pilih A, B, C atau D."),questions:[Q("Aminah ______ buku cerita di dalam biliknya.",["membaca","berlari","duduk","tertawa"],0),Q("______ itu sedang menjual kuih di pasar malam.",["Dia","Kami","Mereka","Saya"],0),Q("Kucing saya sangat ______ kerana bulunya berwarna putih.",["cantik","tinggi","laju","panas"],0),Q("Ibu membeli dua ______ ikan di pasar.",["ekor","buah","biji","helai"],0),Q("Ayah pergi ke ______ untuk bekerja setiap pagi.",["pejabat","pasar","sekolah","taman"],0),Q("Sekolah saya terletak di ______ Kuala Lumpur.",["Bandar","dalam","atas","bawah"],0),Q("Murid-murid sedang ______ bola sepak di padang.",["bermain","membaca","menulis","menyanyi"],0),Q("'Wah, cantiknya baju kamu!' — ayat ini ialah ayat?",["Seru","Tanya","Perintah","Berita"],0),Q("Ali dan Ahmad ______ ke sekolah bersama-sama.",["berjalan","berlari","melompat","terbang"],0),Q("Buku itu ______ oleh Siti semalam.",["dibaca","membaca","terbaca","pembaca"],0),Q("______ murid-murid berdiri di hadapan kelas?",["Mengapa","Bagaimana","Apakah","Bilakah"],0),Q("Saya suka makan nasi lemak ______ ibu.",["masakan","memasak","memasakkan","dimasak"],0),Q("Encik Tan menanam sayur di ______ rumahnya.",["belakang","belakangnya","ke belakang","di belakang"],0),Q("Pasukan bola sepak sekolah saya ______ dalam perlawanan itu.",["menang","kalahkan","dimenangi","memenangkan"],0),Q("Anjing itu ______ dengan kuat apabila melihat orang asing.",["menyalak","menyalakkan","disalak","termenyalak"],0),Q("'Jangan bermain di tepi jalan!' — ayat ini ialah ayat?",["Perintah","Tanya","Seru","Berita"],0),Q("Farah ______ murid yang rajin di dalam kelas.",["ialah","adalah","merupakan","ada"],0),Q("Buku-buku itu telah disusun ______ rak.",["di atas","di dalam","di tepi","di bawah"],0),Q("______ cuaca hari ini sangat panas!",["Wah","Aduh","Eh","Oh"],0),Q("Sekolah itu ditubuhkan ______ tahun 1985.",["pada","di","ke","dari"],0)]},
+{title:"Bahagian B — 2 Subjektif",learn:P("<b>Bahagian B</b>: 2 soalan. Baca petikan dengan teliti."),questions:[Q("Petikan: 'Aina bangun awal setiap pagi. Dia mandi dan bersarapan sebelum ke sekolah. Aina suka bersarapan dengan roti dan susu.'\n\nApakah yang Aina buat dahulu?",["Mandi","Bersarapan","Bangun awal","Mengulang kaji"],2),Q("Petikan yang sama. Apakah makanan Aina ketika bersarapan?",["Nasi lemak","Roti dan susu","Mee goreng","Roti canai"],1)]},
+{title:"Bahagian C — 1 Subjektif",learn:P("<b>Bahagian C</b>: 1 soalan."),questions:[Q("Petikan: 'Kampung Pinang Sebatang dilanda ribut taufan berserta hujan lebat pada hari Jumaat. Banyak pokok tumbang dan laluan air tersumbat.'\n\nApakah yang menyebabkan banyak pokok tumbang?",["Hujan lebat","Ribut taufan","Gempa bumi","Banjir"],1),Q("Mengapa mereka membersihkan longkang?",["Agar air mengalir lancar","Agar kampung cantik","Agar boleh bermain","Agar jiran kagum"],0),Q("Apakah nilai yang ditunjukkan?",["Bergotong-royong","Bersaing","Mementingkan diri","Bermalas-malasan"],0)]},
+{title:"Bahagian D — Karangan (20 markah)",learn:P("<b>Bahagian D</b>: 1 karangan. Tulis 50–80 patah perkataan."),questions:[W("Tulis karangan tentang 'Keluarga Saya'. Ceritakan ahli keluarga, aktiviti bersama dan perasaan anda.","",50,80,"-","-","Keluarga Saya"),W("Tulis karangan tentang 'Cita-cita Saya'. Nyatakan cita-cita anda dan sebab anda memilihnya.","",50,80,"-","-","Cita-cita Saya"),W("Tulis karangan tentang 'Hari Sukan Sekolah Saya'.","",50,80,"-","-","Hari Sukan")]}]},
 {title:"Unit 17: UASA BM Tahun 5",lessons:[
-{title:"Bahagian A — 20 Objektif",learn:P("<b>Bahagian A</b>: 20 soalan objektif."),questions:[
-Q("Angin kencang menyebabkan api ______ dengan pantas.",["merebak","menular","bertambah","berkembang"],0),Q("Dia tidak hadir ke sekolah ______ demam.",["kerana","tetapi","lalu","sambil"],0),Q("Belajarlah rajin-rajin ______ kamu lulus dengan cemerlang.",["supaya","kerana","atau","lalu"],0),Q("Keluarga Ali mungkin berpindah ke Johor ______ ke Melaka.",["atau","dan","lalu","supaya"],0),Q("Penduduk kampung itu ______ apabila mendapat berita tersebut.",["gempar","riuh","bingit","hingar"],0),Q("Ibu ______ nasi lemak untuk sarapan pagi.",["memasak","membaca","menulis","menyanyi"],0),Q("Aminah berkata-kata ______ merenung wajah rakannya.",["sambil","kerana","lalu","maka"],0),Q("Encik Rahim ______ surat itu sebelum menyerahkannya.",["membaca","menulis","melukis","mendengar"],0),Q("Murid-murid ______ dengan tekun untuk peperiksaan UASA.",["belajar","bermain","tidur","menonton"],0),Q("'Adik bermain ______ kucing kesayangannya.'",["dengan","dalam","pada","di"],0),Q("Buku cerita itu ______ oleh penulis terkenal.",["ditulis","menulis","tertulis","penulis"],0),Q("Ibu membeli beberapa ______ gula di kedai.",["bungkus","biji","helai","ekor"],0),Q("Encik Lim dan Encik Tan ______ kedai runcit itu bersama-sama.",["mengusahakan","mengusaha","berusaha","diusahakan"],0),Q("Pokok kelapa itu tinggi ______ berbuah lebat.",["dan","tetapi","kerana","supaya"],0),Q("______ cuaca hari ini sejuk!",["Alangkah","Wah","Aduh","Eh"],0),Q("Rumah banglo itu ______ oleh keluarga Encik Lee.",["didiami","mendiami","terdiami","pendiami"],0),Q("Anak-anak ______ bermain di padang pada waktu petang.",["suka","sukanya","sukakan","sukai"],0),Q("Kakak saya bekerja sebagai ______ di hospital.",["jururawat","doktor","cikgu","petani"],0),Q("Baju yang dijahit oleh ibu itu sangat ______.",["cantik","cantiknya","kecantikan","mencantikkan"],0),Q("______ yang hadir pada majlis itu sangat ramai.",["Tetamu","Tetamunya","Tetamu-tetamu","Tetamui"],0)]},
-{title:"Bahagian B — 2 Subjektif",learn:P("<b>Bahagian B</b>: 2 soalan subjektif."),questions:[
-Q("Petikan: 'Sekolah Menengah Kebangsaan Taman Seri telah mengadakan Hari Sukan pada hari Sabtu. Acara dimulakan pada pukul 8 pagi. Acara lari berganti-ganti dimenangi oleh rumah Biru.'\n\nBilakah Hari Sukan diadakan?",["Hari Sabtu","Hari Ahad","Hari Jumaat","Hari Isnin"],0),Q("Siapakah yang memenangi acara lari berganti-ganti?",["Rumah Merah","Rumah Biru","Rumah Hijau","Rumah Kuning"],1)]},
-{title:"Bahagian C — 1 Subjektif",learn:P("<b>Bahagian C</b>: 1 soalan subjektif."),questions:[
-Q("Petikan: 'Program gotong-royong diadakan di Taman Perumahan Rakyat pada hujung minggu lalu. Penduduk bekerjasama membersihkan longkang dan memotong rumput. Program bermula pukul 7 pagi dan tamat pukul 11 pagi.'\n\nBilakah program gotong-royong diadakan?",["Hujung minggu lalu","Hari biasa","Awal bulan","Hujung bulan"],0),Q("Apakah yang dilakukan oleh penduduk?",["Membersihkan longkang dan memotong rumput","Bermain bola sepak","Memasak bersama","Menonton televisyen"],0),Q("Berapa lama program itu berlangsung?",["4 jam","3 jam","5 jam","2 jam"],0)]},
-{title:"Bahagian D — Karangan (20 markah)",learn:P("<b>Bahagian D</b>: 1 karangan. Tulis 80–120 patah perkataan."),questions:[
-W("Tulis karangan tentang 'Sekolah Saya'. Ceritakan tentang bangunan, guru dan aktiviti di sekolah.","",80,120,"-","-","Sekolah Saya"),W("Tulis karangan tentang 'Hari Kemerdekaan'.","",80,120,"-","-","Hari Kemerdekaan"),W("Tulis karangan tentang 'Pengalaman Melancong'.","",80,120,"-","-","Pengalaman Melancong")]}]},
+{title:"Bahagian A — 20 Objektif",learn:P("<b>Bahagian A</b>: 20 soalan objektif."),questions:[Q("Angin kencang menyebabkan api ______ dengan pantas.",["merebak","menular","bertambah","berkembang"],0),Q("Dia tidak hadir ke sekolah ______ demam.",["kerana","tetapi","lalu","sambil"],0),Q("Belajarlah rajin-rajin ______ kamu lulus dengan cemerlang.",["supaya","kerana","atau","lalu"],0),Q("Keluarga Ali mungkin berpindah ke Johor ______ ke Melaka.",["atau","dan","lalu","supaya"],0),Q("Penduduk kampung itu ______ apabila mendapat berita tersebut.",["gempar","riuh","bingit","hingar"],0),Q("Ibu ______ nasi lemak untuk sarapan pagi.",["memasak","membaca","menulis","menyanyi"],0),Q("Aminah berkata-kata ______ merenung wajah rakannya.",["sambil","kerana","lalu","maka"],0),Q("Encik Rahim ______ surat itu sebelum menyerahkannya.",["membaca","menulis","melukis","mendengar"],0),Q("Murid-murid ______ dengan tekun untuk peperiksaan UASA.",["belajar","bermain","tidur","menonton"],0),Q("'Adik bermain ______ kucing kesayangannya.'",["dengan","dalam","pada","di"],0),Q("Buku cerita itu ______ oleh penulis terkenal.",["ditulis","menulis","tertulis","penulis"],0),Q("Ibu membeli beberapa ______ gula di kedai.",["bungkus","biji","helai","ekor"],0),Q("Encik Lim dan Encik Tan ______ kedai runcit itu bersama-sama.",["mengusahakan","mengusaha","berusaha","diusahakan"],0),Q("Pokok kelapa itu tinggi ______ berbuah lebat.",["dan","tetapi","kerana","supaya"],0),Q("______ cuaca hari ini sejuk!",["Alangkah","Wah","Aduh","Eh"],0),Q("Rumah banglo itu ______ oleh keluarga Encik Lee.",["didiami","mendiami","terdiami","pendiami"],0),Q("Anak-anak ______ bermain di padang pada waktu petang.",["suka","sukanya","sukakan","sukai"],0),Q("Kakak saya bekerja sebagai ______ di hospital.",["jururawat","doktor","cikgu","petani"],0),Q("Baju yang dijahit oleh ibu itu sangat ______.",["cantik","cantiknya","kecantikan","mencantikkan"],0),Q("______ yang hadir pada majlis itu sangat ramai.",["Tetamu","Tetamunya","Tetamu-tetamu","Tetamui"],0)]},
+{title:"Bahagian B — 2 Subjektif",learn:P("<b>Bahagian B</b>: 2 soalan subjektif."),questions:[Q("Petikan: 'Sekolah Menengah Kebangsaan Taman Seri telah mengadakan Hari Sukan pada hari Sabtu. Acara dimulakan pada pukul 8 pagi.'\n\nBilakah Hari Sukan diadakan?",["Hari Sabtu","Hari Ahad","Hari Jumaat","Hari Isnin"],0),Q("Siapakah yang memenangi acara lari berganti-ganti?",["Rumah Merah","Rumah Biru","Rumah Hijau","Rumah Kuning"],1)]},
+{title:"Bahagian C — 1 Subjektif",learn:P("<b>Bahagian C</b>: 1 soalan subjektif."),questions:[Q("Petikan: 'Program gotong-royong diadakan di Taman Perumahan Rakyat pada hujung minggu lalu. Program bermula pukul 7 pagi dan tamat pukul 11 pagi.'\n\nBilakah program gotong-royong diadakan?",["Hujung minggu lalu","Hari biasa","Awal bulan","Hujung bulan"],0),Q("Apakah yang dilakukan oleh penduduk?",["Membersihkan longkang dan memotong rumput","Bermain bola sepak","Memasak bersama","Menonton televisyen"],0),Q("Berapa lama program itu berlangsung?",["4 jam","3 jam","5 jam","2 jam"],0)]},
+{title:"Bahagian D — Karangan (20 markah)",learn:P("<b>Bahagian D</b>: 1 karangan. Tulis 80–120 patah perkataan."),questions:[W("Tulis karangan tentang 'Sekolah Saya'. Ceritakan tentang bangunan, guru dan aktiviti di sekolah.","",80,120,"-","-","Sekolah Saya"),W("Tulis karangan tentang 'Hari Kemerdekaan'.","",80,120,"-","-","Hari Kemerdekaan"),W("Tulis karangan tentang 'Pengalaman Melancong'.","",80,120,"-","-","Pengalaman Melancong")]}]},
 {title:"Unit 18: UASA BM Tahun 6",lessons:[
-{title:"Bahagian A — 20 Objektif",learn:P("<b>Bahagian A</b>: 20 soalan objektif."),questions:[
-Q("Din mengambil surat itu ______ menyerahkannya kepada Rajoo.",["lalu","agar","maka","kerana"],0),Q("Charles lulus ujian itu ______ adiknya gagal.",["tetapi","dan","serta","malahan"],0),Q("Dia tidak hadir ke sekolah ______ demam.",["kerana","lalu","tetapi","sambil"],0),Q("Farzana ______ Mei Hua sangat gembira.",["dan","lalu","tetapi","walhal"],0),Q("Keluarga Chong Wei mungkin berpindah ke Johor ______ ke Melaka.",["atau","dan","lalu","agar"],0),Q("______ keluarga Wong tiba, datuknya tiada di rumah.",["Semasa","Setelah","Supaya","Sementara"],0),Q("Belajarlah rajin-rajin ______ kamu lulus dengan cemerlang.",["supaya","kerana","atau","lalu"],0),Q("Rakyat Malaysia perlu mengamalkan sikap ______.",["toleransi","egoisme","perkauman","mementingkan diri"],0),Q("Malaysia mencapai kemerdekaan pada ______ 1957.",["31 Ogos","16 September","1 Januari","4 Julai"],0),Q("Yang di-Pertuan Agong ialah ______ utama negara.",["ketua","raja","menteri","pegawai"],0),Q("Faktor utama kemajuan negara ialah ______ rakyat.",["perpaduan","perpecahan","persaingan","pergaduhan"],0),Q("Peribahasa 'Muafakat membawa ______'.",["berkat","hasil","rahmat","nikmat"],0),Q("Kata hubung 'sambil' menunjukkan perbuatan yang?",["Serentak","Bertentangan","Berturutan","Berulang"],0),Q("Kata 'gempar' bermaksud?",["Heboh","Panas","Sejuk","Sunyi"],0),Q("Kata 'bingit' bermaksud?",["Bising","Sunyi","Tenang","Sejuk"],0),Q("Encik Tan ialah seorang ______ di bank.",["kerani","cikgu","petani","nelayan"],0),Q("Ibnu Khaldun ialah seorang ahli ______ terkenal.",["sejarah","matematik","sains","sastera"],0),Q("Cuti sekolah akan bermula ______ minggu hadapan.",["pada","di","ke","dari"],0),Q("Murid itu ______ kerana mendapat markah yang tinggi.",["gembira","sedih","marah","takut"],0),Q("______ tarikh hari lahir kamu?",["Bilakah","Bagaimana","Apakah","Mengapa"],0)]},
-{title:"Bahagian B — 2 Subjektif",learn:P("<b>Bahagian B</b>: 2 soalan subjektif."),questions:[
-Q("Petikan: 'Malaysia merupakan sebuah negara yang terdiri daripada pelbagai kaum. Setiap kaum mempunyai budaya dan adat resam tersendiri. Perpaduan kaum amat penting untuk mengekalkan keharmonian negara.'\n\nMengapakah perpaduan kaum penting?",["Untuk mengekalkan keharmonian","Untuk menunjukkan kekayaan","Untuk bersaing","Untuk bermusuhan"],0),Q("Apakah yang perlu diamalkan oleh rakyat Malaysia?",["Saling menghormati","Bersaing antara kaum","Mengasingkan diri","Mementingkan diri"],0)]},
-{title:"Bahagian C — 1 Subjektif",learn:P("<b>Bahagian C</b>: 1 soalan subjektif."),questions:[
-Q("Petikan: 'Pada 16 September 1963, Malaysia telah dibentuk hasil gabungan Tanah Melayu, Sabah, Sarawak dan Singapura. Pembentukan Malaysia melibatkan pelbagai cabaran, termasuk tentangan daripada Indonesia dan Filipina.'\n\nBilakah Malaysia dibentuk?",["16 September 1963","31 Ogos 1957","1 Januari 1960","4 Julai 1965"],0),Q("Apakah cabaran yang dihadapi semasa pembentukan Malaysia?",["Tentangan Indonesia dan Filipina","Kekurangan penduduk","Banjir besar","Perang dunia"],0),Q("Bagaimanakah pemimpin mengatasi cabaran tersebut?",["Dengan kerjasama dan perpaduan","Dengan bersendirian","Dengan bersaing","Dengan bermusuhan"],0)]},
-{title:"Bahagian D — Karangan (20 markah)",learn:P("<b>Bahagian D</b>: 1 karangan. Tulis 100–150 patah perkataan."),questions:[
-W("Tulis karangan tentang 'Perpaduan Kaum di Malaysia'.","",100,150,"-","-","Perpaduan Kaum"),W("Tulis karangan tentang 'Kepentingan Menjaga Alam Sekitar'.","",100,150,"-","-","Alam Sekitar"),W("Tulis karangan tentang 'Tokoh yang Saya Kagumi'.","",100,150,"-","-","Tokoh Kagumi")]}]}
+{title:"Bahagian A — 20 Objektif",learn:P("<b>Bahagian A</b>: 20 soalan objektif."),questions:[Q("Din mengambil surat itu ______ menyerahkannya kepada Rajoo.",["lalu","agar","maka","kerana"],0),Q("Charles lulus ujian itu ______ adiknya gagal.",["tetapi","dan","serta","malahan"],0),Q("Dia tidak hadir ke sekolah ______ demam.",["kerana","lalu","tetapi","sambil"],0),Q("Farzana ______ Mei Hua sangat gembira.",["dan","lalu","tetapi","walhal"],0),Q("Keluarga Chong Wei mungkin berpindah ke Johor ______ ke Melaka.",["atau","dan","lalu","agar"],0),Q("______ keluarga Wong tiba, datuknya tiada di rumah.",["Semasa","Setelah","Supaya","Sementara"],0),Q("Belajarlah rajin-rajin ______ kamu lulus dengan cemerlang.",["supaya","kerana","atau","lalu"],0),Q("Rakyat Malaysia perlu mengamalkan sikap ______.",["toleransi","egoisme","perkauman","mementingkan diri"],0),Q("Malaysia mencapai kemerdekaan pada ______ 1957.",["31 Ogos","16 September","1 Januari","4 Julai"],0),Q("Yang di-Pertuan Agong ialah ______ utama negara.",["ketua","raja","menteri","pegawai"],0),Q("Faktor utama kemajuan negara ialah ______ rakyat.",["perpaduan","perpecahan","persaingan","pergaduhan"],0),Q("Peribahasa 'Muafakat membawa ______'.",["berkat","hasil","rahmat","nikmat"],0),Q("Kata hubung 'sambil' menunjukkan perbuatan yang?",["Serentak","Bertentangan","Berturutan","Berulang"],0),Q("Kata 'gempar' bermaksud?",["Heboh","Panas","Sejuk","Sunyi"],0),Q("Kata 'bingit' bermaksud?",["Bising","Sunyi","Tenang","Sejuk"],0),Q("Encik Tan ialah seorang ______ di bank.",["kerani","cikgu","petani","nelayan"],0),Q("Ibnu Khaldun ialah seorang ahli ______ terkenal.",["sejarah","matematik","sains","sastera"],0),Q("Cuti sekolah akan bermula ______ minggu hadapan.",["pada","di","ke","dari"],0),Q("Murid itu ______ kerana mendapat markah yang tinggi.",["gembira","sedih","marah","takut"],0),Q("______ tarikh hari lahir kamu?",["Bilakah","Bagaimana","Apakah","Mengapa"],0)]},
+{title:"Bahagian B — 2 Subjektif",learn:P("<b>Bahagian B</b>: 2 soalan subjektif."),questions:[Q("Petikan: 'Malaysia merupakan sebuah negara yang terdiri daripada pelbagai kaum. Perpaduan kaum amat penting untuk mengekalkan keharmonian negara.'\n\nMengapakah perpaduan kaum penting?",["Untuk mengekalkan keharmonian","Untuk menunjukkan kekayaan","Untuk bersaing","Untuk bermusuhan"],0),Q("Apakah yang perlu diamalkan oleh rakyat Malaysia?",["Saling menghormati","Bersaing antara kaum","Mengasingkan diri","Mementingkan diri"],0)]},
+{title:"Bahagian C — 1 Subjektif",learn:P("<b>Bahagian C</b>: 1 soalan subjektif."),questions:[Q("Petikan: 'Pada 16 September 1963, Malaysia telah dibentuk hasil gabungan Tanah Melayu, Sabah, Sarawak dan Singapura.'\n\nBilakah Malaysia dibentuk?",["16 September 1963","31 Ogos 1957","1 Januari 1960","4 Julai 1965"],0),Q("Apakah cabaran yang dihadapi semasa pembentukan Malaysia?",["Tentangan Indonesia dan Filipina","Kekurangan penduduk","Banjir besar","Perang dunia"],0),Q("Bagaimanakah pemimpin mengatasi cabaran tersebut?",["Dengan kerjasama dan perpaduan","Dengan bersendirian","Dengan bersaing","Dengan bermusuhan"],0)]},
+{title:"Bahagian D — Karangan (20 markah)",learn:P("<b>Bahagian D</b>: 1 karangan. Tulis 100–150 patah perkataan."),questions:[W("Tulis karangan tentang 'Perpaduan Kaum di Malaysia'.","",100,150,"-","-","Perpaduan Kaum"),W("Tulis karangan tentang 'Kepentingan Menjaga Alam Sekitar'.","",100,150,"-","-","Alam Sekitar"),W("Tulis karangan tentang 'Tokoh yang Saya Kagumi'.","",100,150,"-","-","Tokoh Kagumi")]}]}
 ]},
 "English":{units:[
 {title:"Unit 1: Y4 Nouns & Pronouns",lessons:[
-{title:"Nouns",learn:P("<b>Noun</b> names a person, place, thing or idea."),questions:[
-Q("What is a noun?",["Person, place, thing or idea","Action word","Describing word","Joining word"],0),Q("Which is a common noun?",["Aminah","School","Malaysia","KL"],1),Q("Which is a proper noun?",["book","city","Malaysia","table"],2),Q("Which is an abstract noun?",["table","courage","dog","apple"],1),Q("Which is a collective noun?",["flock","bird","fly","feather"],0),Q("Plural of 'child'?",["childs","children","childes","child"],1),Q("Plural of 'box'?",["boxs","boxen","boxes","box"],2),Q("Which is a noun?",["run","quickly","happiness","slowly"],2),Q("Which is uncountable?",["pen","apple","water","chair"],2),Q("Which is countable?",["water","book","rice","sand"],1)]},
-{title:"Pronouns",learn:P("<b>Pronoun</b> replaces a noun."),questions:[
-Q("Which is a personal pronoun?",["cat","they","green","run"],1),Q("Which is a possessive pronoun?",["mine","I","me","we"],0),Q("Which is reflexive?",["myself","my","me","mine"],0),Q("Which is demonstrative?",["this","she","run","happy"],0),Q("Replace 'Ali and I':",["We","They","She","He"],0),Q("Replace 'Aminah':",["She","He","It","We"],0),Q("'This is ___ book.' (my)",["mine","my","me","I"],1),Q("'The book is ___.' (mine)",["mine","my","me","I"],0),Q("Correct sentence?",["Him is tall.","He is tall.","His is tall.","He tall."],1),Q("'___ are my friends.'",["They","He","She","It"],0)]}]},
+{title:"Nouns",learn:P("<b>Noun</b> names a person, place, thing or idea."),questions:[Q("What is a noun?",["Person, place, thing or idea","Action word","Describing word","Joining word"],0),Q("Which is a common noun?",["Aminah","School","Malaysia","KL"],1),Q("Which is a proper noun?",["book","city","Malaysia","table"],2),Q("Which is an abstract noun?",["table","courage","dog","apple"],1),Q("Which is a collective noun?",["flock","bird","fly","feather"],0),Q("Plural of 'child'?",["childs","children","childes","child"],1),Q("Plural of 'box'?",["boxs","boxen","boxes","box"],2),Q("Which is a noun?",["run","quickly","happiness","slowly"],2),Q("Which is uncountable?",["pen","apple","water","chair"],2),Q("Which is countable?",["water","book","rice","sand"],1)]},
+{title:"Pronouns",learn:P("<b>Pronoun</b> replaces a noun."),questions:[Q("Which is a personal pronoun?",["cat","they","green","run"],1),Q("Which is a possessive pronoun?",["mine","I","me","we"],0),Q("Which is reflexive?",["myself","my","me","mine"],0),Q("Which is demonstrative?",["this","she","run","happy"],0),Q("Replace 'Ali and I':",["We","They","She","He"],0),Q("Replace 'Aminah':",["She","He","It","We"],0),Q("'This is ___ book.' (my)",["mine","my","me","I"],1),Q("'The book is ___.' (mine)",["mine","my","me","I"],0),Q("Correct sentence?",["Him is tall.","He is tall.","His is tall.","He tall."],1),Q("'___ are my friends.'",["They","He","She","It"],0)]}]},
 {title:"Unit 2: Y4 Verbs & Reading",lessons:[
-{title:"Verbs",learn:P("<b>Verb</b> = action or state."),questions:[
-Q("Which is a verb?",["jump","blue","table","happy"],0),Q("Which is a linking verb?",["is","run","quickly","red"],0),Q("Past tense of 'walk'?",["walked","walks","walking","walk"],0),Q("Past tense of 'go'?",["goed","went","gone","going"],1),Q("Past tense of 'eat'?",["eated","ate","eating","eaten"],1),Q("'I ______ to school.'",["go","blue","table","happy"],0),Q("'She ______ a book.'",["reads","blue","table","happy"],0),Q("'They ______ playing.'",["is","am","are","be"],2),Q("'He ______ a boy.'",["is","am","are","be"],0),Q("'I ______ a student.'",["is","am","are","be"],1)]},
-{title:"Reading",learn:P("Read carefully."),questions:[
-Q("Ali wakes at 6 a.m. What does he do first?",["Shower","Breakfast","Wake up","Brush teeth"],2),Q("Siti goes to the library every Saturday.",["Park","Library","Market","School"],1),Q("The cat is under the table.",["On","Under","Beside","Behind"],1),Q("Aminah has 2 brothers and 1 sister.",["One","Two","Three","Four"],2),Q("Shop opens 9 a.m., closes 6 p.m.",["7","8","9","10"],2),Q("Five birds, two fly away.",["Two","Three","Four","Five"],1),Q("Sun rises in the east.",["West","North","South","East"],3),Q("Daniel plays football on Sunday.",["Saturday","Sunday","Monday","Friday"],1),Q("Mei Ling wears a red dress.",["Blue","Green","Red","Yellow"],2),Q("Raju eats an apple every morning.",["Banana","Orange","Apple","Mango"],2)]}]},
+{title:"Verbs",learn:P("<b>Verb</b> = action or state."),questions:[Q("Which is a verb?",["jump","blue","table","happy"],0),Q("Which is a linking verb?",["is","run","quickly","red"],0),Q("Past tense of 'walk'?",["walked","walks","walking","walk"],0),Q("Past tense of 'go'?",["goed","went","gone","going"],1),Q("Past tense of 'eat'?",["eated","ate","eating","eaten"],1),Q("'I ______ to school.'",["go","blue","table","happy"],0),Q("'She ______ a book.'",["reads","blue","table","happy"],0),Q("'They ______ playing.'",["is","am","are","be"],2),Q("'He ______ a boy.'",["is","am","are","be"],0),Q("'I ______ a student.'",["is","am","are","be"],1)]},
+{title:"Reading",learn:P("Read carefully."),questions:[Q("Ali wakes at 6 a.m. What does he do first?",["Shower","Breakfast","Wake up","Brush teeth"],2),Q("Siti goes to the library every Saturday.",["Park","Library","Market","School"],1),Q("The cat is under the table.",["On","Under","Beside","Behind"],1),Q("Aminah has 2 brothers and 1 sister.",["One","Two","Three","Four"],2),Q("Shop opens 9 a.m., closes 6 p.m.",["7","8","9","10"],2),Q("Five birds, two fly away.",["Two","Three","Four","Five"],1),Q("Sun rises in the east.",["West","North","South","East"],3),Q("Daniel plays football on Sunday.",["Saturday","Sunday","Monday","Friday"],1),Q("Mei Ling wears a red dress.",["Blue","Green","Red","Yellow"],2),Q("Raju eats an apple every morning.",["Banana","Orange","Apple","Mango"],2)]}]},
 {title:"Unit 6: Y5 Tenses",lessons:[
-{title:"Tenses",learn:P("Present, past, future."),questions:[
-Q("The children ______ playing in the park now.",["is","am","are","be"],2),Q("My sister ______ a new bicycle yesterday.",["buy","buys","bought","buying"],2),Q("I have ______ my homework already.",["do","did","done","doing"],2),Q("The cat is ______ the box.",["in","on","at","by"],0),Q("She sings ______ than her sister.",["good","well","better","best"],2),Q("There ______ many students in the hall.",["is","was","are","has"],2),Q("Ravi went to the market ______ bought fruit.",["but","or","and","so"],2),Q("______ you like some tea?",["Do","Would","Are","Is"],1),Q("This is ______ book.",["my","mine","me","I"],0),Q("The boy ______ wears a blue shirt is my brother.",["who","which","what","whose"],0)]}]},
+{title:"Tenses",learn:P("Present, past, future."),questions:[Q("The children ______ playing in the park now.",["is","am","are","be"],2),Q("My sister ______ a new bicycle yesterday.",["buy","buys","bought","buying"],2),Q("I have ______ my homework already.",["do","did","done","doing"],2),Q("The cat is ______ the box.",["in","on","at","by"],0),Q("She sings ______ than her sister.",["good","well","better","best"],2),Q("There ______ many students in the hall.",["is","was","are","has"],2),Q("Ravi went to the market ______ bought fruit.",["but","or","and","so"],2),Q("______ you like some tea?",["Do","Would","Are","Is"],1),Q("This is ______ book.",["my","mine","me","I"],0),Q("The boy ______ wears a blue shirt is my brother.",["who","which","what","whose"],0)]}]},
 {title:"Unit 7: Y5 Reading & Writing",lessons:[
-{title:"Reading",learn:P("Read carefully."),questions:[
-Q("Tom works at a hospital. He helps sick people. Job?",["Teacher","Doctor","Chef","Driver"],1),Q("Mei Ling saves RM5 weekly. Total in 4 weeks?",["RM15","RM20","RM25","RM30"],1),Q("Aminah slept 9 p.m. to 6 a.m. Hours?",["8","9","10","7"],1),Q("Library is on floor 2.",["First","Second","Third","Ground"],1),Q("Raju's birthday 12 May.",["March","April","May","June"],2),Q("Train leaves 3 p.m., arrives 6 p.m.",["1hr","2hr","3hr","4hr"],2),Q("3 red + 4 blue marbles.",["5","6","7","8"],2),Q("Shop closes 9 p.m., now 8 p.m.",["30min","1hr","2hr","3hr"],1),Q("Book RM15. 3 books cost?",["RM30","RM40","RM45","RM50"],2),Q("12 months in 2 years?",["12","18","24","30"],2)]},
-{title:"Short Email (30-50 words)",learn:P("Part 6: 30–50 words."),questions:[
-W("Write an email inviting your friend to your birthday party.","",30,50,"Sarah","Aiman","Birthday Party"),W("Write an email to your mother saying you'll be home late.","",30,50,"Mrs. Aminah","Farid","Coming Home Late"),W("Write an email to Mrs. Amanda to say you are sick.","",30,50,"Mrs. Amanda","Nurul","Absent Tomorrow"),W("Write an email to your cousin asking them to return a book.","",30,50,"Ahmad","Hakim","Return Book"),W("Write an email to your classmate asking to borrow notes.","",30,50,"Mei Ling","Kavitha","Borrow Notes")]}]},
+{title:"Reading",learn:P("Read carefully."),questions:[Q("Tom works at a hospital. He helps sick people. Job?",["Teacher","Doctor","Chef","Driver"],1),Q("Mei Ling saves RM5 weekly. Total in 4 weeks?",["RM15","RM20","RM25","RM30"],1),Q("Aminah slept 9 p.m. to 6 a.m. Hours?",["8","9","10","7"],1),Q("Library is on floor 2.",["First","Second","Third","Ground"],1),Q("Raju's birthday 12 May.",["March","April","May","June"],2),Q("Train leaves 3 p.m., arrives 6 p.m.",["1hr","2hr","3hr","4hr"],2),Q("3 red + 4 blue marbles.",["5","6","7","8"],2),Q("Shop closes 9 p.m., now 8 p.m.",["30min","1hr","2hr","3hr"],1),Q("Book RM15. 3 books cost?",["RM30","RM40","RM45","RM50"],2),Q("12 months in 2 years?",["12","18","24","30"],2)]},
+{title:"Short Email (30-50 words)",learn:P("Part 6: 30–50 words."),questions:[W("Write an email inviting your friend to your birthday party.","",30,50,"Sarah","Aiman","Birthday Party"),W("Write an email to your mother saying you'll be home late.","",30,50,"Mrs. Aminah","Farid","Coming Home Late"),W("Write an email to Mrs. Amanda to say you are sick.","",30,50,"Mrs. Amanda","Nurul","Absent Tomorrow"),W("Write an email to your cousin asking them to return a book.","",30,50,"Ahmad","Hakim","Return Book"),W("Write an email to your classmate asking to borrow notes.","",30,50,"Mei Ling","Kavitha","Borrow Notes")]}]},
 {title:"Unit 11: Y6 Advanced Grammar",lessons:[
-{title:"Complex Structures",learn:P("Conditionals, passive, reported speech."),questions:[
-Q("If it ______ tomorrow, we will stay at home.",["rain","rains","rained","raining"],1),Q("He is the ______ student in the class.",["tall","taller","tallest","tallness"],2),Q("I ______ my keys. I can't find them.",["lose","losing","lost","loses"],2),Q("The book is ______ the shelf.",["in","at","on","by"],2),Q("She ______ to the library every day.",["go","goes","going","gone"],1),Q("The homework ______ by Ali yesterday.",["do","did","was done","does"],2),Q("Neither the teacher nor the students ______ ready.",["is","are","was","has"],1),Q("He said he ______ come later.",["will","would","shall","can"],1),Q("The report ______ before Friday.",["must submit","must be submitted","must submitting","submit"],1),Q("Hardly ______ entered when the bell rang.",["he had","had he","he has","has he"],1)]},
-{title:"Idioms & Proverbs",learn:P("Non-literal phrases."),questions:[
-Q("'Break a leg' means?",["Good luck","Get hurt","Run fast","Jump high"],0),Q("'Piece of cake' means?",["Very easy","Tasty food","Small piece","Sweet food"],0),Q("'Hit the books' means?",["Study hard","Punch a book","Buy books","Read comics"],0),Q("'Under the weather' means?",["Feeling sick","Outside","Raining","Cold"],0),Q("'Once in a blue moon' means?",["Very rarely","Every night","Often","Never"],0),Q("'Let the cat out of the bag' means?",["Reveal a secret","Free a cat","Pack a bag","Feed a cat"],0),Q("'Cost an arm and a leg' means?",["Very expensive","Cheap","Painful","Free"],0),Q("'Spill the beans' means?",["Reveal a secret","Drop food","Cook beans","Waste food"],0),Q("'Better late than ___'",["never","early","soon","ever"],0),Q("'Practice makes ___'",["perfect","money","fun","sense"],0)]}]},
+{title:"Complex Structures",learn:P("Conditionals, passive, reported speech."),questions:[Q("If it ______ tomorrow, we will stay at home.",["rain","rains","rained","raining"],1),Q("He is the ______ student in the class.",["tall","taller","tallest","tallness"],2),Q("I ______ my keys. I can't find them.",["lose","losing","lost","loses"],2),Q("The book is ______ the shelf.",["in","at","on","by"],2),Q("She ______ to the library every day.",["go","goes","going","gone"],1),Q("The homework ______ by Ali yesterday.",["do","did","was done","does"],2),Q("Neither the teacher nor the students ______ ready.",["is","are","was","has"],1),Q("He said he ______ come later.",["will","would","shall","can"],1),Q("The report ______ before Friday.",["must submit","must be submitted","must submitting","submit"],1),Q("Hardly ______ entered when the bell rang.",["he had","had he","he has","has he"],1)]},
+{title:"Idioms & Proverbs",learn:P("Non-literal phrases."),questions:[Q("'Break a leg' means?",["Good luck","Get hurt","Run fast","Jump high"],0),Q("'Piece of cake' means?",["Very easy","Tasty food","Small piece","Sweet food"],0),Q("'Hit the books' means?",["Study hard","Punch a book","Buy books","Read comics"],0),Q("'Under the weather' means?",["Feeling sick","Outside","Raining","Cold"],0),Q("'Once in a blue moon' means?",["Very rarely","Every night","Often","Never"],0),Q("'Let the cat out of the bag' means?",["Reveal a secret","Free a cat","Pack a bag","Feed a cat"],0),Q("'Cost an arm and a leg' means?",["Very expensive","Cheap","Painful","Free"],0),Q("'Spill the beans' means?",["Reveal a secret","Drop food","Cook beans","Waste food"],0),Q("'Better late than ___'",["never","early","soon","ever"],0),Q("'Practice makes ___'",["perfect","money","fun","sense"],0)]}]},
 {title:"Unit 12: Y6 UASA Reading",lessons:[
-{title:"Reading Comprehension",learn:P("Read each text carefully."),questions:[
-Q("Tom dislikes offices, likes plants. Occupation?",["Gardener","Officer","Farmer","Florist"],0),Q("Charles: 'I work Sat & Sun 9.30am–5pm.'",["Encourage Keisha","Explain why not free on weekends","Inform applying","Ask Keisha to visit"],1),Q("'Buy 3 chicken burgers, get 1 sausage free!'",["Must buy 3 for free delivery","Chicken free","4 burgers for price of 3","Free delivery only for sausage"],2),Q("Library: Mon–Fri 8am–4pm, Sat & Sun CLOSED.",["Monday","Friday","Sat and Sun","Afternoons"],2),Q("Notice: Switch off fans and lights.",["Keep clean","Save electricity","Bring fan","Switch on lights"],1),Q("Water cut Saturday 9am–3pm.",["Fri morning","Sat morning","Sat afternoon","Sunday"],1),Q("Football 6A vs 6B, Wed 5 June 4.30pm.",["Tuesday","Wednesday","Thursday","Friday"],1),Q("River cleanup this Sunday. Wear?",["School uniform","Suitable clothes and shoes","Raincoat","Sports uniform"],1),Q("English Week moved due to Year 6 exams.",["Clashed with holidays","Year 6 exams","Hall repair","Not enough participants"],1),Q("Mum: 'I'll be late. Heat dinner first.'",["Wait for Mum","Watch TV","Finish homework","Heat dinner"],2)]},
-{title:"Longer Email (60-80 words)",learn:P("Part 7: 60–80 words."),questions:[
-W("Write an email telling your friend about your best holiday.","",60,80,"Ali","Danish","My Best Holiday"),W("Write an email to Mrs. Amanda about a school event.","",60,80,"Mrs. Amanda","Siti","School Sports Day"),W("Write an email to your pen pal about your favourite hobby.","",60,80,"Kenji","Jason","Favourite Hobby"),W("Write an email about a memorable day.","",60,80,"Aina","Alia","Memorable Day"),W("Write an email about the person you admire most.","",60,80,"Ravi","Vishal","Someone I Admire")]}]}]},
+{title:"Reading Comprehension",learn:P("Read each text carefully."),questions:[Q("Tom dislikes offices, likes plants. Occupation?",["Gardener","Officer","Farmer","Florist"],0),Q("Charles: 'I work Sat & Sun 9.30am–5pm.'",["Encourage Keisha","Explain why not free on weekends","Inform applying","Ask Keisha to visit"],1),Q("'Buy 3 chicken burgers, get 1 sausage free!'",["Must buy 3 for free delivery","Chicken free","4 burgers for price of 3","Free delivery only for sausage"],2),Q("Library: Mon–Fri 8am–4pm, Sat & Sun CLOSED.",["Monday","Friday","Sat and Sun","Afternoons"],2),Q("Notice: Switch off fans and lights.",["Keep clean","Save electricity","Bring fan","Switch on lights"],1),Q("Water cut Saturday 9am–3pm.",["Fri morning","Sat morning","Sat afternoon","Sunday"],1),Q("Football 6A vs 6B, Wed 5 June 4.30pm.",["Tuesday","Wednesday","Thursday","Friday"],1),Q("River cleanup this Sunday. Wear?",["School uniform","Suitable clothes and shoes","Raincoat","Sports uniform"],1),Q("English Week moved due to Year 6 exams.",["Clashed with holidays","Year 6 exams","Hall repair","Not enough participants"],1),Q("Mum: 'I'll be late. Heat dinner first.'",["Wait for Mum","Watch TV","Finish homework","Heat dinner"],2)]},
+{title:"Longer Email (60-80 words)",learn:P("Part 7: 60–80 words."),questions:[W("Write an email telling your friend about your best holiday.","",60,80,"Ali","Danish","My Best Holiday"),W("Write an email to Mrs. Amanda about a school event.","",60,80,"Mrs. Amanda","Siti","School Sports Day"),W("Write an email to your pen pal about your favourite hobby.","",60,80,"Kenji","Jason","Favourite Hobby"),W("Write an email about a memorable day.","",60,80,"Aina","Alia","Memorable Day"),W("Write an email about the person you admire most.","",60,80,"Ravi","Vishal","Someone I Admire")]}]}]},
 "Mathematics":{units:[
 {title:"Unit 1: Whole Numbers",lessons:[{title:"To 10 Million",learn:P("Whole numbers up to 10,000,000."),questions:[Q("Place value of 7 in 4,725,310?",["Hundred thousands","Thousands","Ten thousands","Millions"],0),Q("Prime number?",["11","9","15","21"],0),Q("Round 4,678,921?",["4,700,000","4,600,000","4,800,000","4,500,000"],0),Q("4,567,890 + 2,345,678?",["6,913,568","6,813,568","6,913,668","7,013,568"],0),Q("Largest prime below 20?",["19","17","15","13"],0),Q("8,000,000 − 3,456,789?",["4,543,211","4,443,211","4,553,211","4,543,111"],0),Q("Factors of 12?",["1,2,3,4,6,12","1,2,12","2,3,4","1,12"],0),Q("Which is even?",["14","15","17","19"],0),Q("Which is odd?",["9","10","12","14"],0),Q("Multiple of 5?",["25","13","7","22"],0)]}],challenge:[Q("Largest prime below 20?",["19","17","15","13"],0),Q("8,000,000 − 3,456,789?",["4,543,211","4,443,211","4,553,211","4,543,111"],0)]},
 {title:"Unit 2: Operations",lessons:[{title:"Four Operations",learn:P("Add, subtract, multiply, divide."),questions:[Q("25 × 34?",["850","800","900","950"],0),Q("144 ÷ 12?",["12","14","16","18"],0),Q("50 − 23 + 15?",["42","40","45","48"],0),Q("100 × 100?",["10,000","1,000","100,000","1,000,000"],0),Q("4,567 + 2,345?",["6,912","6,812","7,012","6,900"],0),Q("9,000 − 3,456?",["5,544","5,444","6,544","5,500"],0),Q("256 ÷ 16?",["16","14","18","20"],0),Q("17 × 3?",["51","47","54","60"],0),Q("1000 − 999?",["1","0","2","3"],0),Q("125 × 8?",["1,000","900","1,100","1,200"],0)]}],challenge:[Q("2,500 + 1,750?",["4,250","4,350","4,150","4,000"],0),Q("7,200 ÷ 9?",["800","700","900","1,000"],0)]},
@@ -683,6 +443,35 @@ challenge:[Q("ASEAN ditubuhkan pada?",["8 Ogos 1967","31 Ogos 1957","16 Septembe
 ]}};
 const $=id=>document.getElementById(id),esc=t=>String(t==null?"":t).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
 const mem={},st={get:k=>{try{const v=localStorage.getItem(k);if(v!==null)return v}catch(e){}return k in mem?mem[k]:null},set:(k,v)=>{mem[k]=v;try{localStorage.setItem(k,v)}catch(e){}},del:k=>{delete mem[k];try{localStorage.removeItem(k)}catch(e){}}};
+const jget=(k,d)=>{try{const v=st.get(k);return v==null?d:JSON.parse(v)}catch(e){return d}};
+const jset=(k,v)=>{try{st.set(k,JSON.stringify(v))}catch(e){}};
+const missKey=()=>"uasaMistakes_"+(USER?USER.id:"guest");
+const getMistakes=()=>jget(missKey(),[]);
+const saveMistakes=m=>jset(missKey(),m.slice(-100));
+const qidOf=q=>(q.q||q.w||"").slice(0,200);
+function recordMistake(q){
+ if(!USER)return;
+ const m=getMistakes(),id=qidOf(q);
+ const ex=m.find(x=>x.id===id);
+ if(ex){ex.wrong=(ex.wrong||0)+1;ex.right=0;ex.last=Date.now()}
+ else{m.push({id,q:q.q,options:q.options.slice(),answer:q.answer,img:q.img||null,wrong:1,right:0,last:Date.now()})}
+ saveMistakes(m);
+}
+function recordCorrect(q){
+ const m=getMistakes(),id=qidOf(q);
+ const i=m.findIndex(x=>x.id===id);
+ if(i===-1)return null;
+ m[i].right=(m[i].right||0)+1;
+ if(m[i].right>=2){m.splice(i,1);saveMistakes(m);return "removed"}
+ saveMistakes(m);return "progress";
+}
+function startMistakesReview(){
+ const m=getMistakes();
+ if(!m.length){toast("No mistakes to review 🎉");return}
+ if((USER.hearts??5)<=0){toast("💔 No hearts. Wait or try again later.");return}
+ const qs=shuf(m).slice(0,10).map(x=>({q:x.q,options:x.options,answer:x.answer,img:x.img}));
+ quiz(qs,{title:"📝 Mistakes review",key:null,bonus:0,kind:"mistakes",back:()=>go("home")});
+}
 const KL_TIMEZONE="Asia/Kuala_Lumpur";
 const dayKey=(offset=0)=>{const d=new Date(Date.now()+offset*864e5);return new Intl.DateTimeFormat("en-CA",{timeZone:KL_TIMEZONE,year:"numeric",month:"2-digit",day:"2-digit"}).format(d)};
 const today=()=>dayKey(0),yest=()=>dayKey(-1);
@@ -695,37 +484,37 @@ const bar=p=>`<div class="bar"><i style="width:${Math.round(p)}%"></i></div>`;
 function toast(m){const t=document.createElement("div");t.className="toast";t.setAttribute("role","status");t.textContent=m;document.body.appendChild(t);setTimeout(()=>t.remove(),2400)}
 function pop(n){const d=document.createElement("div");d.className="pop";d.textContent="+"+n+" XP";document.body.appendChild(d);setTimeout(()=>d.remove(),1300)}
 function sparkleBurst(x,y,count=24){
-  const colors=["#f59e0b","#059669","#4338ca","#0d9488","#dc2626"];
-  for(let i=0;i<count;i++){
-    const p=document.createElement("div");
-    const angle=(i/count)*Math.PI*2+Math.random()*.3;
-    const dist=60+Math.random()*120;
-    const size=4+Math.random()*6;
-    p.style.cssText=`position:fixed;left:${x}px;top:${y}px;width:${size}px;height:${size}px;background:${colors[i%colors.length]};border:1.5px solid var(--ink);border-radius:50%;pointer-events:none;z-index:9999;transform:translate(-50%,-50%);transition:transform .9s cubic-bezier(.22,1,.36,1),opacity .9s ease`;
-    document.body.appendChild(p);
-    requestAnimationFrame(()=>{
-      p.style.transform=`translate(calc(-50% + ${Math.cos(angle)*dist}px),calc(-50% + ${Math.sin(angle)*dist}px)) scale(0)`;
-      p.style.opacity=0;
-    });
-    setTimeout(()=>p.remove(),950);
-  }
+ const colors=["#f59e0b","#059669","#4338ca","#0d9488","#dc2626"];
+ for(let i=0;i<count;i++){
+  const p=document.createElement("div");
+  const angle=(i/count)*Math.PI*2+Math.random()*.3;
+  const dist=60+Math.random()*120;
+  const size=4+Math.random()*6;
+  p.style.cssText=`position:fixed;left:${x}px;top:${y}px;width:${size}px;height:${size}px;background:${colors[i%colors.length]};border:1.5px solid var(--ink);border-radius:50%;pointer-events:none;z-index:9999;transform:translate(-50%,-50%);transition:transform .9s cubic-bezier(.22,1,.36,1),opacity .9s ease`;
+  document.body.appendChild(p);
+  requestAnimationFrame(()=>{
+   p.style.transform=`translate(calc(-50% + ${Math.cos(angle)*dist}px),calc(-50% + ${Math.sin(angle)*dist}px)) scale(0)`;
+   p.style.opacity=0;
+  });
+  setTimeout(()=>p.remove(),950);
+ }
 }
 function confetti(x,y){
-  const colors=["#f59e0b","#059669","#4338ca","#0d9488","#dc2626","#1a1614"];
-  for(let i=0;i<40;i++){
-    const p=document.createElement("div");
-    const size=6+Math.random()*10;
-    const color=colors[i%colors.length];
-    const isStripe=Math.random()<0.4;
-    p.style.cssText=`position:fixed;left:${x}px;top:${y}px;width:${isStripe?size*0.35:size}px;height:${size}px;background:${color};border:1px solid #1a1614;border-radius:${isStripe?"1px":"50% 50% 50% 0"};pointer-events:none;z-index:9999;transform:translate(-50%,-50%) rotate(0);transition:transform 1s cubic-bezier(.34,1.56,.64,1),opacity 1s ease`;
-    document.body.appendChild(p);
-    requestAnimationFrame(()=>{
-      const dx=(Math.random()-0.5)*480,dy=-100-Math.random()*320,rot=Math.random()*1080-540;
-      p.style.transform=`translate(calc(-50% + ${dx}px),calc(-50% + ${dy}px)) rotate(${rot}deg)`;
-      p.style.opacity="0";
-    });
-    setTimeout(()=>p.remove(),1100);
-  }
+ const colors=["#f59e0b","#059669","#4338ca","#0d9488","#dc2626","#1a1614"];
+ for(let i=0;i<40;i++){
+  const p=document.createElement("div");
+  const size=6+Math.random()*10;
+  const color=colors[i%colors.length];
+  const isStripe=Math.random()<0.4;
+  p.style.cssText=`position:fixed;left:${x}px;top:${y}px;width:${isStripe?size*0.35:size}px;height:${size}px;background:${color};border:1px solid #1a1614;border-radius:${isStripe?"1px":"50% 50% 50% 0"};pointer-events:none;z-index:9999;transform:translate(-50%,-50%) rotate(0);transition:transform 1s cubic-bezier(.34,1.56,.64,1),opacity 1s ease`;
+  document.body.appendChild(p);
+  requestAnimationFrame(()=>{
+   const dx=(Math.random()-0.5)*480,dy=-100-Math.random()*320,rot=Math.random()*1080-540;
+   p.style.transform=`translate(calc(-50% + ${dx}px),calc(-50% + ${dy}px)) rotate(${rot}deg)`;
+   p.style.opacity="0";
+  });
+  setTimeout(()=>p.remove(),1100);
+ }
 }
 function setSaveState(state){
  const el=$("cs");if(!el)return;
@@ -765,14 +554,14 @@ async function award(score,maxScore,bonus,key){
 }
 const yearNum=()=>({"Year 4":4,"Year 5":5,"Year 6":6}[(USER&&USER.year)||""]||0);
 const unitYear=t=>{
-  if(/Tahun 4/i.test(t||""))return 4;
-  if(/Tahun 5/i.test(t||""))return 5;
-  if(/Tahun 6/i.test(t||""))return 6;
-  const m=/Unit (\d+)/.exec(t||"");if(!m)return 0;const n=+m[1];return n<=5?4:n<=10?5:6;
+ if(/Tahun 4/i.test(t||""))return 4;
+ if(/Tahun 5/i.test(t||""))return 5;
+ if(/Tahun 6/i.test(t||""))return 6;
+ const m=/Unit (\d+)/.exec(t||"");if(!m)return 0;const n=+m[1];return n<=5?4:n<=10?5:6;
 };
 const U=s=>{
-  const n=yearNum();
-  return Array.from((CURRICULUM[s]||{}).units||[],(x,i)=>x?{...x,i,ls:Array.from(x.lessons||[],(y,j)=>y&&y.questions&&y.questions.length?{...y,j}:null).filter(Boolean)}:null).filter(Boolean).filter(u=>{const uy=unitYear(u.title);return n===0||uy===0||uy===n});
+ const n=yearNum();
+ return Array.from((CURRICULUM[s]||{}).units||[],(x,i)=>x?{...x,i,ls:Array.from(x.lessons||[],(y,j)=>y&&y.questions&&y.questions.length?{...y,j}:null).filter(Boolean)}:null).filter(Boolean).filter(u=>{const uy=unitYear(u.title);return n===0||uy===0||uy===n});
 };
 const key=(s,u,l)=>s+"|"+u+"|"+l,done=k=>!!(USER&&USER.progress&&USER.progress[k]),ut=u=>u.title||"Unit "+(u.i+1);
 const nDone=(s,u)=>u.ls.filter(l=>done(key(s,u.i,l.j))).length;
@@ -781,8 +570,10 @@ const unlocked=(s,u,x)=>x===0||done(key(s,u.i,u.ls[x-1].j)),chOpen=(s,u)=>u.ls.l
 const pool=s=>{const o=[];(s?[s]:SUBJ.map(x=>x[0])).forEach(n=>U(n).forEach(u=>{u.ls.forEach(l=>o.push(...l.questions.filter(q=>!q.w)));o.push(...(u.challenge||[]).filter(q=>!q.w))}));return o};
 const poolForYear=y=>{const n={"Year 4":4,"Year 5":5,"Year 6":6}[y]||6;const o=[];SUBJ.forEach(s=>U(s[0]).forEach(u=>{const uy=unitYear(u.title);if(uy!==0&&uy!==n)return;u.ls.forEach(l=>o.push(...l.questions.filter(q=>!q.w)));o.push(...(u.challenge||[]).filter(q=>!q.w))}));return o};
 const view=h=>{
-  const apply=()=>{$("main").innerHTML=h;scrollTo(0,0)};
-  if(document.startViewTransition){document.startViewTransition(apply)}else{apply()}
+ const apply=()=>{const m=$("main");if(m){m.innerHTML=h;scrollTo(0,0)}};
+ if(document.startViewTransition){
+  try{const t=document.startViewTransition(apply);if(t&&t.ready)t.ready.catch(()=>{})}catch(e){apply()}
+ }else{apply()}
 };
 const lk=(a,r,t)=>`<button class="lk" data-a="${a}" data-r="${esc(r)}">${t}</button>`;
 function nav(p){
@@ -799,6 +590,7 @@ const PAGES={
 home(){
  const n=SUBJ.reduce((a,s)=>a+sDone(s[0]),0),into=USER.xp%350;
  const goal=50,prog=Math.min(USER.dailyXp||0,goal),pct=prog/goal*100;
+ const m=getMistakes();
  return`<div class="hero"><svg class="hero-haru" aria-hidden="true"><use href="#haru-symbol"/></svg>
  <h1>Welcome, ${esc(USER.display_name||USER.username)}!</h1>
  <p>Learn. Practice. Level up.</p>
@@ -824,28 +616,24 @@ home(){
    <div class="n">${prog}<span style="font-size:16px;color:rgba(0,0,0,.5)">/${goal}</span></div>
   </div>
  </div>
- <div class="card"><h2>Level progress</h2>${bar(into/3.5)}<small>${into} / 350 XP to Level ${lvl()+1}</small></div>`;
+ <div class="card"><h2>Level progress</h2>${bar(into/3.5)}<small>${into} / 350 XP to Level ${lvl()+1}</small></div>
+ ${m.length?`<div class="card" style="border-color:var(--clay)"><h2>📝 Review mistakes</h2><p class="mu">You have <b>${m.length}</b> question${m.length===1?"":"s"} to practise. Get each right twice to clear it.</p><button class="btn" data-a="reviewMistakes">START REVIEW</button></div>`:""}
+`;
 },
 subjects(){return`<h1>📚 Subjects</h1><button class="btn g" data-a="mix" data-r="">🎲 Mixed quiz: all subjects</button>
 <div class="grid" style="margin-top:18px;gap:16px">${SUBJ.map(s=>{
-  const d=sDone(s[0]),t=sTot(s[0]),pct=t?Math.round(d/t*100):0;
-  return`<button class="card tap" data-a="subj" data-r="${esc(s[0])}" style="display:flex;align-items:center;gap:16px;padding:18px">
-   <div class="ring ${pct===100?"done":""}" data-label="${pct}%" style="--size:64px;--thick:6px">
-    <svg viewBox="0 0 80 80"><circle class="track" cx="40" cy="40" r="34"/><circle class="fill" cx="40" cy="40" r="34"/></svg>
-   </div>
-   <div style="flex:1;text-align:left">
-    <h2 style="margin:0 0 2px;font-size:19px">${s[1]} ${esc(s[0])}</h2>
-    <small class="mu" style="font-family:'JetBrains Mono',monospace">${d} / ${t} lessons</small>
-   </div>
-  </button>`}).join("")}</div>`},
-review(){return`<h1>✨ Review</h1><p class="mu">Repeat a lesson you've finished. <b>+5 XP</b> the first time you review each one.</p><div id="rv">
- <div class="skel skel-card"></div><div class="skel skel-card"></div><div class="skel skel-card"></div>
-</div>`},
-leaderboard(){return`<h1>🏆 Leaderboard</h1><div class="card" id="lb">
- <div class="skel skel-line w80"></div><div class="skel skel-line w60"></div>
- <div class="skel skel-line w80"></div><div class="skel skel-line w40"></div>
- <div class="skel skel-line w60"></div>
-</div>`},
+ const d=sDone(s[0]),t=sTot(s[0]),pct=t?Math.round(d/t*100):0;
+ return`<button class="card tap" data-a="subj" data-r="${esc(s[0])}" style="display:flex;align-items:center;gap:16px;padding:18px">
+  <div class="ring ${pct===100?"done":""}" data-label="${pct}%" style="--size:64px;--thick:6px">
+   <svg viewBox="0 0 80 80"><circle class="track" cx="40" cy="40" r="34"/><circle class="fill" cx="40" cy="40" r="34"/></svg>
+  </div>
+  <div style="flex:1;text-align:left">
+   <h2 style="margin:0 0 2px;font-size:19px">${s[1]} ${esc(s[0])}</h2>
+   <small class="mu" style="font-family:'JetBrains Mono',monospace">${d} / ${t} lessons</small>
+  </div>
+ </button>`}).join("")}</div>`},
+review(){return`<h1>✨ Review</h1><p class="mu">Repeat a lesson you've finished. <b>+5 XP</b> the first time you review each one.</p><div id="rv"><div class="skel skel-card"></div><div class="skel skel-card"></div><div class="skel skel-card"></div></div>`},
+leaderboard(){return`<h1>🏆 Leaderboard</h1><div class="card" id="lb"><div class="skel skel-line w80"></div><div class="skel skel-line w60"></div><div class="skel skel-line w80"></div><div class="skel skel-line w40"></div><div class="skel skel-line w60"></div></div>`},
 profile(){
  const badgeList=[
   {name:"First Steps",icon:"👣",earned:USER.xp>=10},
@@ -855,7 +643,7 @@ profile(){
   {name:"7-Day Streak",icon:"🔥🔥",earned:streakNow()>=7},
   {name:"30-Day Streak",icon:"💥",earned:streakNow()>=30},
   {name:"Level 5",icon:"🎯",earned:lvl()>=5},
-  {name:"Level 10",icon:"🏆",earned:lvl()>=10},
+  {name:"Level 10",icon:"🏆",earned:lvl()>=10}
  ];
  return`<h1>👤 ${esc(USER.display_name||USER.username)}</h1>
  <div class="card">
@@ -883,41 +671,56 @@ PAGES.teacher=()=>`<h1>🎓 Teacher Dashboard</h1>
 <div id="td"><p class="mu">Loading students…</p></div>`;
 async function loadLeaderboard(){
  const box=$("lb");if(!box)return;
- const{data,error}=await sb.from("profiles").select("username,display_name,xp").eq("leaderboard_opt_out",false).order("xp",{ascending:false}).limit(100);
- if(error){box.innerHTML="<p>Could not load leaderboard.</p>";console.error(error);return}
- const m=["🥇","🥈","🥉"];
- box.innerHTML=(data||[]).map((u,i)=>`<div class="lbr ${u.username===USER.username?"me":""}"><span>${m[i]||"#"+(i+1)} ${esc(u.display_name||u.username)}</span><b>${+u.xp||0} XP</b></div>`).join("")||"<p>No players yet.</p>"
+ try{
+  const{data,error}=await sb.from("profiles").select("username,display_name,xp,leaderboard_opt_out").order("xp",{ascending:false}).limit(100);
+  if(error)throw error;
+  const list=(data||[]).filter(u=>u.leaderboard_opt_out!==true);
+  if(!list.length){
+   box.innerHTML=`<div class="empty"><div class="empty-art" style="font-size:64px;line-height:1">🏆</div><h3>No players yet</h3><p>Be the first to earn XP and claim the top spot!</p></div>`;
+   return;
+  }
+  const m=["🥇","🥈","🥉"];
+  box.innerHTML=list.map((u,i)=>`<div class="lbr ${u.username===USER.username?"me":""}"><span>${m[i]||"#"+(i+1)} ${esc(u.display_name||u.username)}</span><b>${+u.xp||0} XP</b></div>`).join("");
+ }catch(e){
+  console.error("Leaderboard error:",e);
+  box.innerHTML=`<div class="empty"><div class="empty-art" style="font-size:64px;line-height:1">⚠️</div><h3>Could not load leaderboard</h3><p>${esc(e.message||String(e))}</p></div>`;
+ }
 }
 async function loadReview(){
  const box=$("rv");if(!box)return;
- const r=await sb.from("reviews").select("lesson_key").eq("user_id",USER.id);
- const rv=new Set((r.data||[]).map(x=>x.lesson_key));
- const items=[];
- SUBJ.forEach(s=>U(s[0]).forEach(u=>u.ls.forEach(l=>{const k=key(s[0],u.i,l.j);if(done(k))items.push({s:s[0],icon:s[1],u:ut(u),l:l.title,j:l.j,k,reviewed:rv.has(k)})})));
- let html="";
- if(items.length){
-  const doneCount=items.filter(x=>x.reviewed).length;
-  html+=`<div class="card"><b>${doneCount}</b> / ${items.length} lessons reviewed <small class="mu">· ${USER.streakFreezes||0} freeze${(USER.streakFreezes||0)===1?"":"s"} (max 3)</small></div>`+
-  items.map(x=>`<button class="card tap" data-a="rv" data-r="${esc(x.k)}" data-s="${esc(x.s)}" data-u="${esc(x.u)}" data-l="${esc(x.l)}">
-   <b>${x.icon} ${esc(x.s)}</b>${!x.reviewed?'<span class="rvbadge">+5 XP</span>':""}<br>
-   <small class="mu">${esc(x.u)} · ${esc(x.l)}${x.reviewed?" · ✅ reviewed":""}</small>
-  </button>`).join("");
- }else{
-  html+='<div class="card"><p class="mu">Finish a lesson first, then come back here to review it.</p></div>';
- }
- box.innerHTML=html;
- const m=getMistakes().slice(0,3);
- if(m.length){
-  const stack=document.createElement("div");
-  stack.className="card-stack";
-  stack.innerHTML=`<h2>Today's quick review</h2>
-  ${m.map((q,i)=>`<div class="flip-card-mini" style="--i:${i}">
-   <div class="flip-inner">
-    <div class="flip-front"><small class="mu">Question ${i+1}</small><p><b>${esc(q.q)}</b></p><span class="tap-hint">Tap to flip →</span></div>
-    <div class="flip-back"><small class="mu">Answer</small><p><b>${esc(q.options[q.answer])}</b></p></div>
-   </div>
-  </div>`).join("")}`;
-  box.appendChild(stack);
+ try{
+  const r=await sb.from("reviews").select("lesson_key").eq("user_id",USER.id);
+  const rv=new Set((r.data||[]).map(x=>x.lesson_key));
+  const items=[];
+  SUBJ.forEach(s=>U(s[0]).forEach(u=>u.ls.forEach(l=>{const k=key(s[0],u.i,l.j);if(done(k))items.push({s:s[0],icon:s[1],u:ut(u),l:l.title,j:l.j,k,reviewed:rv.has(k)})})));
+  let html="";
+  if(items.length){
+   const doneCount=items.filter(x=>x.reviewed).length;
+   html+=`<div class="card"><b>${doneCount}</b> / ${items.length} lessons reviewed <small class="mu">· ${USER.streakFreezes||0} freeze${(USER.streakFreezes||0)===1?"":"s"} (max 3)</small></div>`+
+   items.map(x=>`<button class="card tap" data-a="rv" data-r="${esc(x.k)}" data-s="${esc(x.s)}" data-u="${esc(x.u)}" data-l="${esc(x.l)}">
+    <b>${x.icon} ${esc(x.s)}</b>${!x.reviewed?'<span class="rvbadge">+5 XP</span>':""}<br>
+    <small class="mu">${esc(x.u)} · ${esc(x.l)}${x.reviewed?" · ✅ reviewed":""}</small>
+   </button>`).join("");
+  }else{
+   html+='<div class="card"><p class="mu">Finish a lesson first, then come back here to review it.</p></div>';
+  }
+  box.innerHTML=html;
+  const m=getMistakes().slice(0,3);
+  if(m.length){
+   const stack=document.createElement("div");
+   stack.className="card-stack";
+   stack.innerHTML=`<h2>Today's quick review</h2>
+   ${m.map((q,i)=>`<div class="flip-card-mini" style="--i:${i}">
+    <div class="flip-inner">
+     <div class="flip-front"><small class="mu">Question ${i+1}</small><p><b>${esc(q.q)}</b></p><span class="tap-hint">Tap to flip →</span></div>
+     <div class="flip-back"><small class="mu">Answer</small><p><b>${esc(q.options[q.answer])}</b></p></div>
+    </div>
+   </div>`).join("")}`;
+   box.appendChild(stack);
+  }
+ }catch(e){
+  console.error("Review load failed:",e);
+  box.innerHTML=`<div class="empty"><div class="empty-art" style="font-size:64px;line-height:1">📝</div><h3>Could not load review</h3><p>${esc(e.message||String(e))}</p></div>`;
  }
 }
 async function startReview(k,s,u,l){
@@ -1030,14 +833,27 @@ async function answer(k){
  if(!R||R.a||!$("an"))return;
  const q=R.qs[R.i];if(k<0||k>=q.options.length)return;
  R.a=true;const ok=k===q.answer;if(ok)R.c++;
- const practice=R.ctx.kind==="mix"||R.ctx.kind==="daily"||R.ctx.kind==="review"||R.ctx.kind==="challenge";
+ const practice=R.ctx.kind==="mix"||R.ctx.kind==="daily"||R.ctx.kind==="review"||R.ctx.kind==="challenge"||R.ctx.kind==="mistakes";
  if(!ok&&practice){await loseHeart()}
+ if(ok&&R.ctx.kind==="mistakes"){
+  const res=recordCorrect(q);
+  if(res==="removed")toast("✅ Mastered! Removed from review");
+ }else if(!ok&&R.ctx.kind!=="mistakes"){
+  recordMistake(q);
+ }
  document.querySelectorAll("#an .ans").forEach((b,x)=>{b.disabled=true;if(x===q.answer)b.classList.add("ok");else if(x===k)b.classList.add("no")});
  const correctLetter="ABCD"[q.answer]||q.answer+1;
  const correctText=q.options[q.answer];
  $("fb").innerHTML=`<div class="fb">${ok?"✅ Correct!":"❌ Not quite. Correct answer: "+correctLetter+") "+esc(correctText)}</div>${ok?"":`<div class="fb why" id="whyBox">💡 Loading explanation…</div>`}`;
  $("nx").classList.remove("hidden");$("nx").focus();
- if(!ok)await loadWhy(q,correctLetter,correctText,k);
+ if(ok){
+  const btn=document.querySelector(`[data-a="ans"][data-r="${k}"]`);
+  if(btn){const r=btn.getBoundingClientRect();confetti(r.left+r.width/2,r.top+r.height/2)}
+  if(navigator.vibrate){try{navigator.vibrate(18)}catch(e){}}
+ }else{
+  if(navigator.vibrate){try{navigator.vibrate([40,60,40])}catch(e){}}
+  await loadWhy(q,correctLetter,correctText,k);
+ }
 }
 async function loadWhy(q,correctLetter,correctText,wrongIdx){
  const box=$("whyBox");if(!box)return;
@@ -1091,8 +907,8 @@ async function finish(){
    nb=n?`<button class="btn" data-a="les" data-r="${n.j}">NEXT LESSON</button>`:(chOpen(s,u)&&(u.challenge||[]).length?`<button class="btn" data-a="startCh">UNIT CHALLENGE</button>`:"");
   }
  }
- const msg=ctx.kind==="review"?(pass?"✨ Review complete! +5 XP":"You need 70% to complete the review."):ctx.kind==="daily"?(pass?"🎯 Daily challenge complete!":"You need 70% to complete the daily."):ctx.kind==="mix"?"Nice practice!":pass?"You passed! 🎉":"Almost there. You need 70% to pass.";
- const note=ctx.key&&pass&&!xp?"Already completed. No extra XP.":ctx.kind==="mix"?"Mixed quizzes are practice only.":ctx.kind==="review"?"Reviews award +5 XP the first time per lesson.":"";
+ const msg=ctx.kind==="review"?(pass?"✨ Review complete! +5 XP":"You need 70% to complete the review."):ctx.kind==="mistakes"?(pass?"📝 Mistakes reviewed!":"You need 70% to complete the mistakes review."):ctx.kind==="daily"?(pass?"🎯 Daily challenge complete!":"You need 70% to complete the daily."):ctx.kind==="mix"?"Nice practice!":pass?"You passed! 🎉":"Almost there. You need 70% to pass.";
+ const note=ctx.key&&pass&&!xp?"Already completed. No extra XP.":ctx.kind==="mix"?"Mixed quizzes are practice only.":ctx.kind==="review"?"Reviews award +5 XP the first time per lesson.":ctx.kind==="mistakes"?"Questions you get right twice are removed from the list.":"";
  document.body.classList.remove("focus-mode");
  view(`<div class="qz card c flip-card" id="finishCard">
   <div class="stars">${"⭐".repeat(stars)}${"☆".repeat(3-stars)}</div>
@@ -1101,7 +917,7 @@ async function finish(){
   ${xp?`<div class="n gd">+${xp} XP</div>`:""}
   <p class="mu">${note}</p>
   ${nb}
-  ${!pass&&ctx.kind!=="mix"&&ctx.kind!=="daily"&&ctx.kind!=="review"?`<div class="retry-row"><p>Don't give up — try once more.</p><button class="btn" data-a="retry">↻ TRY AGAIN</button></div>`:""}
+  ${!pass&&ctx.kind!=="mix"&&ctx.kind!=="daily"&&ctx.kind!=="review"&&ctx.kind!=="mistakes"?`<div class="retry-row"><p>Don't give up — try once more.</p><button class="btn" data-a="retry">↻ TRY AGAIN</button></div>`:""}
   <button class="btn g" data-a="back" style="margin-top:14px">Back</button>
  </div>`)
 }
@@ -1331,7 +1147,7 @@ document.addEventListener("click",e=>{
   next:next,retry:()=>R&&quiz(R.raw,R.ctx),
   back:()=>{document.body.classList.remove("focus-mode");if(R&&R.ctx.back)R.ctx.back()},
   chest:()=>claimChest(+r),submitW:submitW,
-  daily:startDaily,student:()=>openStudent(r),
+  daily:startDaily,reviewMistakes:startMistakesReview,student:()=>openStudent(r),
   saveProfile:saveProfile,resetStudent:()=>resetStudent(r),
   createClass:createClass,report:generateReport,
   toggleFocus:()=>{

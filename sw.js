@@ -1,4 +1,7 @@
-const CACHE = "uasa-v2";
+/* UASA+ service worker */
+const VERSION = "uasa-v3";
+const RUNTIME = "uasa-runtime-v3";
+
 const PRECACHE = [
   "./",
   "./index.html",
@@ -6,54 +9,77 @@ const PRECACHE = [
   "./icon-192.png",
   "./icon-512.png",
   "./icon-maskable-512.png",
-  "https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"
+  "https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.49.1"
 ];
 
-self.addEventListener("install", e => {
-  e.waitUntil(
-    caches.open(CACHE).then(c =>
-      Promise.all(PRECACHE.map(url => c.add(url).catch(() => null)))
-    ).then(() => self.skipWaiting())
+self.addEventListener("install", (event) => {
+  self.skipWaiting();
+  event.waitUntil(
+    caches.open(VERSION).then((cache) =>
+      Promise.allSettled(PRECACHE.map((url) => cache.add(url)))
+    )
   );
 });
 
-self.addEventListener("activate", e => {
-  e.waitUntil(
-    caches.keys()
-      .then(keys => Promise.all(keys.filter(k => k !== CACHE).map(k => caches.delete(k))))
-      .then(() => self.clients.claim())
+self.addEventListener("activate", (event) => {
+  event.waitUntil(
+    caches.keys().then((keys) =>
+      Promise.all(
+        keys
+          .filter((k) => k !== VERSION && k !== RUNTIME)
+          .map((k) => caches.delete(k))
+      )
+    ).then(() => self.clients.claim())
   );
 });
 
-self.addEventListener("fetch", e => {
-  const req = e.request;
-  if (req.method !== "GET") return;
+self.addEventListener("fetch", (event) => {
+  const req = event.request;
   const url = new URL(req.url);
 
-  // Never intercept Supabase API/auth
-  if (url.host.endsWith(".supabase.co")) return;
+  // 1. Never intercept Supabase auth/API/functions
+  if (url.hostname.endsWith("supabase.co") || url.hostname.endsWith("supabase.in")) {
+    return;
+  }
 
-  // CDN: cache-first
-  if (url.host === "cdn.jsdelivr.net") {
-    e.respondWith(
-      caches.match(req).then(hit => hit || fetch(req).then(res => {
-        if (res.ok) { const clone = res.clone(); caches.open(CACHE).then(c => c.put(req, clone)); }
-        return res;
-      }).catch(() => caches.match(req)))
+  // 2. Only handle GET
+  if (req.method !== "GET") return;
+
+  // 3. CDN (jsdelivr, google fonts): cache-first
+  if (
+    url.hostname === "cdn.jsdelivr.net" ||
+    url.hostname === "fonts.googleapis.com" ||
+    url.hostname === "fonts.gstatic.com"
+  ) {
+    event.respondWith(
+      caches.match(req).then((hit) => {
+        if (hit) return hit;
+        return fetch(req).then((res) => {
+          if (res && res.status === 200) {
+            const copy = res.clone();
+            caches.open(RUNTIME).then((c) => c.put(req, copy));
+          }
+          return res;
+        }).catch(() => hit);
+      })
     );
     return;
   }
 
-  // Same origin: network-first, fall back to cache, then index.html
-  if (url.origin === location.origin) {
-    e.respondWith(
-      fetch(req).then(res => {
-        if (res.ok && (req.destination === "document" || req.destination === "script" || url.pathname.endsWith(".html"))) {
-          const clone = res.clone();
-          caches.open(CACHE).then(c => c.put(req, clone));
-        }
-        return res;
-      }).catch(() => caches.match(req).then(hit => hit || caches.match("./index.html")))
+  // 4. Same-origin: network-first, fall back to cache, then index.html
+  if (url.origin === self.location.origin) {
+    event.respondWith(
+      fetch(req)
+        .then((res) => {
+          if (res && res.status === 200 && res.type === "basic") {
+            const copy = res.clone();
+            caches.open(RUNTIME).then((c) => c.put(req, copy));
+          }
+          return res;
+        })
+        .catch(() =>
+          caches.match(req).then((hit) => hit || caches.match("./index.html"))
+        )
     );
   }
 });

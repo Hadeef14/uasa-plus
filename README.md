@@ -2,6 +2,8 @@
 Hi, Im a dev that makes UASA easier.
 My journey was to make kids improve grade and more. But, it wasnt the end......
 
+UASA+ is only a revision tool to help students practise. It does not replace school lessons, teachers, or official UASA materials.
+
 Hi! 
 I'm hadeef, an ex student from sk bukit damansara that wants to improve educations by making a website
 for students that struggle to learn and studying the exam, which was UASA.

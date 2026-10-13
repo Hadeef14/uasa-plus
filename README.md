@@ -2,7 +2,11 @@
 Hi, Im a dev that makes UASA easier.
 My journey was to make kids improve grade and more. But, it wasnt the end......
 
-UASA+ is only a revision tool to help students practise. It does not replace school lessons, teachers, or official UASA materials.
+WARNING!!!
+UASA+ hanya untuk practise exam UASA dan belajar 
+secara seronok.
+
+Made by a solo developer and SK Bukit Damansara.
 
 Hi! 
 I'm hadeef, an ex student from sk bukit damansara that wants to improve educations by making a website
@@ -12,4 +16,4 @@ Its open-source for everyone and its completely free. Welp, thats from me (hadee
 Goodluck!!!
 
 Founder,
-Hadeef
+Hadeef-(SKBD)

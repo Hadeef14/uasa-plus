@@ -126,7 +126,8 @@ main{max-width:920px;margin:auto;padding:28px 18px 80px;animation:viewIn .35s va
 .hero .btn.g{background:transparent;color:var(--paper);border-color:var(--paper);box-shadow:0 4px 0 color-mix(in srgb,var(--paper) 60%,transparent)}
 .stats,.grid{display:grid;gap:14px;grid-template-columns:repeat(4,1fr)}
 .grid{grid-template-columns:repeat(2,1fr)}
-.stats .card,.grid .card{padding:18px 20px;margin-bottom:0}
+.grid3{display:grid;gap:14px;grid-template-columns:repeat(3,1fr)}
+.stats .card,.grid .card,.grid3 .card{padding:18px 20px;margin-bottom:0}
 .n{font-size:36px;font-weight:900;letter-spacing:-.05em;line-height:1;color:var(--ink)}
 .gd{color:var(--jade)}
 .bar{height:16px;background:var(--paper-2);border:2px solid var(--ink);border-radius:99px;overflow:hidden;margin:14px 0;flex:1;position:relative}
@@ -186,6 +187,24 @@ main{max-width:920px;margin:auto;padding:28px 18px 80px;animation:viewIn .35s va
 .tabbar{display:none}
 .adm-user{border-left:6px solid var(--saffron)}
 .adm-actions{display:flex;gap:6px;flex-wrap:wrap;margin-top:10px}
+/* ---- EXAM MODE ---- */
+.exam-timer{font-family:'JetBrains Mono',monospace;font-size:22px;font-weight:900;color:var(--ink);background:var(--paper-2);border:2px solid var(--ink);border-radius:var(--r-sm);padding:6px 14px;box-shadow:var(--press-sm);min-width:80px;text-align:center}
+.exam-timer.danger{color:var(--clay);border-color:var(--clay);animation:pulse 1s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.5}}
+.exam-grade{font-size:72px;font-weight:900;font-family:'Fraunces',serif;line-height:1}
+/* ---- SHOP ---- */
+.shop-grid{display:grid;gap:14px;grid-template-columns:repeat(auto-fill,minmax(200px,1fr))}
+.shop-item{text-align:center;padding:20px 16px}
+.shop-item .si-icon{font-size:42px;margin-bottom:8px}
+.shop-item .si-cost{font-family:'JetBrains Mono',monospace;font-weight:900;color:var(--saffron-deep);font-size:16px;margin:6px 0}
+.shop-item.owned{opacity:.6;border-style:dashed}
+/* ---- WEAK TOPICS ---- */
+.weak-item{display:flex;justify-content:space-between;align-items:center;padding:10px 0;border-bottom:1px dashed var(--line)}
+.weak-item:last-child{border-bottom:0}
+.weak-count{font-family:'JetBrains Mono',monospace;font-weight:800;color:var(--clay);font-size:14px}
+/* ---- CHALLENGES ---- */
+.challenge-card{border-left:6px solid var(--teal)}
+.challenge-reward{font-family:'JetBrains Mono',monospace;font-weight:900;color:var(--jade);font-size:15px}
 #installBanner{position:fixed;left:50%;bottom:calc(16px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);z-index:40;display:flex;align-items:center;gap:10px;padding:10px 16px;background:var(--ink);color:var(--paper);border:2px solid var(--ink);border-radius:99px;box-shadow:0 5px 0 var(--saffron);max-width:min(560px,calc(100vw - 24px))}
 .ib-txt{font-family:'JetBrains Mono',monospace;font-size:12px;font-weight:700}
 .ib-btn{background:var(--saffron);color:var(--ink-on-accent);border:2px solid var(--ink);border-radius:99px;padding:6px 14px;font-weight:800;font-size:11px}
@@ -197,12 +216,13 @@ header nav{display:none}
 .tabbar button .ti{font-size:20px;line-height:1}
 .tabbar button.on{color:var(--ink);background:var(--saffron)}
 main{padding-bottom:100px!important}
-h1{font-size:26px}.stats{grid-template-columns:repeat(2,1fr)}.grid{grid-template-columns:1fr}
+h1{font-size:26px}.stats{grid-template-columns:repeat(2,1fr)}.grid{grid-template-columns:1fr}.grid3{grid-template-columns:1fr}
 .hero{padding:26px 22px;box-shadow:5px 5px 0 var(--saffron)}
 header{padding:10px 14px;gap:6px}.hl{font-size:21px}.chip{font-size:11px;padding:3px 10px}
 .card{padding:18px}.ans{padding:15px 17px;min-height:62px}.ans b{width:34px;height:34px;font-size:14px}
 .node>span:first-child{width:48px;height:48px;font-size:14px}.logo{font-size:48px}
 #installBanner{bottom:calc(88px + env(safe-area-inset-bottom,0px))}
+.shop-grid{grid-template-columns:repeat(2,1fr)}
 }
 @media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
 ::selection{background:var(--saffron);color:var(--ink-on-accent)}
@@ -284,14 +304,47 @@ const KL="Asia/Kuala_Lumpur";
 const dayKey=o=>{const d=new Date(Date.now()+(o||0)*864e5);return new Intl.DateTimeFormat("en-CA",{timeZone:KL,year:"numeric",month:"2-digit",day:"2-digit"}).format(d)};
 const today=()=>dayKey(0),yest=()=>dayKey(-1);
 let USER=null,NAV={s:"",u:0,l:0},R=null;
+let EXAM_TIMER=null,EXAM_TIME_LEFT=0;
 window.TEACHER_LESSONS=window.TEACHER_LESSONS||[];
 window._tq=window._tq||[];
 const roleTag=r=>r==="admin"?'<span class="roletag rt-admin">🛡️ ADMIN</span>':r==="teacher"?'<span class="roletag rt-teacher">🎓 TEACHER</span>':"";
 const shuf=a=>{a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.random()*(i+1)|0;[a[i],a[j]]=[a[j],a[i]]}return a};
-const sq=q=>{if(q.w)return q;const o=shuf(q.options.map((t,i)=>[t,i]));return{q:q.q,img:q.img,options:o.map(x=>x[0]),answer:o.findIndex(x=>x[1]===q.answer)}};
+const sq=q=>{if(q.w)return q;const o=shuf(q.options.map((t,i)=>[t,i]));return{q:q.q,img:q.img,options:o.map(x=>x[0]),answer:o.findIndex(x=>x[1]===q.answer),_subj:q._subj}};
 const lvl=()=>Math.floor(USER.xp/350)+1;
 const streakNow=()=>USER.lastActive&&![today(),yest()].includes(USER.lastActive)?0:USER.streak;
 const bar=p=>'<div class="bar"><i style="width:'+Math.round(p)+'%"></i></div>';
+/* ---- WEAK TOPICS (Smart Revision) ---- */
+function trackWeak(subj){if(!subj||!USER)return;const k="uasa_weak_"+USER.id;const d=JSON.parse(st.get(k)||"{}");d[subj]=(d[subj]||0)+1;st.set(k,JSON.stringify(d))}
+function getWeak(){if(!USER)return[];const k="uasa_weak_"+USER.id;const d=JSON.parse(st.get(k)||"{}");return Object.entries(d).sort((a,b)=>b[1]-a[1]).slice(0,3)}
+function clearWeak(){if(!USER)return;st.del("uasa_weak_"+USER.id)}
+/* ---- SHOP ---- */
+const SHOP_ITEMS=[
+{id:"freeze",icon:"🔥",name:"Streak Freeze",desc:"Protect your streak for 1 missed day",cost:200},
+{id:"hearts",icon:"❤️",name:"Heart Refill",desc:"Refill all 5 hearts instantly",cost:150},
+{id:"ocean",icon:"🌊",name:"Ocean Theme",desc:"Cool blue colour theme",cost:300,type:"theme"},
+{id:"sakura",icon:"🌸",name:"Sakura Theme",desc:"Soft pink colour theme",cost:300,type:"theme"},
+{id:"forest",icon:"🌿",name:"Forest Theme",desc:"Natural green colour theme",cost:300,type:"theme"}
+];
+const CUSTOM_THEMES={
+ocean:{"--saffron":"#3b82f6","--saffron-deep":"#1d4ed8","--accent":"#3b82f6","--accent-deep":"#1d4ed8","--gl":"#3b82f6"},
+sakura:{"--saffron":"#ec4899","--saffron-deep":"#be185d","--accent":"#ec4899","--accent-deep":"#be185d","--gl":"#ec4899"},
+forest:{"--saffron":"#22c55e","--saffron-deep":"#15803d","--accent":"#22c55e","--accent-deep":"#15803d","--gl":"#22c55e"}
+};
+function getOwned(){return JSON.parse(st.get("uasa_shop_"+USER.id)||"[]")}
+function setOwned(arr){st.set("uasa_shop_"+USER.id,JSON.stringify(arr))}
+function applyCustomTheme(name){
+const t=CUSTOM_THEMES[name];if(!t)return;
+const r=document.documentElement;
+Object.entries(t).forEach(([k,v])=>r.style.setProperty(k,v));
+st.set("uasa_custom_theme_"+USER.id,name);
+}
+function clearCustomTheme(){
+const r=document.documentElement;
+Object.keys(CUSTOM_THEMES.ocean).forEach(k=>r.style.removeProperty(k));
+st.del("uasa_custom_theme_"+USER.id);
+}
+function loadSavedTheme(){if(!USER)return;const t=st.get("uasa_custom_theme_"+USER.id);if(t&&CUSTOM_THEMES[t])applyCustomTheme(t)}
+/* ---- UI HELPERS ---- */
 function toast(m){const t=document.createElement("div");t.className="toast";t.setAttribute("role","status");t.textContent=m;document.body.appendChild(t);setTimeout(()=>t.remove(),2400)}
 function pop(n){const d=document.createElement("div");d.className="pop";d.textContent="+"+n+" XP";document.body.appendChild(d);setTimeout(()=>d.remove(),1300)}
 function setSaveState(s){const el=$("cs");if(!el)return;const m={saving:["☁️ Saving…",""],saved:["☁️ Saved","save-ok"],error:["⚠️ Not saved","save-bad"]};const a=m[s]||m.saved;el.textContent=a[0];el.className="chip "+a[1]}
@@ -315,6 +368,7 @@ if(k){const r=await sb.from("progress").insert({user_id:USER.id,lesson_key:k,sco
 const g=(score|0)*10+(bonus|0);if(g>0){try{await sb.rpc("bump_daily_xp",{amount:g})}catch(e){}}
 await refreshUserStats();setSaveState("saved");
 }catch(e){setSaveState("error");toast("⚠️ Cloud save failed.");console.error(e)}}
+/* ---- CURRICULUM + TEACHER LESSONS ---- */
 const localUnits=s=>Array.from((CURRICULUM[s]||{}).units||[],(x,i)=>x?{...x,i,ls:Array.from(x.lessons||[],(y,j)=>y&&y.questions&&y.questions.length?{...y,j}:null).filter(Boolean)}:null).filter(Boolean);
 const normQ=q=>{if(!q)return null;if(q.w)return W(q.w,"",Number(q.min)||30,Number(q.max)||80,q.to||"",q.from||"",q.subject||"");if(Array.isArray(q.options))return Q(q.q||"",q.options.map(String),Number.isInteger(q.answer)?q.answer:0,q.img||"");return null};
 const teacherUnits=s=>{
@@ -328,32 +382,45 @@ const key=(s,u,l)=>s+"|"+u+"|"+l,done=k=>!!(USER&&USER.progress&&USER.progress[k
 const nDone=(s,u)=>u.ls.filter(l=>done(key(s,u.i,l.j))).length;
 const sTot=s=>U(s).reduce((a,u)=>a+u.ls.length,0),sDone=s=>U(s).reduce((a,u)=>a+nDone(s,u),0);
 const unlocked=(s,u,x)=>x===0||done(key(s,u.i,u.ls[x-1].j)),chOpen=(s,u)=>u.ls.length>0&&nDone(s,u)===u.ls.length;
-const pool=s=>{const o=[];(s?[s]:SUBJ.map(x=>x[0])).forEach(n=>U(n).forEach(u=>{u.ls.forEach(l=>o.push(...l.questions.filter(q=>!q.w)));o.push(...(u.challenge||[]).filter(q=>!q.w))}));return o};
+const pool=s=>{const o=[];(s?[s]:SUBJ.map(x=>x[0])).forEach(n=>U(n).forEach(u=>{u.ls.forEach(l=>o.push(...l.questions.filter(q=>!q.w).map(q=>({...q,_subj:n}))));o.push(...(u.challenge||[]).filter(q=>!q.w).map(q=>({...q,_subj:n})))}));return o};
 const unitYear=t=>{const m=/Unit (\d+)/.exec(t||"");if(!m)return 0;const n=+m[1];return n<=5?4:n<=10?5:6};
-const poolForYear=y=>{const n={"Year 4":4,"Year 5":5,"Year 6":6,"Form 1":6,"Form 2":6}[y]||6;const o=[];SUBJ.forEach(s=>U(s[0]).forEach(u=>{const uy=unitYear(u.title);if(uy!==0&&uy!==n)return;u.ls.forEach(l=>o.push(...l.questions.filter(q=>!q.w)));o.push(...(u.challenge||[]).filter(q=>!q.w))}));return o};
+const poolForYear=y=>{const n={"Year 4":4,"Year 5":5,"Year 6":6,"Form 1":6,"Form 2":6}[y]||6;const o=[];SUBJ.forEach(s=>U(s[0]).forEach(u=>{const uy=unitYear(u.title);if(uy!==0&&uy!==n)return;u.ls.forEach(l=>o.push(...l.questions.filter(q=>!q.w).map(q=>({...q,_subj:s[0]}))));o.push(...(u.challenge||[]).filter(q=>!q.w).map(q=>({...q,_subj:s[0]})))}));return o};
 const view=h=>{$("main").innerHTML=h;scrollTo(0,0)};
 const lk=(a,r,t)=>'<button class="lk" data-a="'+a+'" data-r="'+esc(r)+'">'+t+'</button>';
 async function loadTeacherLessons(){if(!USER||!sb)return;try{const r=await sb.from("teacher_lessons").select("id,teacher_id,subject,unit_title,lesson_title,learn_text,questions,published,class_code,created_at").order("created_at",{ascending:true}).limit(1000);if(!r.error)window.TEACHER_LESSONS=r.data||[]}catch(e){}}
+/* ---- NAV ---- */
 function nav(p){
 const role=(USER&&USER.role)||"student";let items;
-if(role==="admin")items=[["admin","🛡️ Admin"],["teacher","🎓 Studio"],["subjects","📚 Subjects"],["leaderboard","🏆 Board"],["profile","👤 Profile"]];
+if(role==="admin")items=[["admin","🛡️ Admin"],["teacher","🎓 Studio"],["subjects","📚 Subjects"],["exam","📝 Exam"],["shop","🛒 Shop"],["leaderboard","🏆 Board"],["profile","👤 Profile"]];
 else if(role==="teacher")items=[["teacher","🎓 Studio"],["leaderboard","🏆 Board"],["profile","👤 Profile"]];
-else items=[["home","🏠 Home"],["subjects","📚 Subjects"],["review","✨ Review"],["leaderboard","🏆 Board"],["profile","👤 Profile"]];
+else items=[["home","🏠 Home"],["subjects","📚 Subjects"],["exam","📝 Exam"],["review","✨ Review"],["shop","🛒 Shop"],["leaderboard","🏆 Board"],["profile","👤 Profile"]];
 $("nv").innerHTML=items.map(x=>'<button class="'+(x[0]===p?"on":"")+'" data-a="page" data-r="'+x[0]+'">'+x[1]+'</button>').join("")+'<button data-a="logout">🚪 Logout</button>';
 const tb=$("tb");if(tb){let tabs;
-if(role==="admin")tabs=[["admin","🛡️","Admin"],["teacher","🎓","Studio"],["subjects","📚","Learn"],["leaderboard","🏆","Board"],["profile","👤","Me"]];
+if(role==="admin")tabs=[["admin","🛡️","Admin"],["teacher","🎓","Studio"],["subjects","📚","Learn"],["exam","📝","Exam"],["profile","👤","Me"]];
 else if(role==="teacher")tabs=[["teacher","🎓","Studio"],["leaderboard","🏆","Board"],["profile","👤","Me"]];
-else tabs=[["home","🏠","Home"],["subjects","📚","Learn"],["review","✨","Review"],["leaderboard","🏆","Board"],["profile","👤","Me"]];
+else tabs=[["home","🏠","Home"],["subjects","📚","Learn"],["exam","📝","Exam"],["shop","🛒","Shop"],["profile","👤","Me"]];
 tb.innerHTML=tabs.map(x=>'<button class="'+(x[0]===p?"on":"")+'" data-a="page" data-r="'+x[0]+'"><span class="ti">'+x[1]+'</span>'+x[2]+'</button>').join("")}}
+/* ---- PAGES ---- */
 const PAGES={
 home(){const n=SUBJ.reduce((a,s)=>a+sDone(s[0]),0),into=USER.xp%350,goal=50,prog=Math.min(USER.dailyXp||0,goal),pct=prog/goal*100;
-return '<div class="hero"><h1>Welcome, '+esc(USER.display_name||USER.username)+'!'+roleTag(USER.role)+'</h1><p>Learn. Practice. Level up.</p><button class="btn" data-a="page" data-r="subjects">START LEARNING</button><button class="btn" data-a="mix" data-r="">🎲 MIXED QUIZ</button><button class="btn g" data-a="daily">'+(USER.dailyDone===today()?"✅ DAILY DONE":"🎯 DAILY CHALLENGE")+'</button></div><div class="card" style="border-color:var(--clay);background:color-mix(in srgb,var(--clay) 10%,var(--pn))"><b>⚠️ This is only a revision tool.</b><p class="mu" style="margin:8px 0 0">It helps you practise. It does not replace school lessons, teachers, or official UASA papers.</p></div><div class="card"><h2>📅 Daily Goal</h2>'+bar(pct)+'<small>'+prog+' / '+goal+' XP today'+(prog>=goal?" — goal reached! 🎉":"")+'</small></div><div class="stats">'+[[USER.xp,"XP"],[lvl(),"Level"],[streakNow()+(USER.streakFreezes?" ❄️"+USER.streakFreezes:""),"Day streak"],[n,"Lessons done"]].map(x=>'<div class="card"><div class="n">'+x[0]+'</div><small>'+x[1]+'</small></div>').join("")+'</div><div class="card"><h2>Level progress</h2>'+bar(into/3.5)+'<small>'+into+' / 350 XP to Level '+(lvl()+1)+'</small></div>'},
+const weak=getWeak();
+let weakHtml="";
+if(weak.length){weakHtml='<div class="card"><h2>🧠 Focus Areas</h2><p class="mu">Topics you got wrong most often. Practise these to improve faster.</p>'+weak.map(w=>'<div class="weak-item"><span>'+esc(w[0])+'</span><span class="weak-count">'+w[1]+' missed</span></div>').join("")+'<button class="btn" data-a="smartReview" style="margin-top:12px">🎯 Smart Review</button><button class="btn g sm" data-a="clearWeak" style="margin-top:12px">Reset tracking</button></div>'}
+return '<div class="hero"><h1>Welcome, '+esc(USER.display_name||USER.username)+'!'+roleTag(USER.role)+'</h1><p>Learn. Practice. Level up.</p><button class="btn" data-a="page" data-r="subjects">START LEARNING</button><button class="btn" data-a="page" data-r="exam">📝 EXAM MODE</button><button class="btn" data-a="mix" data-r="">🎲 MIXED QUIZ</button><button class="btn g" data-a="daily">'+(USER.dailyDone===today()?"✅ DAILY DONE":"🎯 DAILY CHALLENGE")+'</button></div><div class="card" style="border-color:var(--clay);background:color-mix(in srgb,var(--clay) 10%,var(--pn))"><b>⚠️ This is only a revision tool.</b><p class="mu" style="margin:8px 0 0">It helps you practise. It does not replace school lessons, teachers, or official UASA papers.</p></div>'+weakHtml+'<div id="chHome"></div><div class="card"><h2>📅 Daily Goal</h2>'+bar(pct)+'<small>'+prog+' / '+goal+' XP today'+(prog>=goal?" — goal reached! 🎉":"")+'</small></div><div class="stats">'+[[USER.xp,"XP"],[lvl(),"Level"],[streakNow()+(USER.streakFreezes?" ❄️"+USER.streakFreezes:""),"Day streak"],[n,"Lessons done"]].map(x=>'<div class="card"><div class="n">'+x[0]+'</div><small>'+x[1]+'</small></div>').join("")+'</div><div class="card"><h2>Level progress</h2>'+bar(into/3.5)+'<small>'+into+' / 350 XP to Level '+(lvl()+1)+'</small></div>';},
 subjects(){return '<h1>📚 Subjects</h1><button class="btn g" data-a="mix" data-r="">🎲 Mixed quiz: all subjects</button><div class="grid" style="margin-top:12px">'+SUBJ.map(s=>{const d=sDone(s[0]),t=sTot(s[0]);return '<button class="card tap" data-a="subj" data-r="'+esc(s[0])+'"><h2>'+s[1]+' '+esc(s[0])+'</h2>'+bar(t?d/t*100:0)+'<small>'+d+' / '+t+' lessons</small></button>'}).join("")+'</div>'},
+exam(){return '<h1>📝 Exam Mode</h1><div class="card"><h2>Mock UASA Exam</h2><p class="mu">Simulate real exam conditions. Timer counts down, no hints, no hearts lost. Test yourself!</p><label for="examCount">Number of questions</label><select id="examCount"><option value="10">10 questions</option><option value="20" selected>20 questions</option><option value="30">30 questions</option></select><label for="examTime">Time limit</label><select id="examTime"><option value="15">15 minutes</option><option value="30" selected>30 minutes</option><option value="45">45 minutes</option></select><button class="btn" data-a="startExam" style="margin-top:14px">🚀 START EXAM</button></div><div class="card"><h2>How it works</h2><p class="mu">• Questions are pulled from all subjects based on your year.<br>• The timer counts down. When it hits zero, the exam ends automatically.<br>• No hints or explanations during the exam.<br>• You get a grade (A–E) and score at the end.<br>• Hearts are NOT lost during exams.</p></div>'},
 review(){return '<h1>✨ Review</h1><p class="mu">Repeat a finished lesson. <b>+5 XP</b> first time each.</p><div id="rv"><p class="mu">Loading…</p></div>'},
+shop(){
+const owned=getOwned();
+return '<h1>🛒 Reward Shop</h1><p class="mu">Spend your XP on power-ups and themes. You have <b>⭐ '+USER.xp+' XP</b>.</p><div class="shop-grid">'+SHOP_ITEMS.map(it=>{
+const has=owned.includes(it.id);
+const afford=USER.xp>=it.cost;
+return '<div class="card shop-item'+(has&&it.type==="theme"?" owned":"")+'"><div class="si-icon">'+it.icon+'</div><b>'+it.name+'</b><p class="mu" style="font-size:13px;margin:6px 0">'+it.desc+'</p><div class="si-cost">⭐ '+it.cost+' XP</div>'+(has?(it.type==="theme"?'<button class="btn g sm" data-a="applyTheme" data-v="'+it.id+'">Apply</button>':'<span class="mu">✓ Owned</span>'):'<button class="btn sm" data-a="buyItem" data-v="'+it.id+'"'+(afford?"":" disabled")+'>Buy</button>')+'</div>'}).join("")+'</div>'+(owned.some(id=>SHOP_ITEMS.find(i=>i.id===id&&i.type==="theme"))?'<button class="btn g" data-a="clearTheme" style="margin-top:12px">Reset to default theme</button>':"")},
 leaderboard(){return '<h1>🏆 Leaderboard</h1><div class="card" id="lb"><p class="mu">Loading…</p></div>'},
 profile(){return '<h1>👤 '+esc(USER.display_name||USER.username)+roleTag(USER.role)+'</h1><div class="card"><small class="mu">@'+esc(USER.username)+' · '+esc(USER.role||"student")+(USER.year?" · "+esc(USER.year):"")+'</small><label for="edn">Display name</label><input id="edn" value="'+esc(USER.display_name||USER.username)+'" maxlength="24"><label for="eyr">Year</label><select id="eyr">'+["Year 4","Year 5","Year 6","Form 1","Form 2"].map(y=>'<option'+(y===USER.year?" selected":"")+'>'+y+'</option>').join("")+'</select><label for="ecc">Class code</label><input id="ecc" maxlength="6" value="'+esc(USER.classCode||"")+'" placeholder="e.g. K7M2PQ" autocomplete="off"><label for="ere">Recovery email</label><input id="ere" type="email" value="'+esc(USER.recoveryEmail||"")+'" placeholder="yourname@gmail.com" autocomplete="email"><small class="mu">Used for "Forgot password".</small><label><input type="checkbox" id="elb" style="width:auto"'+(USER.leaderboardOptOut?" checked":"")+'> Hide me from the leaderboard</label><button class="btn" data-a="saveProfile">SAVE PROFILE</button><span id="pmsg" class="mu" style="margin-left:10px"></span></div><div class="card"><p>Level <b>'+lvl()+'</b> · '+USER.xp+' XP · 🔥 '+streakNow()+'-day streak'+(USER.streakFreezes?" · ❄️ "+USER.streakFreezes+" freeze"+(USER.streakFreezes>1?"s":""):"")+'</p>'+SUBJ.map(s=>{const d=sDone(s[0]),t=sTot(s[0]);return '<div>'+s[1]+' '+esc(s[0])+' <small>'+d+' / '+t+' lessons</small>'+bar(t?d/t*100:0)+'</div>'}).join("")+'</div>'}};
-PAGES.teacher=()=>'<h1>🎓 Teacher Studio'+roleTag("teacher")+'</h1><p class="mu">Create lessons & questions for your students. Published lessons appear inside Subjects.</p><div class="card"><h2>➕ Create lesson</h2><label for="tsSubject">Subject</label><select id="tsSubject">'+SUBJ.map(x=>'<option value="'+esc(x[0])+'">'+x[1]+' '+esc(x[0])+'</option>').join("")+'</select><label for="tsClass">Class code (optional)</label><input id="tsClass" maxlength="6" placeholder="Blank = visible to everyone"><label for="tsUnit">Unit title</label><input id="tsUnit" placeholder="e.g. Unit 1: Kata Ganti Nama"><label for="tsLesson">Lesson title</label><input id="tsLesson" placeholder="e.g. Kata Ganti Nama Diri"><label for="tsLearn">Teaching text</label><textarea id="tsLearn" rows="5" placeholder="Explain the topic here…"></textarea><h3>Questions</h3><div id="tsQuestions"><p class="mu">No questions yet.</p></div><button class="btn g" data-a="addQ">+ Add multiple choice</button><div style="margin-top:14px"><button class="btn" data-a="saveLesson" data-v="true">PUBLISH</button><button class="btn g" data-a="saveLesson" data-v="false">SAVE DRAFT</button><span id="tsMsg" class="mu" style="margin-left:10px"></span></div></div><div class="card"><h2>📚 My lessons</h2><div id="tsMine"><p class="mu">Loading…</p></div></div><h2>🏫 My class</h2><div class="card" id="ccard"><p class="mu">Loading class…</p></div><button class="btn g" data-a="report">📄 Generate weekly report</button><div id="td"><p class="mu">Loading students…</p></div>';
+PAGES.teacher=()=>'<h1>🎓 Teacher Studio'+roleTag("teacher")+'</h1><p class="mu">Create lessons, set challenges, and monitor your class.</p><div class="card"><h2>➕ Create lesson</h2><label for="tsSubject">Subject</label><select id="tsSubject">'+SUBJ.map(x=>'<option value="'+esc(x[0])+'">'+x[1]+' '+esc(x[0])+'</option>').join("")+'</select><label for="tsClass">Class code (optional)</label><input id="tsClass" maxlength="6" placeholder="Blank = visible to everyone"><label for="tsUnit">Unit title</label><input id="tsUnit" placeholder="e.g. Unit 1: Kata Ganti Nama"><label for="tsLesson">Lesson title</label><input id="tsLesson" placeholder="e.g. Kata Ganti Nama Diri"><label for="tsLearn">Teaching text</label><textarea id="tsLearn" rows="5" placeholder="Explain the topic here…"></textarea><h3>Questions</h3><div id="tsQuestions"><p class="mu">No questions yet.</p></div><button class="btn g" data-a="addQ">+ Add multiple choice</button><div style="margin-top:14px"><button class="btn" data-a="saveLesson" data-v="true">PUBLISH</button><button class="btn g" data-a="saveLesson" data-v="false">SAVE DRAFT</button><span id="tsMsg" class="mu" style="margin-left:10px"></span></div></div><div class="card"><h2>📚 My lessons</h2><div id="tsMine"><p class="mu">Loading…</p></div></div><div class="card"><h2>🏅 Class Challenge</h2><label for="chTitle">Title</label><input id="chTitle" placeholder="e.g. Week 1 Revision Sprint"><label for="chDesc">Description</label><input id="chDesc" placeholder="e.g. Complete 5 lessons this week"><label for="chTarget">Target lessons</label><input id="chTarget" type="number" value="5" min="1"><label for="chXP">XP reward</label><input id="chXP" type="number" value="100" min="10"><button class="btn" data-a="createChallenge" style="margin-top:10px">Create Challenge</button><span id="chMsg" class="mu" style="margin-left:10px"></span></div><div class="card"><h2>🏫 My class</h2><div id="ccard"><p class="mu">Loading…</p></div></div><button class="btn g" data-a="report">📄 Generate weekly report</button><div id="td"><p class="mu">Loading students…</p></div>';
 PAGES.admin=()=>'<h1>🛡️ Admin Control'+roleTag("admin")+'</h1><div class="card"><h2>🏆 Leaderboard</h2><p class="mu">Turn the global leaderboard on or off for everyone.</p><label><input id="admLbEnabled" type="checkbox" style="width:auto"> Leaderboard enabled</label><button class="btn" data-a="adminSaveSettings">SAVE SETTINGS</button><span id="admMsg" class="mu" style="margin-left:10px"></span></div><div class="card"><h2>👥 Users</h2><input id="admSearch" placeholder="Search username, name, class or year…"><div id="admUsers"><p class="mu">Loading users…</p></div></div><div class="card"><h2>🧾 Recent admin activity</h2><div id="admLogs"><p class="mu">Loading…</p></div></div>';
+/* ---- SETTINGS + LEADERBOARD ---- */
 async function getSettings(){try{const r=await sb.rpc("get_app_settings");if(!r.error&&r.data&&r.data[0])return r.data[0]}catch(e){}try{const r=await sb.from("app_settings").select("leaderboard_enabled").eq("id",1).maybeSingle();if(!r.error&&r.data)return r.data}catch(e){}return{leaderboard_enabled:true}}
 async function loadLeaderboard(){
 const box=$("lb");if(!box)return;const isAdmin=USER&&USER.role==="admin";
@@ -363,18 +430,56 @@ let rows=null;try{const r=await sb.rpc("get_leaderboard",{p_limit:100,p_include_
 if(!rows){const{data,error}=await sb.from("profiles").select("username,display_name,xp,role,leaderboard_opt_out").eq("leaderboard_opt_out",false).order("xp",{ascending:false}).limit(100);if(error){box.innerHTML="<p>Could not load leaderboard.</p>";return}rows=data||[]}
 const m=["🥇","🥈","🥉"];
 box.innerHTML=rows.map((u,i)=>'<div class="lbr '+(u.username===USER.username?"me":"")+'"><span>'+(m[i]||"#"+(i+1))+' '+esc(u.display_name||u.username)+roleTag(u.role)+(u.leaderboard_opt_out?' <small class="mu">hidden</small>':"")+'</span><b>'+(+u.xp||0)+' XP</b></div>').join("")||"<p>No players yet.</p>"}
+/* ---- CHALLENGES (student view) ---- */
+async function loadHomeChallenges(){
+const box=$("chHome");if(!box)return;
+try{
+const r=await sb.from("class_challenges").select("*").order("created_at",{ascending:false}).limit(5);
+if(r.error||!r.data||!r.data.length){box.innerHTML="";return}
+const prog=USER.progress?Object.keys(USER.progress).length:0;
+box.innerHTML=r.data.map(c=>{
+const claimed=st.get("uasa_ch_claimed_"+USER.id+"_"+c.id)==="1";
+const met=prog>=(c.target_lessons||0);
+return '<div class="card challenge-card"><h2>🏅 '+esc(c.title)+'</h2><p class="mu">'+esc(c.description||"")+'</p><small class="mu">Target: '+c.target_lessons+' lessons · Your progress: '+prog+' lessons</small><br>'+(claimed?'<span class="gd" style="font-weight:800">✅ Reward claimed!</span>':met?'<button class="btn sm" data-a="claimChallenge" data-r="'+c.id+'" data-v="'+c.xp_reward+'">🎁 Claim +'+c.xp_reward+' XP</button>':'<span class="challenge-reward">Reward: +'+c.xp_reward+' XP</span>')+'</div>'}).join("");
+}catch(e){box.innerHTML=""}}
+async function claimChallenge(id,xp){
+const k="uasa_ch_claimed_"+USER.id+"_"+id;
+if(st.get(k)==="1"){toast("Already claimed!");return}
+st.set(k,"1");
+try{await sb.rpc("bump_daily_xp",{amount:+xp||0})}catch(e){}
+await refreshUserStats();
+toast("🎁 +"+xp+" XP claimed!");
+loadHomeChallenges();
+}
+/* ---- REVIEW ---- */
 async function loadReview(){const box=$("rv");if(!box)return;const r=await sb.from("reviews").select("lesson_key").eq("user_id",USER.id);const rv=new Set((r.data||[]).map(x=>x.lesson_key));const items=[];SUBJ.forEach(s=>U(s[0]).forEach(u=>u.ls.forEach(l=>{const k=key(s[0],u.i,l.j);if(done(k))items.push({s:s[0],icon:s[1],u:ut(u),l:l.title,j:l.j,k,reviewed:rv.has(k)})})));
 if(!items.length){box.innerHTML='<div class="card"><p class="mu">Finish a lesson first, then review it here.</p></div>';return}
 const dc=items.filter(x=>x.reviewed).length;
 box.innerHTML='<div class="card"><b>'+dc+'</b> / '+items.length+' lessons reviewed</div>'+items.map(x=>'<button class="card tap" data-a="rv" data-r="'+esc(x.k)+'" data-s="'+esc(x.s)+'" data-u="'+esc(x.u)+'" data-l="'+esc(x.l)+'"><b>'+x.icon+' '+esc(x.s)+'</b>'+(x.reviewed?"":'<span class="rvbadge">+5 XP</span>')+'<br><small class="mu">'+esc(x.u)+' · '+esc(x.l)+(x.reviewed?" · ✅ reviewed":"")+'</small></button>').join("")}
 async function startReview(k,s,u,l){const parts=k.split("|");const un=U(s).find(x=>String(x.i)===parts[1]);if(!un)return;const les=un.ls.find(x=>String(x.j)===parts[2]);if(!les)return;if((USER.hearts??5)<=0){toast("💔 No hearts.");return}quiz(les.questions,{title:"✨ Review: "+l,key:null,bonus:0,kind:"review",reviewKey:k,back:()=>go("review")})}
 async function completeReview(k){try{const r=await sb.from("reviews").insert({user_id:USER.id,lesson_key:k});if(r.error&&r.error.code!=="23505")throw r.error;if(!r.error){try{await sb.rpc("bump_daily_xp",{amount:5})}catch(e){}}await refreshUserStats()}catch(e){console.error(e)}}
+/* ---- SMART REVIEW ---- */
+function smartReview(){
+const weak=getWeak();
+if(!weak.length){toast("No weak topics tracked yet. Do some quizzes first!");return}
+const subj=weak[0][0];
+const p=pool(subj);
+if(!p.length){toast("No questions for "+subj);return}
+quiz(shuf(p).slice(0,10),{title:"🧠 Smart Review: "+subj,key:null,bonus:0,kind:"smart",back:()=>go("home")});
+}
+/* ---- NAVIGATION ---- */
 async function go(p){const role=(USER&&USER.role)||"student";
-if(role==="teacher"&&["home","review"].includes(p))p="teacher";
+if(role==="teacher"&&["home","review","exam","shop"].includes(p))p="teacher";
 if(role==="admin"&&p==="home"&&PAGES.admin)p="admin";
 if(!PAGES[p])p=role==="teacher"?"teacher":"home";
+clearInterval(EXAM_TIMER);
 R=null;nav(p);view(PAGES[p]());
-if(p==="leaderboard")await loadLeaderboard();if(p==="teacher")await loadTeacher();if(p==="review")await loadReview();if(p==="admin")await loadAdmin()}
+if(p==="leaderboard")await loadLeaderboard();
+if(p==="teacher")await loadTeacher();
+if(p==="review")await loadReview();
+if(p==="admin")await loadAdmin();
+if(p==="home")await loadHomeChallenges();
+}
 function subj(s){R=null;NAV={s,u:0,l:0};nav("subjects");view('<div class="mu">'+lk("page","subjects","Subjects")+' › '+esc(s)+'</div><h1>'+esc(s)+'</h1><button class="btn g" data-a="mix" data-r="'+esc(s)+'">🎲 Mixed quiz: '+esc(s)+'</button><div class="grid" style="margin-top:12px">'+(U(s).map(u=>'<button class="card tap" data-a="unit" data-r="'+u.i+'"><h2>'+esc(ut(u))+'</h2>'+bar(u.ls.length?nDone(s,u)/u.ls.length*100:0)+'<small>'+nDone(s,u)+' / '+u.ls.length+' lessons</small></button>').join("")||"<p class='mu'>No lessons yet.</p>")+'</div>')}
 function unit(i){R=null;NAV.u=i;NAV.l=0;nav("subjects");const s=NAV.s,u=U(s).find(x=>String(x.i)===String(i));if(!u){subj(s);return}
 const d=nDone(s,u),hasCh=(u.challenge||[]).length>0,ck=key(s,i,"chest"),cd=done(ck),allDone=d===u.ls.length;
@@ -384,21 +489,49 @@ function lesson(j){const s=NAV.s,u=U(s).find(x=>String(x.i)===String(NAV.u)),x=u
 function startLes(){const s=NAV.s,u=U(s).find(x=>String(x.i)===String(NAV.u)),x=u?u.ls.findIndex(l=>String(l.j)===String(NAV.l)):-1;if(x<0||!unlocked(s,u,x))return;const l=u.ls[x];quiz(l.questions,{title:l.title||"Lesson",key:key(s,u.i,l.j),bonus:20,kind:"lesson",back:()=>unit(u.i)})}
 function startCh(){const s=NAV.s,u=U(s).find(x=>String(x.i)===String(NAV.u));if(!u||!chOpen(s,u)||!(u.challenge||[]).length){toast("🔒 Finish all lessons first.");return}if((USER.hearts??5)<=0){toast("💔 No hearts.");return}quiz(u.challenge,{title:"Unit Challenge",key:key(s,u.i,"c"),bonus:50,kind:"challenge",back:()=>unit(u.i)})}
 function startMix(s){const p=pool(s||"");if(!p.length){toast("No questions yet.");return}if((USER.hearts??5)<=0){toast("💔 No hearts.");return}quiz(shuf(p).slice(0,10),{title:s?"Mixed: "+s:"Mixed quiz",key:null,bonus:0,kind:"mix",back:()=>s?subj(s):go("home")})}
+/* ---- EXAM MODE ---- */
+function startExam(){
+const count=+($("examCount")?$("examCount").value:20);
+const mins=+($("examTime")?$("examTime").value:30);
+const p=poolForYear(USER.year);
+if(!p.length){toast("No questions yet.");return}
+const qs=shuf(p).slice(0,count);
+EXAM_TIME_LEFT=mins*60;
+clearInterval(EXAM_TIMER);
+EXAM_TIMER=setInterval(()=>{
+EXAM_TIME_LEFT--;
+const el=$("examTimerDisplay");
+if(el){
+const m=Math.floor(EXAM_TIME_LEFT/60),s=EXAM_TIME_LEFT%60;
+el.textContent=m+":"+String(s).padStart(2,"0");
+if(EXAM_TIME_LEFT<=60)el.classList.add("danger");
+}
+if(EXAM_TIME_LEFT<=0){clearInterval(EXAM_TIMER);if(R&&!R.a){R.a=true}if(R)finish();}
+},1000);
+quiz(qs,{title:"📝 Exam Mode",key:null,bonus:0,kind:"exam",back:()=>{clearInterval(EXAM_TIMER);go("home")}});
+}
+/* ---- QUIZ ENGINE ---- */
 function quiz(qs,ctx){R={raw:qs,qs:qs.map(sq),i:0,c:0,a:false,ctx};draw()}
-function draw(){const q=R.qs[R.i];
-if(q.w){view('<div class="qz"><div class="row"><button class="btn g" data-a="back" aria-label="Quit">✕</button>'+bar(R.i/R.qs.length*100)+'</div><small>'+esc(R.ctx.title)+' · Writing '+(R.i+1)+' of '+R.qs.length+'</small>'+(q.to?'<div class="card" style="margin:8px 0;font-size:15px"><div><b>To:</b> '+esc(q.to)+'</div><div><b>From:</b> '+esc(q.from||"")+'</div><div><b>Subject:</b> '+esc(q.subject||"")+'</div></div>':"")+'<h2>'+esc(q.w)+'</h2><p class="mu">Write between <b>'+q.min+'</b> and <b>'+q.max+'</b> words.</p><textarea id="wt" rows="8" placeholder="Write your answer here..."></textarea><p id="wc" class="mu">0 words</p><button class="btn" data-a="submitW">SUBMIT</button><div id="wfb" role="status"></div><button id="nx" class="btn hidden" data-a="next">'+(R.i+1<R.qs.length?"CONTINUE":"FINISH")+'</button></div>');
+function draw(){const q=R.qs[R.i];const isExam=R.ctx.kind==="exam";
+if(q.w&&!isExam){view('<div class="qz"><div class="row"><button class="btn g" data-a="back" aria-label="Quit">✕</button>'+bar(R.i/R.qs.length*100)+'</div><small>'+esc(R.ctx.title)+' · Writing '+(R.i+1)+' of '+R.qs.length+'</small>'+(q.to?'<div class="card" style="margin:8px 0;font-size:15px"><div><b>To:</b> '+esc(q.to)+'</div><div><b>From:</b> '+esc(q.from||"")+'</div><div><b>Subject:</b> '+esc(q.subject||"")+'</div></div>':"")+'<h2>'+esc(q.w)+'</h2><p class="mu">Write between <b>'+q.min+'</b> and <b>'+q.max+'</b> words.</p><textarea id="wt" rows="8" placeholder="Write your answer here..."></textarea><p id="wc" class="mu">0 words</p><button class="btn" data-a="submitW">SUBMIT</button><div id="wfb" role="status"></div><button id="nx" class="btn hidden" data-a="next">'+(R.i+1<R.qs.length?"CONTINUE":"FINISH")+'</button></div>');
 const ta=$("wt"),wcEl=$("wc"),dk="draft_"+USER.id+"_"+R.i+"_"+(R.ctx.key||"x"),saved=st.get(dk);if(saved)ta.value=saved;
 const uwc=()=>{const n=(ta.value.trim().match(/\S+/g)||[]).length;wcEl.textContent=n+" words";wcEl.style.color=(n>=q.min&&n<=q.max)?"var(--gd)":"var(--mu)"};
 ta.addEventListener("input",()=>{uwc();st.set(dk,ta.value)});uwc();ta.focus();return}
-view('<div class="qz"><div class="row"><button class="btn g" data-a="back" aria-label="Quit quiz">✕</button>'+bar(R.i/R.qs.length*100)+'</div><small>'+esc(R.ctx.title)+' · Question '+(R.i+1)+' of '+R.qs.length+'</small><h2>'+esc(q.q)+'</h2>'+(q.img?'<div class="qimg">'+q.img+'</div>':"")+'<div id="an" role="group" aria-label="Answer choices">'+q.options.map((o,k)=>'<button class="ans" data-a="ans" data-r="'+k+'"><b>'+("ABCD"[k]||k+1)+'</b><span>'+esc(o)+'</span></button>').join("")+'</div><div id="fb" role="status"></div><button id="nx" class="btn hidden" data-a="next">'+(R.i+1<R.qs.length?"CONTINUE":"FINISH")+'</button></div>')}
+const timerHtml=isExam?'<div class="exam-timer" id="examTimerDisplay">--:--</div>':"";
+view('<div class="qz"><div class="row"><button class="btn g" data-a="back" aria-label="Quit quiz">✕</button>'+bar(R.i/R.qs.length*100)+timerHtml+'</div><small>'+esc(R.ctx.title)+' · Question '+(R.i+1)+' of '+R.qs.length+'</small><h2>'+esc(q.q)+'</h2>'+(q.img?'<div class="qimg">'+q.img+'</div>':"")+'<div id="an" role="group" aria-label="Answer choices">'+q.options.map((o,k)=>'<button class="ans" data-a="ans" data-r="'+k+'"><b>'+("ABCD"[k]||k+1)+'</b><span>'+esc(o)+'</span></button>').join("")+'</div><div id="fb" role="status"></div><button id="nx" class="btn hidden" data-a="next">'+(R.i+1<R.qs.length?"CONTINUE":"FINISH")+'</button></div>');
+if(isExam){const el=$("examTimerDisplay");if(el){const m=Math.floor(EXAM_TIME_LEFT/60),s=EXAM_TIME_LEFT%60;el.textContent=m+":"+String(s).padStart(2,"0");if(EXAM_TIME_LEFT<=60)el.classList.add("danger")}}
+}
 async function answer(k){if(!R||R.a||!$("an"))return;const q=R.qs[R.i];if(k<0||k>=q.options.length)return;
 R.a=true;const ok=k===q.answer;if(ok)R.c++;
-const practice=R.ctx.kind==="mix"||R.ctx.kind==="daily"||R.ctx.kind==="review"||R.ctx.kind==="challenge";
+const isExam=R.ctx.kind==="exam";
+const practice=R.ctx.kind==="mix"||R.ctx.kind==="daily"||R.ctx.kind==="review"||R.ctx.kind==="challenge"||R.ctx.kind==="smart";
 if(!ok&&practice)await loseHeart();
+if(!ok&&q._subj)trackWeak(q._subj);
 document.querySelectorAll("#an .ans").forEach((b,x)=>{b.disabled=true;if(x===q.answer)b.classList.add("ok");else if(x===k)b.classList.add("no")});
 const cl="ABCD"[q.answer]||q.answer+1,ct=q.options[q.answer];
-$("fb").innerHTML='<div class="fb">'+(ok?"✅ Correct!":"❌ Not quite. Correct: "+cl+") "+esc(ct))+'</div>'+(ok?"":'<div class="fb why" id="whyBox">💡 Loading explanation…</div>');
-$("nx").classList.remove("hidden");$("nx").focus();if(!ok)await loadWhy(q,cl,ct,k)}
+$("fb").innerHTML='<div class="fb">'+(ok?"✅ Correct!":"❌ Not quite. Correct: "+cl+") "+esc(ct))+'</div>'+(ok||isExam?"":'<div class="fb why" id="whyBox">💡 Loading explanation…</div>');
+$("nx").classList.remove("hidden");$("nx").focus();
+if(!ok&&!isExam)await loadWhy(q,cl,ct,k)}
 async function loadWhy(q,cl,ct,wi){const box=$("whyBox");if(!box)return;const ck="why_"+simpleHash(String(q.q||""));const cached=st.get(ck);if(cached){box.innerHTML="💡 <b>Why:</b> "+esc(cached);return}
 try{const res=await sb.functions.invoke("explain-answer",{body:{question:q.q,correct:ct,chosen:q.options[wi]}});if(res.error)throw res.error;const why=(res.data&&res.data.why)||"";if(why){st.set(ck,why);box.innerHTML="💡 <b>Why:</b> "+esc(why)}else box.innerHTML="💡 <b>Why:</b> <span class='mu'>Not available.</span>"}catch(e){box.innerHTML="💡 <b>Why:</b> <span class='mu'>Not available.</span>"}}
 async function submitW(){if(!R||R.a)return;const q=R.qs[R.i],ta=$("wt");if(!ta)return;const n=(ta.value.trim().match(/\S+/g)||[]).length;
@@ -413,16 +546,55 @@ if(pass){R.a=true;R.c++;btn.classList.add("hidden");$("nx").classList.remove("hi
 catch(e){$("wfb").innerHTML='<div class="fb no">⚠️ Could not mark.</div>';btn.disabled=false;btn.textContent="SUBMIT"}}
 function next(){if(!R||!R.a)return;R.i++;R.a=false;R.i<R.qs.length?draw():finish()}
 async function finish(){const{c,qs,ctx}=R,ratio=c/qs.length,pass=ratio>=.7;let xp=0;
+clearInterval(EXAM_TIMER);
+if(ctx.kind==="exam"){
+const pct=Math.round(ratio*100);
+const grade=pct>=90?"A":pct>=80?"B":pct>=70?"C":pct>=60?"D":"E";
+const gColor=pct>=70?"var(--gd)":pct>=60?"var(--saffron)":"var(--clay)";
+const msg=pct>=90?"Outstanding! 🌟":pct>=80?"Great job! 🎉":pct>=70?"Well done! 👍":pct>=60?"You passed. Keep going!":"Keep practising. You'll get there! 💪";
+view('<div class="qz card c"><div class="exam-grade" style="color:'+gColor+'">'+grade+'</div><h2>'+msg+'</h2><p>Score: <b>'+c+' / '+qs.length+'</b> ('+pct+'%)</p><p class="mu">Exam mode does not award XP. It tests your readiness.</p><button class="btn" data-a="page" data-r="exam">Try Again</button><button class="btn g" data-a="page" data-r="home">Home</button></div>');
+return}
 if(ctx.kind==="review"){if(pass&&ctx.reviewKey)await completeReview(ctx.reviewKey)}
 else if(ctx.kind==="daily"){if(pass&&USER.dailyDone!==today()){xp=ratio===1?150:100;await awardDaily(c,qs.length,xp)}}
+else if(ctx.kind==="smart"){if(pass){xp=c*5;try{await sb.rpc("bump_daily_xp",{amount:xp})}catch(e){}await refreshUserStats()}}
 else if(ctx.key&&pass&&!done(ctx.key)){xp=c*10+ctx.bonus;award(c,qs.length,ctx.bonus,ctx.key)}
 const stars=ratio===1?3:ratio>=.9?2:pass?1:0;let nb="";
 if(pass&&ctx.kind==="lesson"){const s=NAV.s,u=U(s).find(x=>String(x.i)===String(NAV.u)),x=u.ls.findIndex(l=>String(l.j)===String(NAV.l)),n=u.ls[x+1];nb=n?'<button class="btn" data-a="les" data-r="'+esc(String(n.j))+'">NEXT LESSON</button>':(chOpen(s,u)&&(u.challenge||[]).length?'<button class="btn" data-a="startCh">UNIT CHALLENGE</button>':"")}
-const msg=ctx.kind==="review"?(pass?"✨ Review complete! +5 XP":"Need 70%."):ctx.kind==="daily"?(pass?"🎯 Daily complete!":"Need 70%."):ctx.kind==="mix"?"Nice practice!":pass?"You passed! 🎉":"Almost. Need 70%.";
-view('<div class="qz card c"><div class="stars">'+'⭐'.repeat(stars)+'☆'.repeat(3-stars)+'</div><h2>'+msg+'</h2><p>Score: <b>'+c+' / '+qs.length+'</b></p>'+(xp?'<div class="n gd">+'+xp+' XP</div>':"")+nb+(pass||ctx.kind==="mix"||ctx.kind==="daily"||ctx.kind==="review"?"":'<button class="btn" data-a="retry">TRY AGAIN</button>')+'<button class="btn g" data-a="back">Back</button></div>')}
+const msg=ctx.kind==="review"?(pass?"✨ Review complete! +5 XP":"Need 70%."):ctx.kind==="daily"?(pass?"🎯 Daily complete!":"Need 70%."):ctx.kind==="smart"?(pass?"🧠 Smart review done!":"Need 70%."):ctx.kind==="mix"?"Nice practice!":pass?"You passed! 🎉":"Almost. Need 70%.";
+view('<div class="qz card c"><div class="stars">'+'⭐'.repeat(stars)+'☆'.repeat(3-stars)+'</div><h2>'+msg+'</h2><p>Score: <b>'+c+' / '+qs.length+'</b></p>'+(xp?'<div class="n gd">+'+xp+' XP</div>':"")+nb+(pass||ctx.kind==="mix"||ctx.kind==="daily"||ctx.kind==="review"||ctx.kind==="smart"?"":'<button class="btn" data-a="retry">TRY AGAIN</button>')+'<button class="btn g" data-a="back">Back</button></div>')}
 function seededShuffle(arr,seed){let s=2166136261>>>0;for(let i=0;i<seed.length;i++){s^=seed.charCodeAt(i);s=Math.imul(s,16777619)>>>0}const rand=()=>{s^=s<<13;s>>>=0;s^=s>>17;s^=s<<5;s>>>=0;return s/4294967296};const a=arr.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(rand()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a}
 async function startDaily(){if(USER.dailyDone===today()){toast("✅ Already done today!");return}const p=poolForYear(USER.year);if(!p.length){toast("No questions yet.");return}if((USER.hearts??5)<=0){toast("💔 No hearts.");return}quiz(seededShuffle(p,today()).slice(0,10),{title:"🎯 Daily — "+today(),key:null,bonus:0,kind:"daily",back:()=>go("home")})}
 async function awardDaily(score,total,xpOv){setSaveState("saving");try{const xp=typeof xpOv==="number"?xpOv:(score===total?150:100);const r=await sb.from("daily_completions").insert({user_id:USER.id,day:today(),score,total});if(r.error&&r.error.code!=="23505")throw r.error;if(!r.error){USER.dailyDone=today();try{await sb.rpc("bump_daily_xp",{amount:xp})}catch(e){}}await refreshUserStats();setSaveState("saved")}catch(e){setSaveState("error");toast("⚠️ Could not save daily.")}}
+/* ---- SHOP LOGIC ---- */
+async function spendXP(amount){
+if(USER.xp<amount){toast("Not enough XP! You need "+amount+" but have "+USER.xp+".");return false}
+const r=await sb.from("profiles").update({xp:USER.xp-amount}).eq("id",USER.id);
+if(r.error){toast("Purchase failed.");return false}
+USER.xp-=amount;
+await refreshUserStats();
+return true;
+}
+async function buyItem(id){
+const item=SHOP_ITEMS.find(x=>x.id===id);if(!item)return;
+const owned=getOwned();
+if(item.type!=="theme"&&owned.includes(id)){toast("Already owned!");return}
+if(!await spendXP(item.cost))return;
+if(id==="freeze"){
+const r=await sb.from("profiles").update({streak_freezes:Math.min(3,(USER.streakFreezes||0)+1)}).eq("id",USER.id);
+if(!r.error){USER.streakFreezes=Math.min(3,(USER.streakFreezes||0)+1)}
+toast("🔥 Streak freeze added!")
+}else if(id==="hearts"){
+const r=await sb.from("profiles").update({hearts:5}).eq("id",USER.id);
+if(!r.error){USER.hearts=5;heartsUI()}
+toast("❤️ Hearts refilled!")
+}else if(item.type==="theme"){
+owned.push(id);setOwned(owned);
+applyCustomTheme(id);
+toast(item.icon+" "+item.name+" unlocked & applied!")
+}
+go("shop");
+}
+/* ---- PROFILE ---- */
 async function saveProfile(){const name=$("edn")?$("edn").value.trim():"";if(name.length<2||name.length>24){$("pmsg").textContent="Name must be 2-24 chars.";return}
 const year=$("eyr")?$("eyr").value:USER.year,optOut=$("elb")?$("elb").checked:false,cc=$("ecc")?$("ecc").value.trim().toUpperCase():"",re=$("ere")?$("ere").value.trim().toLowerCase():"";
 if(re&&!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(re)){$("pmsg").textContent="Invalid email.";return}
@@ -431,6 +603,7 @@ if(cc){let check=await sb.from("valid_class_codes").select("code").eq("code",cc)
 const r=await sb.from("profiles").update({display_name:name,year,leaderboard_opt_out:optOut,class_code:cc||null,recovery_email:re||null}).eq("id",USER.id);
 if(r.error){setSaveState("error");$("pmsg").textContent="Error: "+r.error.message;return}
 USER.display_name=name;USER.year=year;USER.leaderboardOptOut=optOut;USER.classCode=cc;USER.recoveryEmail=re;setSaveState("saved");$("pmsg").textContent="✓ Saved";setTimeout(()=>go("profile"),600)}
+/* ---- TEACHER STUDIO ---- */
 function tsMsg(t){const m=$("tsMsg");if(m)m.textContent=t}
 function adminMsg(t){const m=$("admMsg");if(m)m.textContent=t}
 function renderTQ(){const wrap=$("tsQuestions");if(!wrap)return;window._tq=window._tq||[];
@@ -452,6 +625,22 @@ const rows=r.data||[];
 box.innerHTML=rows.length?rows.map(x=>'<div class="card" style="padding:14px;margin:10px 0"><div style="display:flex;justify-content:space-between;gap:8px;flex-wrap:wrap"><div><b>'+esc(x.lesson_title)+'</b><br><small class="mu">'+esc(x.subject)+' · '+esc(x.unit_title)+' · '+(x.class_code?"class "+esc(x.class_code):"all")+' · '+(x.questions||[]).length+' Q</small></div><span class="chip '+(x.published?"save-ok":"")+'">'+(x.published?"Published":"Draft")+'</span></div><div class="adm-actions"><button class="btn g sm" data-a="tpublish" data-r="'+x.id+'" data-v="'+(x.published?"false":"true")+'">'+(x.published?"Unpublish":"Publish")+'</button><button class="btn g sm" data-a="tdelete" data-r="'+x.id+'">Delete</button></div></div>').join(""):'<p class="mu">No lessons yet.</p>'}
 async function setLessonPublished(id,pub){const r=await sb.from("teacher_lessons").update({published:!!pub,updated_at:new Date().toISOString()}).eq("id",id).eq("teacher_id",USER.id);if(r.error){toast("Error");return}toast(pub?"Published":"Unpublished");await loadTeacherLessons();loadMyLessons()}
 async function deleteLesson(id){if(!confirm("Delete this lesson?"))return;const r=await sb.from("teacher_lessons").delete().eq("id",id).eq("teacher_id",USER.id);if(r.error){toast("Error");return}toast("Deleted");await loadTeacherLessons();loadMyLessons()}
+async function createChallenge(){
+const title=$("chTitle")?$("chTitle").value.trim():"";
+const desc=$("chDesc")?$("chDesc").value.trim():"";
+const target=Math.max(1,+($("chTarget")?$("chTarget").value:5));
+const xp=Math.max(10,+($("chXP")?$("chXP").value:100));
+const msg=$("chMsg");
+if(!title){if(msg)msg.textContent="Title required.";return}
+if(msg)msg.textContent="Creating…";
+const cls=await sb.from("classes").select("code").eq("teacher_id",USER.id).maybeSingle();
+const r=await sb.from("class_challenges").insert({teacher_id:USER.id,class_code:cls.data?cls.data.code:null,title,description:desc,target_lessons:target,xp_reward:xp});
+if(r.error){if(msg)msg.textContent="Error: "+r.error.message;return}
+if(msg)msg.textContent="Challenge created ✓";
+toast("🏅 Challenge created!");
+["chTitle","chDesc"].forEach(id=>{const el=$(id);if(el)el.value=""});
+}
+/* ---- TEACHER DASHBOARD ---- */
 async function loadTeacher(){const box=$("td");if(!box)return;window._tq=[];renderTQ();loadMyLessons();box.innerHTML='<p class="mu">Loading class…</p>';
 const cls=await sb.from("classes").select("code,name").eq("teacher_id",USER.id).maybeSingle();
 const myCode=cls.data?cls.data.code:null;const cbox=$("ccard");
@@ -484,6 +673,7 @@ if(!rpc.error){setSaveState("saved");toast("✅ Reset.");openStudent(uid);return
 const[a,b,c,d]=await Promise.all([sb.from("progress").delete().eq("user_id",uid),sb.from("daily_completions").delete().eq("user_id",uid),sb.from("reviews").delete().eq("user_id",uid),sb.from("profiles").update({xp:0,streak:0,daily_xp:0,daily_xp_date:null,hearts:5,last_active:null}).eq("id",uid)]);
 if(a.error||b.error||c.error||d.error){setSaveState("error");toast("⚠️ Could not reset.");return}
 setSaveState("saved");toast("✅ Reset.");openStudent(uid)}
+/* ---- ADMIN ---- */
 async function loadAdmin(){if(!USER||USER.role!=="admin"){view("<p>Forbidden.</p>");return}
 const ub=$("admUsers"),lb=$("admLogs");if(ub)ub.innerHTML='<p class="mu">Loading…</p>';if(lb)lb.innerHTML='<p class="mu">Loading…</p>';
 try{const settings=await getSettings();const cb=$("admLbEnabled");if(cb)cb.checked=settings.leaderboard_enabled!==false;
@@ -510,6 +700,7 @@ async function adminRepairStreak(uid){adminMsg("Repairing streak…");
 try{const r=await sb.from("profiles").update({last_active:today()}).eq("id",uid);if(r.error)throw r.error;adminMsg("Streak repaired ✓");toast("🔧 Streak repaired")}catch(e){adminMsg("Error");return}await loadAdmin()}
 async function adminResetProgress(uid){if(!confirm("Reset ALL progress for this user?"))return;adminMsg("Resetting…");
 try{const r=await sb.rpc("admin_reset_progress",{p_user_id:uid});if(r.error)throw r.error;adminMsg("Progress reset ✓")}catch(e){try{await Promise.all([sb.from("progress").delete().eq("user_id",uid),sb.from("daily_completions").delete().eq("user_id",uid),sb.from("reviews").delete().eq("user_id",uid)]);await sb.from("profiles").update({xp:0,streak:0,daily_xp:0,daily_xp_date:null,hearts:5,last_active:null}).eq("id",uid);adminMsg("Progress reset ✓")}catch(e2){adminMsg("Error");return}}await loadAdmin()}
+/* ---- AUTH ---- */
 const authMsg=t=>{$("am").textContent=t};
 function authTab(r){const l=r==="l",s=r==="s",f=r==="f",c=r==="c";$("lf").classList.toggle("hidden",!l);$("sf").classList.toggle("hidden",!s);$("ff").classList.toggle("hidden",!f);$("cf").classList.toggle("hidden",!c);$("tl").className="btn"+(l?"":" g");$("ts").className="btn"+(s?"":" g");authMsg("")}
 function applyTheme(){const t=st.get("uasaTheme")||"auto";if(t==="dark")document.documentElement.dataset.theme="dark";else if(t==="light")document.documentElement.dataset.theme="light";else delete document.documentElement.dataset.theme;const b=$("theme");if(b)b.textContent=t==="dark"?"☀️":t==="light"?"🌙":"🌓"}
@@ -522,9 +713,9 @@ const prog={};(g.data||[]).forEach(x=>{if(x.lesson_key)prog[x.lesson_key]=1});
 const dxd=p.daily_xp_date||null;
 USER={id:au.id,username:p.username,display_name:p.display_name||p.username,role:p.role||"student",year:p.year||"",classCode:p.class_code||"",recoveryEmail:p.recovery_email||"",xp:+p.xp||0,streak:+p.streak||0,lastActive:p.last_active||null,leaderboardOptOut:!!p.leaderboard_opt_out,streakFreezes:+p.streak_freezes||0,hearts:p.hearts??5,dailyXp:dxd===today()?(+p.daily_xp||0):0,dailyXpDate:dxd,progress:prog,dailyDone:null};
 try{const d=await sb.from("daily_completions").select("day").eq("user_id",au.id).eq("day",today()).maybeSingle();if(d.data)USER.dailyDone=today()}catch(e){}
-await refreshHearts();await refreshUserStats();await loadTeacherLessons()}
+await refreshHearts();await refreshUserStats();await loadTeacherLessons();loadSavedTheme()}
 function enter(){$("auth").classList.add("hidden");$("app").classList.remove("hidden");hdr();const role=(USER&&USER.role)||"student";go(role==="teacher"?"teacher":role==="admin"?"admin":"home")}
-async function logout(){try{await sb.auth.signOut()}catch(e){}USER=null;R=null;window.TEACHER_LESSONS=[];window._tq=[];$("app").classList.add("hidden");$("auth").classList.remove("hidden");authTab("l")}
+async function logout(){try{await sb.auth.signOut()}catch(e){}clearInterval(EXAM_TIMER);USER=null;R=null;window.TEACHER_LESSONS=[];window._tq=[];clearCustomTheme();$("app").classList.add("hidden");$("auth").classList.remove("hidden");authTab("l")}
 async function signup(){if(!sb){authMsg("Could not load Supabase.");return}
 const n=normalizeUsername($("su").value),pw=$("sp").value,yr=$("sy").value;
 if(!isValidUsername(n)){authMsg("Username: 3-20 lowercase letters, numbers, . - _");return}
@@ -561,7 +752,12 @@ addQ:addTQ,removeQ:()=>removeTQ(+r),saveLesson:()=>saveLesson(t.dataset.v==="tru
 tpublish:()=>setLessonPublished(r,t.dataset.v==="true"),tdelete:()=>deleteLesson(r),
 adminSaveSettings,adminHide:()=>adminToggleHide(r,t.dataset.v==="1"),
 adminAdjust:()=>adminAdjust(r,t.dataset.v),adminRepairStreak:()=>adminRepairStreak(r),
-adminReset:()=>adminResetProgress(r)};
+adminReset:()=>adminResetProgress(r),
+startExam,smartReview,clearWeak:()=>{clearWeak();toast("Weak topic tracking reset.");go("home")},
+buyItem:()=>buyItem(t.dataset.v),
+applyTheme:()=>{applyCustomTheme(t.dataset.v);toast("Theme applied!")},
+clearTheme:()=>{clearCustomTheme();toast("Default theme restored.");go("shop")},
+createChallenge,claimChallenge:()=>claimChallenge(r,t.dataset.v)};
 if(F[t.dataset.a])F[t.dataset.a]()});
 document.addEventListener("keydown",e=>{if(R&&$("an")&&/^[1-9]$/.test(e.key)&&!/INPUT|TEXTAREA|SELECT/.test(e.target.tagName))answer(+e.key-1)});
 (async()=>{if(!sb){authMsg("Could not load Supabase library.");return}

@@ -1,462 +1,2027 @@
-(function () {
-window.SUBJ=[["Bahasa Melayu","🇲🇾"],["English","🇬🇧"],["Mathematics","➗"],["Science","🔬"],["Sejarah","📜"]];
-window.CURRICULUM={
-"Bahasa Melayu":{units:[
-{title:"Kata: Golongan Kata",lessons:[
-{title:"Kata Nama",learn:P("<b>Kata Nama</b> merujuk kepada orang, tempat, benda, atau perkara."),questions:[Q("Apakah kata nama?",["Kata yang merujuk orang, tempat, benda","Kata yang menunjukkan perbuatan","Kata yang menerangkan sifat","Kata yang menyambung ayat"],0),Q("Yang manakah Kata Nama Am?",["Aminah","Buku","Malaysia","Kuala Lumpur"],1),Q("Yang manakah Kata Nama Khas?",["kucing","kerusi","Aminah","meja"],2),Q("Yang manakah Kata Ganti Nama?",["meja","dia","lari","cantik"],1),Q("'Negara Malaysia' ialah contoh?",["Kata Nama Am","Kata Nama Khas","Kata Ganti Nama","Kata Kerja"],1),Q("'Guru' ialah contoh?",["Kata Nama Am","Kata Nama Khas","Kata Kerja","Kata Adjektif"],0),Q("'Mereka' ialah contoh?",["Kata Nama Khas","Kata Ganti Nama","Kata Adjektif","Kata Kerja"],1),Q("'Sekolah' ialah contoh?",["Kata Kerja","Kata Nama Am","Kata Ganti Nama","Kata Adjektif"],1),Q("'Kuala Lumpur' ialah contoh?",["Kata Nama Khas","Kata Nama Am","Kata Kerja","Kata Adjektif"],0),Q("'Saya' ialah contoh?",["Kata Ganti Nama","Kata Nama Khas","Kata Adjektif","Kata Kerja"],0)]},
-{title:"Kata Kerja",learn:P("<b>Kata Kerja</b>: perbuatan. Transitif dan tak transitif."),questions:[Q("Apakah kata kerja?",["Kata yang menunjukkan perbuatan","Kata yang merujuk benda","Kata yang menerangkan sifat","Kata yang menyambung"],0),Q("Yang manakah Kata Kerja?",["meja","makan","cantik","dan"],1),Q("'Membaca buku' — transitif?",["Membaca","Buku","Baca buku","Buku itu"],0),Q("'Tidur' — kata kerja?",["Transitif","Tak Transitif","Adjektif","Nama"],1),Q("'Minum' — kata kerja?",["Transitif","Tak Transitif","Nama","Adjektif"],0),Q("Kata Kerja Tak Transitif?",["menulis","mandi","makan","membaca"],1),Q("'Dia ___ bola.' — transitif?",["menendang","pergi","sedih","cantik"],0),Q("'Aminah ___ ke sekolah.' — tak transitif?",["berjalan","memakan","membaca","menonton"],0),Q("'Menonton' memerlukan?",["Objek","Subjek","Kata seru","Kata tanya"],0),Q("'Berlari' ialah?",["Transitif","Tak Transitif","Adjektif","Nama"],1)]},
-{title:"Kata Adjektif",learn:P("<b>Kata Adjektif</b>: menerangkan sifat. 9 jenis."),questions:[Q("Apakah kata adjektif?",["Menerangkan sifat kata nama","Menunjukkan perbuatan","Merujuk benda","Menyambung ayat"],0),Q("'Cantik' jenis?",["Sifatan","Warna","Ukuran","Bentuk"],0),Q("'Merah' jenis?",["Sifatan","Warna","Bentuk","Cara"],1),Q("'Besar' jenis?",["Warna","Ukuran","Cara","Bentuk"],1),Q("'Bulat' jenis?",["Bentuk","Jarak","Warna","Cara"],0),Q("'Jauh' jenis?",["Jarak","Waktu","Cara","Bentuk"],0),Q("'Baharu' jenis?",["Waktu","Cara","Perasaan","Warna"],0),Q("'Cermat' jenis?",["Cara","Warna","Ukuran","Bentuk"],0),Q("'Wangi' jenis?",["Pancaindera","Perasaan","Bentuk","Cara"],0),Q("'Sedih' jenis?",["Perasaan","Warna","Cara","Bentuk"],0)]},
-{title:"Kata Tugas",learn:P("<b>Kata Tugas</b>: penyambung, penerang, penegas."),questions:[Q("Apakah kata tugas?",["Kata yang menyambung atau menerangkan","Kata yang merujuk orang","Kata yang menunjukkan perbuatan","Kata yang menerangkan sifat"],0),Q("'Di', 'ke', 'dari' ialah?",["Kata Sendi Nama","Kata Hubung","Kata Nafi","Kata Tanya"],0),Q("'Dan', 'tetapi', 'atau' ialah?",["Kata Sendi","Kata Hubung","Kata Bilangan","Kata Nafi"],1),Q("'Dua', 'semua' ialah?",["Kata Bilangan","Kata Hubung","Kata Tanya","Kata Seru"],0),Q("'Tidak', 'bukan' ialah?",["Kata Nafi","Kata Penguat","Kata Seru","Kata Tanya"],0),Q("'Sangat', 'amat' ialah?",["Kata Penguat","Kata Nafi","Kata Bilangan","Kata Arah"],0),Q("'Apa', 'siapa' ialah?",["Kata Tanya","Kata Seru","Kata Perintah","Kata Nafi"],0),Q("'Aduh', 'wah' ialah?",["Kata Seru","Kata Tanya","Kata Nafi","Kata Bilangan"],0),Q("'Telah', 'akan' ialah?",["Kata Bantu","Kata Sendi","Kata Seru","Kata Nafi"],0),Q("'Jangan', 'tolong' ialah?",["Kata Perintah","Kata Tanya","Kata Nafi","Kata Seru"],0)]},
-{title:"Pembentukan Kata",learn:P("Kata tunggal, terbitan, ganda, majmuk, simpulan bahasa."),questions:[Q("Apakah Kata Tunggal?",["Kata dasar tanpa imbuhan","Kata berimbuhan","Kata berulang","Kata gabungan"],0),Q("'Rumah' ialah?",["Kata Tunggal","Kata Terbitan","Kata Ganda","Kata Majmuk"],0),Q("'Berlari' ialah?",["Kata Terbitan","Kata Tunggal","Kata Majmuk","Kata Ganda"],0),Q("'Budak-budak' ialah?",["Kata Ganda","Kata Tunggal","Kata Majmuk","Kata Terbitan"],0),Q("'Kapal terbang' ialah?",["Kata Majmuk","Kata Tunggal","Kata Ganda","Kata Terbitan"],0),Q("'Buah hati' ialah?",["Simpulan Bahasa","Kata Majmuk","Kata Tunggal","Kata Ganda"],0),Q("'Makanan' dari kata dasar?",["Makan","Makanan","Nakan","Kan"],0),Q("'Pelajar' dari kata dasar?",["Ajar","Lajar","Pelajar","Jar"],0),Q("'Rumah-rumah' kata ganda?",["Penuh","Separa","Berentak","Majmuk"],0),Q("'Tetamu' kata ganda?",["Separa","Penuh","Berentak","Majmuk"],0)]},
-{title:"BM UASA: Kata Hubung",learn:P("<b>Kata hubung</b> menghubungkan dua klausa atau frasa."),questions:[Q("Din mengambil surat itu ______ menyerahkannya kepada Rajoo.",["lalu","agar","maka","kerana"],0),Q("Charles lulus ujian itu ______ adiknya gagal.",["dan","serta","tetapi","malahan"],2),Q("Zamzarina berkata-kata ______ merenung wajah temannya.",["kerana","sambil","maka","lalu"],1),Q("Keluarga Chong Wei mungkin berpindah ke Johor ______ ke Melaka.",["dan","lalu","atau","agar"],2),Q("Dia tidak hadir ke sekolah ______ demam.",["lalu","kerana","tetapi","sambil"],1),Q("Belajarlah rajin-rajin ______ kamu lulus.",["kerana","supaya","atau","lalu"],1),Q("Ali ______ Ahmad pergi ke sekolah.",["tetapi","dan","kerana","sambil"],1),Q("Awak mahu teh ______ kopi?",["atau","dan","supaya","lalu"],0),Q("______ keluarga Wong tiba, datuknya tiada di rumah.",["Semasa","Setelah","Supaya","Sementara"],0),Q("Farzana ______ Mei Hua sangat gembira.",["dan","lalu","tetapi","walhal"],0)]}
-],challenge:[Q("'Cikgu Lim' ialah contoh?",["Kata Nama Am","Kata Nama Khas","Kata Ganti Nama","Kata Kerja"],1),Q("'Warna-warni' kata ganda?",["Berentak","Penuh","Separa","Majmuk"],0),Q("'Ulat buku' bermaksud?",["Orang yang suka membaca","Ulat sebenar","Buku lama","Buku baru"],0)]},
-{title:"Unit 1: Saling Menyayangi",lessons:[{title:"Kasih Sayang Keluarga",learn:P("<b>Kasih sayang</b> dalam keluarga penting."),questions:[Q("Nilai dalam keluarga?",["Kasih sayang","Egoisme","Kebencian","Pentingkan diri"],0),Q("Jasa ibu tidak terbalas?",["Pengorbanan ibu tidak dapat dibalas","Ibu bekerja keras","Ibu suka marah","Ibu selalu sibuk"],0),Q("Cara bantu ibu bapa?",["Membantu kerja rumah","Menonton TV","Bermain","Tidur"],0),Q("Fauzan anak cakna?",["Anak prihatin","Anak malas","Anak nakal","Anak degil"],0)]}],challenge:[Q("Keluarga bahagia?",["Saling menyayangi","Harta","Pangkat","Kuasa"],0),Q("Mengapa hormat ibu bapa?",["Kerana berjasa","Kerana kaya","Kerana terkenal","Kerana pangkat"],0)]},
-{title:"Unit 2: Ke Sana ke Sini",lessons:[{title:"Melancong",learn:P("Melancong mengeratkan hubungan keluarga."),questions:[Q("Faedah melancong?",["Mengukuhkan hubungan","Bazir wang","Penat","Risau"],0),Q("Persiapan melancong?",["Membawa beg","Lupa dokumen","Tidak merancang","Terlupa masa"],0),Q("Tempat menarik Malaysia?",["Pulau Langkawi","Menara Eiffel","Tembok Besar","Taj Mahal"],0),Q("Melancong menambah?",["Pengetahuan","Masalah","Hutang","Risau"],0)]}],challenge:[Q("Patuhi semasa melancong?",["Peraturan tempat","Bebas","Suka hati","Mengikut rasa"],0),Q("Faedah lawat tempat bersejarah?",["Menambah ilmu","Bosan","Bazir","Penat"],0)]},
-{title:"Unit 3: Gaya Hidup Sihat",lessons:[{title:"Makanan Seimbang",learn:P("<b>Piramid makanan</b> menunjukkan pemakanan seimbang."),questions:[Q("Maksud makanan seimbang?",["Mengandungi semua nutrien","Mahal","Segera","Manis"],0),Q("Berapa gelas air sehari?",["6-8 gelas","1-2 gelas","20 gelas","3 gelas"],0),Q("Kebaikan bersenam?",["Badan sihat","Letih","Gemuk","Sakit"],0),Q("Makanan yang dikurangkan?",["Gula dan garam","Sayur","Buah","Air"],0)]}],challenge:[Q("Kesan makan berlebihan?",["Obesiti","Sihat","Cergas","Kuat"],0),Q("Waktu makan penting?",["Sarapan","Makan malam","Snek","Minum"],0)]},
-{title:"Unit 4: Kesihatan Diri",lessons:[{title:"Tanggungjawab Kesihatan",learn:P("<b>Kesihatan</b> tanggungjawab setiap individu."),questions:[Q("Amalan hidup sihat?",["Bersenam berkala","Makan segera","Tidur lewat","Malas"],0),Q("Jam tidur murid?",["8-10 jam","3-4 jam","12-14 jam","5 jam"],0),Q("Vaksinasi bertujuan?",["Mencegah penyakit","Tambah berat","Lambat tumbuh","Cepat besar"],0),Q("Tanda badan sihat?",["Cergas dan bertenaga","Letih","Mudah sakit","Lemah"],0)]}],challenge:[Q("Apabila sakit?",["Berjumpa doktor","Biar","Makan ubat orang","Tidur sahaja"],0),Q("Jaga kesihatan mental?",["Bercakap dengan dipercayai","Pendam perasaan","Mengasingkan diri","Simpan sendiri"],0)]},
-{title:"Unit 5: Kebersihan",lessons:[{title:"Kebersihan Diri",learn:P("Kebersihan menjamin kesihatan."),questions:[Q("Kesan tidak jaga kebersihan?",["Mudah penyakit","Sihat","Cergas","Kuat"],0),Q("Jaga kebersihan persekitaran?",["Mengitar semula","Buang sampah merata","Bakar sampah","Kotorkan"],0),Q("Berus gigi sehari?",["2 kali","1 kali","3 hari sekali","Seminggu sekali"],0),Q("Penyakit air kotor?",["Taun","Campak","Selesema","Demam"],0)]}],challenge:[Q("Amalan kebersihan diri?",["Mandi setiap hari","Seminggu sekali","Tidak mandi","Bila perlu"],0),Q("Buang sampah betul?",["Dalam tong sampah","Dalam longkang","Tepi jalan","Merata"],0)]},
-{title:"Unit 6: Berhati-hati",lessons:[{title:"Keselamatan Diri",learn:P("Keselamatan diutamakan."),questions:[Q("Keselamatan di jalan?",["Guna jejantas","Melintas tanpa lihat","Bermain di jalan","Berlari"],0),Q("Apabila kebakaran?",["Hubungi 999","Bersembunyi","Berlari tanpa arah","Duduk diam"],0),Q("Nombor kecemasan?",["999","111","888","000"],0),Q("Tanda amaran pembinaan?",["Papan kuning","Merah","Hijau","Biru"],0)]}],challenge:[Q("Orang tak dikenali mengajak pergi?",["Tolak dan maklumkan ibu bapa","Ikut","Bersama","Dengar sahaja"],0),Q("Keselamatan kolam renang?",["Berhati-hati, bersama dewasa","Sendiri","Berlari di tepi","Berenang jauh"],0)]},
-{title:"Unit 7: Elak Kemalangan",lessons:[{title:"Situasi Berbahaya",learn:P("Kenali situasi berbahaya."),questions:[Q("Berjalan tempat gelap?",["Bersama orang dipercayai","Sendiri","Berlari laju","Duduk"],0),Q("Bermain api?",["Berbahaya","Selamat","Seronok","Menyihatkan"],0),Q("Keselamatan di sekolah?",["Beratur semasa bergerak","Berlari","Menolak kawan","Bermain"],0),Q("Bila berhati-hati di jalan?",["Sentiasa","Kadang-kadang","Tidak perlu","Jarang"],0)]}],challenge:[Q("Sebelum melintas?",["Lihat kiri kanan","Terus melintas","Berlari","Duduk"],0),Q("Keselamatan di rumah?",["Jangan main suis elektrik","Main pisau","Panjat almari","Lompat"],0)]},
-{title:"Unit 8: Elak Bahaya",lessons:[{title:"Bahaya & Pencegahan",learn:P("Elak bahaya di rumah, sekolah."),questions:[Q("Bahan berbahaya di rumah?",["Bahan kimia","Bantal","Buku","Baju"],0),Q("Amaran botol racun?",["Simbol tengkorak","Buah","Haiwan comel","Bunga"],0),Q("Termakan bahan kimia?",["Berjumpa doktor","Biar","Minum air","Tidur"],0),Q("Simpan bahan berbahaya?",["Tempat tinggi, berkunci","Di lantai","Atas meja","Merata"],0)]}],challenge:[Q("Bahaya di dapur?",["Pisau tajam","Pinggan kertas","Tuala","Sudu"],0),Q("Terhidu gas?",["Keluar dan beritahu dewasa","Duduk diam","Tidur","Tunggu"],0)]},
-{title:"Unit 9: Muafakat Berkat",lessons:[{title:"Semangat Bermuafakat",learn:P("<b>Muafakat</b> membawa kebaikan."),questions:[Q("Maksud muafakat?",["Bekerjasama","Bersaing","Bermusuh","Bersendiri"],0),Q("Faedah bergotong-royong?",["Kerja cepat siap","Kerja lambat","Bersendiri","Bosan"],0),Q("Contoh muafakat?",["Gotong-royong","Bersendiri","Bergaduh","Bertengkar"],0),Q("Peribahasa muafakat?",["Muafakat membawa berkat","Berat mata memandang","Sikit-sikit jadi bukit","Berat sama dipikul"],0)]}],challenge:[Q("Sikap bermuafakat?",["Toleransi","Ego","Bersaing","Mementingkan diri"],0),Q("Kebaikan hidup bermasyarakat?",["Saling membantu","Bersendiri","Bermusuh","Bersaing"],0)]},
-{title:"Unit 10: Bersatu Kita Teguh",lessons:[{title:"Perpaduan Kaum",learn:P("<b>Perpaduan</b> penting."),questions:[Q("Kepentingan perpaduan?",["Memajukan negara","Perbalahan","Pecahbelah","Kekacauan"],0),Q("Kukuhkan perpaduan?",["Meraikan perayaan bersama","Mengasingkan","Menghina","Menjauhi"],0),Q("Masyarakat majmuk Malaysia?",["Pelbagai kaum","Satu kaum","Dua kaum","Tiada kaum"],0),Q("Sikap toleransi?",["Bertolak ansur","Mementingkan diri","Mengasingkan","Bermusuh"],0)]}],challenge:[Q("Peribahasa bersatu?",["Bersatu teguh bercerai roboh","Sikit-sikit jadi bukit","Berat sama dipikul","Muafakat berkat"],0),Q("Faedah perpaduan?",["Keamanan negara","Kekacauan","Perang","Perbalahan"],0)]},
-{title:"Unit 11: Jujur dan Amanah",lessons:[{title:"Integriti Diri",learn:P("<b>Integriti</b>: jujur, amanah."),questions:[Q("Maksud integriti?",["Jujur dan amanah","Malas","Sombong","Degil"],0),Q("Integriti di sekolah?",["Mengaku kesalahan","Meniru ujian","Berbohong","Curi"],0),Q("Mengapa integriti penting?",["Membina kepercayaan","Terkenal","Hadiah","Pangkat"],0),Q("Terjumpa wang?",["Serah kepada guru","Simpan","Guna","Belanja"],0)]}],challenge:[Q("Contoh amanah?",["Menjaga barang pinjaman","Rosakkan","Hilangkan","Jual"],0),Q("Sifat jujur membawa?",["Kepercayaan orang","Kebencian","Kerugian","Masalah"],0)]},
-{title:"Unit 12: Bersih dan Cekap",lessons:[{title:"Amalan Bersih",learn:P("<b>Bersih</b> dan <b>cekap</b>."),questions:[Q("Ciri orang cekap?",["Siapkan kerja awal","Bertangguh","Malas","Lengah"],0),Q("Manfaat bersih?",["Kesihatan terjamin","Penyakit","Kotor","Lemah"],0),Q("Cara jadi cekap?",["Merancang kerja","Main dulu","Tidur","Tengok TV"],0),Q("Bersih persekitaran?",["Mengitar semula","Buang sampah","Bakar","Kotorkan"],0)]}],challenge:[Q("Sikap bersih?",["Peribadi mulia","Peribadi buruk","Malas","Kotor"],0),Q("Cekap urus masa?",["Merancang jadual","Main telefon","Tidak tidur","Tengok TV"],0)]},
-{title:"Unit 13: Warisan Budaya",lessons:[{title:"Warisan Budaya",learn:P("Warisan budaya perlu dipelihara."),questions:[Q("Contoh warisan budaya?",["Tarian tradisional","Permainan video","Fesyen Barat","Lagu asing"],0),Q("Cara memelihara?",["Mempelajari dan praktik","Lupakan","Tukar","Rosakkan"],0),Q("Alat muzik tradisional?",["Kompang","Gitar","Piano","Biola"],0),Q("Tarian tradisional?",["Kuda Kepang","Breakdance","Balet","Salsa"],0)]}],challenge:[Q("Mengapa pelihara warisan?",["Identiti bangsa","Bosan","Fesyen","Lapuk"],0),Q("Warisan bukan kebendaan?",["Bahasa","Bangunan","Batu","Tembikar"],0)]},
-{title:"Unit 14: Persada Seni",lessons:[{title:"Seni & Budaya",learn:P("Seni mencerminkan identiti bangsa."),questions:[Q("Maksud jati diri?",["Identiti diri","Kekayaan","Pangkat","Kuasa"],0),Q("Seni batik?",["Lukisan kain","Ukiran kayu","Anyaman","Tenunan"],0),Q("Songket ditenun dengan?",["Benang emas","Plastik","Kertas","Kain"],0),Q("Wau bulan?",["Permainan tradisional","Makanan","Pakaian","Senjata"],0)]}],challenge:[Q("Alat muzik tradisional Cina?",["Erhu","Kompang","Sitar","Gendang"],0),Q("Seni ukiran kayu?",["Kelantan","Johor","Sabah","Penang"],0)]},
-{title:"Unit 15: Teknologi",lessons:[{title:"Sains & Teknologi",learn:P("Teknologi memudahkan kehidupan."),questions:[Q("Faedah teknologi?",["Memudahkan komunikasi","Kemalasan","Bazir masa","Rugi"],0),Q("Teknologi komunikasi?",["Telefon pintar","Kayu","Batu","Daun"],0),Q("Inovasi?",["Penciptaan baharu","Meniru","Membeli","Mengubah"],0),Q("Guna teknologi?",["Berhemah","Bebas","Sepuasnya","Mengikut rasa"],0)]}],challenge:[Q("Kesan negatif teknologi?",["Ketagihan","Kesihatan","Pendidikan","Perpaduan"],0),Q("Teknologi hijau?",["Mesra alam","Pencemaran","Kerosakan","Bazir"],0)]}
-]},
-"English":{units:[
-{title:"Grammar: Parts of Speech & Idioms",lessons:[
-{title:"Nouns",learn:P("<b>Noun</b>: names a person, place, thing or idea."),questions:[Q("What is a noun?",["A person, place, thing or idea","An action word","A describing word","A joining word"],0),Q("Which is a common noun?",["Aminah","School","Malaysia","Kuala Lumpur"],1),Q("Which is a proper noun?",["book","city","Malaysia","table"],2),Q("Which is an abstract noun?",["table","courage","dog","apple"],1),Q("Which is a collective noun?",["flock","bird","fly","feather"],0),Q("Which is a countable noun?",["water","book","rice","sand"],1),Q("Which is an uncountable noun?",["pen","apple","water","chair"],2),Q("Plural of 'child'?",["childs","children","childes","child"],1),Q("Plural of 'box'?",["boxs","boxen","boxes","box"],2),Q("Which is a noun?",["run","quickly","happiness","slowly"],2)]},
-{title:"Pronouns",learn:P("<b>Pronoun</b> replaces a noun."),questions:[Q("What is a pronoun?",["A word that replaces a noun","A describing word","An action word","A joining word"],0),Q("Which is a personal pronoun?",["cat","they","green","run"],1),Q("Which is a possessive pronoun?",["mine","I","me","we"],0),Q("Which is a reflexive pronoun?",["myself","my","me","mine"],0),Q("Which is a demonstrative pronoun?",["this","she","run","happy"],0),Q("Replace 'Ali and I' with a pronoun:",["We","They","She","He"],0),Q("Replace 'Aminah' with a pronoun:",["She","He","It","We"],0),Q("'This is ___ book.' (my)",["mine","my","me","I"],1),Q("'The book is ___.' (mine)",["mine","my","me","I"],0),Q("Correct sentence?",["Him is tall.","He is tall.","His is tall.","He tall."],1)]},
-{title:"Verbs",learn:P("<b>Verb</b>: action or state."),questions:[Q("What is a verb?",["An action or state word","A person's name","A describing word","A joining word"],0),Q("Which is an action verb?",["jump","blue","table","happy"],0),Q("Which is a linking verb?",["is","run","quickly","red"],0),Q("Which is a helping verb?",["will","eat","slow","blue"],0),Q("Past tense of 'walk'?",["walked","walks","walking","walk"],0),Q("Past tense of 'go'?",["goed","went","gone","going"],1),Q("Past tense of 'eat'?",["eated","ate","eating","eaten"],1),Q("Past participle of 'write'?",["wrote","writed","written","writing"],2),Q("Which uses a helping verb?",["I run.","I can run.","I ran.","I am running."],1),Q("Past tense of 'see'?",["seed","saw","seen","seeing"],1)]},
-{title:"Adjectives",learn:P("<b>Adjective</b>: describes a noun."),questions:[Q("What is an adjective?",["A word that describes a noun","An action word","A person's name","A joining word"],0),Q("Which is an adjective?",["beautiful","jump","slowly","and"],0),Q("Which is an adjective?",["book","red","run","eat"],1),Q("Comparative of 'tall'?",["taller","tallest","talls","tall"],0),Q("Superlative of 'big'?",["bigger","biggest","bigs","big"],1),Q("Comparative of 'happy'?",["happier","happiest","happys","happy"],0),Q("Superlative of 'good'?",["gooder","best","goodest","better"],1),Q("Which is an adjective?",["quickly","tasty","eat","slowly"],1),Q("'The ___ boy smiled.'",["tall","jump","slowly","run"],0),Q("Which is comparative?",["smallest","smaller","small","smallness"],1)]},
-{title:"Adverbs",learn:P("<b>Adverb</b>: describes a verb."),questions:[Q("What is an adverb?",["A word that describes a verb","A person's name","A place","A noun"],0),Q("Which is an adverb?",["quickly","quick","quicker","quickest"],0),Q("Adverb of time?",["yesterday","here","slowly","loudly"],0),Q("Adverb of place?",["here","quickly","usually","always"],0),Q("Adverb of frequency?",["often","fast","now","today"],0),Q("Adverb of manner?",["carefully","here","later","yesterday"],0),Q("'She sings ___.'",["beautifully","beautiful","beauty","beautify"],0),Q("'He runs ___.'",["fast","fastly","fastness","faster"],0),Q("Which is an adverb?",["inside","in","into","at"],0),Q("Which uses an adverb?",["He is a quick runner.","He runs quickly.","He is quick.","He is a runner."],1)]},
-{title:"Prepositions & Conjunctions",learn:P("<b>Preposition</b>: position. <b>Conjunction</b>: joins."),questions:[Q("What is a preposition?",["A word showing position","A describing word","An action word","A noun"],0),Q("Which is a preposition?",["under","quickly","beautiful","run"],0),Q("'The book is ___ the table.'",["on","and","because","so"],0),Q("'She walked ___ the park.'",["through","and","but","or"],0),Q("What is a conjunction?",["A word that joins","A describing word","A place word","An action word"],0),Q("Which is a conjunction?",["and","under","happy","run"],0),Q("'I like tea ___ coffee.'",["and","under","on","at"],0),Q("'She was tired ___ she kept working.'",["but","under","quickly","on"],0),Q("'He ran fast ___ he was late.'",["because","under","on","at"],0),Q("Which is a preposition?",["between","and","or","but"],0)]},
-{title:"Idioms",learn:P("<b>Idiom</b>: non-literal phrase."),questions:[Q("What is an idiom?",["A phrase with non-literal meaning","A single word","A grammar rule","A type of noun"],0),Q("'Break a leg' means?",["Good luck","Get hurt","Run fast","Jump high"],0),Q("'Piece of cake' means?",["Very easy","Tasty food","Small piece","Sweet food"],0),Q("'Hit the books' means?",["Study hard","Punch a book","Buy books","Read comics"],0),Q("'Under the weather' means?",["Feeling sick","Outside","Raining","Cold"],0),Q("'Once in a blue moon' means?",["Very rarely","Every night","Often","Never"],0),Q("'Let the cat out of the bag' means?",["Reveal a secret","Free a cat","Pack a bag","Feed a cat"],0),Q("'Cost an arm and a leg' means?",["Very expensive","Cheap","Painful","Free"],0),Q("'Bite the bullet' means?",["Face something difficult","Eat fast","Fight","Lose"],0),Q("'Bite off more than you can chew' means?",["Take on too much","Eat too fast","Chew gum","Bake bread"],0)]},
-{title:"Similes & Proverbs",learn:P("<b>Simile</b>: like/as. <b>Proverb</b>: short saying."),questions:[Q("What is a simile?",["A comparison using like or as","A single word","A grammar rule","A proverb"],0),Q("'As brave as a ___'",["lion","book","chair","table"],0),Q("'As busy as a ___'",["bee","table","rock","stone"],0),Q("'As quiet as a ___'",["mouse","lion","drum","bell"],0),Q("'As cold as ___'",["ice","fire","sun","heat"],0),Q("Which is a simile?",["She is as tall as a tree.","She is tall.","She is a tree.","She grows tall."],0),Q("What is a proverb?",["A short saying with a lesson","A type of poem","A single word","A story"],0),Q("'Early bird catches the ___'",["worm","sun","moon","star"],0),Q("'Practice makes ___'",["perfect","money","fun","sense"],0),Q("'Where there's a will, there's a ___'",["way","day","say","play"],0)]}
-],challenge:[Q("Which is a collective noun?",["team","player","play","playing"],0),Q("'Spill the beans' means?",["Reveal a secret","Drop food","Cook beans","Waste food"],0),Q("'Better late than ___'",["never","early","soon","ever"],0)]},
-{title:"English UASA: Reading",lessons:[{title:"Reading Comprehension",learn:P("Read carefully. Choose the best answer."),questions:[Q("Tom dislikes offices, likes plants and flowers. Occupation?",["A gardener","An officer","A farmer","A florist"],0),Q("Charles: 'I work Sat & Sun 9.30am–5pm. Free in evenings on weekdays.' Charles wrote to…",["Encourage Keisha to work with him","Explain why he is not free on weekends","Inform Keisha he's applying","Ask Keisha to visit"],1),Q("'Buy three chicken burgers, get one sausage burger free! Free delivery.' We know…",["We must buy three for free delivery","Chicken burgers free if we buy sausage","Four burgers for price of three","Free delivery only for sausage"],2),Q("Library: Mon–Fri 8am–4pm, Sat & Sun CLOSED. When closed?",["Monday","Friday","Saturday and Sunday","Afternoons"],2),Q("Notice: Switch off fans and lights before leaving. What does it remind?",["Keep classroom clean","Save electricity","Bring a fan","Switch on lights"],1),Q("Water interruption Saturday 9am–3pm. When will there be no water?",["Friday morning","Saturday morning","Saturday afternoon","Sunday"],1),Q("Football Match: 6A vs 6B, Wednesday 5th June 4.30pm. When?",["Tuesday","Wednesday","Thursday","Friday"],1),Q("Mr. Lim: Visit the river cleanup project this Sunday. Please wear suitable clothes and shoes. What should students wear?",["School uniform","Suitable clothes and shoes","Raincoat","Sports uniform"],1),Q("English Week moved to next month due to Year 6 exams. Why moved?",["Clashed with holidays","Year 6 exams in the way","School hall under repair","Not enough participants"],1),Q("Mum online: 'I'll be late. Please heat up your dinner and finish your homework first.' What should child do first?",["Wait for Mum","Watch TV","Finish homework","Heat the dinner"],2)]}],challenge:[Q("Invitation: School Open Day, 22nd June, 9am–1pm. What is it for?",["A birthday party","A school open day","A fundraising dinner","A sports carnival"],1),Q("Aisyah: 'Bring your art materials tomorrow for the drawing competition.' What should she bring?",["A trophy","Art materials","A drawing book","A camera"],1),Q("School rules: Students must not bring mobile phones to school. What is the rule?",["Bring phones","Don't bring phones","Phones allowed at lunch","Phones allowed for exams"],1)]},
-{title:"English UASA: Cloze",lessons:[{title:"Cloze Passage",learn:P("Choose the correct word for each blank."),questions:[Q("We ______ our tents together before the activities began.",["put","made","built","set"],3),Q("Our teacher asked us to keep ______ and follow the rules.",["quietly","quiet","quietness","quieter"],1),Q("It was a ______ experience!",["bored","tiring","wonderful","dangerous"],2),Q("Last year I ______ to England on holiday.",["went","gone","goes","going"],0),Q("They received a map so they could find their way ______ the centre.",["across","through","over","into"],1),Q("The scientist ______ a few simple experiments.",["perform","performs","performed","performing"],2),Q("Everyone watched ______ as bubbles, smoke and lights filled the hall.",["easy","angry","amazed","sleepy"],2),Q("Please put back the book ______ the shelf.",["in","on","at","under"],1),Q("The milkman will have to cross ______ the bridge.",["over","under","through","across"],3),Q("Miss Selena has ______ an English teacher for 7 years.",["be","being","been","is"],2)]}],challenge:[Q("I ______ my homework when the phone rang.",["do","does","was doing","did"],2),Q("They left the centre ______ happy smiles.",["at","with","on","by"],1),Q("Miss Selena loves her job ______ teaching brings her happiness.",["and","but","because","so"],2)]},
-{title:"Writing: UASA Paper 2",lessons:[
-{title:"Part 6: Emails (30-50 words)",learn:P("<b>Part 6</b>: short email. <b>30-50 words.</b>","<b>Sample:</b><br>To: Sarah<br>From: Aiman<br>Subject: Birthday Party Invitation<br><br>Hi Sarah, I'm having a birthday party on Saturday, 15 June at 3pm at my house. I hope you can come! See you, Aiman"),questions:[W("Write an email inviting your friend to your birthday party. Include date, time, place.","",30,50,"Sarah","Aiman","Birthday Party Invitation"),W("Write an email to your mother telling her you will be home late because of football practice.","",30,50,"Mrs. Aminah","Farid","Coming Home Late"),W("Write an email to Mrs. Amanda to say you are sick and cannot come to school tomorrow.","",30,50,"Mrs. Amanda","Nurul","Absent Tomorrow"),W("Write an email to your cousin asking them to return the book you lent them by Friday.","",30,50,"Ahmad","Hakim","Please Return My Book"),W("Write an email to your classmate asking to borrow their Science notes for one day.","",30,50,"Mei Ling","Kavitha","Borrow Science Notes")]},
-{title:"Part 7: Longer Emails (60-80 words)",learn:P("<b>Part 7</b>: longer email. <b>60-80 words.</b>","<b>Sample:</b><br>To: Ali<br>From: Danish<br>Subject: My Best Holiday<br><br>Hi Ali, I want to tell you about my best holiday. Last December, my family and I went to Pulau Langkawi. We stayed for four days. We visited the beach, rode the cable car, and ate seafood. I really enjoyed it. Your friend, Danish"),questions:[W("Write an email telling your friend about your best holiday. Where, who with, what you did.","",60,80,"Ali","Danish","My Best Holiday"),W("Write an email to Mrs. Amanda about a school event. What happened and what you enjoyed.","",60,80,"Mrs. Amanda","Siti","School Sports Day"),W("Write an email to your pen pal telling them about your favourite hobby.","",60,80,"Kenji","Jason","My Favourite Hobby"),W("Write an email to your cousin telling them about a memorable day.","",60,80,"Aina","Alia","A Memorable Day"),W("Write an email about the person you admire most. Who and why.","",60,80,"Ravi","Vishal","Someone I Admire")]}
-],challenge:[W("Write an email inviting your friend to a study group at your house on Saturday at 3pm.","",30,50,"Hafiz","Zikri","Study Group Invitation"),W("Write an email about a time you helped someone. Who you helped and how you felt.","",60,80,"Auntie Zara","Yasmin","Helping Someone")]}
-]},
-"Mathematics":{units:[
-{title:"Visual Maths",lessons:[
-{title:"Area & Perimeter",learn:P("Rectangle area = length × width. Perimeter = 2 × (length + width)."),questions:[
-Q("Calculate the area of this rectangle.",["30 cm²","35 cm²","40 cm²","45 cm²"],2,`<svg viewBox="0 0 220 140" width="240"><rect x="30" y="35" width="160" height="80" fill="none" stroke="currentColor" stroke-width="2"/><text x="110" y="25" text-anchor="middle" font-size="15" fill="currentColor">8 cm</text><text x="200" y="80" text-anchor="end" font-size="15" fill="currentColor">5 cm</text></svg>`),
-Q("What is the perimeter of this rectangle?",["24 cm","25 cm","26 cm","27 cm"],2,`<svg viewBox="0 0 220 140" width="240"><rect x="30" y="35" width="160" height="80" fill="none" stroke="currentColor" stroke-width="2"/><text x="110" y="25" text-anchor="middle" font-size="15" fill="currentColor">8 cm</text><text x="200" y="80" text-anchor="end" font-size="15" fill="currentColor">5 cm</text></svg>`),
-Q("Calculate the area of this square.",["36 cm²","40 cm²","44 cm²","48 cm²"],0,`<svg viewBox="0 0 200 140" width="220"><rect x="40" y="25" width="100" height="100" fill="none" stroke="currentColor" stroke-width="2"/><text x="90" y="18" text-anchor="middle" font-size="15" fill="currentColor">6 cm</text></svg>`),
-Q("What is the perimeter of this square?",["20 cm","22 cm","24 cm","26 cm"],2,`<svg viewBox="0 0 200 140" width="220"><rect x="40" y="25" width="100" height="100" fill="none" stroke="currentColor" stroke-width="2"/><text x="90" y="18" text-anchor="middle" font-size="15" fill="currentColor">6 cm</text></svg>`),
-Q("Calculate the area of this triangle.",["20 cm²","24 cm²","28 cm²","30 cm²"],1,`<svg viewBox="0 0 220 160" width="240"><polygon points="110,30 30,130 190,130" fill="none" stroke="currentColor" stroke-width="2"/><line x1="110" y1="30" x2="110" y2="130" stroke="currentColor" stroke-width="1" stroke-dasharray="4 3"/><text x="110" y="20" text-anchor="middle" font-size="15" fill="currentColor">6 cm</text><text x="110" y="150" text-anchor="middle" font-size="15" fill="currentColor">8 cm</text></svg>`),
-Q("Calculate the area of this rectangle.",["24 cm²","28 cm²","32 cm²","36 cm²"],2,`<svg viewBox="0 0 240 140" width="250"><rect x="30" y="35" width="180" height="60" fill="none" stroke="currentColor" stroke-width="2"/><text x="120" y="25" text-anchor="middle" font-size="15" fill="currentColor">8 cm</text><text x="220" y="70" text-anchor="end" font-size="15" fill="currentColor">4 cm</text></svg>`)]},
-{title:"Bar Charts",learn:P("Read the bar chart."),questions:[
-Q("How many students chose mango?",["4","5","6","7"],2,`<svg viewBox="0 0 260 180" width="280"><line x1="40" y1="140" x2="240" y2="140" stroke="currentColor" stroke-width="2"/><line x1="40" y1="20" x2="40" y2="140" stroke="currentColor" stroke-width="2"/><rect x="60" y="100" width="30" height="40" fill="#60a5fa"/><rect x="110" y="80" width="30" height="60" fill="#60a5fa"/><rect x="160" y="60" width="30" height="80" fill="#60a5fa"/><rect x="210" y="90" width="30" height="50" fill="#60a5fa"/><text x="75" y="158" font-size="11" fill="currentColor">Apple</text><text x="125" y="158" font-size="11" fill="currentColor">Mango</text><text x="175" y="158" font-size="11" fill="currentColor">Orange</text><text x="222" y="158" font-size="11" fill="currentColor">Grape</text></svg>`),
-Q("Which fruit was chosen by the most students?",["Apple","Mango","Orange","Grape"],2,`<svg viewBox="0 0 260 180" width="280"><line x1="40" y1="140" x2="240" y2="140" stroke="currentColor" stroke-width="2"/><line x1="40" y1="20" x2="40" y2="140" stroke="currentColor" stroke-width="2"/><rect x="60" y="100" width="30" height="40" fill="#60a5fa"/><rect x="110" y="80" width="30" height="60" fill="#60a5fa"/><rect x="160" y="60" width="30" height="80" fill="#60a5fa"/><rect x="210" y="90" width="30" height="50" fill="#60a5fa"/><text x="75" y="158" font-size="11" fill="currentColor">Apple</text><text x="125" y="158" font-size="11" fill="currentColor">Mango</text><text x="175" y="158" font-size="11" fill="currentColor">Orange</text><text x="222" y="158" font-size="11" fill="currentColor">Grape</text></svg>`)]},
-{title:"Angles",learn:P("Identify the angle type."),questions:[
-Q("What type of angle is shown?",["Acute","Right","Obtuse","Straight"],0,`<svg viewBox="0 0 200 140" width="220"><line x1="40" y1="110" x2="160" y2="110" stroke="currentColor" stroke-width="2"/><line x1="40" y1="110" x2="130" y2="50" stroke="currentColor" stroke-width="2"/><text x="90" y="100" font-size="12" fill="currentColor">45°</text></svg>`),
-Q("What type of angle is shown?",["Acute","Right","Obtuse","Straight"],1,`<svg viewBox="0 0 200 140" width="220"><line x1="40" y1="110" x2="160" y2="110" stroke="currentColor" stroke-width="2"/><line x1="40" y1="110" x2="40" y2="30" stroke="currentColor" stroke-width="2"/><path d="M 60 110 L 60 90 L 40 90" fill="none" stroke="currentColor" stroke-width="1"/></svg>`),
-Q("What type of angle is shown?",["Acute","Right","Obtuse","Straight"],2,`<svg viewBox="0 0 200 140" width="220"><line x1="40" y1="110" x2="170" y2="110" stroke="currentColor" stroke-width="2"/><line x1="40" y1="110" x2="80" y2="40" stroke="currentColor" stroke-width="2"/><text x="95" y="90" font-size="12" fill="currentColor">120°</text></svg>`),
-Q("What type of angle is shown?",["Acute","Right","Obtuse","Straight"],3,`<svg viewBox="0 0 220 100" width="240"><line x1="30" y1="50" x2="190" y2="50" stroke="currentColor" stroke-width="2"/><text x="105" y="35" font-size="12" fill="currentColor">180°</text></svg>`)]}
-],challenge:[Q("Calculate the perimeter of this rectangle.",["30 cm","32 cm","34 cm","36 cm"],1,`<svg viewBox="0 0 240 150" width="250"><rect x="30" y="40" width="180" height="70" fill="none" stroke="currentColor" stroke-width="2"/><text x="120" y="30" text-anchor="middle" font-size="15" fill="currentColor">10 cm</text><text x="220" y="80" text-anchor="end" font-size="15" fill="currentColor">6 cm</text></svg>`),Q("What is the total number of students who chose a fruit?",["20","22","23","25"],2,`<svg viewBox="0 0 260 180" width="280"><line x1="40" y1="140" x2="240" y2="140" stroke="currentColor" stroke-width="2"/><line x1="40" y1="20" x2="40" y2="140" stroke="currentColor" stroke-width="2"/><rect x="60" y="100" width="30" height="40" fill="#60a5fa"/><rect x="110" y="80" width="30" height="60" fill="#60a5fa"/><rect x="160" y="60" width="30" height="80" fill="#60a5fa"/><rect x="210" y="90" width="30" height="50" fill="#60a5fa"/></svg>`)]},
-{title:"Maths UASA: Wang",lessons:[{title:"Penyelesaian Masalah Wang",learn:P("Selesaikan masalah wang."),questions:[Q("Puan Sarah: RM245.30. Bayar RM50 + 2×RM20 + 3×RM10 + 5×RM5. Baki?",["RM9.70","RM14.70","RM24.70","RM29.70"],1),Q("Petrol RM95.80, Tol RM18.40, Makan RM76.60, Tiket RM32.00. Jumlah?",["RM212.80","RM222.80","RM232.80","RM242.80"],1),Q("Baju RM89.90. Beli 2 diskaun 10% setiap helai. Bayaran?",["RM161.82","RM161.91","RM179.80","RM179.78"],0),Q("15 kotak pensel RM38.75 + 20 buku RM6.45. Jumlah?",["RM710.25","RM710.50","RM719.25","RM719.50"],0),Q("Mesin basuh RM1,899. Ansuran RM299 pendahuluan, baki 18 bulan. Bulanan?",["RM88.89","RM88.94","RM94.44","RM95.56"],0),Q("RM4,200 faedah 3% setahun. 2 tahun?",["RM84.00","RM120.00","RM126.00","RM252.00"],2),Q("Bas RM380 sekali. 5 kali pergi balik. Kos?",["RM760.00","RM1,140.00","RM1,520.00","RM1,900.00"],1),Q("RM300 dibahagi nisbah 5:3:2. Anak kedua?",["RM60.00","RM75.00","RM90.00","RM100.00"],2),Q("TV RM2,450 termasuk cukai 6%. Harga asal?",["RM2,216.98","RM2,283.02","RM2,311.32","RM2,594.70"],2),Q("Komputer RM3,699. RM500 pendahuluan, 20 bulan + RM49.95. Bulanan?",["RM169.90","RM184.85","RM209.85","RM224.80"],1)]}],challenge:[Q("Siti: beg RM215. Bayar RM100+2×RM50+RM20. Baki?",["RM5.00","RM15.00","RM25.00","RM35.00"],0),Q("Encik Ali: 4 pasu bunga, RM196. Harga sepasu?",["RM44.00","RM48.00","RM49.00","RM52.00"],2),Q("Farid: 3 biji bola RM38.50 setiap satu. Bayar RM200. Baki?",["RM84.50","RM85.50","RM86.50","RM87.50"],0)]},
-{title:"Unit 1: Whole Numbers",lessons:[{title:"To 10 Million",learn:P("Whole numbers up to 10,000,000."),questions:[Q("Place value of 7 in 4,725,310?",["Hundred thousands","Thousands","Ten thousands","Millions"],0),Q("Prime number?",["11","9","15","21"],0),Q("Round 4,678,921?",["4,700,000","4,600,000","4,800,000","4,500,000"],0),Q("4,567,890 + 2,345,678?",["6,913,568","6,813,568","6,913,668","7,013,568"],0),Q("Largest prime below 20?",["19","17","15","13"],0),Q("8,000,000 − 3,456,789?",["4,543,211","4,443,211","4,553,211","4,543,111"],0),Q("Factors of 12?",["1,2,3,4,6,12","1,2,12","2,3,4","1,12"],0),Q("Which is even?",["14","15","17","19"],0),Q("Which is odd?",["9","10","12","14"],0),Q("Multiple of 5?",["25","13","7","22"],0)]}],challenge:[Q("Largest prime below 20?",["19","17","15","13"],0),Q("8,000,000 − 3,456,789?",["4,543,211","4,443,211","4,553,211","4,543,111"],0)]},
-{title:"Unit 2: Operations",lessons:[{title:"Four Operations",learn:P("Add, subtract, multiply, divide."),questions:[Q("25 × 34?",["850","800","900","950"],0),Q("144 ÷ 12?",["12","14","16","18"],0),Q("50 − 23 + 15?",["42","40","45","48"],0),Q("100 × 100?",["10,000","1,000","100,000","1,000,000"],0),Q("4,567 + 2,345?",["6,912","6,812","7,012","6,900"],0),Q("9,000 − 3,456?",["5,544","5,444","6,544","5,500"],0),Q("256 ÷ 16?",["16","14","18","20"],0),Q("17 × 3?",["51","47","54","60"],0),Q("1000 − 999?",["1","0","2","3"],0),Q("125 × 8?",["1,000","900","1,100","1,200"],0)]}],challenge:[Q("2,500 + 1,750?",["4,250","4,350","4,150","4,000"],0),Q("7,200 ÷ 9?",["800","700","900","1,000"],0)]},
-{title:"Unit 3: Fractions",lessons:[{title:"Fractions",learn:P("Proper, improper, mixed."),questions:[Q("7/4 as mixed?",["1 3/4","1 1/4","2 3/4","2 1/4"],0),Q("Equivalent to 2/3?",["4/6","3/4","2/6","6/8"],0),Q("1/2 + 1/3?",["5/6","2/5","1/6","3/5"],0),Q("3/5 − 1/5?",["2/5","4/5","2/10","3/5"],0),Q("6 3/4 ÷ 5/8?",["10 4/5","10 5/4","9 4/5","8 4/5"],0),Q("2/3 × 3/4?",["1/2","2/7","3/7","1/3"],0),Q("1/4 + 1/4?",["1/2","2/8","1/8","3/4"],0),Q("3/4 of 20?",["15","12","18","10"],0),Q("Simplify 6/8?",["3/4","2/3","1/2","6/8"],0),Q("Proper fraction?",["1/2","3/2","5/4","7/4"],0)]}],challenge:[Q("6 3/4 ÷ 5/8?",["10 4/5","10 5/4","9 4/5","8 4/5"],0),Q("2/3 × 3/4?",["1/2","2/7","3/7","1/3"],0)]},
-{title:"Unit 4: Decimals",lessons:[{title:"Decimals",learn:P("To three decimal places."),questions:[Q("2.5 + 1.75?",["4.25","4.35","4.15","4.50"],0),Q("0.6 as fraction?",["3/5","2/5","1/5","6/10"],0),Q("0.125 as fraction?",["1/8","1/4","1/2","1/5"],0),Q("3.456 to 2 dp?",["3.46","3.45","3.44","3.50"],0),Q("1.5 × 2.4?",["3.6","3.5","4.0","3.0"],0),Q("0.75 as %?",["75%","7.5%","750%","0.75%"],0),Q("0.25 + 0.25?",["0.5","0.05","0.505","0.025"],0),Q("2.5 × 2?",["5","2.5","4.5","6"],0),Q("3.6 − 1.2?",["2.4","2.6","1.4","3.0"],0),Q("0.1 × 0.1?",["0.01","0.1","1","0.001"],0)]}],challenge:[Q("1.5 × 2.4?",["3.6","3.5","4.0","3.0"],0),Q("0.75 as %?",["75%","7.5%","750%","0.75%"],0)]},
-{title:"Unit 5: Percentages",lessons:[{title:"Percentages",learn:P("Percent = out of 100."),questions:[Q("25% of 80?",["20","25","40","15"],0),Q("3/4 as %?",["75%","34%","60%","80%"],0),Q("50% of 200?",["100","50","150","200"],0),Q("10% of 500?",["50","5","100","500"],0),Q("20% of number is 40?",["200","80","60","100"],0),Q("40% as fraction?",["2/5","4/5","1/5","1/2"],0),Q("15% of 100?",["15","1.5","150","0.15"],0),Q("Increase 50 by 10%?",["55","60","45","50"],0),Q("Decrease 100 by 25%?",["75","85","70","80"],0),Q("5% of 200?",["10","5","20","15"],0)]}],challenge:[Q("20% of number is 40?",["200","80","60","100"],0),Q("40% as fraction?",["2/5","4/5","1/5","1/2"],0)]},
-{title:"Unit 6: Money",lessons:[{title:"Money",learn:P("Up to RM1,000,000."),questions:[Q("RM45.50, pay RM50?",["RM4.50","RM5.50","RM4.00","RM5.00"],0),Q("RM30 −20%?",["RM24","RM26","RM28","RM25"],0),Q("Profit = ?",["Selling − Cost","Cost − Selling","Selling × Cost","Cost ÷ Selling"],0),Q("Cost RM80, profit RM20. Selling?",["RM100","RM60","RM80","RM90"],0),Q("RM500 at 5% for 2 years?",["RM50","RM25","RM75","RM100"],0),Q("Cost RM50, loss RM10. Selling?",["RM40","RM60","RM50","RM45"],0),Q("RM20 × 3?",["RM60","RM23","RM40","RM50"],0),Q("RM100 − RM35?",["RM65","RM75","RM55","RM70"],0),Q("RM12 × 4?",["RM48","RM16","RM24","RM36"],0),Q("RM5 + RM3.50?",["RM8.50","RM8","RM9","RM8.00"],0)]}],challenge:[Q("RM500 at 5% for 2 years?",["RM50","RM25","RM75","RM100"],0),Q("Cost RM50, loss RM10. Selling?",["RM40","RM60","RM50","RM45"],0)]},
-{title:"Unit 7: Time",lessons:[{title:"Time",learn:P("24-hour system."),questions:[Q("3:45 p.m. 24hr?",["15:45","13:45","17:45","16:45"],0),Q("2:30-4:15 p.m.?",["1 hr 45 min","2 hr 15 min","1 hr 30 min","2 hr"],0),Q("12:00 a.m. 24hr?",["00:00","12:00","24:00","11:00"],0),Q("5:00 p.m. in 12hr?",["5:00 p.m.","5:00 a.m.","15:00","17:00"],0),Q("10:30 a.m. to 2:15 p.m.?",["3 hr 45 min","4 hr 15 min","3 hr 15 min","4 hr"],0),Q("100 years?",["1 century","1 decade","1 millennium","1 score"],0),Q("60 minutes?",["1 hour","30 min","90 min","2 hours"],0),Q("24 hours?",["1 day","1 week","12 hours","48 hours"],0),Q("12 months?",["1 year","6 months","2 years","18 months"],0),Q("7 days?",["1 week","1 month","1 year","1 decade"],0)]}],challenge:[Q("10:30 a.m. to 2:15 p.m.?",["3 hr 45 min","4 hr 15 min","3 hr 15 min","4 hr"],0),Q("100 years?",["1 century","1 decade","1 millennium","1 score"],0)]},
-{title:"Unit 8: Length",lessons:[{title:"Length",learn:P("mm, cm, m, km."),questions:[Q("3.5 km in m?",["3,500 m","350 m","35,000 m","35 m"],0),Q("450 cm in m?",["4.5 m","45 m","0.45 m","4,500 m"],0),Q("2 m in cm?",["200 cm","20 cm","2,000 cm","2 cm"],0),Q("5000 m in km?",["5 km","50 km","0.5 km","500 km"],0),Q("Rope 2.4 m ÷ 6?",["0.4 m","0.6 m","0.5 m","0.8 m"],0),Q("100 mm in cm?",["10 cm","1 cm","100 cm","1,000 cm"],0),Q("1 km in mm?",["1,000,000 mm","1,000 mm","10,000 mm","100,000 mm"],0),Q("500 cm in mm?",["5,000 mm","500 mm","50 mm","50,000 mm"],0),Q("2.5 m + 1.5 m?",["4 m","3.5 m","5 m","3 m"],0),Q("10 km − 3 km?",["7 km","13 km","6 km","30 km"],0)]}],challenge:[Q("Rope 2.4 m ÷ 6?",["0.4 m","0.6 m","0.5 m","0.8 m"],0),Q("100 mm in cm?",["10 cm","1 cm","100 cm","1,000 cm"],0)]},
-{title:"Unit 9: Mass",lessons:[{title:"Mass",learn:P("mg, g, kg."),questions:[Q("2.5 kg in g?",["2,500 g","250 g","25,000 g","25 g"],0),Q("500 g in kg?",["0.5 kg","5 kg","50 kg","0.05 kg"],0),Q("3 kg − 500 g?",["2.5 kg","3.5 kg","2 kg","3 kg"],0),Q("1000 mg?",["1 g","10 g","100 g","0.1 g"],0),Q("5 kg − 1,200 g?",["3.8 kg","3.2 kg","4.2 kg","3.5 kg"],0),Q("1500 g + 500 g?",["2 kg","1.5 kg","3 kg","1 kg"],0),Q("750 g + 250 g?",["1 kg","0.9 kg","1.1 kg","0.75 kg"],0),Q("2 kg in mg?",["2,000,000 mg","20,000 mg","200,000 mg","2,000 mg"],0),Q("500 mg + 500 mg?",["1 g","1 kg","10 g","100 g"],0),Q("3 kg + 2 kg?",["5 kg","6 kg","4 kg","7 kg"],0)]}],challenge:[Q("5 kg − 1,200 g?",["3.8 kg","3.2 kg","4.2 kg","3.5 kg"],0),Q("1500 g + 500 g?",["2 kg","1.5 kg","3 kg","1 kg"],0)]},
-{title:"Unit 10: Volume",lessons:[{title:"Volume of Liquid",learn:P("ml and l."),questions:[Q("1.5 l in ml?",["1,500 ml","150 ml","15,000 ml","15 ml"],0),Q("250 ml in l?",["0.25 l","2.5 l","25 l","0.025 l"],0),Q("500 ml + 750 ml?",["1.25 l","1 l","1.5 l","0.75 l"],0),Q("2 l − 500 ml?",["1.5 l","1.75 l","2.5 l","1 l"],0),Q("3 l ÷ 4?",["0.75 l","0.5 l","1 l","1.5 l"],0),Q("500 ml × 4?",["2 l","1 l","3 l","4 l"],0),Q("2.5 l + 1.5 l?",["4 l","3 l","3.5 l","5 l"],0),Q("5 l − 2 l?",["3 l","2 l","7 l","4 l"],0),Q("750 ml + 250 ml?",["1 l","0.5 l","1.5 l","0.75 l"],0),Q("1500 ml ÷ 3?",["500 ml","300 ml","750 ml","450 ml"],0)]}],challenge:[Q("3 l ÷ 4?",["0.75 l","0.5 l","1 l","1.5 l"],0),Q("500 ml × 4?",["2 l","1 l","3 l","4 l"],0)]},
-{title:"Unit 11: Perimeter & Area",lessons:[{title:"2D Shapes",learn:P("Perimeter and area."),questions:[Q("Area 8×5 cm?",["40 cm²","13 cm²","26 cm²","30 cm²"],0),Q("Perimeter square 6 cm?",["24 cm","36 cm","12 cm","30 cm"],0),Q("Area triangle 10×6?",["30 cm²","60 cm²","16 cm²","45 cm²"],0),Q("Perimeter 8×5?",["26 cm","40 cm","13 cm","30 cm"],0),Q("Area square 7 cm?",["49 cm²","28 cm²","14 cm²","21 cm²"],0),Q("Area 12×4?",["48 cm²","16 cm²","32 cm²","24 cm²"],0),Q("Perimeter square 3 cm?",["12 cm","9 cm","6 cm","15 cm"],0),Q("Area rectangle 6×9?",["54 cm²","30 cm²","45 cm²","36 cm²"],0),Q("Perimeter 10×4?",["28 cm","40 cm","14 cm","20 cm"],0),Q("Area square 5 cm?",["25 cm²","20 cm²","10 cm²","15 cm²"],0)]}],challenge:[Q("Area square 7 cm?",["49 cm²","28 cm²","14 cm²","21 cm²"],0),Q("Area 12×4?",["48 cm²","16 cm²","32 cm²","24 cm²"],0)]},
-{title:"Unit 12: Volume 3D",lessons:[{title:"3D Shapes",learn:P("Volume of cubes, cuboids."),questions:[Q("Volume cube 4 cm?",["64 cm³","16 cm³","12 cm³","24 cm³"],0),Q("Cuboid 3×4×5?",["60 cm³","12 cm³","20 cm³","24 cm³"],0),Q("Cube edges?",["12","8","6","16"],0),Q("Cube faces?",["6","8","12","4"],0),Q("Volume cube 5 cm?",["125 cm³","25 cm³","100 cm³","50 cm³"],0),Q("Cuboid 10×2×3?",["60 cm³","30 cm³","50 cm³","20 cm³"],0),Q("Cube 2 cm volume?",["8 cm³","4 cm³","6 cm³","2 cm³"],0),Q("Cuboid 5×5×2?",["50 cm³","25 cm³","10 cm³","100 cm³"],0),Q("Cube 6 cm volume?",["216 cm³","36 cm³","72 cm³","108 cm³"],0),Q("Cuboid 4×4×4?",["64 cm³","12 cm³","16 cm³","48 cm³"],0)]}],challenge:[Q("Volume cube 5 cm?",["125 cm³","25 cm³","100 cm³","50 cm³"],0),Q("Cuboid 10×2×3?",["60 cm³","30 cm³","50 cm³","20 cm³"],0)]},
-{title:"Unit 13: Coordinates",lessons:[{title:"Cartesian Plane",learn:P("x-axis and y-axis."),questions:[Q("(3,5) x-coord?",["3","5","8","15"],0),Q("(0,0) is?",["Origin","Centre","Midpoint","Axis"],0),Q("y-axis is?",["Vertical","Horizontal","Diagonal","Curved"],0),Q("(2,-1) quadrant?",["4th","1st","2nd","3rd"],0),Q("(-3,4) quadrant?",["2nd","3rd","4th","1st"],0),Q("Reflect (2,3) in x-axis?",["(2,-3)","(-2,3)","(-2,-3)","(3,2)"],0),Q("(5,0) on which axis?",["x-axis","y-axis","Neither","Both"],0),Q("(0,7) on which axis?",["y-axis","x-axis","Neither","Both"],0),Q("(1,1) quadrant?",["1st","2nd","3rd","4th"],0),Q("(-1,-1) quadrant?",["3rd","4th","2nd","1st"],0)]}],challenge:[Q("(-3,4) quadrant?",["2nd","3rd","4th","1st"],0),Q("Reflect (2,3) in x-axis?",["(2,-3)","(-2,3)","(-2,-3)","(3,2)"],0)]},
-{title:"Unit 14: Ratio",lessons:[{title:"Ratio & Proportion",learn:P("Ratio problems."),questions:[Q("Simplify 12:18?",["2:3","3:2","6:9","1:3"],0),Q("3 pens RM6, 5 pens?",["RM10","RM12","RM8","RM15"],0),Q("2:3, 30 students, girls?",["18","12","15","20"],0),Q("Simplify 15:25?",["3:5","5:3","1:5","5:1"],0),Q("4 books RM20, 7 books?",["RM35","RM30","RM40","RM25"],0),Q("Ratio 1:2:3 total 60, largest?",["30","20","10","40"],0),Q("Simplify 10:20?",["1:2","2:1","5:10","10:20"],0),Q("2:5, total 21, first part?",["6","5","10","8"],0),Q("Simplify 8:12?",["2:3","3:2","4:6","8:12"],0),Q("Simplify 6:9?",["2:3","3:2","1:3","6:9"],0)]}],challenge:[Q("4 books RM20, 7 books?",["RM35","RM30","RM40","RM25"],0),Q("Ratio 1:2:3 total 60, largest?",["30","20","10","40"],0)]},
-{title:"Unit 15: Data",lessons:[{title:"Data Handling",learn:P("Pie, bar, line graphs."),questions:[Q("Mean 4,6,8,10?",["7","6","8","9"],0),Q("Mode 2,3,3,5,7?",["3","2","5","7"],0),Q("Range 15,22,8,19?",["14","22","8","19"],0),Q("Pie chart uses?",["Sectors","Bars","Lines","Dots"],0),Q("Median 3,7,9,12,15?",["9","7","12","15"],0),Q("Graph change over time?",["Line graph","Pie chart","Bar chart","Table"],0),Q("Mean 2,4,6?",["4","3","5","6"],0),Q("Mode 1,2,2,3?",["2","1","3","4"],0),Q("Median 1,3,5,7?",["4","3","5","7"],0),Q("Range 5,10,15?",["10","5","15","20"],0)]}],challenge:[Q("Median 3,7,9,12,15?",["9","7","12","15"],0),Q("Graph change over time?",["Line graph","Pie chart","Bar chart","Table"],0)]}
-]},
-"Science":{units:[
-{title:"Science UASA: Revision",lessons:[{title:"Revision",learn:P("Topik: Human, Microorganisms, Force, Speed, Eclipse, Galaxy."),questions:[Q("All diseases related to nervous system damage except…",["paralysis","high blood pressure","Bell's palsy","balance problems"],1),Q("Which is not a fungus?",["Yeast","Influenza","Penicillium","Rhizopus"],1),Q("Air particles moving have ______ energy.",["electrical","kinetic","heat","potential"],1),Q("Which tool reduces friction?",["Wheels","Tyre tread","Anti-slip mat","Shoe sole"],0),Q("2 hours, 164 km. Average speed?",["72","102","92","82"],3),Q("Apples coated with wax. Which factor controlled?",["Temperature","Water and air","Acidity","Nutrient"],1),Q("Non-biodegradable plastic. Which waste method?",["Burying","Burning","Recycling","Drowning"],2),Q("Wider base makes object more…",["stable","unstable","heavy","light"],0),Q("Which shape strongest?",["Triangle","Circle","Square","Rectangle"],0),Q("Solar eclipse when…",["Moon blocks Sun","Earth blocks Moon","Sun blocks Earth","Moon blocks Earth"],0)]}],challenge:[Q("Purpose of cellular respiration?",["To get energy","To release oxygen","To make food","To make water"],0),Q("Red Planet?",["Mars","Jupiter","Saturn","Venus"],0),Q("Lunar eclipse when…",["Earth blocks Sun's light to Moon","Moon blocks Sun","Sun blocks Moon","Moon blocks Earth"],0)]},
-{title:"Unit 1: Scientific Skills",lessons:[{title:"Skills",learn:P("Process and manipulative skills."),questions:[Q("Science process skill?",["Observing","Sleeping","Eating","Reading"],0),Q("Measure temperature?",["Thermometer","Ruler","Balance","Clock"],0),Q("Inferring?",["Conclusions from observations","Guessing","Measuring","Copying"],0),Q("Manipulative skill?",["Using microscope","Reading","Drawing","Writing"],0),Q("Lab safety?",["Wearing goggles","Eating","Running","Sleeping"],0),Q("Unit for mass?",["Kilogram","Metre","Litre","Second"],0),Q("Classifying means?",["Grouping","Measuring","Heating","Cooling"],0),Q("Predicting means?",["Forecast","Copy","Guess","Sleep"],0),Q("Communicating means?",["Sharing findings","Hiding","Ignoring","Sleeping"],0),Q("Hypothesis is?",["Testable statement","Fact","Law","Theory"],0)]}],challenge:[Q("Lab safety?",["Wearing goggles","Eating","Running","Sleeping"],0),Q("Unit for mass?",["Kilogram","Metre","Litre","Second"],0)]},
-{title:"Unit 2: Humans",lessons:[{title:"Nervous System",learn:P("Brain, spinal cord, nerves."),questions:[Q("Part of nervous system?",["Brain","Heart","Lungs","Liver"],0),Q("Paralysis caused by?",["Nervous damage","Digestive damage","Respiratory","Heart"],0),Q("Bell's palsy affects?",["Facial muscles","Legs","Arms","Torso"],0),Q("Spinal cord protected by?",["Vertebrae","Ribs","Skull","Sternum"],0),Q("Controls body movements?",["Nervous system","Circulatory","Digestive","Respiratory"],0),Q("Fertilisation in?",["Fallopian tube","Uterus","Ovary","Cervix"],0),Q("Brain controls?",["Everything","Only walking","Only talking","Only seeing"],0),Q("Nerves carry?",["Messages","Blood","Air","Food"],0),Q("Skull protects?",["Brain","Heart","Lungs","Stomach"],0),Q("Pregnancy lasts?",["9 months","6 months","12 months","3 months"],0)]}],challenge:[Q("Controls body movements?",["Nervous system","Circulatory","Digestive","Respiratory"],0),Q("Fertilisation in?",["Fallopian tube","Uterus","Ovary","Cervix"],0)]},
-{title:"Unit 3: Microorganisms",lessons:[{title:"Microbes",learn:P("Bacteria, fungi, viruses."),questions:[Q("Which is fungus?",["Yeast","Influenza","E. coli","Salmonella"],0),Q("Need ___ to grow?",["Water","Plastic","Metal","Glass"],0),Q("Makes bread rise?",["Yeast","Protozoa","Virus","Bacteria"],0),Q("Penicillin from?",["Fungi","Bacteria","Virus","Protozoa"],0),Q("Disease from virus?",["Influenza","Ringworm","Malaria","Typhoid"],0),Q("Which is bacterium?",["E. coli","Yeast","Mushroom","Mould"],0),Q("Harmful microorganism?",["Virus","Yeast","Mushroom","Mould"],0),Q("Useful microorganism?",["Yeast","Influenza","Coronavirus","HIV"],0),Q("Protozoa cause?",["Malaria","Ringworm","Flu","Cold"],0),Q("Antibiotics kill?",["Bacteria","Viruses","Fungi","Protozoa"],0)]}],challenge:[Q("Disease from virus?",["Influenza","Ringworm","Malaria","Typhoid"],0),Q("Which is bacterium?",["E. coli","Yeast","Mushroom","Mould"],0)]},
-{title:"Unit 4: Interactions",lessons:[{title:"Symbiosis",learn:P("Predator-prey, mutualism."),questions:[Q("Lion eating zebra?",["Predator-prey","Mutualism","Commensalism","Parasitism"],0),Q("Remora & shark?",["Commensalism","Parasitism","Mutualism","Predator-prey"],0),Q("Tapeworm in dog?",["Parasitism","Mutualism","Commensalism","Predator-prey"],0),Q("Competition occurs?",["Fight for resources","Help each other","Live together","Share"],0),Q("Mutualism?",["Bees & flowers","Lice & humans","Barnacles","Fleas"],0),Q("Food chain shows?",["Energy flow","Water cycle","Rock cycle","Carbon"],0),Q("Producer?",["Plant","Lion","Bird","Fish"],0),Q("Consumer?",["Herbivore","Grass","Sun","Water"],0),Q("Decomposer?",["Fungi","Lion","Grass","Flower"],0),Q("Prey is?",["Eaten animal","Eater","Plant","Sun"],0)]}],challenge:[Q("Mutualism?",["Bees & flowers","Lice & humans","Barnacles","Fleas"],0),Q("Food chain shows?",["Energy flow","Water cycle","Rock cycle","Carbon"],0)]},
-{title:"Unit 5: Conservation",lessons:[{title:"Endangered",learn:P("Preservation, conservation."),questions:[Q("Malayan tiger endangered?",["Habitat loss & poaching","Too many","Migrate","Lost"],0),Q("Conservation?",["Use resources wisely","Waste","Destroy","Bury"],0),Q("Endangered in Malaysia?",["Orangutan","Chicken","Cat","Cow"],0),Q("Help conserve wildlife?",["Protect habitats","Pollute rivers","Cut forests","Hunt"],0),Q("National park is?",["Conservation area","Factory","Farm","School"],0),Q("Extinction means?",["Gone forever","Grow","Move","Multiply"],0),Q("Recycling saves?",["Resources","Time","Money only","Space"],0),Q("Planting trees helps?",["Habitat","Pollution","Deforestation","Flood"],0),Q("Poaching means?",["Illegal hunting","Farming","Fishing","Breeding"],0),Q("Sanctuary means?",["Safe place","Museum","Zoo","Park"],0)]}],challenge:[Q("National park is?",["Conservation area","Factory","Farm","School"],0),Q("Extinction means?",["Gone forever","Grow","Move","Multiply"],0)]},
-{title:"Unit 6: Force",lessons:[{title:"Forces",learn:P("Friction, gravity, magnetic."),questions:[Q("Friction?",["Opposes motion","Helps motion","Nothing","Speeds"],0),Q("Reduces friction?",["Wheels","Sandpaper","Rope","Carpet"],0),Q("Gravity pulls?",["Downwards","Upwards","Sideways","Diagonally"],0),Q("Magnetic acts on?",["Iron","Wood","Plastic","Glass"],0),Q("Tyre tread increases?",["Friction","Gravity","Speed","Weight"],0),Q("Oil is a?",["Lubricant","Glue","Fuel","Liquid"],0),Q("Weight is a?",["Force","Mass","Length","Volume"],0),Q("Push and pull are?",["Forces","Speed","Energy","Motion"],0),Q("Heavier object has?",["More weight","Less weight","No weight","Same weight"],0),Q("Which reduces friction?",["Ice","Sand","Carpet","Rope"],0)]}],challenge:[Q("Tyre tread increases?",["Friction","Gravity","Speed","Weight"],0),Q("Oil is a?",["Lubricant","Glue","Fuel","Liquid"],0)]},
-{title:"Unit 7: Speed",lessons:[{title:"Speed",learn:P("Speed = distance ÷ time."),questions:[Q("120 km in 2 hr?",["60 km/h","240 km/h","120 km/h","80 km/h"],0),Q("Speed unit?",["km/h","kg","litres","m"],0),Q("400 m in 50 s?",["8 m/s","4 m/s","10 m/s","6 m/s"],0),Q("Average speed?",["Total dist ÷ total time","Time ÷ dist","Dist × time","Dist + time"],0),Q("240 km in 3 hr?",["80 km/h","60 km/h","120 km/h","100 km/h"],0),Q("60 km/h for 2 hr covers?",["120 km","60 km","30 km","100 km"],0),Q("100 m in 20 s?",["5 m/s","20 m/s","2 m/s","10 m/s"],0),Q("300 km in 5 hr?",["60 km/h","50 km/h","75 km/h","70 km/h"],0),Q("Faster means?",["More distance per time","Less","Same","None"],0),Q("Speed is a?",["Rate","Length","Mass","Time"],0)]}],challenge:[Q("240 km in 3 hr?",["80 km/h","60 km/h","120 km/h","100 km/h"],0),Q("60 km/h for 2 hr covers?",["120 km","60 km","30 km","100 km"],0)]},
-{title:"Unit 8: Food Preservation",lessons:[{title:"Preservation",learn:P("Drying, freezing, canning."),questions:[Q("Preservation method?",["Freezing","Cooking","Eating","Serving"],0),Q("Pickling uses?",["Acid","Sugar","Salt only","Water"],0),Q("Drying removes?",["Water","Air","Nutrients","Salt"],0),Q("Freezing prevents?",["Microorganism growth","Colour","Taste","Smell"],0),Q("Canning preserves by?",["Sealing & heating","Cooling","Drying","Freezing"],0),Q("Salt preserves by?",["Removing water","Adding water","Adding colour","Adding sugar"],0),Q("Smoking preserves by?",["Drying & smoke","Cooling","Washing","Freezing"],0),Q("Refrigeration?",["Slows spoilage","Speeds spoilage","No effect","Spoils"],0),Q("Pasteurisation?",["Heating liquid","Freezing","Drying","Cooling"],0),Q("Vacuum packing?",["Removes air","Adds air","Adds water","Adds salt"],0)]}],challenge:[Q("Canning preserves by?",["Sealing & heating","Cooling","Drying","Freezing"],0),Q("Salt preserves by?",["Removing water","Adding water","Adding colour","Adding sugar"],0)]},
-{title:"Unit 9: Waste Management",lessons:[{title:"3R",learn:P("Reduce, Reuse, Recycle."),questions:[Q("Non-biodegradable?",["Plastic","Paper","Food","Leaves"],0),Q("Recycling?",["Reduce waste","Increase pollution","Waste energy","Increase"],0),Q("Biodegradable?",["Vegetable peel","Plastic","Glass","Metal"],0),Q("3R stands for?",["Reduce, Reuse, Recycle","Read, Run, Rest","Red, Round, Right","Run, Rest, Relax"],0),Q("Composting recycles?",["Organic waste","Metal","Glass","Plastic"],0),Q("Decomposes slowest?",["Plastic","Paper","Banana peel","Food"],0),Q("Reuse means?",["Use again","Throw","Burn","Bury"],0),Q("Reduce means?",["Use less","Use more","Reuse","Recycle"],0),Q("Landfill is?",["Waste site","Recycling centre","Park","Farm"],0),Q("Hazardous waste?",["Batteries","Paper","Leaves","Food"],0)]}],challenge:[Q("Composting recycles?",["Organic waste","Metal","Glass","Plastic"],0),Q("Decomposes slowest?",["Plastic","Paper","Banana peel","Food"],0)]},
-{title:"Unit 10: Eclipse",lessons:[{title:"Eclipse",learn:P("Solar and lunar."),questions:[Q("Solar eclipse?",["Moon blocks Sun","Earth blocks Moon","Sun blocks Earth","Moon blocks Earth"],0),Q("Lunar eclipse?",["Earth blocks Sun's light","Moon blocks Sun","Sun blocks Moon","Moon blocks Earth"],0),Q("Eclipse alignment?",["Straight line","Right angles","Far apart","Random"],0),Q("Lunar eclipse during?",["Full moon","New moon","Half","Quarter"],0),Q("Seen from Earth?",["Both","Solar only","Lunar only","Neither"],0),Q("Solar eclipse during?",["New moon","Full moon","Half","Quarter"],0),Q("Eclipse occurs when?",["Three bodies aligned","Random","Any time","Never"],0),Q("Sun appears dark?",["Solar eclipse","Lunar eclipse","Normal","Never"],0),Q("Moon turns red?",["Lunar eclipse","Solar eclipse","Normal","Never"],0),Q("Frequency?",["Several per year","Once a decade","Never","Once a century"],0)]}],challenge:[Q("Seen from Earth?",["Both","Solar only","Lunar only","Neither"],0),Q("Solar eclipse during?",["New moon","Full moon","Half","Quarter"],0)]},
-{title:"Unit 11: Galaxy",lessons:[{title:"Milky Way",learn:P("Stars, gas, dust."),questions:[Q("Our galaxy?",["Milky Way","Andromeda","Sombrero","Whirlpool"],0),Q("Solar System in?",["Milky Way","Andromeda","Whirlpool","Sombrero"],0),Q("Planets in system?",["8","9","7","10"],0),Q("Closest to Sun?",["Mercury","Venus","Earth","Mars"],0),Q("Red Planet?",["Mars","Jupiter","Saturn","Venus"],0),Q("Sun is a?",["Star","Planet","Moon","Comet"],0),Q("Largest planet?",["Jupiter","Saturn","Neptune","Earth"],0),Q("Earth rank from Sun?",["3rd","1st","5th","2nd"],0),Q("Milky Way type?",["Spiral","Elliptical","Irregular","Round"],0),Q("Light year is?",["Distance","Time","Mass","Speed"],0)]}],challenge:[Q("Red Planet?",["Mars","Jupiter","Saturn","Venus"],0),Q("Sun is a?",["Star","Planet","Moon","Comet"],0)]},
-{title:"Unit 12: Stability",lessons:[{title:"Balance",learn:P("Stability and strength."),questions:[Q("Wider base?",["More stable","Unstable","Heavy","Light"],0),Q("Strongest shape?",["Triangle","Circle","Square","Rectangle"],0),Q("Low centre gravity?",["Stable","Unstable","Light","Heavy"],0),Q("Most stable?",["Short and wide","Tall narrow","Tall wide","Thin"],0),Q("Bridge needs to be?",["Strong","Weak","Flexible","Soft"],0),Q("Triangles in structures?",["Strength","Flexibility","Weight","Beauty"],0),Q("Stability means?",["Stay balanced","Fall","Move","Break"],0),Q("Higher centre?",["Less stable","More stable","No effect","Same"],0),Q("Wide base helps?",["Balance","Speed","Height","Weight"],0),Q("Strong material?",["Steel","Paper","Foam","Cloth"],0)]}],challenge:[Q("Bridge needs to be?",["Strong","Weak","Flexible","Soft"],0),Q("Triangles in structures?",["Strength","Flexibility","Weight","Beauty"],0)]},
-{title:"Unit 13: Technology",lessons:[{title:"Tech",learn:P("Applications."),questions:[Q("Technology is?",["Application of science","Food","Game","Art"],0),Q("Communication tech?",["Smartphone","Bicycle","Pencil","Book"],0),Q("Innovation?",["Creating something new","Copying","Buying","Selling"],0),Q("Helps farmers?",["Tractor","Aeroplane","Computer","Phone"],0),Q("Used wisely?",["Wisely","Carelessly","Wastefully","Badly"],0),Q("3D printing used in?",["Manufacturing","Cooking","Farming","Eating"],0),Q("Computer is a?",["Machine","Food","Plant","Animal"],0),Q("Tech in medicine?",["X-ray","Spoon","Chair","Table"],0),Q("GPS uses?",["Satellites","Wires","Radio","Cable"],0),Q("Robot is a?",["Machine","Animal","Plant","Person"],0)]}],challenge:[Q("Used wisely?",["Wisely","Carelessly","Wastefully","Badly"],0),Q("3D printing used in?",["Manufacturing","Cooking","Farming","Eating"],0)]},
-{title:"Unit 14: Energy",lessons:[{title:"Energy",learn:P("Kinetic and potential."),questions:[Q("Moving air particles?",["Kinetic","Electrical","Heat","Potential"],0),Q("Renewable?",["Solar","Coal","Oil","Gas"],0),Q("Non-renewable?",["Natural gas","Wind","Water","Solar"],0),Q("Energy cannot be?",["Created or destroyed","Converted","Used","Stored"],0),Q("Moving car has?",["Kinetic energy","Potential","Chemical","Sound"],0),Q("Book on shelf?",["Potential energy","Kinetic","Sound","Light"],0),Q("Sun energy is?",["Solar","Wind","Nuclear","Hydro"],0),Q("Which is renewable?",["Water","Coal","Oil","Gas"],0),Q("Energy unit?",["Joule","Newton","Watt","Amp"],0),Q("Which is kinetic?",["Running","Still","Sleeping","Sitting"],0)]}],challenge:[Q("Moving car has?",["Kinetic energy","Potential","Chemical","Sound"],0),Q("Book on shelf?",["Potential energy","Kinetic","Sound","Light"],0)]},
-{title:"Unit 15: Earth Resources",lessons:[{title:"Resources",learn:P("Natural resources."),questions:[Q("Natural resource?",["Water","Plastic","Glass","Metal"],0),Q("Renewable?",["Sunlight","Coal","Petroleum","Gas"],0),Q("Deforestation causes?",["Soil erosion","Clean air","Rain","Sun"],0),Q("Conserving water?",["Use less water","Waste water","Pollute","Boil"],0),Q("Recycling paper saves?",["Trees","Water only","Air only","Sun"],0),Q("Limited resource?",["Petroleum","Wind","Sunlight","Water"],0),Q("Which is renewable?",["Wind","Oil","Gas","Coal"],0),Q("Water cycle is?",["Natural","Man-made","Fake","Broken"],0),Q("Soil erosion caused by?",["Deforestation","Rain only","Sun only","Wind only"],0),Q("Air pollution from?",["Cars","Trees","Rain","Sun"],0)]}],challenge:[Q("Recycling paper saves?",["Trees","Water only","Air only","Sun"],0),Q("Limited resource?",["Petroleum","Wind","Sunlight","Water"],0)]}
-]},
-"Sejarah":{units:[
-{title:"Unit 1: Pembentukan Malaysia",lessons:[
-{title:"Idea Pembentukan Malaysia",learn:P("Idea pembentukan Malaysia melibatkan <b>pemimpin tempatan</b> dan <b>pihak British</b>.","<b>1887</b>: Lord Brassey (Pengarah British North Borneo Company) cadang awal.","<b>1938</b>: Ibrahim Haji Yaakob & Harun Aminurrashid - konsep <b>Melayu Raya</b>.","<b>1951</b>: Malcolm MacDonald (Gabenor Jeneral British Asia Tenggara).","<b>1955</b>: Tunku Abdul Rahman cadang Sarawak, Sabah, Singapura, Brunei sertai PTM."),
-questions:[
-Q("Siapakah yang mencadangkan idea pembentukan Malaysia pada 1887?",["Lord Brassey","Malcolm MacDonald","Tunku Abdul Rahman","Ibrahim Haji Yaakob"],0),
-Q("Lord Brassey ialah Pengarah syarikat apa?",["British North Borneo Company","Syarikat Hindia Timur","Syarikat Inggeris","Syarikat Borneo Selatan"],0),
-Q("Pada 1938, siapakah yang memperjuangkan konsep Melayu Raya?",["Ibrahim Haji Yaakob & Harun Aminurrashid","Tunku Abdul Rahman","Lord Brassey","Malcolm MacDonald"],0),
-Q("Siapakah Gabenor Jeneral British di Asia Tenggara pada 1951?",["Malcolm MacDonald","Lord Brassey","Tunku Abdul Rahman","Harun Aminurrashid"],0),
-Q("Pada 1955, siapakah yang mencadangkan penggabungan?",["Tunku Abdul Rahman Putra Al-Haj","Tun Razak","Tun Hussein","Dr. Mahathir"],0),
-Q("Melayu Raya merangkumi kawasan berikut KECUALI…",["Thailand","Tanah Melayu","Kalimantan","Filipina"],0),
-Q("Pembentukan Malaysia melibatkan berapa buah negeri/wilayah?",["5","4","3","6"],0),
-Q("Malaysia dibentuk pada…",["16 September 1963","31 Ogos 1957","9 Ogos 1965","1 Januari 1960"],0),
-Q("Singapura keluar dari Malaysia pada…",["1965","1963","1969","1970"],0),
-Q("Negeri yang TIDAK menyertai Malaysia pada 1963?",["Brunei","Sabah","Sarawak","Singapura"],0)]},
-{title:"Langkah-langkah ke Arah Pembentukan Malaysia",learn:P("<b>27 Mei 1961</b>: Tunku umum di Hotel Adelphi, Singapura.","<b>23 Julai 1961</b>: Penubuhan JSKM.","<b>17 Januari 1962</b>: Suruhanjaya Cobbold dibentuk.","<b>21 Jun 1962</b>: Laporan Cobbold. <b>30 Ogos 1962</b>: Mesyuarat JAK.","<b>9 Julai 1963</b>: Perjanjian Malaysia di London. <b>16 Sept 1963</b>: Pemasyhuran."),
-questions:[
-Q("Di manakah Tunku mengumumkan cadangan pembentukan Malaysia?",["Hotel Adelphi, Singapura","Kuala Lumpur","London","Kuching"],0),
-Q("JSKM singkatan bagi?",["Jawatankuasa Setia Kawan Malaysia","Jawatankuasa Sultan","Jawatankuasa Kebangsaan","Jawatankuasa Khas"],0),
-Q("Suruhanjaya Cobbold dibentuk pada tarikh?",["17 Januari 1962","23 Julai 1961","30 Ogos 1962","9 Julai 1963"],0),
-Q("Suruhanjaya Cobbold dianggotai berapa orang?",["5","3","7","10"],0),
-Q("Perjanjian Malaysia ditandatangani di?",["Malborough House, London","Istana Negara","Hotel Adelphi","Kuching"],0),
-Q("Tarikh Perjanjian Malaysia?",["9 Julai 1963","16 September 1963","31 Ogos 1963","1 September 1962"],0),
-Q("Pemasyhuran Malaysia diadakan di berapa tempat?",["4","3","5","2"],0),
-Q("Referendum diadakan di negeri mana?",["Singapura","Sabah","Sarawak","Brunei"],0)]},
-{title:"Sebab-sebab Pembentukan Malaysia",learn:P("1. <b>Menjamin keselamatan negara</b> - ancaman komunis.","2. <b>Mencapai keseimbangan kaum</b> - penduduk seimbang.","3. <b>Mempercepat kemerdekaan</b> Sarawak, Sabah, Singapura, Brunei.","4. <b>Membangunkan sosioekonomi</b> - infrastruktur, sosial, ekonomi."),
-questions:[
-Q("Ancaman apa yang dihadapi Singapura dan Sarawak?",["Komunis","Jepun","Belanda","Portugis"],0),
-Q("Mengapa penggabungan PTM dengan Sarawak, Sabah, Brunei penting?",["Keseimbangan kaum","Menambah wilayah","Mengurangkan cukai","Menambah bahasa"],0),
-Q("Pembentukan Malaysia mempercepat kemerdekaan negeri?",["Sarawak, Sabah, Singapura, Brunei","Johor, Melaka, Penang","Perak, Selangor","Kedah, Kelantan"],0),
-Q("Pembentukan Malaysia membangunkan apa?",["Sosioekonomi","Ketenteraan","Sukan","Bahasa"],0),
-Q("Siapakah yang menolak rancangan pembentukan Malaysia?",["Sarawak United People's Party (SUPP)","UMNO","MCA","MIC"],0),
-Q("Indonesia mengisytiharkan konfrontasi dari tahun?",["1963-1966","1957-1960","1970-1975","1945-1950"],0),
-Q("Negara yang mendakwa Sabah sebahagian wilayahnya?",["Filipina","Indonesia","Thailand","Vietnam"],0),
-Q("Peribahasa 'carik-carik bulu ayam, akhirnya bercantum juga' bermaksud?",["Hubungan tegang akhirnya pulih","Ayam bertengkar","Bulu ayam cantik","Ayam hilang"],0),
-Q("Cabaran pertama pembentukan Malaysia?",["Penolakan oleh SUPP","Perang dunia","Kekurangan sumber","Banjir"],0),
-Q("Kesimpulan daripada cabaran pembentukan Malaysia?",["Kerjasama demi kemakmuran","Penjajahan","Perang","Perpecahan"],0)]}],
-challenge:[
-Q("Tokoh-tokoh dalam pembentukan Malaysia: Tunku Abdul Rahman ialah pemimpin?",["UMNO","MCA","MIC","PAP"],0),
-Q("Tan Sri Wong Pow Nee ialah pemimpin?",["MCA","UMNO","MIC","PAP"],0),
-Q("Tun V.T. Sambanthan ialah pemimpin?",["MIC","MCA","UMNO","PAP"],0),
-Q("Donald Stephens ialah pemimpin?",["UNKO","USNO","PASOK","PANAS"],0),
-Q("Lee Kuan Yew ialah pemimpin?",["PAP","UMNO","MCA","SNAP"],0),
-Q("Tan Sri Datuk Amar Stephen Kalong Ningkan ialah pemimpin?",["SNAP","PESAKA","USNO","UNKO"],0),
-Q("Tun Temenggung Jugah anak Barieng ialah pemimpin?",["PESAKA","PAP","SNAP","USNO"],0),
-Q("Tun Datu Mustapha Datu Harun ialah pemimpin?",["USNO","UNKO","PANAS","PESAKA"],0),
-Q("Datu Bandar Abang Haji Mustapha ialah pemimpin?",["PANAS","PESAKA","USNO","SNAP"],0),
-Q("Tun Muhammad Ghazali Shafie ialah pemimpin?",["UMNO","MCA","MIC","PAP"],0)]},
-{title:"Unit 2: Negeri-Negeri di Malaysia",lessons:[
-{title:"Asal Usul Nama Negeri",learn:P("<b>Perlis</b>: 'prow-lowy' (Siam) = kelapa hanyut.","<b>Kedah</b>: 'Kheddah' = perangkap gajah; Arab 'Qadah' = cawan.","<b>Pulau Pinang</b>: Pulo Ka Satu, Tanjong Penaga, buah pinang.","<b>Perak</b>: kilatan ikan dalam air; bijih timah putih.","<b>Selangor</b>: pokok mentagau; serangga 'selangur'.","<b>Negeri Sembilan</b>: 9 luak (Sungai Ujong, Jelebu, Rembau, Johol, Jelai, Ulu Pahang, Naning, Segamat, Klang)."),
-questions:[
-Q("Nama Perlis dari perkataan Siam 'prow-lowy' bermaksud?",["Kelapa hanyut","Batu permata","Ikan","Gajah"],0),
-Q("Nama Kedah berasal dari 'Kheddah' bermaksud?",["Perangkap gajah","Cawan","Pokok","Ikan"],0),
-Q("Pulau Pinang juga dikenali sebagai?",["Tanjong Penaga","Batu Putih","Pulau Kelapa","Pulau Siput"],0),
-Q("Nama Perak bersempena dengan?",["Kilatan ikan dalam air","Batu putih","Pokok merah","Buah bulat"],0),
-Q("Nama Selangor dikaitkan dengan pokok?",["Mentagau","Nyiur","Getah","Pinang"],0),
-Q("Negeri Sembilan berasal dari?",["9 buah luak","9 orang raja","9 buah kampung","9 negeri"],0),
-Q("Melaka dari perkataan Arab 'Malakat' bermaksud?",["Perhimpunan para pedagang","Batu permata","Pokok kayu","Ikan putih"],0),
-Q("Johor dari perkataan Arab 'Jauhar' bermaksud?",["Batu permata bernilai","Pokok jati","Sungai besar","Batu putih"],0),
-Q("Pahang bersempena dengan pokok?",["Mahang","Kelapa","Pinang","Getah"],0),
-Q("Terengganu berkaitan 'taring anu' bermaksud?",["Taring gading gajah","Batu tajam","Besi panjang","Pisau besar"],0)]},
-{title:"Ketua-Ketua Negeri",learn:P("<b>Sultan/Raja</b>: Kedah, Perak, Selangor, Johor, Pahang, Terengganu, Kelantan (Sultan); Perlis (Raja).","<b>Yang di-Pertuan Besar</b>: Negeri Sembilan.","<b>Yang di-Pertua Negeri</b>: Pulau Pinang, Melaka, Sarawak, Sabah.","Wilayah Persekutuan: <b>Yang di-Pertuan Agong</b>."),
-questions:[
-Q("Siapakah ketua negeri Perlis?",["Raja","Sultan","Yang di-Pertua Negeri","Yang di-Pertuan Besar"],0),
-Q("Negeri Sembilan diketuai oleh?",["Yang di-Pertuan Besar","Sultan","Raja","Yang di-Pertua Negeri"],0),
-Q("Melaka diketuai oleh?",["Yang di-Pertua Negeri","Sultan","Raja","Yang di-Pertuan Besar"],0),
-Q("Wilayah Persekutuan diketuai oleh?",["Yang di-Pertuan Agong","Sultan","Raja","Yang di-Pertua Negeri"],0),
-Q("Negeri mana TIDAK diketuai Sultan?",["Negeri Sembilan","Perak","Kedah","Johor"],0),
-Q("Sabah diketuai oleh?",["Yang di-Pertua Negeri","Sultan","Raja","Yang di-Pertuan Besar"],0),
-Q("Pulau Pinang diketuai oleh?",["Yang di-Pertua Negeri","Sultan","Raja","Yang di-Pertuan Besar"],0),
-Q("Ibu negeri Perlis?",["Kangar","Alor Setar","Georgetown","Ipoh"],0),
-Q("Ibu negeri Kedah?",["Alor Setar","Kangar","Ipoh","Shah Alam"],0),
-Q("Ibu negeri Sarawak?",["Kuching","Kota Kinabalu","Kuantan","Johor Bahru"],0)]}],
-challenge:[
-Q("Bandar diraja Selangor?",["Klang","Shah Alam","Kuala Selangor","Petaling"],0),
-Q("Bandar diraja Johor?",["Muar","Johor Bahru","Batu Pahat","Kluang"],0),
-Q("Bandar diraja Negeri Sembilan?",["Seri Menanti","Seremban","Port Dickson","Nilai"],0),
-Q("Bandar diraja Pahang?",["Pekan","Kuantan","Temerloh","Raub"],0),
-Q("Lagu negeri Terengganu?",["Selamat Sultan","Duli Yang Maha Mulia","Amin-Amin","Selamat Sultan"],0),
-Q("Lagu negeri Perlis?",["Amin-Amin","Selamat Sultan","Duli Yang Maha Mulia","Untuk Negeri Kita"],0),
-Q("Lagu negeri Selangor?",["Duli Yang Maha Mulia","Selamat Sultan","Amin-Amin","Sabah Tanah Airku"],0),
-Q("Lagu negeri Johor?",["Lagu Bangsa Johor","Selamat Sultan","Amin-Amin","Ibu Pertiwiku"],0),
-Q("Lagu negeri Sabah?",["Sabah Tanah Airku","Selamat Sultan","Duli Yang Maha Mulia","Untuk Negeri Kita"],0),
-Q("Lagu negeri Melaka?",["Melaka Maju Jaya","Selamat Sultan","Amin-Amin","Untuk Negeri Kita"],0)]},
-{title:"Unit 3: Rukun Negara",lessons:[
-{title:"Latar Belakang dan Sebab Pengenalan",learn:P("<b>Dirangka</b> oleh Jawatankuasa Rukun Negara bawah <b>MAPEN</b> pada <b>4 Mac 1970</b>.","Dibentuk selepas peristiwa <b>13 Mei 1969</b>.","<b>Dirasmikan</b> oleh YDP Agong ke-4 pada <b>31 Ogos 1970</b>.","Sebab: <b>perbezaan kegiatan ekonomi</b>, <b>pengasingan tempat tinggal</b>, <b>perbezaan fahaman politik</b>."),
-questions:[
-Q("Rukun Negara dirangka oleh jawatankuasa bawah?",["MAPEN","MAGERAN","JSKM","SUPP"],0),
-Q("Rukun Negara dirangka pada tarikh?",["4 Mac 1970","31 Ogos 1970","13 Mei 1969","16 September 1963"],0),
-Q("Rukun Negara dibentuk selepas peristiwa?",["13 Mei 1969","Merdeka","Pembentukan Malaysia","Perang"],0),
-Q("Rukun Negara dirasmikan pada?",["31 Ogos 1970","4 Mac 1970","13 Mei 1969","31 Ogos 1957"],0),
-Q("Sebab pertama pengenalan Rukun Negara?",["Perbezaan kegiatan ekonomi","Perang","Banjir","Penyakit"],0),
-Q("Masyarakat Melayu dahulu tinggal di?",["Kampung dan kawasan pedalaman","Bandar","Ladang getah","Lombong"],0),
-Q("Masyarakat India dahulu bekerja di?",["Ladang getah","Bandar","Kampung","Lombong"],0),
-Q("Masyarakat Cina dahulu bekerja di?",["Lombong bijih timah","Ladang getah","Kampung","Sawah"],0),
-Q("MAPEN dianggotai berapa orang?",["66","50","100","30"],0),
-Q("Peristiwa rusuhan kaum berlaku pada tarikh?",["13 Mei 1969","31 Ogos 1970","16 September 1963","9 Ogos 1965"],0)]},
-{title:"Matlamat dan 5 Prinsip Rukun Negara",learn:P("<b>Matlamat:</b> Perpaduan, demokrasi, keadilan, toleransi, progresif.","<b>5 Prinsip:</b>","1. Kepercayaan kepada Tuhan","2. Kesetiaan kepada Raja dan Negara","3. Keluhuran Perlembagaan","4. Kedaulatan Undang-Undang","5. Kesopanan dan Kesusilaan"),
-questions:[
-Q("Berapa prinsip Rukun Negara?",["5","6","4","3"],0),
-Q("Prinsip pertama?",["Kepercayaan kepada Tuhan","Kesetiaan Raja","Kedaulatan","Keluhuran"],0),
-Q("Prinsip kedua?",["Kesetiaan kepada Raja dan Negara","Kepercayaan","Kedaulatan","Kesopanan"],0),
-Q("Prinsip ketiga?",["Keluhuran Perlembagaan","Kedaulatan","Kesopanan","Kesetiaan"],0),
-Q("Prinsip keempat?",["Kedaulatan Undang-Undang","Keluhuran","Kesopanan","Kesetiaan"],0),
-Q("Prinsip kelima?",["Kesopanan dan Kesusilaan","Kedaulatan","Keluhuran","Kesetiaan"],0),
-Q("Siapakah Ketua Utama Negara Malaysia?",["Yang di-Pertuan Agong","Perdana Menteri","Sultan","Presiden"],0),
-Q("Keluhuran Perlembagaan bermaksud?",["Perlembagaan undang-undang tertinggi","Raja tertinggi","Sultan berkuasa","Menteri tertinggi"],0),
-Q("Kedaulatan Undang-Undang bermaksud?",["Rakyat mesti patuh undang-undang","Raja buat undang-undang","Undang-undang asing","Menteri buat undang-undang"],0),
-Q("Mengapa perlu mematuhi undang-undang?",["Menjamin keharmonian dan keselamatan","Menambah cukai","Mengurangkan pekerjaan","Menambah hutang"],0)]},
-{title:"Peranan Rukun Negara",learn:P("<b>4 peranan utama:</b>","1. Meraikan kepelbagaian agama dan kepercayaan","2. Membentuk masyarakat Malaysia patriotik","3. Memupuk sikap menghormati undang-undang","4. Mengukuhkan perpaduan masyarakat"),
-questions:[
-Q("Berapa peranan utama Rukun Negara?",["4","3","5","6"],0),
-Q("Rukun Negara dapat melahirkan rakyat yang?",["Bersikap rendah diri, bersyukur","Sombong","Malas","Bermusuh"],0),
-Q("Semangat patriotik melahirkan rakyat?",["Taat setia, sanggup berkorban","Mementingkan diri","Malas","Penakut"],0),
-Q("Contoh lambang kedaulatan negara?",["Bendera Jalur Gemilang, Jata Negara","Papan tanda","Bangunan","Peta"],0),
-Q("Rukun Negara membimbing rakyat daripada?",["Terlibat kegiatan jenayah","Belajar","Bekerja","Berehat"],0),
-Q("Masyarakat Malaysia perlu amalkan semangat?",["Permuafakatan dan toleransi","Perkauman","Egoisme","Bersaing"],0),
-Q("Rakyat dibimbing untuk memahami dan menghormati?",["Budaya kaum lain","Bahasa asing","Makanan asing","Pakaian asing"],0),
-Q("Rakyat Malaysia yang bersatu padu dan bertoleransi diwujudkan oleh?",["Rukun Negara","Perlembagaan","Undang-undang","Parlimen"],0),
-Q("Kempen 'Anak Muda Bebas Dadah' menunjukkan Rukun Negara memupuk?",["Sikap menghormati undang-undang","Kekayaan","Pangkat","Kesihatan"],0),
-Q("Rukun Negara sebagai ideologi negara menjadikan masyarakat?",["Berbilang kaum hidup bersatu padu","Bermusuh","Bersaing","Berpecah"],0)]}],
-challenge:[
-Q("Bilakah Rukun Negara dirangka?",["4 Mac 1970","31 Ogos 1970","13 Mei 1969","16 September 1963"],0),
-Q("Siapakah YDP Agong ke-4 yang merasmikan Rukun Negara?",["Tuanku Sultan Ismail Nasiruddin Shah","Tuanku Abdul Rahman","Tuanku Syed Putra","Tuanku Jaafar"],0),
-Q("MAGERAN bermaksud?",["Majlis Gerakan Negara","Majlis Kerajaan","Majlis Negara","Majlis Rakyat"],0),
-Q("Rukun Negara mengukuhkan perpaduan melalui?",["Semangat kepercayaan agama","Kekayaan","Perang","Perpecahan"],0),
-Q("Perbezaan kegiatan ekonomi antara kaum menyebab?",["Jurang ekonomi tidak seimbang","Perpaduan","Kekayaan","Kemajuan"],0),
-Q("Pengasingan tempat tinggal menyebabkan?",["Kurang interaksi antara masyarakat","Perpaduan","Kekayaan","Kemajuan"],0),
-Q("Perbezaan fahaman politik membawa kepada?",["Suasana tidak harmoni","Perpaduan","Kekayaan","Kemajuan"],0),
-Q("Rukun Negara diisytiharkan pada ulang tahun Hari Kebangsaan ke-?",["13","10","15","20"],0),
-Q("Rukun Negara bertujuan mewujudkan masyarakat?",["Progresif menggunakan sains & teknologi","Mundur","Statik","Terpisah"],0),
-Q("Prinsip Rukun Negara menjadi panduan untuk?",["Rakyat Malaysia bersatu padu","Rakyat berkuasa","Raja berkuasa","Menteri berkuasa"],0)]},
-{title:"Unit 4: Kaum di Malaysia",lessons:[
-{title:"Masyarakat Majmuk",learn:P("Malaysia mempunyai pelbagai kaum: <b>Melayu</b>, <b>Cina</b>, <b>India</b>, dan <b>bumiputera</b> Sabah & Sarawak.","<b>Melayu</b>: kaum terbesar, bertutur bahasa Melayu, beragama Islam.","<b>Cina</b>: bertutur bahasa Mandarin/dialek Cina.","<b>India</b>: bertutur bahasa Tamil, Telugu atau Malayalam.","<b>Iban</b>: kaum terbesar di Sarawak, terkenal dengan seni tenunan Pua Kumbu.","<b>Kadazandusun</b>: kaum terbesar di Sabah, terkenal dengan Pesta Kaamatan."),
-questions:[
-Q("Kaum terbesar di Malaysia?",["Melayu","Cina","India","Kadazan"],0),
-Q("Kaum terbesar di Sarawak?",["Iban","Melanau","Bidayuh","Kadazan"],0),
-Q("Kaum terbesar di Sabah?",["Kadazandusun","Bajau","Murut","Iban"],0),
-Q("Pesta Kaamatan disambut oleh?",["Kadazandusun","Iban","Melayu","Cina"],0),
-Q("Seni tenunan Pua Kumbu kepunyaan kaum?",["Iban","Kadazan","Melayu","India"],0),
-Q("Kaum Bajau digelar?",["Koboi Timur","Pahlawan","Pelaut","Petani"],0),
-Q("Orang Asli di Semenanjung terbahagi kepada?",["Negrito, Senoi, Melayu Proto","Iban, Kadazan, Murut","Melayu, Cina, India","Bajau, Suluk, Rungus"],0),
-Q("Bahasa pengantar kaum Cina?",["Mandarin","Tamil","Melayu","Iban"],0),
-Q("Kaum India bertutur bahasa?",["Tamil, Telugu atau Malayalam","Mandarin","Iban","Kadazan"],0),
-Q("Masyarakat majmuk bermaksud?",["Pelbagai kaum","Satu kaum","Luar negara","Satu budaya"],0)]},
-{title:"Alat Muzik dan Tarian Tradisional",learn:P("<b>Melayu</b>: Kompang, Gamelan, Rebana. Tarian: Mak Yong, Zapin, Kuda Kepang.","<b>Cina</b>: Erhu, Bo, Seruling Bambu. Tarian: Singa, Naga, Kipas.","<b>India</b>: Tabla, Sitar, Veena. Tarian: Bharatanatyam, Kolattam.","<b>Borneo</b>: Sape (Sarawak), Sompoton (Sabah). Tarian: Ngajat, Sumazau, Magunatip."),
-questions:[
-Q("Alat muzik tradisional Melayu?",["Kompang","Erhu","Sitar","Sape"],0),
-Q("Tarian tradisional Melayu?",["Kuda Kepang","Tarian Singa","Bharatanatyam","Sumazau"],0),
-Q("Alat muzik tradisional Cina?",["Erhu","Kompang","Sitar","Gendang"],0),
-Q("Tarian tradisional Cina?",["Tarian Singa","Kuda Kepang","Ngajat","Bhangra"],0),
-Q("Alat muzik tradisional India?",["Sitar","Sape","Sompoton","Erhu"],0),
-Q("Tarian klasik India?",["Bharatanatyam","Sumazau","Zapin","Tarian Kipas"],0),
-Q("Alat muzik tradisional Sarawak?",["Sape","Sompoton","Kulintangan","Erhu"],0),
-Q("Alat muzik tradisional Sabah?",["Sompoton","Sape","Sitar","Bo"],0),
-Q("Tarian tradisional Iban?",["Ngajat","Sumazau","Magunatip","Bhangra"],0),
-Q("Tarian tradisional Kadazandusun?",["Sumazau","Ngajat","Magunatip","Bhangra"],0)]},
-{title:"Permainan Tradisional & Perubahan Petempatan",learn:P("<b>Permainan tradisional</b>: Congkak, Wau, Gasing, Sepak Raga.","<b>Zaman dahulu</b> (British): Melayu di kampung (petani/nelayan), Cina di bandar/lombong, India di estet getah.","<b>Zaman kini</b>: Semua kaum bebas tinggal di mana-mana, pelbagai pekerjaan."),
-questions:[
-Q("Permainan tradisional menggunakan papan kayu berlubang?",["Congkak","Wau","Gasing","Sepak Raga"],0),
-Q("Permainan tradisional yang dimainkan dengan bola rotan?",["Sepak Raga","Congkak","Wau","Gasing"],0),
-Q("Pada zaman British, kaum Melayu tinggal di?",["Kampung","Bandar","Estet","Lombong"],0),
-Q("Pada zaman British, kaum Cina bekerja sebagai?",["Pelombong dan peniaga","Petani dan nelayan","Buruh ladang getah","Guru"],0),
-Q("Pada zaman British, kaum India tinggal di?",["Estet getah","Kampung","Bandar","Lombong"],0),
-Q("Kesan pengasingan petempatan pada zaman British?",["Kurang interaksi antara kaum","Perpaduan","Kekayaan","Kemajuan"],0),
-Q("Pada zaman kini, semua kaum bebas?",["Tinggal di mana-mana","Tinggal di kampung sahaja","Tinggal di bandar sahaja","Tinggal di estet sahaja"],0),
-Q("Contoh pekerjaan moden yang boleh dilakukan semua kaum?",["Doktor, guru, jurutera","Petani sahaja","Nelayan sahaja","Pelombong sahaja"],0),
-Q("Perubahan petempatan telah?",["Mengukuhkan perpaduan","Memecahbelahkan kaum","Mengurangkan penduduk","Menambah masalah"],0),
-Q("Permainan tradisional mengeratkan?",["Hubungan silaturahim","Perbalahan","Persaingan","Permusuhan"],0)]}],
-challenge:[
-Q("Pesta Kaamatan disambut oleh?",["Kadazandusun","Iban","Melayu","Cina"],0),
-Q("Tarian Sumazau dipersembahkan semasa?",["Pesta Kaamatan","Tahun Baru Cina","Deepavali","Hari Raya"],0),
-Q("Alat muzik bertali kaum India?",["Sitar","Kompang","Sape","Erhu"],0),
-Q("Tarian Singa dipersembahkan untuk?",["Tahun Baru Cina","Deepavali","Pesta Kaamatan","Hari Gawai"],0),
-Q("Permainan tradisional yang memerlukan kepandaian mengira?",["Congkak","Wau","Gasing","Sepak Raga"],0)]},
-{title:"Unit 5: Agama dan Kepercayaan",lessons:[
-{title:"Pelbagai Agama di Malaysia",learn:P("<b>Islam</b>: agama paling ramai penganutnya, kitab suci al-Quran.","<b>Buddha & Taoisme</b>: majoriti masyarakat Cina.","<b>Hindu</b>: majoriti masyarakat India, dewa Murugan dirai semasa Thaipusam.","<b>Kristian</b>: kitab suci Bible, ramai di Sabah & Sarawak.","<b>Sikh</b>: ajaran Guru Nanak.","<b>Kepercayaan tradisional</b>: Kadazandusun percaya Kinorohingan, Iban & Orang Asli percaya semangat alam."),
-questions:[
-Q("Agama paling ramai penganutnya di Malaysia?",["Islam","Buddha","Hindu","Kristian"],0),
-Q("Kitab suci agama Islam?",["Al-Quran","Bible","Kitab Veda","Tripitaka"],0),
-Q("Agama yang dianuti majoriti masyarakat Cina?",["Buddha & Taoisme","Islam","Hindu","Sikh"],0),
-Q("Dewa yang dirai semasa Thaipusam?",["Dewa Murugan","Dewa Siva","Dewa Vishnu","Dewa Rama"],0),
-Q("Kitab suci agama Kristian?",["Bible","Al-Quran","Tripitaka","Kitab Veda"],0),
-Q("Agama Sikh diasaskan oleh?",["Guru Nanak","Guru Gobind Singh","Guru Arjan","Guru Tegh Bahadur"],0),
-Q("Tuhan yang dipercayai oleh Kadazandusun?",["Kinorohingan","Batara Guru","Dewa Murugan","Tuhan Allah"],0),
-Q("Rumah ibadat agama Islam?",["Masjid/Surau","Tokong","Kuil","Gereja"],0),
-Q("Rumah ibadat agama Buddha?",["Tokong/Wat","Masjid","Kuil","Gurdwara"],0),
-Q("Rumah ibadat agama Sikh?",["Gurdwara","Masjid","Tokong","Kuil"],0)]},
-{title:"Kedudukan Agama Islam & Kebebasan Beragama",learn:P("<b>Perkara 3(1)</b>: Islam ialah Agama Persekutuan.","<b>Ketua agama Islam</b>: Sultan/Raja bagi negeri beraja; YDP Agong bagi negeri tiada raja & Wilayah Persekutuan.","<b>Perkara 11</b>: agama lain boleh diamalkan dengan aman.","Sikap: <b>bertimbang rasa</b>, <b>tidak menghina agama lain</b>."),
-questions:[
-Q("Islam ialah Agama Persekutuan menurut?",["Perkara 3(1) Perlembagaan","Perkara 11 Perlembagaan","Rukun Negara","Undang-undang antarabangsa"],0),
-Q("Ketua agama Islam bagi negeri beraja?",["Sultan/Raja","Yang di-Pertuan Agong","Perdana Menteri","Menteri Besar"],0),
-Q("Ketua agama Islam bagi Melaka, Pulau Pinang, Sabah, Sarawak?",["Yang di-Pertuan Agong","Sultan","Raja","Gabenor"],0),
-Q("Kebebasan beragama dijamin oleh?",["Perkara 11 Perlembagaan","Perkara 3 Perlembagaan","Rukun Negara","Undang-undang asing"],0),
-Q("Sikap yang perlu diamalkan terhadap agama lain?",["Bertimbang rasa","Menghina","Mengganggu","Menjauhi"],0),
-Q("Mengapa perlu hormat agama lain?",["Mengekalkan keamanan negara","Menunjuk kuasa","Mendapat pahala","Takut"],0),
-Q("Masyarakat yang menghormati agama melahirkan negara?",["Harmoni dan maju","Bermusuh","Mundur","Berpecah"],0),
-Q("Adab menziarahi rumah ibadat?",["Berpakaian sopan, jaga kebersihan","Berpakaian selekeh","Membuat bising","Membawa makanan"],0),
-Q("Rumah ibadat agama Hindu?",["Kuil","Masjid","Tokong","Gereja"],0),
-Q("Rumah ibadat agama Kristian?",["Gereja","Masjid","Tokong","Kuil"],0)]}],
-challenge:[
-Q("Agama rasmi Malaysia?",["Islam","Buddha","Hindu","Kristian"],0),
-Q("Kitab suci agama Islam?",["Al-Quran","Bible","Tripitaka","Veda"],0),
-Q("Tempat ibadat Sikh?",["Gurdwara","Masjid","Kuil","Tokong"],0),
-Q("Perkara yang menjamin kebebasan beragama?",["Perkara 11","Perkara 3","Perkara 12","Perkara 8"],0),
-Q("Sikap yang perlu diamalkan terhadap agama lain?",["Menghormati","Menghina","Mengganggu","Menjauhi"],0)]},
-{title:"Unit 6: Perayaan Masyarakat di Malaysia",lessons:[
-{title:"Perayaan Utama",learn:P("<b>Hari Raya Aidilfitri</b>: umat Islam, selepas Ramadan.","<b>Tahun Baru Cina</b>: masyarakat Cina.","<b>Deepavali</b>: masyarakat India, perayaan cahaya.","<b>Krismas</b>: umat Kristian.","<b>Hari Gawai</b>: Iban (Sarawak). <b>Pesta Kaamatan</b>: Kadazandusun (Sabah)."),
-questions:[
-Q("Perayaan utama umat Islam?",["Hari Raya Aidilfitri","Tahun Baru Cina","Deepavali","Krismas"],0),
-Q("Tahun Baru Cina disambut oleh?",["Cina","Melayu","India","Kadazan"],0),
-Q("Deepavali disambut oleh?",["India","Cina","Melayu","Iban"],0),
-Q("Krismas disambut oleh?",["Kristian","Islam","Hindu","Buddha"],0),
-Q("Hari Gawai disambut oleh?",["Iban","Kadazan","Melayu","Cina"],0),
-Q("Pesta Kaamatan disambut oleh?",["Kadazandusun","Iban","Melayu","India"],0),
-Q("Deepavali bermaksud?",["Perayaan cahaya","Perayaan air","Perayaan angin","Perayaan hujan"],0),
-Q("Perayaan yang disambut selepas Ramadan?",["Hari Raya Aidilfitri","Tahun Baru Cina","Deepavali","Krismas"],0),
-Q("Perayaan yang menyambut kedatangan tahun baharu?",["Tahun Baru Cina","Deepavali","Hari Raya","Krismas"],0),
-Q("Hari Gawai disambut di negeri?",["Sarawak","Sabah","Johor","Kedah"],0)]},
-{title:"Tujuan dan Kepentingan Perayaan",learn:P("Tujuan: <b>mengeratkan silaturahim</b>, <b>menunjukkan kesyukuran</b>, <b>memupuk perpaduan</b>.","Konsep <b>'open house'</b>: kunjung-mengunjung.","Kita perlu <b>menghormati</b> perayaan kaum lain."),
-questions:[
-Q("Tujuan utama perayaan di Malaysia?",["Mengeratkan silaturahim","Perbalahan","Membazir wang","Penat"],0),
-Q("Konsep 'open house' diamalkan untuk?",["Kunjung-mengunjung","Menyendiri","Bersaing","Bermusuh"],0),
-Q("Sikap yang perlu diamalkan semasa perayaan kaum lain?",["Menghormati","Menghina","Mengganggu","Menjauhi"],0),
-Q("Mengapa perayaan penting?",["Mengeratkan hubungan kaum","Menambah hutang","Mengurangkan penduduk","Menambah masalah"],0),
-Q("Perayaan menunjukkan?",["Kesyukuran","Kekayaan","Pangkat","Kuasa"],0),
-Q("Kepentingan menyambut perayaan bersama?",["Memupuk perpaduan","Perpecahan","Persaingan","Permusuhan"],0),
-Q("Masyarakat yang menghormati perayaan kaum lain melahirkan?",["Perpaduan","Perbalahan","Kekacauan","Perpecahan"],0),
-Q("Apakah maksud 'open house'?",["Kunjung-mengunjung","Menyendiri","Bersaing","Bermusuh"],0),
-Q("Perayaan yang menyatukan semua kaum?",["Hari Kebangsaan","Hari Raya","Tahun Baru Cina","Deepavali"],0),
-Q("Mengapa kita perlu menghormati perayaan kaum lain?",["Mengekalkan keharmonian","Menunjuk kuasa","Mendapat hadiah","Takut"],0)]}],
-challenge:[
-Q("Perayaan utama umat Islam?",["Hari Raya Aidilfitri","Tahun Baru Cina","Deepavali","Krismas"],0),
-Q("Deepavali bermaksud?",["Perayaan cahaya","Perayaan air","Perayaan angin","Perayaan hujan"],0),
-Q("Hari Gawai disambut di?",["Sarawak","Sabah","Johor","Kedah"],0),
-Q("Pesta Kaamatan disambut oleh?",["Kadazandusun","Iban","Melayu","Cina"],0),
-Q("Konsep 'open house' diamalkan untuk?",["Kunjung-mengunjung","Menyendiri","Bersaing","Bermusuh"],0)]},
-{title:"Unit 7: Pemimpin Negara Malaysia",lessons:[
-{title:"Perdana Menteri Malaysia",learn:P("<b>Tunku Abdul Rahman</b> (PM pertama, Bapa Kemerdekaan), <b>Tun Abdul Razak</b> (Bapa Pembangunan), <b>Tun Hussein Onn</b>, <b>Dr. Mahathir</b>.","Tugas PM: <b>mengetuai kerajaan</b>, <b>menentukan dasar negara</b>, <b>memimpin kabinet</b>."),
-questions:[
-Q("Bapa Kemerdekaan Malaysia?",["Tunku Abdul Rahman","Tun Razak","Tun Hussein","Dr. Mahathir"],0),
-Q("PM pertama Malaysia?",["Tunku Abdul Rahman","Tun Razak","Tun Hussein","Dr. Mahathir"],0),
-Q("Bapa Pembangunan?",["Tun Abdul Razak","Tunku","Tun Hussein","Dr. Mahathir"],0),
-Q("PM ke-4 Malaysia?",["Dr. Mahathir","Tun Abdullah","Najib","Anwar"],0),
-Q("Tugas utama PM?",["Mengetuai kerajaan","Mengetuai tentera","Mengetuai sukan","Mengetuai pendidikan"],0),
-Q("Tunku Abdul Rahman lahir pada?",["8 Februari 1903","11 Mac 1922","12 Februari 1922","16 Julai 1925"],0),
-Q("Tun Abdul Razak lahir pada?",["11 Mac 1922","8 Februari 1903","12 Februari 1922","16 Julai 1925"],0),
-Q("Tun Hussein Onn lahir pada?",["12 Februari 1922","8 Februari 1903","11 Mac 1922","16 Julai 1925"],0),
-Q("PM dilantik oleh?",["Yang di-Pertuan Agong","Rakyat","Parlimen","Sultan"],0),
-Q("PM mengetuai mesyuarat?",["Kabinet","Parlimen","Mahkamah","Tentera"],0)]},
-{title:"Tugas dan Tanggungjawab PM",learn:P("<b>Tugas PM</b>:","Mengetuai kerajaan.","Menentukan dasar negara.","Memimpin kabinet.","Menjaga kesejahteraan rakyat.","Mewakili negara di peringkat antarabangsa."),
-questions:[
-Q("Tugas utama PM?",["Mengetuai kerajaan","Mengetuai tentera","Mengetuai sukan","Mengetuai pendidikan"],0),
-Q("PM mengetuai?",["Kabinet","Parlimen","Mahkamah","Tentera"],0),
-Q("PM menentukan?",["Dasar negara","Undang-undang","Hukuman","Cukai"],0),
-Q("PM mewakili negara di?",["Peringkat antarabangsa","Kampung","Bandar","Sekolah"],0),
-Q("PM bertanggungjawab menjaga?",["Kesejahteraan rakyat","Kekayaan sendiri","Pangkat","Kuasa"],0),
-Q("PM dilantik oleh?",["Yang di-Pertuan Agong","Rakyat","Parlimen","Sultan"],0),
-Q("PM perlu mendapat sokongan?",["Majoriti ahli Parlimen","Rakyat","Sultan","Gabenor"],0),
-Q("PM mengetuai kerajaan Persekutuan?",["Ya","Tidak","Kadang-kadang","Tiada jawapan"],0),
-Q("PM bertanggungjawab kepada?",["Parlimen dan rakyat","Sultan","Gabenor","Presiden"],0),
-Q("PM mengetuai mesyuarat?",["Kabinet","Parlimen","Mahkamah","Tentera"],0)]}],
-challenge:[
-Q("PM ke-2 Malaysia?",["Tun Abdul Razak","Tun Hussein","Tunku","Dr. Mahathir"],0),
-Q("PM ke-3 Malaysia?",["Tun Hussein Onn","Tunku","Tun Razak","Dr. Mahathir"],0),
-Q("Malaysia pernah dipimpin oleh PM wanita?",["Tidak pernah","Pernah","Akan datang","Tiada maklumat"],0),
-Q("Tugas PM?",["Mengetuai kerajaan","Mengetuai tentera","Mengetuai sukan","Mengetuai pendidikan"],0),
-Q("PM dilantik oleh?",["Yang di-Pertuan Agong","Rakyat","Parlimen","Sultan"],0)]},
-{title:"Unit 8: Kemajuan Ekonomi Malaysia",lessons:[
-{title:"Perkembangan Awal Ekonomi",learn:P("<b>Ekonomi tradisional</b>: bertani, menangkap ikan, melombong secara kecil-kecilan.","<b>Ekonomi komersial</b>: besar-besaran, guna jentera moden, eksport.","Hasil mahsul: <b>getah</b>, <b>kelapa sawit</b>, <b>petroleum</b>.","Industri: <b>automotif</b> (Proton Saga, 1985), <b>pembuatan</b>, <b>pelancongan</b>."),
-questions:[
-Q("Ciri ekonomi tradisional?",["Kecil-kecilan, sara diri","Besar-besaran, eksport","Guna jentera moden","Modal besar"],0),
-Q("Ciri ekonomi komersial?",["Besar-besaran, eksport","Kecil-kecilan, sara diri","Guna peralatan tradisional","Hasil untuk keluarga"],0),
-Q("Hasil mahsul utama Malaysia?",["Getah, kelapa sawit, petroleum","Gandum, kurma, anggur","Teh, kopi, koko","Jagung, gandum, barli"],0),
-Q("Kereta nasional pertama Malaysia?",["Proton Saga","Perodua Myvi","Proton Wira","Perodua Kancil"],0),
-Q("Kereta nasional pertama dilancarkan pada?",["1985","1990","1995","2000"],0),
-Q("Pelabuhan bertaraf antarabangsa Malaysia?",["Pelabuhan Klang, Tanjung Pelepas","Pelabuhan Singapura","Pelabuhan Bangkok","Pelabuhan Jakarta"],0),
-Q("Industri yang menyumbang eksport terbesar Malaysia?",["Elektrik dan elektronik","Pertanian","Perlombongan","Perhutanan"],0),
-Q("Kemajuan ekonomi membuka peluang?",["Pekerjaan","Perang","Banjir","Penyakit"],0),
-Q("Ekonomi penting untuk?",["Membangunkan negara","Menambah hutang","Mengurangkan penduduk","Menambah masalah"],0),
-Q("Hasil eksport Malaysia?",["Barang ke luar negara","Barang dari luar","Barang terpakai","Barang tiruan"],0)]},
-{title:"Kepentingan Ekonomi",learn:P("Ekonomi kuat = rakyat mendapat manfaat:","Peluang pekerjaan.","Pendapatan negara.","Kemudahan infrastruktur.","Taraf hidup meningkat."),
-questions:[
-Q("Ekonomi kuat membuka?",["Peluang pekerjaan","Perang","Banjir","Penyakit"],0),
-Q("Hasil cukai dan eksport membolehkan kerajaan?",["Membangunkan negara","Menambah hutang","Mengurangkan penduduk","Menambah masalah"],0),
-Q("Kemajuan ekonomi membolehkan kerajaan membina?",["Sekolah, hospital, lebuh raya","Kubu","Tembok","Parit"],0),
-Q("Taraf hidup rakyat meningkat apabila?",["Ekonomi maju","Ekonomi mundur","Ekonomi statik","Ekonomi merosot"],0),
-Q("Ekonomi penting untuk?",["Membangunkan negara","Menambah hutang","Mengurangkan penduduk","Menambah masalah"],0),
-Q("Kemajuan ekonomi membawa?",["Kesejahteraan rakyat","Kemiskinan","Pengangguran","Kekacauan"],0),
-Q("Pelaburan asing penting untuk?",["Menambah modal dan teknologi","Menambah hutang","Mengurangkan pekerjaan","Menaikkan harga"],0),
-Q("Ekonomi yang stabil menjamin?",["Keamanan negara","Perang","Banjir","Penyakit"],0),
-Q("Rakyat mendapat manfaat apabila?",["Ekonomi maju","Ekonomi mundur","Ekonomi statik","Ekonomi merosot"],0),
-Q("Kemajuan ekonomi adalah hasil?",["Usaha bersama","Perang","Banjir","Penyakit"],0)]}],
-challenge:[
-Q("Kereta nasional pertama?",["Proton Saga","Perodua Myvi","Proton Wira","Perodua Kancil"],0),
-Q("Hasil mahsul utama Malaysia?",["Getah, kelapa sawit, petroleum","Gandum, kurma, anggur","Teh, kopi, koko","Jagung, gandum, barli"],0),
-Q("Ekonomi tradisional?",["Kecil-kecilan, sara diri","Besar-besaran, eksport","Guna jentera moden","Modal besar"],0),
-Q("Pelabuhan bertaraf antarabangsa?",["Pelabuhan Klang, Tanjung Pelepas","Pelabuhan Singapura","Pelabuhan Bangkok","Pelabuhan Jakarta"],0),
-Q("Ekonomi penting untuk?",["Membangunkan negara","Menambah hutang","Mengurangkan penduduk","Menambah masalah"],0)]},
-{title:"Unit 9: Sukan Kebanggaan Malaysia",lessons:[
-{title:"Kejayaan Sukan Negara",learn:P("<b>Piala Thomas</b>: Malaysia juara 5 kali.","<b>Sukan Olimpik & Paralimpik</b>: pingat dalam badminton, terjun, berbasikal.","<b>Sukan Komanwel 1998 (SUKOM)</b>: Malaysia tuan rumah.","<b>Le Tour de Langkawi</b>: lumba basikal antarabangsa.","<b>MotoGP</b>: Litar Antarabangsa Sepang."),
-questions:[
-Q("Malaysia juara Piala Thomas berapa kali?",["5","3","7","10"],0),
-Q("Malaysia menjadi tuan rumah Sukan Komanwel pada?",["1998","2001","2017","1989"],0),
-Q("Le Tour de Langkawi ialah?",["Lumba basikal","Lumba kereta","Lumba motosikal","Maraton"],0),
-Q("Litar Antarabangsa Sepang menganjurkan?",["MotoGP","F1 sahaja","Le Tour de Langkawi","Sukan SEA"],0),
-Q("Sukan Olimpik diadakan setiap?",["4 tahun","2 tahun","1 tahun","3 tahun"],0),
-Q("Sukan SEA diadakan setiap?",["2 tahun","4 tahun","1 tahun","5 tahun"],0),
-Q("Malaysia pertama kali sertai Sukan Olimpik pada?",["1956","1960","1964","1968"],0),
-Q("Atlet badminton terkenal Malaysia?",["Datuk Lee Chong Wei","Nicol David","Azizulhasni","Pandelela"],0),
-Q("Nicol David terkenal dalam sukan?",["Skuasy","Badminton","Hoki","Renang"],0),
-Q("Stadium utama Malaysia?",["Bukit Jalil","Merdeka","Shah Alam","Darul Aman"],0)]},
-{title:"Peranan Sukan sebagai Alat Perpaduan",learn:P("Sukan menyatukan rakyat tanpa mengira kaum dan agama.","Slogan <b>'Malaysia Boleh!'</b>.","Bermain bersama-sama memupuk <b>kerjasama</b> dan <b>toleransi</b>.","Menghormati peraturan dan lawan."),
-questions:[
-Q("Peranan sukan sebagai alat perpaduan?",["Menyatukan rakyat","Memecahbelahkan","Mengasingkan","Bermusuh"],0),
-Q("Slogan sorakan rakyat Malaysia?",["Malaysia Boleh!","Malaysia Hebat!","Malaysia Maju!","Malaysia Jaya!"],0),
-Q("Bermain bersama-sama memupuk?",["Kerjasama dan toleransi","Persaingan","Permusuhan","Egoisme"],0),
-Q("Sukan mengajar kita?",["Mematuhi peraturan dan menghormati lawan","Melanggar peraturan","Menghina lawan","Bermusuh"],0),
-Q("Sukan meruntuhkan?",["Tembok perbezaan","Semangat kesukanan","Perpaduan","Kerjasama"],0),
-Q("Apabila atlet Malaysia bertanding, rakyat?",["Bersatu padu menyokong","Bermusuh","Mengasingkan diri","Tidak peduli"],0),
-Q("Sukan melahirkan masyarakat yang?",["Harmoni","Bermusuh","Berpecah","Bersaing"],0),
-Q("Perpaduan melalui sukan bermula di?",["Sekolah dan taman perumahan","Stadium sahaja","Rumah sahaja","Bandar sahaja"],0),
-Q("Sukan mengajar kita menghormati?",["Lawan dan peraturan","Diri sendiri sahaja","Kawan sahaja","Keluarga sahaja"],0),
-Q("Sukan penting untuk?",["Kesihatan dan perpaduan","Kekayaan","Pangkat","Kuasa"],0)]}],
-challenge:[
-Q("Jaguh badminton Malaysia?",["Datuk Lee Chong Wei","Nicol David","Azizulhasni","Pandelela"],0),
-Q("Malaysia menjadi tuan rumah Sukan Komanwel pada?",["1998","2001","2017","1989"],0),
-Q("Sukan SEA diadakan setiap?",["2 tahun","4 tahun","1 tahun","5 tahun"],0),
-Q("Sukan Olimpik diadakan setiap?",["4 tahun","2 tahun","1 tahun","3 tahun"],0),
-Q("Peranan sukan sebagai alat perpaduan?",["Menyatukan rakyat","Memecahbelahkan","Mengasingkan","Bermusuh"],0)]},
-{title:"Unit 10: Malaysia dan Dunia",lessons:[
-{title:"Malaysia dalam Pertubuhan Antarabangsa",learn:P("Malaysia ahli <b>ASEAN</b>, <b>PBB</b>, <b>OIC</b>, <b>Komanwel</b>.","<b>ASEAN</b>: ditubuhkan 8 Ogos 1967 di Bangkok.","<b>PBB</b>: Malaysia sertai 1957.","<b>OIC</b>: Pertubuhan Kerjasama Islam.","<b>Komanwel</b>: diketuai Raja British."),
-questions:[
-Q("ASEAN ditubuhkan pada?",["8 Ogos 1967","31 Ogos 1957","16 September 1963","1 Januari 1960"],0),
-Q("ASEAN ditubuhkan di?",["Bangkok, Thailand","Kuala Lumpur","Jakarta","Manila"],0),
-Q("Malaysia sertai PBB pada?",["1957","1963","1970","1965"],0),
-Q("OIC bermaksud?",["Pertubuhan Kerjasama Islam","Persatuan Islam","Organisasi Islam","Pertubuhan Islam"],0),
-Q("Komanwel diketuai oleh?",["Raja British","Presiden","Perdana Menteri","Sultan"],0),
-Q("Ibu pejabat ASEAN?",["Jakarta","KL","Bangkok","Manila"],0),
-Q("PBB bermaksud?",["Pertubuhan Bangsa-Bangsa Bersatu","Persatuan Bangsa","Pertubuhan Bebas","Persatuan Dunia"],0),
-Q("Malaysia ahli ASEAN?",["Ya","Tidak","Akan","Tiada"],0),
-Q("PBB ibu pejabat?",["New York","Geneva","Paris","London"],0),
-Q("Faedah hubungan antarabangsa?",["Kerjasama ekonomi, pendidikan, keselamatan","Perang","Pengasingan","Permusuhan"],0)]},
-{title:"Penglibatan Malaysia dalam ASEAN",learn:P("Malaysia aktif dalam <b>ZOPFAN</b> (Zon Aman, Bebas dan Berkecuali).","Menyelesaikan konflik serantau.","Kerjasama ekonomi (AIP).","Kerjasama sosial dan kebudayaan.","Sukan SEA."),
-questions:[
-Q("ZOPFAN bermaksud?",["Zon Aman, Bebas dan Berkecuali","Zon Perdagangan Bebas","Zon Ekonomi","Zon Ketenteraan"],0),
-Q("Malaysia menyeru agar kuasa besar tidak campur tangan dalam isu?",["Vietnam","Kemboja","Thailand","Myanmar"],0),
-Q("Kerjasama ekonomi ASEAN melalui?",["AIP","AEC","AFTA","ZOPFAN"],0),
-Q("Sukan SEA dianjurkan untuk?",["Menjalinkan kerjasama dalam sukan","Perang","Permusuhan","Persaingan"],0),
-Q("Logo ASEAN menunjukkan?",["10 tangkai padi","Bintang","Bulan","Matahari"],0),
-Q("Moto ASEAN?",["Keamanan, kestabilan, kemakmuran","Perang, pengasingan","Persaingan, permusuhan","Kekayaan, kuasa"],0),
-Q("10 tangkai padi melambangkan?",["10 negara ASEAN","10 tahun","10 pemimpin","10 dasar"],0),
-Q("Kerjasama sosial ASEAN dalam bidang?",["Pendidikan, pertukaran pelajar","Ketenteraan","Perang","Pengasingan"],0),
-Q("Konflik Kemboja diselesaikan melalui?",["Pilihan raya 1993","Perang","Rundingan","Pengasingan"],0),
-Q("Malaysia menghantar pasukan pengaman di bawah?",["PBB (UNTAC)","NATO","ASEAN","OIC"],0)]}],
-challenge:[
-Q("ASEAN ditubuhkan pada?",["8 Ogos 1967","31 Ogos 1957","16 September 1963","1 Januari 1960"],0),
-Q("Ibu pejabat ASEAN?",["Jakarta","KL","Bangkok","Manila"],0),
-Q("OIC bermaksud?",["Pertubuhan Kerjasama Islam","Persatuan Islam","Organisasi Islam","Pertubuhan Islam"],0),
-Q("PBB bermaksud?",["Pertubuhan Bangsa-Bangsa Bersatu","Persatuan Bangsa","Pertubuhan Bebas","Persatuan Dunia"],0),
-Q("Faedah hubungan antarabangsa?",["Kerjasama ekonomi, pendidikan, keselamatan","Perang","Pengasingan","Permusuhan"],0)]}
-]}
-};
+(function(){
+  // Helpers — defined here so this file works standalone
+  const Q = (q, options, answer, img) => ({ q, options, answer, img });
+  const W = (w, _e, min, max, to, from, subject) => ({ w, min, max, to, from, subject });
+  const P = (...t) => t.map(x => "<p>" + x + "</p>").join("");
+
+  window.SUBJ = [
+    ["Bahasa Melayu", "🇲🇾"],
+    ["English", "🇬🇧"],
+    ["Mathematics", "➗"],
+    ["Science", "🔬"],
+    ["Sejarah", "📜"]
+  ];
+
+  window.CURRICULUM = {
+    "Bahasa Melayu": {
+      units: [
+        {
+          title: "Kata: Golongan Kata",
+          lessons: [
+            {
+              title: "Kata Nama",
+              learn: P("<b>Kata Nama</b> merujuk kepada orang, tempat, benda, atau perkara."),
+              questions: [
+                Q("Apakah kata nama?", ["Kata yang merujuk orang, tempat, benda", "Kata yang menunjukkan perbuatan", "Kata yang menerangkan sifat", "Kata yang menyambung ayat"], 0),
+                Q("Yang manakah Kata Nama Am?", ["Aminah", "Buku", "Malaysia", "Kuala Lumpur"], 1),
+                Q("Yang manakah Kata Nama Khas?", ["kucing", "kerusi", "Aminah", "meja"], 2),
+                Q("Yang manakah Kata Ganti Nama?", ["meja", "dia", "lari", "cantik"], 1),
+                Q("'Negara Malaysia' ialah contoh?", ["Kata Nama Am", "Kata Nama Khas", "Kata Ganti Nama", "Kata Kerja"], 1),
+                Q("'Guru' ialah contoh?", ["Kata Nama Am", "Kata Nama Khas", "Kata Kerja", "Kata Adjektif"], 0),
+                Q("'Mereka' ialah contoh?", ["Kata Nama Khas", "Kata Ganti Nama", "Kata Adjektif", "Kata Kerja"], 1),
+                Q("'Sekolah' ialah contoh?", ["Kata Kerja", "Kata Nama Am", "Kata Ganti Nama", "Kata Adjektif"], 1),
+                Q("'Kuala Lumpur' ialah contoh?", ["Kata Nama Khas", "Kata Nama Am", "Kata Kerja", "Kata Adjektif"], 0),
+                Q("'Saya' ialah contoh?", ["Kata Ganti Nama", "Kata Nama Khas", "Kata Adjektif", "Kata Kerja"], 0)
+              ]
+            },
+            {
+              title: "Kata Kerja",
+              learn: P("<b>Kata Kerja</b>: perbuatan. Transitif dan tak transitif."),
+              questions: [
+                Q("Apakah kata kerja?", ["Kata yang menunjukkan perbuatan", "Kata yang merujuk benda", "Kata yang menerangkan sifat", "Kata yang menyambung"], 0),
+                Q("Yang manakah Kata Kerja?", ["meja", "makan", "cantik", "dan"], 1),
+                Q("'Membaca buku' — transitif?", ["Membaca", "Buku", "Baca buku", "Buku itu"], 0),
+                Q("'Tidur' — kata kerja?", ["Transitif", "Tak Transitif", "Adjektif", "Nama"], 1),
+                Q("'Minum' — kata kerja?", ["Transitif", "Tak Transitif", "Nama", "Adjektif"], 0),
+                Q("Kata Kerja Tak Transitif?", ["menulis", "mandi", "makan", "membaca"], 1),
+                Q("'Dia ___ bola.' — transitif?", ["menendang", "pergi", "sedih", "cantik"], 0),
+                Q("'Aminah ___ ke sekolah.' — tak transitif?", ["berjalan", "memakan", "membaca", "menonton"], 0),
+                Q("'Menonton' memerlukan?", ["Objek", "Subjek", "Kata seru", "Kata tanya"], 0),
+                Q("'Berlari' ialah?", ["Transitif", "Tak Transitif", "Adjektif", "Nama"], 1)
+              ]
+            },
+            {
+              title: "Kata Adjektif",
+              learn: P("<b>Kata Adjektif</b>: menerangkan sifat. 9 jenis."),
+              questions: [
+                Q("Apakah kata adjektif?", ["Menerangkan sifat kata nama", "Menunjukkan perbuatan", "Merujuk benda", "Menyambung ayat"], 0),
+                Q("'Cantik' jenis?", ["Sifatan", "Warna", "Ukuran", "Bentuk"], 0),
+                Q("'Merah' jenis?", ["Sifatan", "Warna", "Bentuk", "Cara"], 1),
+                Q("'Besar' jenis?", ["Warna", "Ukuran", "Cara", "Bentuk"], 1),
+                Q("'Bulat' jenis?", ["Bentuk", "Jarak", "Warna", "Cara"], 0),
+                Q("'Jauh' jenis?", ["Jarak", "Waktu", "Cara", "Bentuk"], 0),
+                Q("'Baharu' jenis?", ["Waktu", "Cara", "Perasaan", "Warna"], 0),
+                Q("'Cermat' jenis?", ["Cara", "Warna", "Ukuran", "Bentuk"], 0),
+                Q("'Wangi' jenis?", ["Pancaindera", "Perasaan", "Bentuk", "Cara"], 0),
+                Q("'Sedih' jenis?", ["Perasaan", "Warna", "Cara", "Bentuk"], 0)
+              ]
+            },
+            {
+              title: "Kata Tugas",
+              learn: P("<b>Kata Tugas</b>: penyambung, penerang, penegas."),
+              questions: [
+                Q("Apakah kata tugas?", ["Kata yang menyambung atau menerangkan", "Kata yang merujuk orang", "Kata yang menunjukkan perbuatan", "Kata yang menerangkan sifat"], 0),
+                Q("'Di', 'ke', 'dari' ialah?", ["Kata Sendi Nama", "Kata Hubung", "Kata Nafi", "Kata Tanya"], 0),
+                Q("'Dan', 'tetapi', 'atau' ialah?", ["Kata Sendi", "Kata Hubung", "Kata Bilangan", "Kata Nafi"], 1),
+                Q("'Dua', 'semua' ialah?", ["Kata Bilangan", "Kata Hubung", "Kata Tanya", "Kata Seru"], 0),
+                Q("'Tidak', 'bukan' ialah?", ["Kata Nafi", "Kata Penguat", "Kata Seru", "Kata Tanya"], 0),
+                Q("'Sangat', 'amat' ialah?", ["Kata Penguat", "Kata Nafi", "Kata Bilangan", "Kata Arah"], 0),
+                Q("'Apa', 'siapa' ialah?", ["Kata Tanya", "Kata Seru", "Kata Perintah", "Kata Nafi"], 0),
+                Q("'Aduh', 'wah' ialah?", ["Kata Seru", "Kata Tanya", "Kata Nafi", "Kata Bilangan"], 0),
+                Q("'Telah', 'akan' ialah?", ["Kata Bantu", "Kata Sendi", "Kata Seru", "Kata Nafi"], 0),
+                Q("'Jangan', 'tolong' ialah?", ["Kata Perintah", "Kata Tanya", "Kata Nafi", "Kata Seru"], 0)
+              ]
+            },
+            {
+              title: "Pembentukan Kata",
+              learn: P("Kata tunggal, terbitan, ganda, majmuk, simpulan bahasa."),
+              questions: [
+                Q("Apakah Kata Tunggal?", ["Kata dasar tanpa imbuhan", "Kata berimbuhan", "Kata berulang", "Kata gabungan"], 0),
+                Q("'Rumah' ialah?", ["Kata Tunggal", "Kata Terbitan", "Kata Ganda", "Kata Majmuk"], 0),
+                Q("'Berlari' ialah?", ["Kata Terbitan", "Kata Tunggal", "Kata Majmuk", "Kata Ganda"], 0),
+                Q("'Budak-budak' ialah?", ["Kata Ganda", "Kata Tunggal", "Kata Majmuk", "Kata Terbitan"], 0),
+                Q("'Kapal terbang' ialah?", ["Kata Majmuk", "Kata Tunggal", "Kata Ganda", "Kata Terbitan"], 0),
+                Q("'Buah hati' ialah?", ["Simpulan Bahasa", "Kata Majmuk", "Kata Tunggal", "Kata Ganda"], 0),
+                Q("'Makanan' dari kata dasar?", ["Makan", "Makanan", "Nakan", "Kan"], 0),
+                Q("'Pelajar' dari kata dasar?", ["Ajar", "Lajar", "Pelajar", "Jar"], 0),
+                Q("'Rumah-rumah' kata ganda?", ["Penuh", "Separa", "Berentak", "Majmuk"], 0),
+                Q("'Tetamu' kata ganda?", ["Separa", "Penuh", "Berentak", "Majmuk"], 0)
+              ]
+            },
+            {
+              title: "BM UASA: Kata Hubung",
+              learn: P("<b>Kata hubung</b> menghubungkan dua klausa atau frasa."),
+              questions: [
+                Q("Din mengambil surat itu ______ menyerahkannya kepada Rajoo.", ["lalu", "agar", "maka", "kerana"], 0),
+                Q("Charles lulus ujian itu ______ adiknya gagal.", ["dan", "serta", "tetapi", "malahan"], 2),
+                Q("Zamzarina berkata-kata ______ merenung wajah temannya.", ["kerana", "sambil", "maka", "lalu"], 1),
+                Q("Keluarga Chong Wei mungkin berpindah ke Johor ______ ke Melaka.", ["dan", "lalu", "atau", "agar"], 2),
+                Q("Dia tidak hadir ke sekolah ______ demam.", ["lalu", "kerana", "tetapi", "sambil"], 1),
+                Q("Belajarlah rajin-rajin ______ kamu lulus.", ["kerana", "supaya", "atau", "lalu"], 1),
+                Q("Ali ______ Ahmad pergi ke sekolah.", ["tetapi", "dan", "kerana", "sambil"], 1),
+                Q("Awak mahu teh ______ kopi?", ["atau", "dan", "supaya", "lalu"], 0),
+                Q("______ keluarga Wong tiba, datuknya tiada di rumah.", ["Semasa", "Setelah", "Supaya", "Sementara"], 0),
+                Q("Farzana ______ Mei Hua sangat gembira.", ["dan", "lalu", "tetapi", "walhal"], 0)
+              ]
+            }
+          ],
+          challenge: [
+            Q("'Cikgu Lim' ialah contoh?", ["Kata Nama Am", "Kata Nama Khas", "Kata Ganti Nama", "Kata Kerja"], 1),
+            Q("'Warna-warni' kata ganda?", ["Berentak", "Penuh", "Separa", "Majmuk"], 0),
+            Q("'Ulat buku' bermaksud?", ["Orang yang suka membaca", "Ulat sebenar", "Buku lama", "Buku baru"], 0)
+          ]
+        },
+        {
+          title: "Unit 1: Saling Menyayangi",
+          lessons: [{
+            title: "Kasih Sayang Keluarga",
+            learn: P("<b>Kasih sayang</b> dalam keluarga penting."),
+            questions: [
+              Q("Nilai dalam keluarga?", ["Kasih sayang", "Egoisme", "Kebencian", "Pentingkan diri"], 0),
+              Q("Jasa ibu tidak terbalas?", ["Pengorbanan ibu tidak dapat dibalas", "Ibu bekerja keras", "Ibu suka marah", "Ibu selalu sibuk"], 0),
+              Q("Cara bantu ibu bapa?", ["Membantu kerja rumah", "Menonton TV", "Bermain", "Tidur"], 0),
+              Q("Fauzan anak cakna?", ["Anak prihatin", "Anak malas", "Anak nakal", "Anak degil"], 0)
+            ]
+          }],
+          challenge: [
+            Q("Keluarga bahagia?", ["Saling menyayangi", "Harta", "Pangkat", "Kuasa"], 0),
+            Q("Mengapa hormat ibu bapa?", ["Kerana berjasa", "Kerana kaya", "Kerana terkenal", "Kerana pangkat"], 0)
+          ]
+        },
+        {
+          title: "Unit 2: Ke Sana ke Sini",
+          lessons: [{
+            title: "Melancong",
+            learn: P("Melancong mengeratkan hubungan keluarga."),
+            questions: [
+              Q("Faedah melancong?", ["Mengukuhkan hubungan", "Bazir wang", "Penat", "Risau"], 0),
+              Q("Persiapan melancong?", ["Membawa beg", "Lupa dokumen", "Tidak merancang", "Terlupa masa"], 0),
+              Q("Tempat menarik Malaysia?", ["Pulau Langkawi", "Menara Eiffel", "Tembok Besar", "Taj Mahal"], 0),
+              Q("Melancong menambah?", ["Pengetahuan", "Masalah", "Hutang", "Risau"], 0)
+            ]
+          }],
+          challenge: [
+            Q("Patuhi semasa melancong?", ["Peraturan tempat", "Bebas", "Suka hati", "Mengikut rasa"], 0),
+            Q("Faedah lawat tempat bersejarah?", ["Menambah ilmu", "Bosan", "Bazir", "Penat"], 0)
+          ]
+        },
+        {
+          title: "Unit 3: Gaya Hidup Sihat",
+          lessons: [{
+            title: "Makanan Seimbang",
+            learn: P("<b>Piramid makanan</b> menunjukkan pemakanan seimbang."),
+            questions: [
+              Q("Maksud makanan seimbang?", ["Mengandungi semua nutrien", "Mahal", "Segera", "Manis"], 0),
+              Q("Berapa gelas air sehari?", ["6-8 gelas", "1-2 gelas", "20 gelas", "3 gelas"], 0),
+              Q("Kebaikan bersenam?", ["Badan sihat", "Letih", "Gemuk", "Sakit"], 0),
+              Q("Makanan yang dikurangkan?", ["Gula dan garam", "Sayur", "Buah", "Air"], 0)
+            ]
+          }],
+          challenge: [
+            Q("Kesan makan berlebihan?", ["Obesiti", "Sihat", "Cergas", "Kuat"], 0),
+            Q("Waktu makan penting?", ["Sarapan", "Makan malam", "Snek", "Minum"], 0)
+          ]
+        },
+        {
+          title: "Unit 4: Kesihatan Diri",
+          lessons: [{
+            title: "Tanggungjawab Kesihatan",
+            learn: P("<b>Kesihatan</b> tanggungjawab setiap individu."),
+            questions: [
+              Q("Amalan hidup sihat?", ["Bersenam berkala", "Makan segera", "Tidur lewat", "Malas"], 0),
+              Q("Jam tidur murid?", ["8-10 jam", "3-4 jam", "12-14 jam", "5 jam"], 0),
+              Q("Vaksinasi bertujuan?", ["Mencegah penyakit", "Tambah berat", "Lambat tumbuh", "Cepat besar"], 0),
+              Q("Tanda badan sihat?", ["Cergas dan bertenaga", "Letih", "Mudah sakit", "Lemah"], 0)
+            ]
+          }],
+          challenge: [
+            Q("Apabila sakit?", ["Berjumpa doktor", "Biar", "Makan ubat orang", "Tidur sahaja"], 0),
+            Q("Jaga kesihatan mental?", ["Bercakap dengan dipercayai", "Pendam perasaan", "Mengasingkan diri", "Simpan sendiri"], 0)
+          ]
+        },
+        {
+          title: "Unit 5: Kebersihan",
+          lessons: [{
+            title: "Kebersihan Diri",
+            learn: P("Kebersihan menjamin kesihatan."),
+            questions: [
+              Q("Kesan tidak jaga kebersihan?", ["Mudah penyakit", "Sihat", "Cergas", "Kuat"], 0),
+              Q("Jaga kebersihan persekitaran?", ["Mengitar semula", "Buang sampah merata", "Bakar sampah", "Kotorkan"], 0),
+              Q("Berus gigi sehari?", ["2 kali", "1 kali", "3 hari sekali", "Seminggu sekali"], 0),
+              Q("Penyakit air kotor?", ["Taun", "Campak", "Selesema", "Demam"], 0)
+            ]
+          }],
+          challenge: [
+            Q("Amalan kebersihan diri?", ["Mandi setiap hari", "Seminggu sekali", "Tidak mandi", "Bila perlu"], 0),
+            Q("Buang sampah betul?", ["Dalam tong sampah", "Dalam longkang", "Tepi jalan", "Merata"], 0)
+          ]
+        },
+        {
+          title: "Unit 6: Berhati-hati",
+          lessons: [{
+            title: "Keselamatan Diri",
+            learn: P("Keselamatan diutamakan."),
+            questions: [
+              Q("Keselamatan di jalan?", ["Guna jejantas", "Melintas tanpa lihat", "Bermain di jalan", "Berlari"], 0),
+              Q("Apabila kebakaran?", ["Hubungi 999", "Bersembunyi", "Berlari tanpa arah", "Duduk diam"], 0),
+              Q("Nombor kecemasan?", ["999", "111", "888", "000"], 0),
+              Q("Tanda amaran pembinaan?", ["Papan kuning", "Merah", "Hijau", "Biru"], 0)
+            ]
+          }],
+          challenge: [
+            Q("Orang tak dikenali mengajak pergi?", ["Tolak dan maklumkan ibu bapa", "Ikut", "Bersama", "Dengar sahaja"], 0),
+            Q("Keselamatan kolam renang?", ["Berhati-hati, bersama dewasa", "Sendiri", "Berlari di tepi", "Berenang jauh"], 0)
+          ]
+        },
+        {
+          title: "Unit 7: Elak Kemalangan",
+          lessons: [{
+            title: "Situasi Berbahaya",
+            learn: P("Kenali situasi berbahaya."),
+            questions: [
+              Q("Berjalan tempat gelap?", ["Bersama orang dipercayai", "Sendiri", "Berlari laju", "Duduk"], 0),
+              Q("Bermain api?", ["Berbahaya", "Selamat", "Seronok", "Menyihatkan"], 0),
+              Q("Keselamatan di sekolah?", ["Beratur semasa bergerak", "Berlari", "Menolak kawan", "Bermain"], 0),
+              Q("Bila berhati-hati di jalan?", ["Sentiasa", "Kadang-kadang", "Tidak perlu", "Jarang"], 0)
+            ]
+          }],
+          challenge: [
+            Q("Sebelum melintas?", ["Lihat kiri kanan", "Terus melintas", "Berlari", "Duduk"], 0),
+            Q("Keselamatan di rumah?", ["Jangan main suis elektrik", "Main pisau", "Panjat almari", "Lompat"], 0)
+          ]
+        },
+        {
+          title: "Unit 8: Elak Bahaya",
+          lessons: [{
+            title: "Bahaya & Pencegahan",
+            learn: P("Elak bahaya di rumah, sekolah."),
+            questions: [
+              Q("Bahan berbahaya di rumah?", ["Bahan kimia", "Bantal", "Buku", "Baju"], 0),
+              Q("Amaran botol racun?", ["Simbol tengkorak", "Buah", "Haiwan comel", "Bunga"], 0),
+              Q("Termakan bahan kimia?", ["Berjumpa doktor", "Biar", "Minum air", "Tidur"], 0),
+              Q("Simpan bahan berbahaya?", ["Tempat tinggi, berkunci", "Di lantai", "Atas meja", "Merata"], 0)
+            ]
+          }],
+          challenge: [
+            Q("Bahaya di dapur?", ["Pisau tajam", "Pinggan kertas", "Tuala", "Sudu"], 0),
+            Q("Terhidu gas?", ["Keluar dan beritahu dewasa", "Duduk diam", "Tidur", "Tunggu"], 0)
+          ]
+        },
+        {
+          title: "Unit 9: Muafakat Berkat",
+          lessons: [{
+            title: "Semangat Bermuafakat",
+            learn: P("<b>Muafakat</b> membawa kebaikan."),
+            questions: [
+              Q("Maksud muafakat?", ["Bekerjasama", "Bersaing", "Bermusuh", "Bersendiri"], 0),
+              Q("Faedah bergotong-royong?", ["Kerja cepat siap", "Kerja lambat", "Bersendiri", "Bosan"], 0),
+              Q("Contoh muafakat?", ["Gotong-royong", "Bersendiri", "Bergaduh", "Bertengkar"], 0),
+              Q("Peribahasa muafakat?", ["Muafakat membawa berkat", "Berat mata memandang", "Sikit-sikit jadi bukit", "Berat sama dipikul"], 0)
+            ]
+          }],
+          challenge: [
+            Q("Sikap bermuafakat?", ["Toleransi", "Ego", "Bersaing", "Mementingkan diri"], 0),
+            Q("Kebaikan hidup bermasyarakat?", ["Saling membantu", "Bersendiri", "Bermusuh", "Bersaing"], 0)
+          ]
+        },
+        {
+          title: "Unit 10: Bersatu Kita Teguh",
+          lessons: [{
+            title: "Perpaduan Kaum",
+            learn: P("<b>Perpaduan</b> penting."),
+            questions: [
+              Q("Kepentingan perpaduan?", ["Memajukan negara", "Perbalahan", "Pecahbelah", "Kekacauan"], 0),
+              Q("Kukuhkan perpaduan?", ["Meraikan perayaan bersama", "Mengasingkan", "Menghina", "Menjauhi"], 0),
+              Q("Masyarakat majmuk Malaysia?", ["Pelbagai kaum", "Satu kaum", "Dua kaum", "Tiada kaum"], 0),
+              Q("Sikap toleransi?", ["Bertolak ansur", "Mementingkan diri", "Mengasingkan", "Bermusuh"], 0)
+            ]
+          }],
+          challenge: [
+            Q("Peribahasa bersatu?", ["Bersatu teguh bercerai roboh", "Sikit-sikit jadi bukit", "Berat sama dipikul", "Muafakat berkat"], 0),
+            Q("Faedah perpaduan?", ["Keamanan negara", "Kekacauan", "Perang", "Perbalahan"], 0)
+          ]
+        },
+        {
+          title: "Unit 11: Jujur dan Amanah",
+          lessons: [{
+            title: "Integriti Diri",
+            learn: P("<b>Integriti</b>: jujur, amanah."),
+            questions: [
+              Q("Maksud integriti?", ["Jujur dan amanah", "Malas", "Sombong", "Degil"], 0),
+              Q("Integriti di sekolah?", ["Mengaku kesalahan", "Meniru ujian", "Berbohong", "Curi"], 0),
+              Q("Mengapa integriti penting?", ["Membina kepercayaan", "Terkenal", "Hadiah", "Pangkat"], 0),
+              Q("Terjumpa wang?", ["Serah kepada guru", "Simpan", "Guna", "Belanja"], 0)
+            ]
+          }],
+          challenge: [
+            Q("Contoh amanah?", ["Menjaga barang pinjaman", "Rosakkan", "Hilangkan", "Jual"], 0),
+            Q("Sifat jujur membawa?", ["Kepercayaan orang", "Kebencian", "Kerugian", "Masalah"], 0)
+          ]
+        },
+        {
+          title: "Unit 12: Bersih dan Cekap",
+          lessons: [{
+            title: "Amalan Bersih",
+            learn: P("<b>Bersih</b> dan <b>cekap</b>."),
+            questions: [
+              Q("Ciri orang cekap?", ["Siapkan kerja awal", "Bertangguh", "Malas", "Lengah"], 0),
+              Q("Manfaat bersih?", ["Kesihatan terjamin", "Penyakit", "Kotor", "Lemah"], 0),
+              Q("Cara jadi cekap?", ["Merancang kerja", "Main dulu", "Tidur", "Tengok TV"], 0),
+              Q("Bersih persekitaran?", ["Mengitar semula", "Buang sampah", "Bakar", "Kotorkan"], 0)
+            ]
+          }],
+          challenge: [
+            Q("Sikap bersih?", ["Peribadi mulia", "Peribadi buruk", "Malas", "Kotor"], 0),
+            Q("Cekap urus masa?", ["Merancang jadual", "Main telefon", "Tidak tidur", "Tengok TV"], 0)
+          ]
+        },
+        {
+          title: "Unit 13: Warisan Budaya",
+          lessons: [{
+            title: "Warisan Budaya",
+            learn: P("Warisan budaya perlu dipelihara."),
+            questions: [
+              Q("Contoh warisan budaya?", ["Tarian tradisional", "Permainan video", "Fesyen Barat", "Lagu asing"], 0),
+              Q("Cara memelihara?", ["Mempelajari dan praktik", "Lupakan", "Tukar", "Rosakkan"], 0),
+              Q("Alat muzik tradisional?", ["Kompang", "Gitar", "Piano", "Biola"], 0),
+              Q("Tarian tradisional?", ["Kuda Kepang", "Breakdance", "Balet", "Salsa"], 0)
+            ]
+          }],
+          challenge: [
+            Q("Mengapa pelihara warisan?", ["Identiti bangsa", "Bosan", "Fesyen", "Lapuk"], 0),
+            Q("Warisan bukan kebendaan?", ["Bahasa", "Bangunan", "Batu", "Tembikar"], 0)
+          ]
+        },
+        {
+          title: "Unit 14: Persada Seni",
+          lessons: [{
+            title: "Seni & Budaya",
+            learn: P("Seni mencerminkan identiti bangsa."),
+            questions: [
+              Q("Maksud jati diri?", ["Identiti diri", "Kekayaan", "Pangkat", "Kuasa"], 0),
+              Q("Seni batik?", ["Lukisan kain", "Ukiran kayu", "Anyaman", "Tenunan"], 0),
+              Q("Songket ditenun dengan?", ["Benang emas", "Plastik", "Kertas", "Kain"], 0),
+              Q("Wau bulan?", ["Permainan tradisional", "Makanan", "Pakaian", "Senjata"], 0)
+            ]
+          }],
+          challenge: [
+            Q("Alat muzik tradisional Cina?", ["Erhu", "Kompang", "Sitar", "Gendang"], 0),
+            Q("Seni ukiran kayu?", ["Kelantan", "Johor", "Sabah", "Penang"], 0)
+          ]
+        },
+        {
+          title: "Unit 15: Teknologi",
+          lessons: [{
+            title: "Sains & Teknologi",
+            learn: P("Teknologi memudahkan kehidupan."),
+            questions: [
+              Q("Faedah teknologi?", ["Memudahkan komunikasi", "Kemalasan", "Bazir masa", "Rugi"], 0),
+              Q("Teknologi komunikasi?", ["Telefon pintar", "Kayu", "Batu", "Daun"], 0),
+              Q("Inovasi?", ["Penciptaan baharu", "Meniru", "Membeli", "Mengubah"], 0),
+              Q("Guna teknologi?", ["Berhemah", "Bebas", "Sepuasnya", "Mengikut rasa"], 0)
+            ]
+          }],
+          challenge: [
+            Q("Kesan negatif teknologi?", ["Ketagihan", "Kesihatan", "Pendidikan", "Perpaduan"], 0),
+            Q("Teknologi hijau?", ["Mesra alam", "Pencemaran", "Kerosakan", "Bazir"], 0)
+          ]
+        }
+      ]
+    },
+
+    "English": {
+      units: [
+        {
+          title: "Grammar: Parts of Speech & Idioms",
+          lessons: [
+            {
+              title: "Nouns",
+              learn: P("<b>Noun</b>: names a person, place, thing or idea."),
+              questions: [
+                Q("What is a noun?", ["A person, place, thing or idea", "An action word", "A describing word", "A joining word"], 0),
+                Q("Which is a common noun?", ["Aminah", "School", "Malaysia", "Kuala Lumpur"], 1),
+                Q("Which is a proper noun?", ["book", "city", "Malaysia", "table"], 2),
+                Q("Which is an abstract noun?", ["table", "courage", "dog", "apple"], 1),
+                Q("Which is a collective noun?", ["flock", "bird", "fly", "feather"], 0),
+                Q("Which is a countable noun?", ["water", "book", "rice", "sand"], 1),
+                Q("Which is an uncountable noun?", ["pen", "apple", "water", "chair"], 2),
+                Q("Plural of 'child'?", ["childs", "children", "childes", "child"], 1),
+                Q("Plural of 'box'?", ["boxs", "boxen", "boxes", "box"], 2),
+                Q("Which is a noun?", ["run", "quickly", "happiness", "slowly"], 2)
+              ]
+            },
+            {
+              title: "Pronouns",
+              learn: P("<b>Pronoun</b> replaces a noun."),
+              questions: [
+                Q("What is a pronoun?", ["A word that replaces a noun", "A describing word", "An action word", "A joining word"], 0),
+                Q("Which is a personal pronoun?", ["cat", "they", "green", "run"], 1),
+                Q("Which is a possessive pronoun?", ["mine", "I", "me", "we"], 0),
+                Q("Which is a reflexive pronoun?", ["myself", "my", "me", "mine"], 0),
+                Q("Which is a demonstrative pronoun?", ["this", "she", "run", "happy"], 0),
+                Q("Replace 'Ali and I' with a pronoun:", ["We", "They", "She", "He"], 0),
+                Q("Replace 'Aminah' with a pronoun:", ["She", "He", "It", "We"], 0),
+                Q("'This is ___ book.' (my)", ["mine", "my", "me", "I"], 1),
+                Q("'The book is ___.' (mine)", ["mine", "my", "me", "I"], 0),
+                Q("Correct sentence?", ["Him is tall.", "He is tall.", "His is tall.", "He tall."], 1)
+              ]
+            },
+            {
+              title: "Verbs",
+              learn: P("<b>Verb</b>: action or state."),
+              questions: [
+                Q("What is a verb?", ["An action or state word", "A person's name", "A describing word", "A joining word"], 0),
+                Q("Which is an action verb?", ["jump", "blue", "table", "happy"], 0),
+                Q("Which is a linking verb?", ["is", "run", "quickly", "red"], 0),
+                Q("Which is a helping verb?", ["will", "eat", "slow", "blue"], 0),
+                Q("Past tense of 'walk'?", ["walked", "walks", "walking", "walk"], 0),
+                Q("Past tense of 'go'?", ["goed", "went", "gone", "going"], 1),
+                Q("Past tense of 'eat'?", ["eated", "ate", "eating", "eaten"], 1),
+                Q("Past participle of 'write'?", ["wrote", "writed", "written", "writing"], 2),
+                Q("Which uses a helping verb?", ["I run.", "I can run.", "I ran.", "I am running."], 1),
+                Q("Past tense of 'see'?", ["seed", "saw", "seen", "seeing"], 1)
+              ]
+            },
+            {
+              title: "Adjectives",
+              learn: P("<b>Adjective</b>: describes a noun."),
+              questions: [
+                Q("What is an adjective?", ["A word that describes a noun", "An action word", "A person's name", "A joining word"], 0),
+                Q("Which is an adjective?", ["beautiful", "jump", "slowly", "and"], 0),
+                Q("Which is an adjective?", ["book", "red", "run", "eat"], 1),
+                Q("Comparative of 'tall'?", ["taller", "tallest", "talls", "tall"], 0),
+                Q("Superlative of 'big'?", ["bigger", "biggest", "bigs", "big"], 1),
+                Q("Comparative of 'happy'?", ["happier", "happiest", "happys", "happy"], 0),
+                Q("Superlative of 'good'?", ["gooder", "best", "goodest", "better"], 1),
+                Q("Which is an adjective?", ["quickly", "tasty", "eat", "slowly"], 1),
+                Q("'The ___ boy smiled.'", ["tall", "jump", "slowly", "run"], 0),
+                Q("Which is comparative?", ["smallest", "smaller", "small", "smallness"], 1)
+              ]
+            },
+            {
+              title: "Adverbs",
+              learn: P("<b>Adverb</b>: describes a verb."),
+              questions: [
+                Q("What is an adverb?", ["A word that describes a verb", "A person's name", "A place", "A noun"], 0),
+                Q("Which is an adverb?", ["quickly", "quick", "quicker", "quickest"], 0),
+                Q("Adverb of time?", ["yesterday", "here", "slowly", "loudly"], 0),
+                Q("Adverb of place?", ["here", "quickly", "usually", "always"], 0),
+                Q("Adverb of frequency?", ["often", "fast", "now", "today"], 0),
+                Q("Adverb of manner?", ["carefully", "here", "later", "yesterday"], 0),
+                Q("'She sings ___.", ["beautifully", "beautiful", "beauty", "beautify"], 0),
+                Q("'He runs ___.", ["fast", "fastly", "fastness", "faster"], 0),
+                Q("Which is an adverb?", ["inside", "in", "into", "at"], 0),
+                Q("Which uses an adverb?", ["He is a quick runner.", "He runs quickly.", "He is quick.", "He is a runner."], 1)
+              ]
+            },
+            {
+              title: "Prepositions & Conjunctions",
+              learn: P("<b>Preposition</b>: position. <b>Conjunction</b>: joins."),
+              questions: [
+                Q("What is a preposition?", ["A word showing position", "A describing word", "An action word", "A noun"], 0),
+                Q("Which is a preposition?", ["under", "quickly", "beautiful", "run"], 0),
+                Q("'The book is ___ the table.'", ["on", "and", "because", "so"], 0),
+                Q("'She walked ___ the park.'", ["through", "and", "but", "or"], 0),
+                Q("What is a conjunction?", ["A word that joins", "A describing word", "A place word", "An action word"], 0),
+                Q("Which is a conjunction?", ["and", "under", "happy", "run"], 0),
+                Q("'I like tea ___ coffee.'", ["and", "under", "on", "at"], 0),
+                Q("'She was tired ___ she kept working.'", ["but", "under", "quickly", "on"], 0),
+                Q("'He ran fast ___ he was late.'", ["because", "under", "on", "at"], 0),
+                Q("Which is a preposition?", ["between", "and", "or", "but"], 0)
+              ]
+            },
+            {
+              title: "Idioms",
+              learn: P("<b>Idiom</b>: non-literal phrase."),
+              questions: [
+                Q("What is an idiom?", ["A phrase with non-literal meaning", "A single word", "A grammar rule", "A type of noun"], 0),
+                Q("'Break a leg' means?", ["Good luck", "Get hurt", "Run fast", "Jump high"], 0),
+                Q("'Piece of cake' means?", ["Very easy", "Tasty food", "Small piece", "Sweet food"], 0),
+                Q("'Hit the books' means?", ["Study hard", "Punch a book", "Buy books", "Read comics"], 0),
+                Q("'Under the weather' means?", ["Feeling sick", "Outside", "Raining", "Cold"], 0),
+                Q("'Once in a blue moon' means?", ["Very rarely", "Every night", "Often", "Never"], 0),
+                Q("'Let the cat out of the bag' means?", ["Reveal a secret", "Free a cat", "Pack a bag", "Feed a cat"], 0),
+                Q("'Cost an arm and a leg' means?", ["Very expensive", "Cheap", "Painful", "Free"], 0),
+                Q("'Bite the bullet' means?", ["Face something difficult", "Eat fast", "Fight", "Lose"], 0),
+                Q("'Bite off more than you can chew' means?", ["Take on too much", "Eat too fast", "Chew gum", "Bake bread"], 0)
+              ]
+            },
+            {
+              title: "Similes & Proverbs",
+              learn: P("<b>Simile</b>: like/as. <b>Proverb</b>: short saying."),
+              questions: [
+                Q("What is a simile?", ["A comparison using like or as", "A single word", "A grammar rule", "A proverb"], 0),
+                Q("'As brave as a ___'", ["lion", "book", "chair", "table"], 0),
+                Q("'As busy as a ___'", ["bee", "table", "rock", "stone"], 0),
+                Q("'As quiet as a ___'", ["mouse", "lion", "drum", "bell"], 0),
+                Q("'As cold as ___'", ["ice", "fire", "sun", "heat"], 0),
+                Q("Which is a simile?", ["She is as tall as a tree.", "She is tall.", "She is a tree.", "She grows tall."], 0),
+                Q("What is a proverb?", ["A short saying with a lesson", "A type of poem", "A single word", "A story"], 0),
+                Q("'Early bird catches the ___'", ["worm", "sun", "moon", "star"], 0),
+                Q("'Practice makes ___'", ["perfect", "money", "fun", "sense"], 0),
+                Q("'Where there's a will, there's a ___'", ["way", "day", "say", "play"], 0)
+              ]
+            }
+          ],
+          challenge: [
+            Q("Which is a collective noun?", ["team", "player", "play", "playing"], 0),
+            Q("'Spill the beans' means?", ["Reveal a secret", "Drop food", "Cook beans", "Waste food"], 0),
+            Q("'Better late than ___'", ["never", "early", "soon", "ever"], 0)
+          ]
+        },
+        {
+          title: "English UASA: Reading",
+          lessons: [{
+            title: "Reading Comprehension",
+            learn: P("Read carefully. Choose the best answer."),
+            questions: [
+              Q("Tom dislikes offices, likes plants and flowers. Occupation?", ["A gardener", "An officer", "A farmer", "A florist"], 0),
+              Q("Charles: 'I work Sat & Sun 9.30am–5pm. Free in evenings on weekdays.' Charles wrote to…", ["Encourage Keisha to work with him", "Explain why he is not free on weekends", "Inform Keisha he's applying", "Ask Keisha to visit"], 1),
+              Q("'Buy three chicken burgers, get one sausage burger free! Free delivery.' We know…", ["We must buy three for free delivery", "Chicken burgers free if we buy sausage", "Four burgers for price of three", "Free delivery only for sausage"], 2),
+              Q("Library: Mon–Fri 8am–4pm, Sat & Sun CLOSED. When closed?", ["Monday", "Friday", "Saturday and Sunday", "Afternoons"], 2),
+              Q("Notice: Switch off fans and lights before leaving. What does it remind?", ["Keep classroom clean", "Save electricity", "Bring a fan", "Switch on lights"], 1),
+              Q("Water interruption Saturday 9am–3pm. When will there be no water?", ["Friday morning", "Saturday morning", "Saturday afternoon", "Sunday"], 1),
+              Q("Football Match: 6A vs 6B, Wednesday 5th June 4.30pm. When?", ["Tuesday", "Wednesday", "Thursday", "Friday"], 1),
+              Q("Mr. Lim: Visit the river cleanup project this Sunday. Please wear suitable clothes and shoes. What should students wear?", ["School uniform", "Suitable clothes and shoes", "Raincoat", "Sports uniform"], 1),
+              Q("English Week moved to next month due to Year 6 exams. Why moved?", ["Clashed with holidays", "Year 6 exams in the way", "School hall under repair", "Not enough participants"], 1),
+              Q("Mum online: 'I'll be late. Please heat up your dinner and finish your homework first.' What should child do first?", ["Wait for Mum", "Watch TV", "Finish homework", "Heat the dinner"], 2)
+            ]
+          }],
+          challenge: [
+            Q("Invitation: School Open Day, 22nd June, 9am–1pm. What is it for?", ["A birthday party", "A school open day", "A fundraising dinner", "A sports carnival"], 1),
+            Q("Aisyah: 'Bring your art materials tomorrow for the drawing competition.' What should she bring?", ["A trophy", "Art materials", "A drawing book", "A camera"], 1),
+            Q("School rules: Students must not bring mobile phones to school. What is the rule?", ["Bring phones", "Don't bring phones", "Phones allowed at lunch", "Phones allowed for exams"], 1)
+          ]
+        },
+        {
+          title: "English UASA: Cloze",
+          lessons: [{
+            title: "Cloze Passage",
+            learn: P("Choose the correct word for each blank."),
+            questions: [
+              Q("We ______ our tents together before the activities began.", ["put", "made", "built", "set"], 3),
+              Q("Our teacher asked us to keep ______ and follow the rules.", ["quietly", "quiet", "quietness", "quieter"], 1),
+              Q("It was a ______ experience!", ["bored", "tiring", "wonderful", "dangerous"], 2),
+              Q("Last year I ______ to England on holiday.", ["went", "gone", "goes", "going"], 0),
+              Q("They received a map so they could find their way ______ the centre.", ["across", "through", "over", "into"], 1),
+              Q("The scientist ______ a few simple experiments.", ["perform", "performs", "performed", "performing"], 2),
+              Q("Everyone watched ______ as bubbles, smoke and lights filled the hall.", ["easy", "angry", "amazed", "sleepy"], 2),
+              Q("Please put back the book ______ the shelf.", ["in", "on", "at", "under"], 1),
+              Q("The milkman will have to cross ______ the bridge.", ["over", "under", "through", "across"], 3),
+              Q("Miss Selena has ______ an English teacher for 7 years.", ["be", "being", "been", "is"], 2)
+            ]
+          }],
+          challenge: [
+            Q("I ______ my homework when the phone rang.", ["do", "does", "was doing", "did"], 2),
+            Q("They left the centre ______ happy smiles.", ["at", "with", "on", "by"], 1),
+            Q("Miss Selena loves her job ______ teaching brings her happiness.", ["and", "but", "because", "so"], 2)
+          ]
+        },
+        {
+          title: "Writing: UASA Paper 2",
+          lessons: [
+            {
+              title: "Part 6: Emails (30-50 words)",
+              learn: P("<b>Part 6</b>: short email. <b>30-50 words.</b>", "<b>Sample:</b><br>To: Sarah<br>From: Aiman<br>Subject: Birthday Party Invitation<br><br>Hi Sarah, I'm having a birthday party on Saturday, 15 June at 3pm at my house. I hope you can come! See you, Aiman"),
+              questions: [
+                W("Write an email inviting your friend to your birthday party. Include date, time, place.", "", 30, 50, "Sarah", "Aiman", "Birthday Party Invitation"),
+                W("Write an email to your mother telling her you will be home late because of football practice.", "", 30, 50, "Mrs. Aminah", "Farid", "Coming Home Late"),
+                W("Write an email to Mrs. Amanda to say you are sick and cannot come to school tomorrow.", "", 30, 50, "Mrs. Amanda", "Nurul", "Absent Tomorrow"),
+                W("Write an email to your cousin asking them to return the book you lent them by Friday.", "", 30, 50, "Ahmad", "Hakim", "Please Return My Book"),
+                W("Write an email to your classmate asking to borrow their Science notes for one day.", "", 30, 50, "Mei Ling", "Kavitha", "Borrow Science Notes")
+              ]
+            },
+            {
+              title: "Part 7: Longer Emails (60-80 words)",
+              learn: P("<b>Part 7</b>: longer email. <b>60-80 words.</b>", "<b>Sample:</b><br>To: Ali<br>From: Danish<br>Subject: My Best Holiday<br><br>Hi Ali, I want to tell you about my best holiday. Last December, my family and I went to Pulau Langkawi. We stayed for four days. We visited the beach, rode the cable car, and ate seafood. I really enjoyed it. Your friend, Danish"),
+              questions: [
+                W("Write an email telling your friend about your best holiday. Where, who with, what you did.", "", 60, 80, "Ali", "Danish", "My Best Holiday"),
+                W("Write an email to Mrs. Amanda about a school event. What happened and what you enjoyed.", "", 60, 80, "Mrs. Amanda", "Siti", "School Sports Day"),
+                W("Write an email to your pen pal telling them about your favourite hobby.", "", 60, 80, "Kenji", "Jason", "My Favourite Hobby"),
+                W("Write an email to your cousin telling them about a memorable day.", "", 60, 80, "Aina", "Alia", "A Memorable Day"),
+                W("Write an email about the person you admire most. Who and why.", "", 60, 80, "Ravi", "Vishal", "Someone I Admire")
+              ]
+            }
+          ],
+          challenge: [
+            W("Write an email inviting your friend to a study group at your house on Saturday at 3pm.", "", 30, 50, "Hafiz", "Zikri", "Study Group Invitation"),
+            W("Write an email about a time you helped someone. Who you helped and how you felt.", "", 60, 80, "Auntie Zara", "Yasmin", "Helping Someone")
+          ]
+        }
+      ]
+    },
+
+    "Mathematics": {
+      units: [
+        {
+          title: "Visual Maths",
+          lessons: [
+            {
+              title: "Area & Perimeter",
+              learn: P("Rectangle area = length × width. Perimeter = 2 × (length + width)."),
+              questions: [
+                Q("Calculate the area of this rectangle.", ["30 cm²", "35 cm²", "40 cm²", "45 cm²"], 2, `<svg viewBox="0 0 220 140" width="240"><rect x="30" y="35" width="160" height="80" fill="none" stroke="currentColor" stroke-width="2"/><text x="110" y="25" text-anchor="middle" font-size="15" fill="currentColor">8 cm</text><text x="200" y="80" text-anchor="end" font-size="15" fill="currentColor">5 cm</text></svg>`),
+                Q("What is the perimeter of this rectangle?", ["24 cm", "25 cm", "26 cm", "27 cm"], 2, `<svg viewBox="0 0 220 140" width="240"><rect x="30" y="35" width="160" height="80" fill="none" stroke="currentColor" stroke-width="2"/><text x="110" y="25" text-anchor="middle" font-size="15" fill="currentColor">8 cm</text><text x="200" y="80" text-anchor="end" font-size="15" fill="currentColor">5 cm</text></svg>`),
+                Q("Calculate the area of this square.", ["36 cm²", "40 cm²", "44 cm²", "48 cm²"], 0, `<svg viewBox="0 0 200 140" width="220"><rect x="40" y="25" width="100" height="100" fill="none" stroke="currentColor" stroke-width="2"/><text x="90" y="18" text-anchor="middle" font-size="15" fill="currentColor">6 cm</text></svg>`),
+                Q("What is the perimeter of this square?", ["20 cm", "22 cm", "24 cm", "26 cm"], 2, `<svg viewBox="0 0 200 140" width="220"><rect x="40" y="25" width="100" height="100" fill="none" stroke="currentColor" stroke-width="2"/><text x="90" y="18" text-anchor="middle" font-size="15" fill="currentColor">6 cm</text></svg>`),
+                Q("Calculate the area of this triangle.", ["20 cm²", "24 cm²", "28 cm²", "30 cm²"], 1, `<svg viewBox="0 0 220 160" width="240"><polygon points="110,30 30,130 190,130" fill="none" stroke="currentColor" stroke-width="2"/><line x1="110" y1="30" x2="110" y2="130" stroke="currentColor" stroke-width="1" stroke-dasharray="4 3"/><text x="110" y="20" text-anchor="middle" font-size="15" fill="currentColor">6 cm</text><text x="110" y="150" text-anchor="middle" font-size="15" fill="currentColor">8 cm</text></svg>`),
+                Q("Calculate the area of this rectangle.", ["24 cm²", "28 cm²", "32 cm²", "36 cm²"], 2, `<svg viewBox="0 0 240 140" width="250"><rect x="30" y="35" width="180" height="60" fill="none" stroke="currentColor" stroke-width="2"/><text x="120" y="25" text-anchor="middle" font-size="15" fill="currentColor">8 cm</text><text x="220" y="70" text-anchor="end" font-size="15" fill="currentColor">4 cm</text></svg>`)
+              ]
+            },
+            {
+              title: "Bar Charts",
+              learn: P("Read the bar chart."),
+              questions: [
+                Q("How many students chose mango?", ["4", "5", "6", "7"], 2, `<svg viewBox="0 0 260 180" width="280"><line x1="40" y1="140" x2="240" y2="140" stroke="currentColor" stroke-width="2"/><line x1="40" y1="20" x2="40" y2="140" stroke="currentColor" stroke-width="2"/><rect x="60" y="100" width="30" height="40" fill="#60a5fa"/><rect x="110" y="80" width="30" height="60" fill="#60a5fa"/><rect x="160" y="60" width="30" height="80" fill="#60a5fa"/><rect x="210" y="90" width="30" height="50" fill="#60a5fa"/><text x="75" y="158" font-size="11" fill="currentColor">Apple</text><text x="125" y="158" font-size="11" fill="currentColor">Mango</text><text x="175" y="158" font-size="11" fill="currentColor">Orange</text><text x="222" y="158" font-size="11" fill="currentColor">Grape</text></svg>`),
+                Q("Which fruit was chosen by the most students?", ["Apple", "Mango", "Orange", "Grape"], 2, `<svg viewBox="0 0 260 180" width="280"><line x1="40" y1="140" x2="240" y2="140" stroke="currentColor" stroke-width="2"/><line x1="40" y1="20" x2="40" y2="140" stroke="currentColor" stroke-width="2"/><rect x="60" y="100" width="30" height="40" fill="#60a5fa"/><rect x="110" y="80" width="30" height="60" fill="#60a5fa"/><rect x="160" y="60" width="30" height="80" fill="#60a5fa"/><rect x="210" y="90" width="30" height="50" fill="#60a5fa"/><text x="75" y="158" font-size="11" fill="currentColor">Apple</text><text x="125" y="158" font-size="11" fill="currentColor">Mango</text><text x="175" y="158" font-size="11" fill="currentColor">Orange</text><text x="222" y="158" font-size="11" fill="currentColor">Grape</text></svg>`)
+              ]
+            },
+            {
+              title: "Angles",
+              learn: P("Identify the angle type."),
+              questions: [
+                Q("What type of angle is shown?", ["Acute", "Right", "Obtuse", "Straight"], 0, `<svg viewBox="0 0 200 140" width="220"><line x1="40" y1="110" x2="160" y2="110" stroke="currentColor" stroke-width="2"/><line x1="40" y1="110" x2="130" y2="50" stroke="currentColor" stroke-width="2"/><text x="90" y="100" font-size="12" fill="currentColor">45°</text></svg>`),
+                Q("What type of angle is shown?", ["Acute", "Right", "Obtuse", "Straight"], 1, `<svg viewBox="0 0 200 140" width="220"><line x1="40" y1="110" x2="160" y2="110" stroke="currentColor" stroke-width="2"/><line x1="40" y1="110" x2="40" y2="30" stroke="currentColor" stroke-width="2"/><path d="M 60 110 L 60 90 L 40 90" fill="none" stroke="currentColor" stroke-width="1"/></svg>`),
+                Q("What type of angle is shown?", ["Acute", "Right", "Obtuse", "Straight"], 2, `<svg viewBox="0 0 200 140" width="220"><line x1="40" y1="110" x2="170" y2="110" stroke="currentColor" stroke-width="2"/><line x1="40" y1="110" x2="80" y2="40" stroke="currentColor" stroke-width="2"/><text x="95" y="90" font-size="12" fill="currentColor">120°</text></svg>`),
+                Q("What type of angle is shown?", ["Acute", "Right", "Obtuse", "Straight"], 3, `<svg viewBox="0 0 220 100" width="240"><line x1="30" y1="50" x2="190" y2="50" stroke="currentColor" stroke-width="2"/><text x="105" y="35" font-size="12" fill="currentColor">180°</text></svg>`)
+              ]
+            }
+          ],
+          challenge: [
+            Q("Calculate the perimeter of this rectangle.", ["30 cm", "32 cm", "34 cm", "36 cm"], 1, `<svg viewBox="0 0 240 150" width="250"><rect x="30" y="40" width="180" height="70" fill="none" stroke="currentColor" stroke-width="2"/><text x="120" y="30" text-anchor="middle" font-size="15" fill="currentColor">10 cm</text><text x="220" y="80" text-anchor="end" font-size="15" fill="currentColor">6 cm</text></svg>`),
+            Q("What is the total number of students who chose a fruit?", ["20", "22", "23", "25"], 2, `<svg viewBox="0 0 260 180" width="280"><line x1="40" y1="140" x2="240" y2="140" stroke="currentColor" stroke-width="2"/><line x1="40" y1="20" x2="40" y2="140" stroke="currentColor" stroke-width="2"/><rect x="60" y="100" width="30" height="40" fill="#60a5fa"/><rect x="110" y="80" width="30" height="60" fill="#60a5fa"/><rect x="160" y="60" width="30" height="80" fill="#60a5fa"/><rect x="210" y="90" width="30" height="50" fill="#60a5fa"/></svg>`)
+          ]
+        },
+        {
+          title: "Maths UASA: Wang",
+          lessons: [{
+            title: "Penyelesaian Masalah Wang",
+            learn: P("Selesaikan masalah wang."),
+            questions: [
+              Q("Puan Sarah: RM245.30. Bayar RM50 + 2×RM20 + 3×RM10 + 5×RM5. Baki?", ["RM9.70", "RM14.70", "RM24.70", "RM29.70"], 1),
+              Q("Petrol RM95.80, Tol RM18.40, Makan RM76.60, Tiket RM32.00. Jumlah?", ["RM212.80", "RM222.80", "RM232.80", "RM242.80"], 1),
+              Q("Baju RM89.90. Beli 2 diskaun 10% setiap helai. Bayaran?", ["RM161.82", "RM161.91", "RM179.80", "RM179.78"], 0),
+              Q("15 kotak pensel RM38.75 + 20 buku RM6.45. Jumlah?", ["RM710.25", "RM710.50", "RM719.25", "RM719.50"], 0),
+              Q("Mesin basuh RM1,899. Ansuran RM299 pendahuluan, baki 18 bulan. Bulanan?", ["RM88.89", "RM88.94", "RM94.44", "RM95.56"], 0),
+              Q("RM4,200 faedah 3% setahun. 2 tahun?", ["RM84.00", "RM120.00", "RM126.00", "RM252.00"], 2),
+              Q("Bas RM380 sekali. 5 kali pergi balik. Kos?", ["RM760.00", "RM1,140.00", "RM1,520.00", "RM1,900.00"], 1),
+              Q("RM300 dibahagi nisbah 5:3:2. Anak kedua?", ["RM60.00", "RM75.00", "RM90.00", "RM100.00"], 2),
+              Q("TV RM2,450 termasuk cukai 6%. Harga asal?", ["RM2,216.98", "RM2,283.02", "RM2,311.32", "RM2,594.70"], 2),
+              Q("Komputer RM3,699. RM500 pendahuluan, 20 bulan + RM49.95. Bulanan?", ["RM169.90", "RM184.85", "RM209.85", "RM224.80"], 1)
+            ]
+          }],
+          challenge: [
+            Q("Siti: beg RM215. Bayar RM100+2×RM50+RM20. Baki?", ["RM5.00", "RM15.00", "RM25.00", "RM35.00"], 0),
+            Q("Encik Ali: 4 pasu bunga, RM196. Harga sepasu?", ["RM44.00", "RM48.00", "RM49.00", "RM52.00"], 2),
+            Q("Farid: 3 biji bola RM38.50 setiap satu. Bayar RM200. Baki?", ["RM84.50", "RM85.50", "RM86.50", "RM87.50"], 0)
+          ]
+        },
+        {
+          title: "Unit 1: Whole Numbers",
+          lessons: [{
+            title: "To 10 Million",
+            learn: P("Whole numbers up to 10,000,000."),
+            questions: [
+              Q("Place value of 7 in 4,725,310?", ["Hundred thousands", "Thousands", "Ten thousands", "Millions"], 0),
+              Q("Prime number?", ["11", "9", "15", "21"], 0),
+              Q("Round 4,678,921?", ["4,700,000", "4,600,000", "4,800,000", "4,500,000"], 0),
+              Q("4,567,890 + 2,345,678?", ["6,913,568", "6,813,568", "6,913,668", "7,013,568"], 0),
+              Q("Largest prime below 20?", ["19", "17", "15", "13"], 0),
+              Q("8,000,000 − 3,456,789?", ["4,543,211", "4,443,211", "4,553,211", "4,543,111"], 0),
+              Q("Factors of 12?", ["1,2,3,4,6,12", "1,2,12", "2,3,4", "1,12"], 0),
+              Q("Which is even?", ["14", "15", "17", "19"], 0),
+              Q("Which is odd?", ["9", "10", "12", "14"], 0),
+              Q("Multiple of 5?", ["25", "13", "7", "22"], 0)
+            ]
+          }],
+          challenge: [
+            Q("Largest prime below 20?", ["19", "17", "15", "13"], 0),
+            Q("8,000,000 − 3,456,789?", ["4,543,211", "4,443,211", "4,553,211", "4,543,111"], 0)
+          ]
+        },
+        {
+          title: "Unit 2: Operations",
+          lessons: [{
+            title: "Four Operations",
+            learn: P("Add, subtract, multiply, divide."),
+            questions: [
+              Q("25 × 34?", ["850", "800", "900", "950"], 0),
+              Q("144 ÷ 12?", ["12", "14", "16", "18"], 0),
+              Q("50 − 23 + 15?", ["42", "40", "45", "48"], 0),
+              Q("100 × 100?", ["10,000", "1,000", "100,000", "1,000,000"], 0),
+              Q("4,567 + 2,345?", ["6,912", "6,812", "7,012", "6,900"], 0),
+              Q("9,000 − 3,456?", ["5,544", "5,444", "6,544", "5,500"], 0),
+              Q("256 ÷ 16?", ["16", "14", "18", "20"], 0),
+              Q("17 × 3?", ["51", "47", "54", "60"], 0),
+              Q("1000 − 999?", ["1", "0", "2", "3"], 0),
+              Q("125 × 8?", ["1,000", "900", "1,100", "1,200"], 0)
+            ]
+          }],
+          challenge: [
+            Q("2,500 + 1,750?", ["4,250", "4,350", "4,150", "4,000"], 0),
+            Q("7,200 ÷ 9?", ["800", "700", "900", "1,000"], 0)
+          ]
+        },
+        {
+          title: "Unit 3: Fractions",
+          lessons: [{
+            title: "Fractions",
+            learn: P("Proper, improper, mixed."),
+            questions: [
+              Q("7/4 as mixed?", ["1 3/4", "1 1/4", "2 3/4", "2 1/4"], 0),
+              Q("Equivalent to 2/3?", ["4/6", "3/4", "2/6", "6/8"], 0),
+              Q("1/2 + 1/3?", ["5/6", "2/5", "1/6", "3/5"], 0),
+              Q("3/5 − 1/5?", ["2/5", "4/5", "2/10", "3/5"], 0),
+              Q("6 3/4 ÷ 5/8?", ["10 4/5", "10 5/4", "9 4/5", "8 4/5"], 0),
+              Q("2/3 × 3/4?", ["1/2", "2/7", "3/7", "1/3"], 0),
+              Q("1/4 + 1/4?", ["1/2", "2/8", "1/8", "3/4"], 0),
+              Q("3/4 of 20?", ["15", "12", "18", "10"], 0),
+              Q("Simplify 6/8?", ["3/4", "2/3", "1/2", "6/8"], 0),
+              Q("Proper fraction?", ["1/2", "3/2", "5/4", "7/4"], 0)
+            ]
+          }],
+          challenge: [
+            Q("6 3/4 ÷ 5/8?", ["10 4/5", "10 5/4", "9 4/5", "8 4/5"], 0),
+            Q("2/3 × 3/4?", ["1/2", "2/7", "3/7", "1/3"], 0)
+          ]
+        },
+        {
+          title: "Unit 4: Decimals",
+          lessons: [{
+            title: "Decimals",
+            learn: P("To three decimal places."),
+            questions: [
+              Q("2.5 + 1.75?", ["4.25", "4.35", "4.15", "4.50"], 0),
+              Q("0.6 as fraction?", ["3/5", "2/5", "1/5", "6/10"], 0),
+              Q("0.125 as fraction?", ["1/8", "1/4", "1/2", "1/5"], 0),
+              Q("3.456 to 2 dp?", ["3.46", "3.45", "3.44", "3.50"], 0),
+              Q("1.5 × 2.4?", ["3.6", "3.5", "4.0", "3.0"], 0),
+              Q("0.75 as %?", ["75%", "7.5%", "750%", "0.75%"], 0),
+              Q("0.25 + 0.25?", ["0.5", "0.05", "0.505", "0.025"], 0),
+              Q("2.5 × 2?", ["5", "2.5", "4.5", "6"], 0),
+              Q("3.6 − 1.2?", ["2.4", "2.6", "1.4", "3.0"], 0),
+              Q("0.1 × 0.1?", ["0.01", "0.1", "1", "0.001"], 0)
+            ]
+          }],
+          challenge: [
+            Q("1.5 × 2.4?", ["3.6", "3.5", "4.0", "3.0"], 0),
+            Q("0.75 as %?", ["75%", "7.5%", "750%", "0.75%"], 0)
+          ]
+        },
+        {
+          title: "Unit 5: Percentages",
+          lessons: [{
+            title: "Percentages",
+            learn: P("Percent = out of 100."),
+            questions: [
+              Q("25% of 80?", ["20", "25", "40", "15"], 0),
+              Q("3/4 as %?", ["75%", "34%", "60%", "80%"], 0),
+              Q("50% of 200?", ["100", "50", "150", "200"], 0),
+              Q("10% of 500?", ["50", "5", "100", "500"], 0),
+              Q("20% of number is 40?", ["200", "80", "60", "100"], 0),
+              Q("40% as fraction?", ["2/5", "4/5", "1/5", "1/2"], 0),
+              Q("15% of 100?", ["15", "1.5", "150", "0.15"], 0),
+              Q("Increase 50 by 10%?", ["55", "60", "45", "50"], 0),
+              Q("Decrease 100 by 25%?", ["75", "85", "70", "80"], 0),
+              Q("5% of 200?", ["10", "5", "20", "15"], 0)
+            ]
+          }],
+          challenge: [
+            Q("20% of number is 40?", ["200", "80", "60", "100"], 0),
+            Q("40% as fraction?", ["2/5", "4/5", "1/5", "1/2"], 0)
+          ]
+        },
+        {
+          title: "Unit 6: Money",
+          lessons: [{
+            title: "Money",
+            learn: P("Up to RM1,000,000."),
+            questions: [
+              Q("RM45.50, pay RM50?", ["RM4.50", "RM5.50", "RM4.00", "RM5.00"], 0),
+              Q("RM30 −20%?", ["RM24", "RM26", "RM28", "RM25"], 0),
+              Q("Profit = ?", ["Selling − Cost", "Cost − Selling", "Selling × Cost", "Cost ÷ Selling"], 0),
+              Q("Cost RM80, profit RM20. Selling?", ["RM100", "RM60", "RM80", "RM90"], 0),
+              Q("RM500 at 5% for 2 years?", ["RM50", "RM25", "RM75", "RM100"], 0),
+              Q("Cost RM50, loss RM10. Selling?", ["RM40", "RM60", "RM50", "RM45"], 0),
+              Q("RM20 × 3?", ["RM60", "RM23", "RM40", "RM50"], 0),
+              Q("RM100 − RM35?", ["RM65", "RM75", "RM55", "RM70"], 0),
+              Q("RM12 × 4?", ["RM48", "RM16", "RM24", "RM36"], 0),
+              Q("RM5 + RM3.50?", ["RM8.50", "RM8", "RM9", "RM8.00"], 0)
+            ]
+          }],
+          challenge: [
+            Q("RM500 at 5% for 2 years?", ["RM50", "RM25", "RM75", "RM100"], 0),
+            Q("Cost RM50, loss RM10. Selling?", ["RM40", "RM60", "RM50", "RM45"], 0)
+          ]
+        },
+        {
+          title: "Unit 7: Time",
+          lessons: [{
+            title: "Time",
+            learn: P("24-hour system."),
+            questions: [
+              Q("3:45 p.m. 24hr?", ["15:45", "13:45", "17:45", "16:45"], 0),
+              Q("2:30-4:15 p.m.?", ["1 hr 45 min", "2 hr 15 min", "1 hr 30 min", "2 hr"], 0),
+              Q("12:00 a.m. 24hr?", ["00:00", "12:00", "24:00", "11:00"], 0),
+              Q("5:00 p.m. in 12hr?", ["5:00 p.m.", "5:00 a.m.", "15:00", "17:00"], 0),
+              Q("10:30 a.m. to 2:15 p.m.?", ["3 hr 45 min", "4 hr 15 min", "3 hr 15 min", "4 hr"], 0),
+              Q("100 years?", ["1 century", "1 decade", "1 millennium", "1 score"], 0),
+              Q("60 minutes?", ["1 hour", "30 min", "90 min", "2 hours"], 0),
+              Q("24 hours?", ["1 day", "1 week", "12 hours", "48 hours"], 0),
+              Q("12 months?", ["1 year", "6 months", "2 years", "18 months"], 0),
+              Q("7 days?", ["1 week", "1 month", "1 year", "1 decade"], 0)
+            ]
+          }],
+          challenge: [
+            Q("10:30 a.m. to 2:15 p.m.?", ["3 hr 45 min", "4 hr 15 min", "3 hr 15 min", "4 hr"], 0),
+            Q("100 years?", ["1 century", "1 decade", "1 millennium", "1 score"], 0)
+          ]
+        },
+        {
+          title: "Unit 8: Length",
+          lessons: [{
+            title: "Length",
+            learn: P("mm, cm, m, km."),
+            questions: [
+              Q("3.5 km in m?", ["3,500 m", "350 m", "35,000 m", "35 m"], 0),
+              Q("450 cm in m?", ["4.5 m", "45 m", "0.45 m", "4,500 m"], 0),
+              Q("2 m in cm?", ["200 cm", "20 cm", "2,000 cm", "2 cm"], 0),
+              Q("5000 m in km?", ["5 km", "50 km", "0.5 km", "500 km"], 0),
+              Q("Rope 2.4 m ÷ 6?", ["0.4 m", "0.6 m", "0.5 m", "0.8 m"], 0),
+              Q("100 mm in cm?", ["10 cm", "1 cm", "100 cm", "1,000 cm"], 0),
+              Q("1 km in mm?", ["1,000,000 mm", "1,000 mm", "10,000 mm", "100,000 mm"], 0),
+              Q("500 cm in mm?", ["5,000 mm", "500 mm", "50 mm", "50,000 mm"], 0),
+              Q("2.5 m + 1.5 m?", ["4 m", "3.5 m", "5 m", "3 m"], 0),
+              Q("10 km − 3 km?", ["7 km", "13 km", "6 km", "30 km"], 0)
+            ]
+          }],
+          challenge: [
+            Q("Rope 2.4 m ÷ 6?", ["0.4 m", "0.6 m", "0.5 m", "0.8 m"], 0),
+            Q("100 mm in cm?", ["10 cm", "1 cm", "100 cm", "1,000 cm"], 0)
+          ]
+        },
+        {
+          title: "Unit 9: Mass",
+          lessons: [{
+            title: "Mass",
+            learn: P("mg, g, kg."),
+            questions: [
+              Q("2.5 kg in g?", ["2,500 g", "250 g", "25,000 g", "25 g"], 0),
+              Q("500 g in kg?", ["0.5 kg", "5 kg", "50 kg", "0.05 kg"], 0),
+              Q("3 kg − 500 g?", ["2.5 kg", "3.5 kg", "2 kg", "3 kg"], 0),
+              Q("1000 mg?", ["1 g", "10 g", "100 g", "0.1 g"], 0),
+              Q("5 kg − 1,200 g?", ["3.8 kg", "3.2 kg", "4.2 kg", "3.5 kg"], 0),
+              Q("1500 g + 500 g?", ["2 kg", "1.5 kg", "3 kg", "1 kg"], 0),
+              Q("750 g + 250 g?", ["1 kg", "0.9 kg", "1.1 kg", "0.75 kg"], 0),
+              Q("2 kg in mg?", ["2,000,000 mg", "20,000 mg", "200,000 mg", "2,000 mg"], 0),
+              Q("500 mg + 500 mg?", ["1 g", "1 kg", "10 g", "100 g"], 0),
+              Q("3 kg + 2 kg?", ["5 kg", "6 kg", "4 kg", "7 kg"], 0)
+            ]
+          }],
+          challenge: [
+            Q("5 kg − 1,200 g?", ["3.8 kg", "3.2 kg", "4.2 kg", "3.5 kg"], 0),
+            Q("1500 g + 500 g?", ["2 kg", "1.5 kg", "3 kg", "1 kg"], 0)
+          ]
+        },
+        {
+          title: "Unit 10: Volume",
+          lessons: [{
+            title: "Volume of Liquid",
+            learn: P("ml and l."),
+            questions: [
+              Q("1.5 l in ml?", ["1,500 ml", "150 ml", "15,000 ml", "15 ml"], 0),
+              Q("250 ml in l?", ["0.25 l", "2.5 l", "25 l", "0.025 l"], 0),
+              Q("500 ml + 750 ml?", ["1.25 l", "1 l", "1.5 l", "0.75 l"], 0),
+              Q("2 l − 500 ml?", ["1.5 l", "1.75 l", "2.5 l", "1 l"], 0),
+              Q("3 l ÷ 4?", ["0.75 l", "0.5 l", "1 l", "1.5 l"], 0),
+              Q("500 ml × 4?", ["2 l", "1 l", "3 l", "4 l"], 0),
+              Q("2.5 l + 1.5 l?", ["4 l", "3 l", "3.5 l", "5 l"], 0),
+              Q("5 l − 2 l?", ["3 l", "2 l", "7 l", "4 l"], 0),
+              Q("750 ml + 250 ml?", ["1 l", "0.5 l", "1.5 l", "0.75 l"], 0),
+              Q("1500 ml ÷ 3?", ["500 ml", "300 ml", "750 ml", "450 ml"], 0)
+            ]
+          }],
+          challenge: [
+            Q("3 l ÷ 4?", ["0.75 l", "0.5 l", "1 l", "1.5 l"], 0),
+            Q("500 ml × 4?", ["2 l", "1 l", "3 l", "4 l"], 0)
+          ]
+        },
+        {
+          title: "Unit 11: Perimeter & Area",
+          lessons: [{
+            title: "2D Shapes",
+            learn: P("Perimeter and area."),
+            questions: [
+              Q("Area 8×5 cm?", ["40 cm²", "13 cm²", "26 cm²", "30 cm²"], 0),
+              Q("Perimeter square 6 cm?", ["24 cm", "36 cm", "12 cm", "30 cm"], 0),
+              Q("Area triangle 10×6?", ["30 cm²", "60 cm²", "16 cm²", "45 cm²"], 0),
+              Q("Perimeter 8×5?", ["26 cm", "40 cm", "13 cm", "30 cm"], 0),
+              Q("Area square 7 cm?", ["49 cm²", "28 cm²", "14 cm²", "21 cm²"], 0),
+              Q("Area 12×4?", ["48 cm²", "16 cm²", "32 cm²", "24 cm²"], 0),
+              Q("Perimeter square 3 cm?", ["12 cm", "9 cm", "6 cm", "15 cm"], 0),
+              Q("Area rectangle 6×9?", ["54 cm²", "30 cm²", "45 cm²", "36 cm²"], 0),
+              Q("Perimeter 10×4?", ["28 cm", "40 cm", "14 cm", "20 cm"], 0),
+              Q("Area square 5 cm?", ["25 cm²", "20 cm²", "10 cm²", "15 cm²"], 0)
+            ]
+          }],
+          challenge: [
+            Q("Area square 7 cm?", ["49 cm²", "28 cm²", "14 cm²", "21 cm²"], 0),
+            Q("Area 12×4?", ["48 cm²", "16 cm²", "32 cm²", "24 cm²"], 0)
+          ]
+        },
+        {
+          title: "Unit 12: Volume 3D",
+          lessons: [{
+            title: "3D Shapes",
+            learn: P("Volume of cubes, cuboids."),
+            questions: [
+              Q("Volume cube 4 cm?", ["64 cm³", "16 cm³", "12 cm³", "24 cm³"], 0),
+              Q("Cuboid 3×4×5?", ["60 cm³", "12 cm³", "20 cm³", "24 cm³"], 0),
+              Q("Cube edges?", ["12", "8", "6", "16"], 0),
+              Q("Cube faces?", ["6", "8", "12", "4"], 0),
+              Q("Volume cube 5 cm?", ["125 cm³", "25 cm³", "100 cm³", "50 cm³"], 0),
+              Q("Cuboid 10×2×3?", ["60 cm³", "30 cm³", "50 cm³", "20 cm³"], 0),
+              Q("Cube 2 cm volume?", ["8 cm³", "4 cm³", "6 cm³", "2 cm³"], 0),
+              Q("Cuboid 5×5×2?", ["50 cm³", "25 cm³", "10 cm³", "100 cm³"], 0),
+              Q("Cube 6 cm volume?", ["216 cm³", "36 cm³", "72 cm³", "108 cm³"], 0),
+              Q("Cuboid 4×4×4?", ["64 cm³", "12 cm³", "16 cm³", "48 cm³"], 0)
+            ]
+          }],
+          challenge: [
+            Q("Volume cube 5 cm?", ["125 cm³", "25 cm³", "100 cm³", "50 cm³"], 0),
+            Q("Cuboid 10×2×3?", ["60 cm³", "30 cm³", "50 cm³", "20 cm³"], 0)
+          ]
+        },
+        {
+          title: "Unit 13: Coordinates",
+          lessons: [{
+            title: "Cartesian Plane",
+            learn: P("x-axis and y-axis."),
+            questions: [
+              Q("(3,5) x-coord?", ["3", "5", "8", "15"], 0),
+              Q("(0,0) is?", ["Origin", "Centre", "Midpoint", "Axis"], 0),
+              Q("y-axis is?", ["Vertical", "Horizontal", "Diagonal", "Curved"], 0),
+              Q("(2,-1) quadrant?", ["4th", "1st", "2nd", "3rd"], 0),
+              Q("(-3,4) quadrant?", ["2nd", "3rd", "4th", "1st"], 0),
+              Q("Reflect (2,3) in x-axis?", ["(2,-3)", "(-2,3)", "(-2,-3)", "(3,2)"], 0),
+              Q("(5,0) on which axis?", ["x-axis", "y-axis", "Neither", "Both"], 0),
+              Q("(0,7) on which axis?", ["y-axis", "x-axis", "Neither", "Both"], 0),
+              Q("(1,1) quadrant?", ["1st", "2nd", "3rd", "4th"], 0),
+              Q("(-1,-1) quadrant?", ["3rd", "4th", "2nd", "1st"], 0)
+            ]
+          }],
+          challenge: [
+            Q("(-3,4) quadrant?", ["2nd", "3rd", "4th", "1st"], 0),
+            Q("Reflect (2,3) in x-axis?", ["(2,-3)", "(-2,3)", "(-2,-3)", "(3,2)"], 0)
+          ]
+        },
+        {
+          title: "Unit 14: Ratio",
+          lessons: [{
+            title: "Ratio & Proportion",
+            learn: P("Ratio problems."),
+            questions: [
+              Q("Simplify 12:18?", ["2:3", "3:2", "6:9", "1:3"], 0),
+              Q("3 pens RM6, 5 pens?", ["RM10", "RM12", "RM8", "RM15"], 0),
+              Q("2:3, 30 students, girls?", ["18", "12", "15", "20"], 0),
+              Q("Simplify 15:25?", ["3:5", "5:3", "1:5", "5:1"], 0),
+              Q("4 books RM20, 7 books?", ["RM35", "RM30", "RM40", "RM25"], 0),
+              Q("Ratio 1:2:3 total 60, largest?", ["30", "20", "10", "40"], 0),
+              Q("Simplify 10:20?", ["1:2", "2:1", "5:10", "10:20"], 0),
+              Q("2:5, total 21, first part?", ["6", "5", "10", "8"], 0),
+              Q("Simplify 8:12?", ["2:3", "3:2", "4:6", "8:12"], 0),
+              Q("Simplify 6:9?", ["2:3", "3:2", "1:3", "6:9"], 0)
+            ]
+          }],
+          challenge: [
+            Q("4 books RM20, 7 books?", ["RM35", "RM30", "RM40", "RM25"], 0),
+            Q("Ratio 1:2:3 total 60, largest?", ["30", "20", "10", "40"], 0)
+          ]
+        },
+        {
+          title: "Unit 15: Data",
+          lessons: [{
+            title: "Data Handling",
+            learn: P("Pie, bar, line graphs."),
+            questions: [
+              Q("Mean 4,6,8,10?", ["7", "6", "8", "9"], 0),
+              Q("Mode 2,3,3,5,7?", ["3", "2", "5", "7"], 0),
+              Q("Range 15,22,8,19?", ["14", "22", "8", "19"], 0),
+              Q("Pie chart uses?", ["Sectors", "Bars", "Lines", "Dots"], 0),
+              Q("Median 3,7,9,12,15?", ["9", "7", "12", "15"], 0),
+              Q("Graph change over time?", ["Line graph", "Pie chart", "Bar chart", "Table"], 0),
+              Q("Mean 2,4,6?", ["4", "3", "5", "6"], 0),
+              Q("Mode 1,2,2,3?", ["2", "1", "3", "4"], 0),
+              Q("Median 1,3,5,7?", ["4", "3", "5", "7"], 0),
+              Q("Range 5,10,15?", ["10", "5", "15", "20"], 0)
+            ]
+          }],
+          challenge: [
+            Q("Median 3,7,9,12,15?", ["9", "7", "12", "15"], 0),
+            Q("Graph change over time?", ["Line graph", "Pie chart", "Bar chart", "Table"], 0)
+          ]
+        }
+      ]
+    },
+
+    "Science": {
+      units: [
+        {
+          title: "Science UASA: Revision",
+          lessons: [{
+            title: "Revision",
+            learn: P("Topik: Human, Microorganisms, Force, Speed, Eclipse, Galaxy."),
+            questions: [
+              Q("All diseases related to nervous system damage except…", ["paralysis", "high blood pressure", "Bell's palsy", "balance problems"], 1),
+              Q("Which is not a fungus?", ["Yeast", "Influenza", "Penicillium", "Rhizopus"], 1),
+              Q("Air particles moving have ______ energy.", ["electrical", "kinetic", "heat", "potential"], 1),
+              Q("Which tool reduces friction?", ["Wheels", "Tyre tread", "Anti-slip mat", "Shoe sole"], 0),
+              Q("2 hours, 164 km. Average speed?", ["72", "102", "92", "82"], 3),
+              Q("Apples coated with wax. Which factor controlled?", ["Temperature", "Water and air", "Acidity", "Nutrient"], 1),
+              Q("Non-biodegradable plastic. Which waste method?", ["Burying", "Burning", "Recycling", "Drowning"], 2),
+              Q("Wider base makes object more…", ["stable", "unstable", "heavy", "light"], 0),
+              Q("Which shape strongest?", ["Triangle", "Circle", "Square", "Rectangle"], 0),
+              Q("Solar eclipse when…", ["Moon blocks Sun", "Earth blocks Moon", "Sun blocks Earth", "Moon blocks Earth"], 0)
+            ]
+          }],
+          challenge: [
+            Q("Purpose of cellular respiration?", ["To get energy", "To release oxygen", "To make food", "To make water"], 0),
+            Q("Red Planet?", ["Mars", "Jupiter", "Saturn", "Venus"], 0),
+            Q("Lunar eclipse when…", ["Earth blocks Sun's light to Moon", "Moon blocks Sun", "Sun blocks Moon", "Moon blocks Earth"], 0)
+          ]
+        },
+        {
+          title: "Unit 1: Scientific Skills",
+          lessons: [{
+            title: "Skills",
+            learn: P("Process and manipulative skills."),
+            questions: [
+              Q("Science process skill?", ["Observing", "Sleeping", "Eating", "Reading"], 0),
+              Q("Measure temperature?", ["Thermometer", "Ruler", "Balance", "Clock"], 0),
+              Q("Inferring?", ["Conclusions from observations", "Guessing", "Measuring", "Copying"], 0),
+              Q("Manipulative skill?", ["Using microscope", "Reading", "Drawing", "Writing"], 0),
+              Q("Lab safety?", ["Wearing goggles", "Eating", "Running", "Sleeping"], 0),
+              Q("Unit for mass?", ["Kilogram", "Metre", "Litre", "Second"], 0),
+              Q("Classifying means?", ["Grouping", "Measuring", "Heating", "Cooling"], 0),
+              Q("Predicting means?", ["Forecast", "Copy", "Guess", "Sleep"], 0),
+              Q("Communicating means?", ["Sharing findings", "Hiding", "Ignoring", "Sleeping"], 0),
+              Q("Hypothesis is?", ["Testable statement", "Fact", "Law", "Theory"], 0)
+            ]
+          }],
+          challenge: [
+            Q("Lab safety?", ["Wearing goggles", "Eating", "Running", "Sleeping"], 0),
+            Q("Unit for mass?", ["Kilogram", "Metre", "Litre", "Second"], 0)
+          ]
+        },
+        {
+          title: "Unit 2: Humans",
+          lessons: [{
+            title: "Nervous System",
+            learn: P("Brain, spinal cord, nerves."),
+            questions: [
+              Q("Part of nervous system?", ["Brain", "Heart", "Lungs", "Liver"], 0),
+              Q("Paralysis caused by?", ["Nervous damage", "Digestive damage", "Respiratory", "Heart"], 0),
+              Q("Bell's palsy affects?", ["Facial muscles", "Legs", "Arms", "Torso"], 0),
+              Q("Spinal cord protected by?", ["Vertebrae", "Ribs", "Skull", "Sternum"], 0),
+              Q("Controls body movements?", ["Nervous system", "Circulatory", "Digestive", "Respiratory"], 0),
+              Q("Fertilisation in?", ["Fallopian tube", "Uterus", "Ovary", "Cervix"], 0),
+              Q("Brain controls?", ["Everything", "Only walking", "Only talking", "Only seeing"], 0),
+              Q("Nerves carry?", ["Messages", "Blood", "Air", "Food"], 0),
+              Q("Skull protects?", ["Brain", "Heart", "Lungs", "Stomach"], 0),
+              Q("Pregnancy lasts?", ["9 months", "6 months", "12 months", "3 months"], 0)
+            ]
+          }],
+          challenge: [
+            Q("Controls body movements?", ["Nervous system", "Circulatory", "Digestive", "Respiratory"], 0),
+            Q("Fertilisation in?", ["Fallopian tube", "Uterus", "Ovary", "Cervix"], 0)
+          ]
+        },
+        {
+          title: "Unit 3: Microorganisms",
+          lessons: [{
+            title: "Microbes",
+            learn: P("Bacteria, fungi, viruses."),
+            questions: [
+              Q("Which is fungus?", ["Yeast", "Influenza", "E. coli", "Salmonella"], 0),
+              Q("Need ___ to grow?", ["Water", "Plastic", "Metal", "Glass"], 0),
+              Q("Makes bread rise?", ["Yeast", "Protozoa", "Virus", "Bacteria"], 0),
+              Q("Penicillin from?", ["Fungi", "Bacteria", "Virus", "Protozoa"], 0),
+              Q("Disease from virus?", ["Influenza", "Ringworm", "Malaria", "Typhoid"], 0),
+              Q("Which is bacterium?", ["E. coli", "Yeast", "Mushroom", "Mould"], 0),
+              Q("Harmful microorganism?", ["Virus", "Yeast", "Mushroom", "Mould"], 0),
+              Q("Useful microorganism?", ["Yeast", "Influenza", "Coronavirus", "HIV"], 0),
+              Q("Protozoa cause?", ["Malaria", "Ringworm", "Flu", "Cold"], 0),
+              Q("Antibiotics kill?", ["Bacteria", "Viruses", "Fungi", "Protozoa"], 0)
+            ]
+          }],
+          challenge: [
+            Q("Disease from virus?", ["Influenza", "Ringworm", "Malaria", "Typhoid"], 0),
+            Q("Which is bacterium?", ["E. coli", "Yeast", "Mushroom", "Mould"], 0)
+          ]
+        },
+        {
+          title: "Unit 4: Interactions",
+          lessons: [{
+            title: "Symbiosis",
+            learn: P("Predator-prey, mutualism."),
+            questions: [
+              Q("Lion eating zebra?", ["Predator-prey", "Mutualism", "Commensalism", "Parasitism"], 0),
+              Q("Remora & shark?", ["Commensalism", "Parasitism", "Mutualism", "Predator-prey"], 0),
+              Q("Tapeworm in dog?", ["Parasitism", "Mutualism", "Commensalism", "Predator-prey"], 0),
+              Q("Competition occurs?", ["Fight for resources", "Help each other", "Live together", "Share"], 0),
+              Q("Mutualism?", ["Bees & flowers", "Lice & humans", "Barnacles", "Fleas"], 0),
+              Q("Food chain shows?", ["Energy flow", "Water cycle", "Rock cycle", "Carbon"], 0),
+              Q("Producer?", ["Plant", "Lion", "Bird", "Fish"], 0),
+              Q("Consumer?", ["Herbivore", "Grass", "Sun", "Water"], 0),
+              Q("Decomposer?", ["Fungi", "Lion", "Grass", "Flower"], 0),
+              Q("Prey is?", ["Eaten animal", "Eater", "Plant", "Sun"], 0)
+            ]
+          }],
+          challenge: [
+            Q("Mutualism?", ["Bees & flowers", "Lice & humans", "Barnacles", "Fleas"], 0),
+            Q("Food chain shows?", ["Energy flow", "Water cycle", "Rock cycle", "Carbon"], 0)
+          ]
+        },
+        {
+          title: "Unit 5: Conservation",
+          lessons: [{
+            title: "Endangered",
+            learn: P("Preservation, conservation."),
+            questions: [
+              Q("Malayan tiger endangered?", ["Habitat loss & poaching", "Too many", "Migrate", "Lost"], 0),
+              Q("Conservation?", ["Use resources wisely", "Waste", "Destroy", "Bury"], 0),
+              Q("Endangered in Malaysia?", ["Orangutan", "Chicken", "Cat", "Cow"], 0),
+              Q("Help conserve wildlife?", ["Protect habitats", "Pollute rivers", "Cut forests", "Hunt"], 0),
+              Q("National park is?", ["Conservation area", "Factory", "Farm", "School"], 0),
+              Q("Extinction means?", ["Gone forever", "Grow", "Move", "Multiply"], 0),
+              Q("Recycling saves?", ["Resources", "Time", "Money only", "Space"], 0),
+              Q("Planting trees helps?", ["Habitat", "Pollution", "Deforestation", "Flood"], 0),
+              Q("Poaching means?", ["Illegal hunting", "Farming", "Fishing", "Breeding"], 0),
+              Q("Sanctuary means?", ["Safe place", "Museum", "Zoo", "Park"], 0)
+            ]
+          }],
+          challenge: [
+            Q("National park is?", ["Conservation area", "Factory", "Farm", "School"], 0),
+            Q("Extinction means?", ["Gone forever", "Grow", "Move", "Multiply"], 0)
+          ]
+        },
+        {
+          title: "Unit 6: Force",
+          lessons: [{
+            title: "Forces",
+            learn: P("Friction, gravity, magnetic."),
+            questions: [
+              Q("Friction?", ["Opposes motion", "Helps motion", "Nothing", "Speeds"], 0),
+              Q("Reduces friction?", ["Wheels", "Sandpaper", "Rope", "Carpet"], 0),
+              Q("Gravity pulls?", ["Downwards", "Upwards", "Sideways", "Diagonally"], 0),
+              Q("Magnetic acts on?", ["Iron", "Wood", "Plastic", "Glass"], 0),
+              Q("Tyre tread increases?", ["Friction", "Gravity", "Speed", "Weight"], 0),
+              Q("Oil is a?", ["Lubricant", "Glue", "Fuel", "Liquid"], 0),
+              Q("Weight is a?", ["Force", "Mass", "Length", "Volume"], 0),
+              Q("Push and pull are?", ["Forces", "Speed", "Energy", "Motion"], 0),
+              Q("Heavier object has?", ["More weight", "Less weight", "No weight", "Same weight"], 0),
+              Q("Which reduces friction?", ["Ice", "Sand", "Carpet", "Rope"], 0)
+            ]
+          }],
+          challenge: [
+            Q("Tyre tread increases?", ["Friction", "Gravity", "Speed", "Weight"], 0),
+            Q("Oil is a?", ["Lubricant", "Glue", "Fuel", "Liquid"], 0)
+          ]
+        },
+        {
+          title: "Unit 7: Speed",
+          lessons: [{
+            title: "Speed",
+            learn: P("Speed = distance ÷ time."),
+            questions: [
+              Q("120 km in 2 hr?", ["60 km/h", "240 km/h", "120 km/h", "80 km/h"], 0),
+              Q("Speed unit?", ["km/h", "kg", "litres", "m"], 0),
+              Q("400 m in 50 s?", ["8 m/s", "4 m/s", "10 m/s", "6 m/s"], 0),
+              Q("Average speed?", ["Total dist ÷ total time", "Time ÷ dist", "Dist × time", "Dist + time"], 0),
+              Q("240 km in 3 hr?", ["80 km/h", "60 km/h", "120 km/h", "100 km/h"], 0),
+              Q("60 km/h for 2 hr covers?", ["120 km", "60 km", "30 km", "100 km"], 0),
+              Q("100 m in 20 s?", ["5 m/s", "20 m/s", "2 m/s", "10 m/s"], 0),
+              Q("300 km in 5 hr?", ["60 km/h", "50 km/h", "75 km/h", "70 km/h"], 0),
+              Q("Faster means?", ["More distance per time", "Less", "Same", "None"], 0),
+              Q("Speed is a?", ["Rate", "Length", "Mass", "Time"], 0)
+            ]
+          }],
+          challenge: [
+            Q("240 km in 3 hr?", ["80 km/h", "60 km/h", "120 km/h", "100 km/h"], 0),
+            Q("60 km/h for 2 hr covers?", ["120 km", "60 km", "30 km", "100 km"], 0)
+          ]
+        },
+        {
+          title: "Unit 8: Food Preservation",
+          lessons: [{
+            title: "Preservation",
+            learn: P("Drying, freezing, canning."),
+            questions: [
+              Q("Preservation method?", ["Freezing", "Cooking", "Eating", "Serving"], 0),
+              Q("Pickling uses?", ["Acid", "Sugar", "Salt only", "Water"], 0),
+              Q("Drying removes?", ["Water", "Air", "Nutrients", "Salt"], 0),
+              Q("Freezing prevents?", ["Microorganism growth", "Colour", "Taste", "Smell"], 0),
+              Q("Canning preserves by?", ["Sealing & heating", "Cooling", "Drying", "Freezing"], 0),
+              Q("Salt preserves by?", ["Removing water", "Adding water", "Adding colour", "Adding sugar"], 0),
+              Q("Smoking preserves by?", ["Drying & smoke", "Cooling", "Washing", "Freezing"], 0),
+              Q("Refrigeration?", ["Slows spoilage", "Speeds spoilage", "No effect", "Spoils"], 0),
+              Q("Pasteurisation?", ["Heating liquid", "Freezing", "Drying", "Cooling"], 0),
+              Q("Vacuum packing?", ["Removes air", "Adds air", "Adds water", "Adds salt"], 0)
+            ]
+          }],
+          challenge: [
+            Q("Canning preserves by?", ["Sealing & heating", "Cooling", "Drying", "Freezing"], 0),
+            Q("Salt preserves by?", ["Removing water", "Adding water", "Adding colour", "Adding sugar"], 0)
+          ]
+        },
+        {
+          title: "Unit 9: Waste Management",
+          lessons: [{
+            title: "3R",
+            learn: P("Reduce, Reuse, Recycle."),
+            questions: [
+              Q("Non-biodegradable?", ["Plastic", "Paper", "Food", "Leaves"], 0),
+              Q("Recycling?", ["Reduce waste", "Increase pollution", "Waste energy", "Increase"], 0),
+              Q("Biodegradable?", ["Vegetable peel", "Plastic", "Glass", "Metal"], 0),
+              Q("3R stands for?", ["Reduce, Reuse, Recycle", "Read, Run, Rest", "Red, Round, Right", "Run, Rest, Relax"], 0),
+              Q("Composting recycles?", ["Organic waste", "Metal", "Glass", "Plastic"], 0),
+              Q("Decomposes slowest?", ["Plastic", "Paper", "Banana peel", "Food"], 0),
+              Q("Reuse means?", ["Use again", "Throw", "Burn", "Bury"], 0),
+              Q("Reduce means?", ["Use less", "Use more", "Reuse", "Recycle"], 0),
+              Q("Landfill is?", ["Waste site", "Recycling centre", "Park", "Farm"], 0),
+              Q("Hazardous waste?", ["Batteries", "Paper", "Leaves", "Food"], 0)
+            ]
+          }],
+          challenge: [
+            Q("Composting recycles?", ["Organic waste", "Metal", "Glass", "Plastic"], 0),
+            Q("Decomposes slowest?", ["Plastic", "Paper", "Banana peel", "Food"], 0)
+          ]
+        },
+        {
+          title: "Unit 10: Eclipse",
+          lessons: [{
+            title: "Eclipse",
+            learn: P("Solar and lunar."),
+            questions: [
+              Q("Solar eclipse?", ["Moon blocks Sun", "Earth blocks Moon", "Sun blocks Earth", "Moon blocks Earth"], 0),
+              Q("Lunar eclipse?", ["Earth blocks Sun's light", "Moon blocks Sun", "Sun blocks Moon", "Moon blocks Earth"], 0),
+              Q("Eclipse alignment?", ["Straight line", "Right angles", "Far apart", "Random"], 0),
+              Q("Lunar eclipse during?", ["Full moon", "New moon", "Half", "Quarter"], 0),
+              Q("Seen from Earth?", ["Both", "Solar only", "Lunar only", "Neither"], 0),
+              Q("Solar eclipse during?", ["New moon", "Full moon", "Half", "Quarter"], 0),
+              Q("Eclipse occurs when?", ["Three bodies aligned", "Random", "Any time", "Never"], 0),
+              Q("Sun appears dark?", ["Solar eclipse", "Lunar eclipse", "Normal", "Never"], 0),
+              Q("Moon turns red?", ["Lunar eclipse", "Solar eclipse", "Normal", "Never"], 0),
+              Q("Frequency?", ["Several per year", "Once a decade", "Never", "Once a century"], 0)
+            ]
+          }],
+          challenge: [
+            Q("Seen from Earth?", ["Both", "Solar only", "Lunar only", "Neither"], 0),
+            Q("Solar eclipse during?", ["New moon", "Full moon", "Half", "Quarter"], 0)
+          ]
+        },
+        {
+          title: "Unit 11: Galaxy",
+          lessons: [{
+            title: "Milky Way",
+            learn: P("Stars, gas, dust."),
+            questions: [
+              Q("Our galaxy?", ["Milky Way", "Andromeda", "Sombrero", "Whirlpool"], 0),
+              Q("Solar System in?", ["Milky Way", "Andromeda", "Whirlpool", "Sombrero"], 0),
+              Q("Planets in system?", ["8", "9", "7", "10"], 0),
+              Q("Closest to Sun?", ["Mercury", "Venus", "Earth", "Mars"], 0),
+              Q("Red Planet?", ["Mars", "Jupiter", "Saturn", "Venus"], 0),
+              Q("Sun is a?", ["Star", "Planet", "Moon", "Comet"], 0),
+              Q("Largest planet?", ["Jupiter", "Saturn", "Neptune", "Earth"], 0),
+              Q("Earth rank from Sun?", ["3rd", "1st", "5th", "2nd"], 0),
+              Q("Milky Way type?", ["Spiral", "Elliptical", "Irregular", "Round"], 0),
+              Q("Light year is?", ["Distance", "Time", "Mass", "Speed"], 0)
+            ]
+          }],
+          challenge: [
+            Q("Red Planet?", ["Mars", "Jupiter", "Saturn", "Venus"], 0),
+            Q("Sun is a?", ["Star", "Planet", "Moon", "Comet"], 0)
+          ]
+        },
+        {
+          title: "Unit 12: Stability",
+          lessons: [{
+            title: "Balance",
+            learn: P("Stability and strength."),
+            questions: [
+              Q("Wider base?", ["More stable", "Unstable", "Heavy", "Light"], 0),
+              Q("Strongest shape?", ["Triangle", "Circle", "Square", "Rectangle"], 0),
+              Q("Low centre gravity?", ["Stable", "Unstable", "Light", "Heavy"], 0),
+              Q("Most stable?", ["Short and wide", "Tall narrow", "Tall wide", "Thin"], 0),
+              Q("Bridge needs to be?", ["Strong", "Weak", "Flexible", "Soft"], 0),
+              Q("Triangles in structures?", ["Strength", "Flexibility", "Weight", "Beauty"], 0),
+              Q("Stability means?", ["Stay balanced", "Fall", "Move", "Break"], 0),
+              Q("Higher centre?", ["Less stable", "More stable", "No effect", "Same"], 0),
+              Q("Wide base helps?", ["Balance", "Speed", "Height", "Weight"], 0),
+              Q("Strong material?", ["Steel", "Paper", "Foam", "Cloth"], 0)
+            ]
+          }],
+          challenge: [
+            Q("Bridge needs to be?", ["Strong", "Weak", "Flexible", "Soft"], 0),
+            Q("Triangles in structures?", ["Strength", "Flexibility", "Weight", "Beauty"], 0)
+          ]
+        },
+        {
+          title: "Unit 13: Technology",
+          lessons: [{
+            title: "Tech",
+            learn: P("Applications."),
+            questions: [
+              Q("Technology is?", ["Application of science", "Food", "Game", "Art"], 0),
+              Q("Communication tech?", ["Smartphone", "Bicycle", "Pencil", "Book"], 0),
+              Q("Innovation?", ["Creating something new", "Copying", "Buying", "Selling"], 0),
+              Q("Helps farmers?", ["Tractor", "Aeroplane", "Computer", "Phone"], 0),
+              Q("Used wisely?", ["Wisely", "Carelessly", "Wastefully", "Badly"], 0),
+              Q("3D printing used in?", ["Manufacturing", "Cooking", "Farming", "Eating"], 0),
+              Q("Computer is a?", ["Machine", "Food", "Plant", "Animal"], 0),
+              Q("Tech in medicine?", ["X-ray", "Spoon", "Chair", "Table"], 0),
+              Q("GPS uses?", ["Satellites", "Wires", "Radio", "Cable"], 0),
+              Q("Robot is a?", ["Machine", "Animal", "Plant", "Person"], 0)
+            ]
+          }],
+          challenge: [
+            Q("Used wisely?", ["Wisely", "Carelessly", "Wastefully", "Badly"], 0),
+            Q("3D printing used in?", ["Manufacturing", "Cooking", "Farming", "Eating"], 0)
+          ]
+        },
+        {
+          title: "Unit 14: Energy",
+          lessons: [{
+            title: "Energy",
+            learn: P("Kinetic and potential."),
+            questions: [
+              Q("Moving air particles?", ["Kinetic", "Electrical", "Heat", "Potential"], 0),
+              Q("Renewable?", ["Solar", "Coal", "Oil", "Gas"], 0),
+              Q("Non-renewable?", ["Natural gas", "Wind", "Water", "Solar"], 0),
+              Q("Energy cannot be?", ["Created or destroyed", "Converted", "Used", "Stored"], 0),
+              Q("Moving car has?", ["Kinetic energy", "Potential", "Chemical", "Sound"], 0),
+              Q("Book on shelf?", ["Potential energy", "Kinetic", "Sound", "Light"], 0),
+              Q("Sun energy is?", ["Solar", "Wind", "Nuclear", "Hydro"], 0),
+              Q("Which is renewable?", ["Water", "Coal", "Oil", "Gas"], 0),
+              Q("Energy unit?", ["Joule", "Newton", "Watt", "Amp"], 0),
+              Q("Which is kinetic?", ["Running", "Still", "Sleeping", "Sitting"], 0)
+            ]
+          }],
+          challenge: [
+            Q("Moving car has?", ["Kinetic energy", "Potential", "Chemical", "Sound"], 0),
+            Q("Book on shelf?", ["Potential energy", "Kinetic", "Sound", "Light"], 0)
+          ]
+        },
+        {
+          title: "Unit 15: Earth Resources",
+          lessons: [{
+            title: "Resources",
+            learn: P("Natural resources."),
+            questions: [
+              Q("Natural resource?", ["Water", "Plastic", "Glass", "Metal"], 0),
+              Q("Renewable?", ["Sunlight", "Coal", "Petroleum", "Gas"], 0),
+              Q("Deforestation causes?", ["Soil erosion", "Clean air", "Rain", "Sun"], 0),
+              Q("Conserving water?", ["Use less water", "Waste water", "Pollute", "Boil"], 0),
+              Q("Recycling paper saves?", ["Trees", "Water only", "Air only", "Sun"], 0),
+              Q("Limited resource?", ["Petroleum", "Wind", "Sunlight", "Water"], 0),
+              Q("Which is renewable?", ["Wind", "Oil", "Gas", "Coal"], 0),
+              Q("Water cycle is?", ["Natural", "Man-made", "Fake", "Broken"], 0),
+              Q("Soil erosion caused by?", ["Deforestation", "Rain only", "Sun only", "Wind only"], 0),
+              Q("Air pollution from?", ["Cars", "Trees", "Rain", "Sun"], 0)
+            ]
+          }],
+          challenge: [
+            Q("Recycling paper saves?", ["Trees", "Water only", "Air only", "Sun"], 0),
+            Q("Limited resource?", ["Petroleum", "Wind", "Sunlight", "Water"], 0)
+          ]
+        }
+      ]
+    },
+
+    "Sejarah": {
+      units: [
+        {
+          title: "Unit 1: Pembentukan Malaysia",
+          lessons: [
+            {
+              title: "Idea Pembentukan Malaysia",
+              learn: P(
+                "Idea pembentukan Malaysia melibatkan <b>pemimpin tempatan</b> dan <b>pihak British</b>.",
+                "<b>1887</b>: Lord Brassey (Pengarah British North Borneo Company) cadang awal.",
+                "<b>1938</b>: Ibrahim Haji Yaakob & Harun Aminurrashid - konsep <b>Melayu Raya</b>.",
+                "<b>1951</b>: Malcolm MacDonald (Gabenor Jeneral British Asia Tenggara).",
+                "<b>1955</b>: Tunku Abdul Rahman cadang Sarawak, Sabah, Singapura, Brunei sertai PTM."
+              ),
+              questions: [
+                Q("Siapakah yang mencadangkan idea pembentukan Malaysia pada 1887?", ["Lord Brassey", "Malcolm MacDonald", "Tunku Abdul Rahman", "Ibrahim Haji Yaakob"], 0),
+                Q("Lord Brassey ialah Pengarah syarikat apa?", ["British North Borneo Company", "Syarikat Hindia Timur", "Syarikat Inggeris", "Syarikat Borneo Selatan"], 0),
+                Q("Pada 1938, siapakah yang memperjuangkan konsep Melayu Raya?", ["Ibrahim Haji Yaakob & Harun Aminurrashid", "Tunku Abdul Rahman", "Lord Brassey", "Malcolm MacDonald"], 0),
+                Q("Siapakah Gabenor Jeneral British di Asia Tenggara pada 1951?", ["Malcolm MacDonald", "Lord Brassey", "Tunku Abdul Rahman", "Harun Aminurrashid"], 0),
+                Q("Pada 1955, siapakah yang mencadangkan penggabungan?", ["Tunku Abdul Rahman Putra Al-Haj", "Tun Razak", "Tun Hussein", "Dr. Mahathir"], 0),
+                Q("Melayu Raya merangkumi kawasan berikut KECUALI…", ["Thailand", "Tanah Melayu", "Kalimantan", "Filipina"], 0),
+                Q("Pembentukan Malaysia melibatkan berapa buah negeri/wilayah?", ["5", "4", "3", "6"], 0),
+                Q("Malaysia dibentuk pada…", ["16 September 1963", "31 Ogos 1957", "9 Ogos 1965", "1 Januari 1960"], 0),
+                Q("Singapura keluar dari Malaysia pada…", ["1965", "1963", "1969", "1970"], 0),
+                Q("Negeri yang TIDAK menyertai Malaysia pada 1963?", ["Brunei", "Sabah", "Sarawak", "Singapura"], 0)
+              ]
+            },
+            {
+              title: "Langkah-langkah ke Arah Pembentukan Malaysia",
+              learn: P(
+                "<b>27 Mei 1961</b>: Tunku umum di Hotel Adelphi, Singapura.",
+                "<b>23 Julai 1961</b>: Penubuhan JSKM.",
+                "<b>17 Januari 1962</b>: Suruhanjaya Cobbold dibentuk.",
+                "<b>21 Jun 1962</b>: Laporan Cobbold. <b>30 Ogos 1962</b>: Mesyuarat JAK.",
+                "<b>9 Julai 1963</b>: Perjanjian Malaysia di London. <b>16 Sept 1963</b>: Pemasyhuran."
+              ),
+              questions: [
+                Q("Di manakah Tunku mengumumkan cadangan pembentukan Malaysia?", ["Hotel Adelphi, Singapura", "Kuala Lumpur", "London", "Kuching"], 0),
+                Q("JSKM singkatan bagi?", ["Jawatankuasa Setia Kawan Malaysia", "Jawatankuasa Sultan", "Jawatankuasa Kebangsaan", "Jawatankuasa Khas"], 0),
+                Q("Suruhanjaya Cobbold dibentuk pada tarikh?", ["17 Januari 1962", "23 Julai 1961", "30 Ogos 1962", "9 Julai 1963"], 0),
+                Q("Suruhanjaya Cobbold dianggotai berapa orang?", ["5", "3", "7", "10"], 0),
+                Q("Perjanjian Malaysia ditandatangani di?", ["Malborough House, London", "Istana Negara", "Hotel Adelphi", "Kuching"], 0),
+                Q("Tarikh Perjanjian Malaysia?", ["9 Julai 1963", "16 September 1963", "31 Ogos 1963", "1 September 1962"], 0),
+                Q("Pemasyhuran Malaysia diadakan di berapa tempat?", ["4", "3", "5", "2"], 0),
+                Q("Referendum diadakan di negeri mana?", ["Singapura", "Sabah", "Sarawak", "Brunei"], 0)
+              ]
+            },
+            {
+              title: "Sebab-sebab Pembentukan Malaysia",
+              learn: P(
+                "1. <b>Menjamin keselamatan negara</b> - ancaman komunis.",
+                "2. <b>Mencapai keseimbangan kaum</b> - penduduk seimbang.",
+                "3. <b>Mempercepat kemerdekaan</b> Sarawak, Sabah, Singapura, Brunei.",
+                "4. <b>Membangunkan sosioekonomi</b> - infrastruktur, sosial, ekonomi."
+              ),
+              questions: [
+                Q("Ancaman apa yang dihadapi Singapura dan Sarawak?", ["Komunis", "Jepun", "Belanda", "Portugis"], 0),
+                Q("Mengapa penggabungan PTM dengan Sarawak, Sabah, Brunei penting?", ["Keseimbangan kaum", "Menambah wilayah", "Mengurangkan cukai", "Menambah bahasa"], 0),
+                Q("Pembentukan Malaysia mempercepat kemerdekaan negeri?", ["Sarawak, Sabah, Singapura, Brunei", "Johor, Melaka, Penang", "Perak, Selangor", "Kedah, Kelantan"], 0),
+                Q("Pembentukan Malaysia membangunkan apa?", ["Sosioekonomi", "Ketenteraan", "Sukan", "Bahasa"], 0),
+                Q("Siapakah yang menolak rancangan pembentukan Malaysia?", ["Sarawak United People's Party (SUPP)", "UMNO", "MCA", "MIC"], 0),
+                Q("Indonesia mengisytiharkan konfrontasi dari tahun?", ["1963-1966", "1957-1960", "1970-1975", "1945-1950"], 0),
+                Q("Negara yang mendakwa Sabah sebahagian wilayahnya?", ["Filipina", "Indonesia", "Thailand", "Vietnam"], 0),
+                Q("Peribahasa 'carik-carik bulu ayam, akhirnya bercantum juga' bermaksud?", ["Hubungan tegang akhirnya pulih", "Ayam bertengkar", "Bulu ayam cantik", "Ayam hilang"], 0),
+                Q("Cabaran pertama pembentukan Malaysia?", ["Penolakan oleh SUPP", "Perang dunia", "Kekurangan sumber", "Banjir"], 0),
+                Q("Kesimpulan daripada cabaran pembentukan Malaysia?", ["Kerjasama demi kemakmuran", "Penjajahan", "Perang", "Perpecahan"], 0)
+              ]
+            }
+          ],
+          challenge: [
+            Q("Tokoh-tokoh dalam pembentukan Malaysia: Tunku Abdul Rahman ialah pemimpin?", ["UMNO", "MCA", "MIC", "PAP"], 0),
+            Q("Tan Sri Wong Pow Nee ialah pemimpin?", ["MCA", "UMNO", "MIC", "PAP"], 0),
+            Q("Tun V.T. Sambanthan ialah pemimpin?", ["MIC", "MCA", "UMNO", "PAP"], 0),
+            Q("Donald Stephens ialah pemimpin?", ["UNKO", "USNO", "PASOK", "PANAS"], 0),
+            Q("Lee Kuan Yew ialah pemimpin?", ["PAP", "UMNO", "MCA", "SNAP"], 0),
+            Q("Tan Sri Datuk Amar Stephen Kalong Ningkan ialah pemimpin?", ["SNAP", "PESAKA", "USNO", "UNKO"], 0),
+            Q("Tun Temenggung Jugah anak Barieng ialah pemimpin?", ["PESAKA", "PAP", "SNAP", "USNO"], 0),
+            Q("Tun Datu Mustapha Datu Harun ialah pemimpin?", ["USNO", "UNKO", "PANAS", "PESAKA"], 0),
+            Q("Datu Bandar Abang Haji Mustapha ialah pemimpin?", ["PANAS", "PESAKA", "USNO", "SNAP"], 0),
+            Q("Tun Muhammad Ghazali Shafie ialah pemimpin?", ["UMNO", "MCA", "MIC", "PAP"], 0)
+          ]
+        },
+        {
+          title: "Unit 2: Negeri-Negeri di Malaysia",
+          lessons: [
+            {
+              title: "Asal Usul Nama Negeri",
+              learn: P(
+                "<b>Perlis</b>: 'prow-lowy' (Siam) = kelapa hanyut.",
+                "<b>Kedah</b>: 'Kheddah' = perangkap gajah; Arab 'Qadah' = cawan.",
+                "<b>Pulau Pinang</b>: Pulo Ka Satu, Tanjong Penaga, buah pinang.",
+                "<b>Perak</b>: kilatan ikan dalam air; bijih timah putih.",
+                "<b>Selangor</b>: pokok mentagau; serangga 'selangur'.",
+                "<b>Negeri Sembilan</b>: 9 luak (Sungai Ujong, Jelebu, Rembau, Johol, Jelai, Ulu Pahang, Naning, Segamat, Klang)."
+              ),
+              questions: [
+                Q("Nama Perlis dari perkataan Siam 'prow-lowy' bermaksud?", ["Kelapa hanyut", "Batu permata", "Ikan", "Gajah"], 0),
+                Q("Nama Kedah berasal dari 'Kheddah' bermaksud?", ["Perangkap gajah", "Cawan", "Pokok", "Ikan"], 0),
+                Q("Pulau Pinang juga dikenali sebagai?", ["Tanjong Penaga", "Batu Putih", "Pulau Kelapa", "Pulau Siput"], 0),
+                Q("Nama Perak bersempena dengan?", ["Kilatan ikan dalam air", "Batu putih", "Pokok merah", "Buah bulat"], 0),
+                Q("Nama Selangor dikaitkan dengan pokok?", ["Mentagau", "Nyiur", "Getah", "Pinang"], 0),
+                Q("Negeri Sembilan berasal dari?", ["9 buah luak", "9 orang raja", "9 buah kampung", "9 negeri"], 0),
+                Q("Melaka dari perkataan Arab 'Malakat' bermaksud?", ["Perhimpunan para pedagang", "Batu permata", "Pokok kayu", "Ikan putih"], 0),
+                Q("Johor dari perkataan Arab 'Jauhar' bermaksud?", ["Batu permata bernilai", "Pokok jati", "Sungai besar", "Batu putih"], 0),
+                Q("Pahang bersempena dengan pokok?", ["Mahang", "Kelapa", "Pinang", "Getah"], 0),
+                Q("Terengganu berkaitan 'taring anu' bermaksud?", ["Taring gading gajah", "Batu tajam", "Besi panjang", "Pisau besar"], 0)
+              ]
+            },
+            {
+              title: "Ketua-Ketua Negeri",
+              learn: P(
+                "<b>Sultan/Raja</b>: Kedah, Perak, Selangor, Johor, Pahang, Terengganu, Kelantan (Sultan); Perlis (Raja).",
+                "<b>Yang di-Pertuan Besar</b>: Negeri Sembilan.",
+                "<b>Yang di-Pertua Negeri</b>: Pulau Pinang, Melaka, Sarawak, Sabah.",
+                "Wilayah Persekutuan: <b>Yang di-Pertuan Agong</b>."
+              ),
+              questions: [
+                Q("Siapakah ketua negeri Perlis?", ["Raja", "Sultan", "Yang di-Pertua Negeri", "Yang di-Pertuan Besar"], 0),
+                Q("Negeri Sembilan diketuai oleh?", ["Yang di-Pertuan Besar", "Sultan", "Raja", "Yang di-Pertua Negeri"], 0),
+                Q("Melaka diketuai oleh?", ["Yang di-Pertua Negeri", "Sultan", "Raja", "Yang di-Pertuan Besar"], 0),
+                Q("Wilayah Persekutuan diketuai oleh?", ["Yang di-Pertuan Agong", "Sultan", "Raja", "Yang di-Pertua Negeri"], 0),
+                Q("Negeri mana TIDAK diketuai Sultan?", ["Negeri Sembilan", "Perak", "Kedah", "Johor"], 0),
+                Q("Sabah diketuai oleh?", ["Yang di-Pertua Negeri", "Sultan", "Raja", "Yang di-Pertuan Besar"], 0),
+                Q("Pulau Pinang diketuai oleh?", ["Yang di-Pertua Negeri", "Sultan", "Raja", "Yang di-Pertuan Besar"], 0),
+                Q("Ibu negeri Perlis?", ["Kangar", "Alor Setar", "Georgetown", "Ipoh"], 0),
+                Q("Ibu negeri Kedah?", ["Alor Setar", "Kangar", "Ipoh", "Shah Alam"], 0),
+                Q("Ibu negeri Sarawak?", ["Kuching", "Kota Kinabalu", "Kuantan", "Johor Bahru"], 0)
+              ]
+            }
+          ],
+          challenge: [
+            Q("Bandar diraja Selangor?", ["Klang", "Shah Alam", "Kuala Selangor", "Petaling"], 0),
+            Q("Bandar diraja Johor?", ["Muar", "Johor Bahru", "Batu Pahat", "Kluang"], 0),
+            Q("Bandar diraja Negeri Sembilan?", ["Seri Menanti", "Seremban", "Port Dickson", "Nilai"], 0),
+            Q("Bandar diraja Pahang?", ["Pekan", "Kuantan", "Temerloh", "Raub"], 0),
+            Q("Lagu negeri Terengganu?", ["Selamat Sultan", "Duli Yang Maha Mulia", "Amin-Amin", "Selamat Sultan"], 0),
+            Q("Lagu negeri Perlis?", ["Amin-Amin", "Selamat Sultan", "Duli Yang Maha Mulia", "Untuk Negeri Kita"], 0),
+            Q("Lagu negeri Selangor?", ["Duli Yang Maha Mulia", "Selamat Sultan", "Amin-Amin", "Sabah Tanah Airku"], 0),
+            Q("Lagu negeri Johor?", ["Lagu Bangsa Johor", "Selamat Sultan", "Amin-Amin", "Ibu Pertiwiku"], 0),
+            Q("Lagu negeri Sabah?", ["Sabah Tanah Airku", "Selamat Sultan", "Duli Yang Maha Mulia", "Untuk Negeri Kita"], 0),
+            Q("Lagu negeri Melaka?", ["Melaka Maju Jaya", "Selamat Sultan", "Amin-Amin", "Untuk Negeri Kita"], 0)
+          ]
+        },
+        {
+          title: "Unit 3: Rukun Negara",
+          lessons: [
+            {
+              title: "Latar Belakang dan Sebab Pengenalan",
+              learn: P(
+                "<b>Dirangka</b> oleh Jawatankuasa Rukun Negara bawah <b>MAPEN</b> pada <b>4 Mac 1970</b>.",
+                "Dibentuk selepas peristiwa <b>13 Mei 1969</b>.",
+                "<b>Dirasmikan</b> oleh YDP Agong ke-4 pada <b>31 Ogos 1970</b>.",
+                "Sebab: <b>perbezaan kegiatan ekonomi</b>, <b>pengasingan tempat tinggal</b>, <b>perbezaan fahaman politik</b>."
+              ),
+              questions: [
+                Q("Rukun Negara dirangka oleh jawatankuasa bawah?", ["MAPEN", "MAGERAN", "JSKM", "SUPP"], 0),
+                Q("Rukun Negara dirangka pada tarikh?", ["4 Mac 1970", "31 Ogos 1970", "13 Mei 1969", "16 September 1963"], 0),
+                Q("Rukun Negara dibentuk selepas peristiwa?", ["13 Mei 1969", "Merdeka", "Pembentukan Malaysia", "Perang"], 0),
+                Q("Rukun Negara dirasmikan pada?", ["31 Ogos 1970", "4 Mac 1970", "13 Mei 1969", "31 Ogos 1957"], 0),
+                Q("Sebab pertama pengenalan Rukun Negara?", ["Perbezaan kegiatan ekonomi", "Perang", "Banjir", "Penyakit"], 0),
+                Q("Masyarakat Melayu dahulu tinggal di?", ["Kampung dan kawasan pedalaman", "Bandar", "Ladang getah", "Lombong"], 0),
+                Q("Masyarakat India dahulu bekerja di?", ["Ladang getah", "Bandar", "Kampung", "Lombong"], 0),
+                Q("Masyarakat Cina dahulu bekerja di?", ["Lombong bijih timah", "Ladang getah", "Kampung", "Sawah"], 0),
+                Q("MAPEN dianggotai berapa orang?", ["66", "50", "100", "30"], 0),
+                Q("Peristiwa rusuhan kaum berlaku pada tarikh?", ["13 Mei 1969", "31 Ogos 1970", "16 September 1963", "9 Ogos 1965"], 0)
+              ]
+            },
+            {
+              title: "Matlamat dan 5 Prinsip Rukun Negara",
+              learn: P(
+                "<b>Matlamat:</b> Perpaduan, demokrasi, keadilan, toleransi, progresif.",
+                "<b>5 Prinsip:</b>",
+                "1. Kepercayaan kepada Tuhan",
+                "2. Kesetiaan kepada Raja dan Negara",
+                "3. Keluhuran Perlembagaan",
+                "4. Kedaulatan Undang-Undang",
+                "5. Kesopanan dan Kesusilaan"
+              ),
+              questions: [
+                Q("Berapa prinsip Rukun Negara?", ["5", "6", "4", "3"], 0),
+                Q("Prinsip pertama?", ["Kepercayaan kepada Tuhan", "Kesetiaan Raja", "Kedaulatan", "Keluhuran"], 0),
+                Q("Prinsip kedua?", ["Kesetiaan kepada Raja dan Negara", "Kepercayaan", "Kedaulatan", "Kesopanan"], 0),
+                Q("Prinsip ketiga?", ["Keluhuran Perlembagaan", "Kedaulatan", "Kesopanan", "Kesetiaan"], 0),
+                Q("Prinsip keempat?", ["Kedaulatan Undang-Undang", "Keluhuran", "Kesopanan", "Kesetiaan"], 0),
+                Q("Prinsip kelima?", ["Kesopanan dan Kesusilaan", "Kedaulatan", "Keluhuran", "Kesetiaan"], 0),
+                Q("Siapakah Ketua Utama Negara Malaysia?", ["Yang di-Pertuan Agong", "Perdana Menteri", "Sultan", "Presiden"], 0),
+                Q("Keluhuran Perlembagaan bermaksud?", ["Perlembagaan undang-undang tertinggi", "Raja tertinggi", "Sultan berkuasa", "Menteri tertinggi"], 0),
+                Q("Kedaulatan Undang-Undang bermaksud?", ["Rakyat mesti patuh undang-undang", "Raja buat undang-undang", "Undang-undang asing", "Menteri buat undang-undang"], 0),
+                Q("Mengapa perlu mematuhi undang-undang?", ["Menjamin keharmonian dan keselamatan", "Menambah cukai", "Mengurangkan pekerjaan", "Menambah hutang"], 0)
+              ]
+            },
+            {
+              title: "Peranan Rukun Negara",
+              learn: P(
+                "<b>4 peranan utama:</b>",
+                "1. Meraikan kepelbagaian agama dan kepercayaan",
+                "2. Membentuk masyarakat Malaysia patriotik",
+                "3. Memupuk sikap menghormati undang-undang",
+                "4. Mengukuhkan perpaduan masyarakat"
+              ),
+              questions: [
+                Q("Berapa peranan utama Rukun Negara?", ["4", "3", "5", "6"], 0),
+                Q("Rukun Negara dapat melahirkan rakyat yang?", ["Bersikap rendah diri, bersyukur", "Sombong", "Malas", "Bermusuh"], 0),
+                Q("Semangat patriotik melahirkan rakyat?", ["Taat setia, sanggup berkorban", "Mementingkan diri", "Malas", "Penakut"], 0),
+                Q("Contoh lambang kedaulatan negara?", ["Bendera Jalur Gemilang, Jata Negara", "Papan tanda", "Bangunan", "Peta"], 0),
+                Q("Rukun Negara membimbing rakyat daripada?", ["Terlibat kegiatan jenayah", "Belajar", "Bekerja", "Berehat"], 0),
+                Q("Masyarakat Malaysia perlu amalkan semangat?", ["Permuafakatan dan toleransi", "Perkauman", "Egoisme", "Bersaing"], 0),
+                Q("Rakyat dibimbing untuk memahami dan menghormati?", ["Budaya kaum lain", "Bahasa asing", "Makanan asing", "Pakaian asing"], 0),
+                Q("Rakyat Malaysia yang bersatu padu dan bertoleransi diwujudkan oleh?", ["Rukun Negara", "Perlembagaan", "Undang-undang", "Parlimen"], 0),
+                Q("Kempen 'Anak Muda Bebas Dadah' menunjukkan Rukun Negara memupuk?", ["Sikap menghormati undang-undang", "Kekayaan", "Pangkat", "Kesihatan"], 0),
+                Q("Rukun Negara sebagai ideologi negara menjadikan masyarakat?", ["Berbilang kaum hidup bersatu padu", "Bermusuh", "Bersaing", "Berpecah"], 0)
+              ]
+            }
+          ],
+          challenge: [
+            Q("Bilakah Rukun Negara dirangka?", ["4 Mac 1970", "31 Ogos 1970", "13 Mei 1969", "16 September 1963"], 0),
+            Q("Siapakah YDP Agong ke-4 yang merasmikan Rukun Negara?", ["Tuanku Sultan Ismail Nasiruddin Shah", "Tuanku Abdul Rahman", "Tuanku Syed Putra", "Tuanku Jaafar"], 0),
+            Q("MAGERAN bermaksud?", ["Majlis Gerakan Negara", "Majlis Kerajaan", "Majlis Negara", "Majlis Rakyat"], 0),
+            Q("Rukun Negara mengukuhkan perpaduan melalui?", ["Semangat kepercayaan agama", "Kekayaan", "Perang", "Perpecahan"], 0),
+            Q("Perbezaan kegiatan ekonomi antara kaum menyebab?", ["Jurang ekonomi tidak seimbang", "Perpaduan", "Kekayaan", "Kemajuan"], 0),
+            Q("Pengasingan tempat tinggal menyebabkan?", ["Kurang interaksi antara masyarakat", "Perpaduan", "Kekayaan", "Kemajuan"], 0),
+            Q("Perbezaan fahaman politik membawa kepada?", ["Suasana tidak harmoni", "Perpaduan", "Kekayaan", "Kemajuan"], 0),
+            Q("Rukun Negara diisytiharkan pada ulang tahun Hari Kebangsaan ke-?", ["13", "10", "15", "20"], 0),
+            Q("Rukun Negara bertujuan mewujudkan masyarakat?", ["Progresif menggunakan sains & teknologi", "Mundur", "Statik", "Terpisah"], 0),
+            Q("Prinsip Rukun Negara menjadi panduan untuk?", ["Rakyat Malaysia bersatu padu", "Rakyat berkuasa", "Raja berkuasa", "Menteri berkuasa"], 0)
+          ]
+        },
+        {
+          title: "Unit 4: Kaum di Malaysia",
+          lessons: [
+            {
+              title: "Masyarakat Majmuk",
+              learn: P(
+                "Malaysia mempunyai pelbagai kaum: <b>Melayu</b>, <b>Cina</b>, <b>India</b>, dan <b>bumiputera</b> Sabah & Sarawak.",
+                "<b>Melayu</b>: kaum terbesar, bertutur bahasa Melayu, beragama Islam.",
+                "<b>Cina</b>: bertutur bahasa Mandarin/dialek Cina.",
+                "<b>India</b>: bertutur bahasa Tamil, Telugu atau Malayalam.",
+                "<b>Iban</b>: kaum terbesar di Sarawak, terkenal dengan seni tenunan Pua Kumbu.",
+                "<b>Kadazandusun</b>: kaum terbesar di Sabah, terkenal dengan Pesta Kaamatan."
+              ),
+              questions: [
+                Q("Kaum terbesar di Malaysia?", ["Melayu", "Cina", "India", "Kadazan"], 0),
+                Q("Kaum terbesar di Sarawak?", ["Iban", "Melanau", "Bidayuh", "Kadazan"], 0),
+                Q("Kaum terbesar di Sabah?", ["Kadazandusun", "Bajau", "Murut", "Iban"], 0),
+                Q("Pesta Kaamatan disambut oleh?", ["Kadazandusun", "Iban", "Melayu", "Cina"], 0),
+                Q("Seni tenunan Pua Kumbu kepunyaan kaum?", ["Iban", "Kadazan", "Melayu", "India"], 0),
+                Q("Kaum Bajau digelar?", ["Koboi Timur", "Pahlawan", "Pelaut", "Petani"], 0),
+                Q("Orang Asli di Semenanjung terbahagi kepada?", ["Negrito, Senoi, Melayu Proto", "Iban, Kadazan, Murut", "Melayu, Cina, India", "Bajau, Suluk, Rungus"], 0),
+                Q("Bahasa pengantar kaum Cina?", ["Mandarin", "Tamil", "Melayu", "Iban"], 0),
+                Q("Kaum India bertutur bahasa?", ["Tamil, Telugu atau Malayalam", "Mandarin", "Iban", "Kadazan"], 0),
+                Q("Masyarakat majmuk bermaksud?", ["Pelbagai kaum", "Satu kaum", "Luar negara", "Satu budaya"], 0)
+              ]
+            },
+            {
+              title: "Alat Muzik dan Tarian Tradisional",
+              learn: P(
+                "<b>Melayu</b>: Kompang, Gamelan, Rebana. Tarian: Mak Yong, Zapin, Kuda Kepang.",
+                "<b>Cina</b>: Erhu, Bo, Seruling Bambu. Tarian: Singa, Naga, Kipas.",
+                "<b>India</b>: Tabla, Sitar, Veena. Tarian: Bharatanatyam, Kolattam.",
+                "<b>Borneo</b>: Sape (Sarawak), Sompoton (Sabah). Tarian: Ngajat, Sumazau, Magunatip."
+              ),
+              questions: [
+                Q("Alat muzik tradisional Melayu?", ["Kompang", "Erhu", "Sitar", "Sape"], 0),
+                Q("Tarian tradisional Melayu?", ["Kuda Kepang", "Tarian Singa", "Bharatanatyam", "Sumazau"], 0),
+                Q("Alat muzik tradisional Cina?", ["Erhu", "Kompang", "Sitar", "Gendang"], 0),
+                Q("Tarian tradisional Cina?", ["Tarian Singa", "Kuda Kepang", "Ngajat", "Bhangra"], 0),
+                Q("Alat muzik tradisional India?", ["Sitar", "Sape", "Sompoton", "Erhu"], 0),
+                Q("Tarian klasik India?", ["Bharatanatyam", "Sumazau", "Zapin", "Tarian Kipas"], 0),
+                Q("Alat muzik tradisional Sarawak?", ["Sape", "Sompoton", "Kulintangan", "Erhu"], 0),
+                Q("Alat muzik tradisional Sabah?", ["Sompoton", "Sape", "Sitar", "Bo"], 0),
+                Q("Tarian tradisional Iban?", ["Ngajat", "Sumazau", "Magunatip", "Bhangra"], 0),
+                Q("Tarian tradisional Kadazandusun?", ["Sumazau", "Ngajat", "Magunatip", "Bhangra"], 0)
+              ]
+            },
+            {
+              title: "Permainan Tradisional & Perubahan Petempatan",
+              learn: P(
+                "<b>Permainan tradisional</b>: Congkak, Wau, Gasing, Sepak Raga.",
+                "<b>Zaman dahulu</b> (British): Melayu di kampung (petani/nelayan), Cina di bandar/lombong, India di estet getah.",
+                "<b>Zaman kini</b>: Semua kaum bebas tinggal di mana-mana, pelbagai pekerjaan."
+              ),
+              questions: [
+                Q("Permainan tradisional menggunakan papan kayu berlubang?", ["Congkak", "Wau", "Gasing", "Sepak Raga"], 0),
+                Q("Permainan tradisional yang dimainkan dengan bola rotan?", ["Sepak Raga", "Congkak", "Wau", "Gasing"], 0),
+                Q("Pada zaman British, kaum Melayu tinggal di?", ["Kampung", "Bandar", "Estet", "Lombong"], 0),
+                Q("Pada zaman British, kaum Cina bekerja sebagai?", ["Pelombong dan peniaga", "Petani dan nelayan", "Buruh ladang getah", "Guru"], 0),
+                Q("Pada zaman British, kaum India tinggal di?", ["Estet getah", "Kampung", "Bandar", "Lombong"], 0),
+                Q("Kesan pengasingan petempatan pada zaman British?", ["Kurang interaksi antara kaum", "Perpaduan", "Kekayaan", "Kemajuan"], 0),
+                Q("Pada zaman kini, semua kaum bebas?", ["Tinggal di mana-mana", "Tinggal di kampung sahaja", "Tinggal di bandar sahaja", "Tinggal di estet sahaja"], 0),
+                Q("Contoh pekerjaan moden yang boleh dilakukan semua kaum?", ["Doktor, guru, jurutera", "Petani sahaja", "Nelayan sahaja", "Pelombong sahaja"], 0),
+                Q("Perubahan petempatan telah?", ["Mengukuhkan perpaduan", "Memecahbelahkan kaum", "Mengurangkan penduduk", "Menambah masalah"], 0),
+                Q("Permainan tradisional mengeratkan?", ["Hubungan silaturahim", "Perbalahan", "Persaingan", "Permusuhan"], 0)
+              ]
+            }
+          ],
+          challenge: [
+            Q("Pesta Kaamatan disambut oleh?", ["Kadazandusun", "Iban", "Melayu", "Cina"], 0),
+            Q("Tarian Sumazau dipersembahkan semasa?", ["Pesta Kaamatan", "Tahun Baru Cina", "Deepavali", "Hari Raya"], 0),
+            Q("Alat muzik bertali kaum India?", ["Sitar", "Kompang", "Sape", "Erhu"], 0),
+            Q("Tarian Singa dipersembahkan untuk?", ["Tahun Baru Cina", "Deepavali", "Pesta Kaamatan", "Hari Gawai"], 0),
+            Q("Permainan tradisional yang memerlukan kepandaian mengira?", ["Congkak", "Wau", "Gasing", "Sepak Raga"], 0)
+          ]
+        },
+        {
+          title: "Unit 5: Agama dan Kepercayaan",
+          lessons: [
+            {
+              title: "Pelbagai Agama di Malaysia",
+              learn: P(
+                "<b>Islam</b>: agama paling ramai penganutnya, kitab suci al-Quran.",
+                "<b>Buddha & Taoisme</b>: majoriti masyarakat Cina.",
+                "<b>Hindu</b>: majoriti masyarakat India, dewa Murugan dirai semasa Thaipusam.",
+                "<b>Kristian</b>: kitab suci Bible, ramai di Sabah & Sarawak.",
+                "<b>Sikh</b>: ajaran Guru Nanak.",
+                "<b>Kepercayaan tradisional</b>: Kadazandusun percaya Kinorohingan, Iban & Orang Asli percaya semangat alam."
+              ),
+              questions: [
+                Q("Agama paling ramai penganutnya di Malaysia?", ["Islam", "Buddha", "Hindu", "Kristian"], 0),
+                Q("Kitab suci agama Islam?", ["Al-Quran", "Bible", "Kitab Veda", "Tripitaka"], 0),
+                Q("Agama yang dianuti majoriti masyarakat Cina?", ["Buddha & Taoisme", "Islam", "Hindu", "Sikh"], 0),
+                Q("Dewa yang dirai semasa Thaipusam?", ["Dewa Murugan", "Dewa Siva", "Dewa Vishnu", "Dewa Rama"], 0),
+                Q("Kitab suci agama Kristian?", ["Bible", "Al-Quran", "Tripitaka", "Kitab Veda"], 0),
+                Q("Agama Sikh diasaskan oleh?", ["Guru Nanak", "Guru Gobind Singh", "Guru Arjan", "Guru Tegh Bahadur"], 0),
+                Q("Tuhan yang dipercayai oleh Kadazandusun?", ["Kinorohingan", "Batara Guru", "Dewa Murugan", "Tuhan Allah"], 0),
+                Q("Rumah ibadat agama Islam?", ["Masjid/Surau", "Tokong", "Kuil", "Gereja"], 0),
+                Q("Rumah ibadat agama Buddha?", ["Tokong/Wat", "Masjid", "Kuil", "Gurdwara"], 0),
+                Q("Rumah ibadat agama Sikh?", ["Gurdwara", "Masjid", "Tokong", "Kuil"], 0)
+              ]
+            },
+            {
+              title: "Kedudukan Agama Islam & Kebebasan Beragama",
+              learn: P(
+                "<b>Perkara 3(1)</b>: Islam ialah Agama Persekutuan.",
+                "<b>Ketua agama Islam</b>: Sultan/Raja bagi negeri beraja; YDP Agong bagi negeri tiada raja & Wilayah Persekutuan.",
+                "<b>Perkara 11</b>: agama lain boleh diamalkan dengan aman.",
+                "Sikap: <b>bertimbang rasa</b>, <b>tidak menghina agama lain</b>."
+              ),
+              questions: [
+                Q("Islam ialah Agama Persekutuan menurut?", ["Perkara 3(1) Perlembagaan", "Perkara 11 Perlembagaan", "Rukun Negara", "Undang-undang antarabangsa"], 0),
+                Q("Ketua agama Islam bagi negeri beraja?", ["Sultan/Raja", "Yang di-Pertuan Agong", "Perdana Menteri", "Menteri Besar"], 0),
+                Q("Ketua agama Islam bagi Melaka, Pulau Pinang, Sabah, Sarawak?", ["Yang di-Pertuan Agong", "Sultan", "Raja", "Gabenor"], 0),
+                Q("Kebebasan beragama dijamin oleh?", ["Perkara 11 Perlembagaan", "Perkara 3 Perlembagaan", "Rukun Negara", "Undang-undang asing"], 0),
+                Q("Sikap yang perlu diamalkan terhadap agama lain?", ["Bertimbang rasa", "Menghina", "Mengganggu", "Menjauhi"], 0),
+                Q("Mengapa perlu hormat agama lain?", ["Mengekalkan keamanan negara", "Menunjuk kuasa", "Mendapat pahala", "Takut"], 0),
+                Q("Masyarakat yang menghormati agama melahirkan negara?", ["Harmoni dan maju", "Bermusuh", "Mundur", "Berpecah"], 0),
+                Q("Adab menziarahi rumah ibadat?", ["Berpakaian sopan, jaga kebersihan", "Berpakaian selekeh", "Membuat bising", "Membawa makanan"], 0),
+                Q("Rumah ibadat agama Hindu?", ["Kuil", "Masjid", "Tokong", "Gereja"], 0),
+                Q("Rumah ibadat agama Kristian?", ["Gereja", "Masjid", "Tokong", "Kuil"], 0)
+              ]
+            }
+          ],
+          challenge: [
+            Q("Agama rasmi Malaysia?", ["Islam", "Buddha", "Hindu", "Kristian"], 0),
+            Q("Kitab suci agama Islam?", ["Al-Quran", "Bible", "Tripitaka", "Veda"], 0),
+            Q("Tempat ibadat Sikh?", ["Gurdwara", "Masjid", "Kuil", "Tokong"], 0),
+            Q("Perkara yang menjamin kebebasan beragama?", ["Perkara 11", "Perkara 3", "Perkara 12", "Perkara 8"], 0),
+            Q("Sikap yang perlu diamalkan terhadap agama lain?", ["Menghormati", "Menghina", "Mengganggu", "Menjauhi"], 0)
+          ]
+        },
+        {
+          title: "Unit 6: Perayaan Masyarakat di Malaysia",
+          lessons: [
+            {
+              title: "Perayaan Utama",
+              learn: P(
+                "<b>Hari Raya Aidilfitri</b>: umat Islam, selepas Ramadan.",
+                "<b>Tahun Baru Cina</b>: masyarakat Cina.",
+                "<b>Deepavali</b>: masyarakat India, perayaan cahaya.",
+                "<b>Krismas</b>: umat Kristian.",
+                "<b>Hari Gawai</b>: Iban (Sarawak). <b>Pesta Kaamatan</b>: Kadazandusun (Sabah)."
+              ),
+              questions: [
+                Q("Perayaan utama umat Islam?", ["Hari Raya Aidilfitri", "Tahun Baru Cina", "Deepavali", "Krismas"], 0),
+                Q("Tahun Baru Cina disambut oleh?", ["Cina", "Melayu", "India", "Kadazan"], 0),
+                Q("Deepavali disambut oleh?", ["India", "Cina", "Melayu", "Iban"], 0),
+                Q("Krismas disambut oleh?", ["Kristian", "Islam", "Hindu", "Buddha"], 0),
+                Q("Hari Gawai disambut oleh?", ["Iban", "Kadazan", "Melayu", "Cina"], 0),
+                Q("Pesta Kaamatan disambut oleh?", ["Kadazandusun", "Iban", "Melayu", "India"], 0),
+                Q("Deepavali bermaksud?", ["Perayaan cahaya", "Perayaan air", "Perayaan angin", "Perayaan hujan"], 0),
+                Q("Perayaan yang disambut selepas Ramadan?", ["Hari Raya Aidilfitri", "Tahun Baru Cina", "Deepavali", "Krismas"], 0),
+                Q("Perayaan yang menyambut kedatangan tahun baharu?", ["Tahun Baru Cina", "Deepavali", "Hari Raya", "Krismas"], 0),
+                Q("Hari Gawai disambut di negeri?", ["Sarawak", "Sabah", "Johor", "Kedah"], 0)
+              ]
+            },
+            {
+              title: "Tujuan dan Kepentingan Perayaan",
+              learn: P(
+                "Tujuan: <b>mengeratkan silaturahim</b>, <b>menunjukkan kesyukuran</b>, <b>memupuk perpaduan</b>.",
+                "Konsep <b>'open house'</b>: kunjung-mengunjung.",
+                "Kita perlu <b>menghormati</b> perayaan kaum lain."
+              ),
+              questions: [
+                Q("Tujuan utama perayaan di Malaysia?", ["Mengeratkan silaturahim", "Perbalahan", "Membazir wang", "Penat"], 0),
+                Q("Konsep 'open house' diamalkan untuk?", ["Kunjung-mengunjung", "Menyendiri", "Bersaing", "Bermusuh"], 0),
+                Q("Sikap yang perlu diamalkan semasa perayaan kaum lain?", ["Menghormati", "Menghina", "Mengganggu", "Menjauhi"], 0),
+                Q("Mengapa perayaan penting?", ["Mengeratkan hubungan kaum", "Menambah hutang", "Mengurangkan penduduk", "Menambah masalah"], 0),
+                Q("Perayaan menunjukkan?", ["Kesyukuran", "Kekayaan", "Pangkat", "Kuasa"], 0),
+                Q("Kepentingan menyambut perayaan bersama?", ["Memupuk perpaduan", "Perpecahan", "Persaingan", "Permusuhan"], 0),
+                Q("Masyarakat yang menghormati perayaan kaum lain melahirkan?", ["Perpaduan", "Perbalahan", "Kekacauan", "Perpecahan"], 0),
+                Q("Apakah maksud 'open house'?", ["Kunjung-mengunjung", "Menyendiri", "Bersaing", "Bermusuh"], 0),
+                Q("Perayaan yang menyatukan semua kaum?", ["Hari Kebangsaan", "Hari Raya", "Tahun Baru Cina", "Deepavali"], 0),
+                Q("Mengapa kita perlu menghormati perayaan kaum lain?", ["Mengekalkan keharmonian", "Menunjuk kuasa", "Mendapat hadiah", "Takut"], 0)
+              ]
+            }
+          ],
+          challenge: [
+            Q("Perayaan utama umat Islam?", ["Hari Raya Aidilfitri", "Tahun Baru Cina", "Deepavali", "Krismas"], 0),
+            Q("Deepavali bermaksud?", ["Perayaan cahaya", "Perayaan air", "Perayaan angin", "Perayaan hujan"], 0),
+            Q("Hari Gawai disambut di?", ["Sarawak", "Sabah", "Johor", "Kedah"], 0),
+            Q("Pesta Kaamatan disambut oleh?", ["Kadazandusun", "Iban", "Melayu", "Cina"], 0),
+            Q("Konsep 'open house' diamalkan untuk?", ["Kunjung-mengunjung", "Menyendiri", "Bersaing", "Bermusuh"], 0)
+          ]
+        },
+        {
+          title: "Unit 7: Pemimpin Negara Malaysia",
+          lessons: [
+            {
+              title: "Perdana Menteri Malaysia",
+              learn: P(
+                "<b>Tunku Abdul Rahman</b> (PM pertama, Bapa Kemerdekaan), <b>Tun Abdul Razak</b> (Bapa Pembangunan), <b>Tun Hussein Onn</b>, <b>Dr. Mahathir</b>.",
+                "Tugas PM: <b>mengetuai kerajaan</b>, <b>menentukan dasar negara</b>, <b>memimpin kabinet</b>."
+              ),
+              questions: [
+                Q("Bapa Kemerdekaan Malaysia?", ["Tunku Abdul Rahman", "Tun Razak", "Tun Hussein", "Dr. Mahathir"], 0),
+                Q("PM pertama Malaysia?", ["Tunku Abdul Rahman", "Tun Razak", "Tun Hussein", "Dr. Mahathir"], 0),
+                Q("Bapa Pembangunan?", ["Tun Abdul Razak", "Tunku", "Tun Hussein", "Dr. Mahathir"], 0),
+                Q("PM ke-4 Malaysia?", ["Dr. Mahathir", "Tun Abdullah", "Najib", "Anwar"], 0),
+                Q("Tugas utama PM?", ["Mengetuai kerajaan", "Mengetuai tentera", "Mengetuai sukan", "Mengetuai pendidikan"], 0),
+                Q("Tunku Abdul Rahman lahir pada?", ["8 Februari 1903", "11 Mac 1922", "12 Februari 1922", "16 Julai 1925"], 0),
+                Q("Tun Abdul Razak lahir pada?", ["11 Mac 1922", "8 Februari 1903", "12 Februari 1922", "16 Julai 1925"], 0),
+                Q("Tun Hussein Onn lahir pada?", ["12 Februari 1922", "8 Februari 1903", "11 Mac 1922", "16 Julai 1925"], 0),
+                Q("PM dilantik oleh?", ["Yang di-Pertuan Agong", "Rakyat", "Parlimen", "Sultan"], 0),
+                Q("PM mengetuai mesyuarat?", ["Kabinet", "Parlimen", "Mahkamah", "Tentera"], 0)
+              ]
+            },
+            {
+              title: "Tugas dan Tanggungjawab PM",
+              learn: P(
+                "<b>Tugas PM</b>:",
+                "Mengetuai kerajaan.",
+                "Menentukan dasar negara.",
+                "Memimpin kabinet.",
+                "Menjaga kesejahteraan rakyat.",
+                "Mewakili negara di peringkat antarabangsa."
+              ),
+              questions: [
+                Q("Tugas utama PM?", ["Mengetuai kerajaan", "Mengetuai tentera", "Mengetuai sukan", "Mengetuai pendidikan"], 0),
+                Q("PM mengetuai?", ["Kabinet", "Parlimen", "Mahkamah", "Tentera"], 0),
+                Q("PM menentukan?", ["Dasar negara", "Undang-undang", "Hukuman", "Cukai"], 0),
+                Q("PM mewakili negara di?", ["Peringkat antarabangsa", "Kampung", "Bandar", "Sekolah"], 0),
+                Q("PM bertanggungjawab menjaga?", ["Kesejahteraan rakyat", "Kekayaan sendiri", "Pangkat", "Kuasa"], 0),
+                Q("PM dilantik oleh?", ["Yang di-Pertuan Agong", "Rakyat", "Parlimen", "Sultan"], 0),
+                Q("PM perlu mendapat sokongan?", ["Majoriti ahli Parlimen", "Rakyat", "Sultan", "Gabenor"], 0),
+                Q("PM mengetuai kerajaan Persekutuan?", ["Ya", "Tidak", "Kadang-kadang", "Tiada jawapan"], 0),
+                Q("PM bertanggungjawab kepada?", ["Parlimen dan rakyat", "Sultan", "Gabenor", "Presiden"], 0),
+                Q("PM mengetuai mesyuarat?", ["Kabinet", "Parlimen", "Mahkamah", "Tentera"], 0)
+              ]
+            }
+          ],
+          challenge: [
+            Q("PM ke-2 Malaysia?", ["Tun Abdul Razak", "Tun Hussein", "Tunku", "Dr. Mahathir"], 0),
+            Q("PM ke-3 Malaysia?", ["Tun Hussein Onn", "Tunku", "Tun Razak", "Dr. Mahathir"], 0),
+            Q("Malaysia pernah dipimpin oleh PM wanita?", ["Tidak pernah", "Pernah", "Akan datang", "Tiada maklumat"], 0),
+            Q("Tugas PM?", ["Mengetuai kerajaan", "Mengetuai tentera", "Mengetuai sukan", "Mengetuai pendidikan"], 0),
+            Q("PM dilantik oleh?", ["Yang di-Pertuan Agong", "Rakyat", "Parlimen", "Sultan"], 0)
+          ]
+        },
+        {
+          title: "Unit 8: Kemajuan Ekonomi Malaysia",
+          lessons: [
+            {
+              title: "Perkembangan Awal Ekonomi",
+              learn: P(
+                "<b>Ekonomi tradisional</b>: bertani, menangkap ikan, melombong secara kecil-kecilan.",
+                "<b>Ekonomi komersial</b>: besar-besaran, guna jentera moden, eksport.",
+                "Hasil mahsul: <b>getah</b>, <b>kelapa sawit</b>, <b>petroleum</b>.",
+                "Industri: <b>automotif</b> (Proton Saga, 1985), <b>pembuatan</b>, <b>pelancongan</b>."
+              ),
+              questions: [
+                Q("Ciri ekonomi tradisional?", ["Kecil-kecilan, sara diri", "Besar-besaran, eksport", "Guna jentera moden", "Modal besar"], 0),
+                Q("Ciri ekonomi komersial?", ["Besar-besaran, eksport", "Kecil-kecilan, sara diri", "Guna peralatan tradisional", "Hasil untuk keluarga"], 0),
+                Q("Hasil mahsul utama Malaysia?", ["Getah, kelapa sawit, petroleum", "Gandum, kurma, anggur", "Teh, kopi, koko", "Jagung, gandum, barli"], 0),
+                Q("Kereta nasional pertama Malaysia?", ["Proton Saga", "Perodua Myvi", "Proton Wira", "Perodua Kancil"], 0),
+                Q("Kereta nasional pertama dilancarkan pada?", ["1985", "1990", "1995", "2000"], 0),
+                Q("Pelabuhan bertaraf antarabangsa Malaysia?", ["Pelabuhan Klang, Tanjung Pelepas", "Pelabuhan Singapura", "Pelabuhan Bangkok", "Pelabuhan Jakarta"], 0),
+                Q("Industri yang menyumbang eksport terbesar Malaysia?", ["Elektrik dan elektronik", "Pertanian", "Perlombongan", "Perhutanan"], 0),
+                Q("Kemajuan ekonomi membuka peluang?", ["Pekerjaan", "Perang", "Banjir", "Penyakit"], 0),
+                Q("Ekonomi penting untuk?", ["Membangunkan negara", "Menambah hutang", "Mengurangkan penduduk", "Menambah masalah"], 0),
+                Q("Hasil eksport Malaysia?", ["Barang ke luar negara", "Barang dari luar", "Barang terpakai", "Barang tiruan"], 0)
+              ]
+            },
+            {
+              title: "Kepentingan Ekonomi",
+              learn: P(
+                "Ekonomi kuat = rakyat mendapat manfaat:",
+                "Peluang pekerjaan.",
+                "Pendapatan negara.",
+                "Kemudahan infrastruktur.",
+                "Taraf hidup meningkat."
+              ),
+              questions: [
+                Q("Ekonomi kuat membuka?", ["Peluang pekerjaan", "Perang", "Banjir", "Penyakit"], 0),
+                Q("Hasil cukai dan eksport membolehkan kerajaan?", ["Membangunkan negara", "Menambah hutang", "Mengurangkan penduduk", "Menambah masalah"], 0),
+                Q("Kemajuan ekonomi membolehkan kerajaan membina?", ["Sekolah, hospital, lebuh raya", "Kubu", "Tembok", "Parit"], 0),
+                Q("Taraf hidup rakyat meningkat apabila?", ["Ekonomi maju", "Ekonomi mundur", "Ekonomi statik", "Ekonomi merosot"], 0),
+                Q("Ekonomi penting untuk?", ["Membangunkan negara", "Menambah hutang", "Mengurangkan penduduk", "Menambah masalah"], 0),
+                Q("Kemajuan ekonomi membawa?", ["Kesejahteraan rakyat", "Kemiskinan", "Pengangguran", "Kekacauan"], 0),
+                Q("Pelaburan asing penting untuk?", ["Menambah modal dan teknologi", "Menambah hutang", "Mengurangkan pekerjaan", "Menaikkan harga"], 0),
+                Q("Ekonomi yang stabil menjamin?", ["Keamanan negara", "Perang", "Banjir", "Penyakit"], 0),
+                Q("Rakyat mendapat manfaat apabila?", ["Ekonomi maju", "Ekonomi mundur", "Ekonomi statik", "Ekonomi merosot"], 0),
+                Q("Kemajuan ekonomi adalah hasil?", ["Usaha bersama", "Perang", "Banjir", "Penyakit"], 0)
+              ]
+            }
+          ],
+          challenge: [
+            Q("Kereta nasional pertama?", ["Proton Saga", "Perodua Myvi", "Proton Wira", "Perodua Kancil"], 0),
+            Q("Hasil mahsul utama Malaysia?", ["Getah, kelapa sawit, petroleum", "Gandum, kurma, anggur", "Teh, kopi, koko", "Jagung, gandum, barli"], 0),
+            Q("Ekonomi tradisional?", ["Kecil-kecilan, sara diri", "Besar-besaran, eksport", "Guna jentera moden", "Modal besar"], 0),
+            Q("Pelabuhan bertaraf antarabangsa?", ["Pelabuhan Klang, Tanjung Pelepas", "Pelabuhan Singapura", "Pelabuhan Bangkok", "Pelabuhan Jakarta"], 0),
+            Q("Ekonomi penting untuk?", ["Membangunkan negara", "Menambah hutang", "Mengurangkan penduduk", "Menambah masalah"], 0)
+          ]
+        },
+        {
+          title: "Unit 9: Sukan Kebanggaan Malaysia",
+          lessons: [
+            {
+              title: "Kejayaan Sukan Negara",
+              learn: P(
+                "<b>Piala Thomas</b>: Malaysia juara 5 kali.",
+                "<b>Sukan Olimpik & Paralimpik</b>: pingat dalam badminton, terjun, berbasikal.",
+                "<b>Sukan Komanwel 1998 (SUKOM)</b>: Malaysia tuan rumah.",
+                "<b>Le Tour de Langkawi</b>: lumba basikal antarabangsa.",
+                "<b>MotoGP</b>: Litar Antarabangsa Sepang."
+              ),
+              questions: [
+                Q("Malaysia juara Piala Thomas berapa kali?", ["5", "3", "7", "10"], 0),
+                Q("Malaysia menjadi tuan rumah Sukan Komanwel pada?", ["1998", "2001", "2017", "1989"], 0),
+                Q("Le Tour de Langkawi ialah?", ["Lumba basikal", "Lumba kereta", "Lumba motosikal", "Maraton"], 0),
+                Q("Litar Antarabangsa Sepang menganjurkan?", ["MotoGP", "F1 sahaja", "Le Tour de Langkawi", "Sukan SEA"], 0),
+                Q("Sukan Olimpik diadakan setiap?", ["4 tahun", "2 tahun", "1 tahun", "3 tahun"], 0),
+                Q("Sukan SEA diadakan setiap?", ["2 tahun", "4 tahun", "1 tahun", "5 tahun"], 0),
+                Q("Malaysia pertama kali sertai Sukan Olimpik pada?", ["1956", "1960", "1964", "1968"], 0),
+                Q("Atlet badminton terkenal Malaysia?", ["Datuk Lee Chong Wei", "Nicol David", "Azizulhasni", "Pandelela"], 0),
+                Q("Nicol David terkenal dalam sukan?", ["Skuasy", "Badminton", "Hoki", "Renang"], 0),
+                Q("Stadium utama Malaysia?", ["Bukit Jalil", "Merdeka", "Shah Alam", "Darul Aman"], 0)
+              ]
+            },
+            {
+              title: "Peranan Sukan sebagai Alat Perpaduan",
+              learn: P(
+                "Sukan menyatukan rakyat tanpa mengira kaum dan agama.",
+                "Slogan <b>'Malaysia Boleh!'</b>.",
+                "Bermain bersama-sama memupuk <b>kerjasama</b> dan <b>toleransi</b>.",
+                "Menghormati peraturan dan lawan."
+              ),
+              questions: [
+                Q("Peranan sukan sebagai alat perpaduan?", ["Menyatukan rakyat", "Memecahbelahkan", "Mengasingkan", "Bermusuh"], 0),
+                Q("Slogan sorakan rakyat Malaysia?", ["Malaysia Boleh!", "Malaysia Hebat!", "Malaysia Maju!", "Malaysia Jaya!"], 0),
+                Q("Bermain bersama-sama memupuk?", ["Kerjasama dan toleransi", "Persaingan", "Permusuhan", "Egoisme"], 0),
+                Q("Sukan mengajar kita?", ["Mematuhi peraturan dan menghormati lawan", "Melanggar peraturan", "Menghina lawan", "Bermusuh"], 0),
+                Q("Sukan meruntuhkan?", ["Tembok perbezaan", "Semangat kesukanan", "Perpaduan", "Kerjasama"], 0),
+                Q("Apabila atlet Malaysia bertanding, rakyat?", ["Bersatu padu menyokong", "Bermusuh", "Mengasingkan diri", "Tidak peduli"], 0),
+                Q("Sukan melahirkan masyarakat yang?", ["Harmoni", "Bermusuh", "Berpecah", "Bersaing"], 0),
+                Q("Perpaduan melalui sukan bermula di?", ["Sekolah dan taman perumahan", "Stadium sahaja", "Rumah sahaja", "Bandar sahaja"], 0),
+                Q("Sukan mengajar kita menghormati?", ["Lawan dan peraturan", "Diri sendiri sahaja", "Kawan sahaja", "Keluarga sahaja"], 0),
+                Q("Sukan penting untuk?", ["Kesihatan dan perpaduan", "Kekayaan", "Pangkat", "Kuasa"], 0)
+              ]
+            }
+          ],
+          challenge: [
+            Q("Jaguh badminton Malaysia?", ["Datuk Lee Chong Wei", "Nicol David", "Azizulhasni", "Pandelela"], 0),
+            Q("Malaysia menjadi tuan rumah Sukan Komanwel pada?", ["1998", "2001", "2017", "1989"], 0),
+            Q("Sukan SEA diadakan setiap?", ["2 tahun", "4 tahun", "1 tahun", "5 tahun"], 0),
+            Q("Sukan Olimpik diadakan setiap?", ["4 tahun", "2 tahun", "1 tahun", "3 tahun"], 0),
+            Q("Peranan sukan sebagai alat perpaduan?", ["Menyatukan rakyat", "Memecahbelahkan", "Mengasingkan", "Bermusuh"], 0)
+          ]
+        },
+        {
+          title: "Unit 10: Malaysia dan Dunia",
+          lessons: [
+            {
+              title: "Malaysia dalam Pertubuhan Antarabangsa",
+              learn: P(
+                "Malaysia ahli <b>ASEAN</b>, <b>PBB</b>, <b>OIC</b>, <b>Komanwel</b>.",
+                "<b>ASEAN</b>: ditubuhkan 8 Ogos 1967 di Bangkok.",
+                "<b>PBB</b>: Malaysia sertai 1957.",
+                "<b>OIC</b>: Pertubuhan Kerjasama Islam.",
+                "<b>Komanwel</b>: diketuai Raja British."
+              ),
+              questions: [
+                Q("ASEAN ditubuhkan pada?", ["8 Ogos 1967", "31 Ogos 1957", "16 September 1963", "1 Januari 1960"], 0),
+                Q("ASEAN ditubuhkan di?", ["Bangkok, Thailand", "Kuala Lumpur", "Jakarta", "Manila"], 0),
+                Q("Malaysia sertai PBB pada?", ["1957", "1963", "1970", "1965"], 0),
+                Q("OIC bermaksud?", ["Pertubuhan Kerjasama Islam", "Persatuan Islam", "Organisasi Islam", "Pertubuhan Islam"], 0),
+                Q("Komanwel diketuai oleh?", ["Raja British", "Presiden", "Perdana Menteri", "Sultan"], 0),
+                Q("Ibu pejabat ASEAN?", ["Jakarta", "KL", "Bangkok", "Manila"], 0),
+                Q("PBB bermaksud?", ["Pertubuhan Bangsa-Bangsa Bersatu", "Persatuan Bangsa", "Pertubuhan Bebas", "Persatuan Dunia"], 0),
+                Q("Malaysia ahli ASEAN?", ["Ya", "Tidak", "Akan", "Tiada"], 0),
+                Q("PBB ibu pejabat?", ["New York", "Geneva", "Paris", "London"], 0),
+                Q("Faedah hubungan antarabangsa?", ["Kerjasama ekonomi, pendidikan, keselamatan", "Perang", "Pengasingan", "Permusuhan"], 0)
+              ]
+            },
+            {
+              title: "Penglibatan Malaysia dalam ASEAN",
+              learn: P(
+                "Malaysia aktif dalam <b>ZOPFAN</b> (Zon Aman, Bebas dan Berkecuali).",
+                "Menyelesaikan konflik serantau.",
+                "Kerjasama ekonomi (AIP).",
+                "Kerjasama sosial dan kebudayaan.",
+                "Sukan SEA."
+              ),
+              questions: [
+                Q("ZOPFAN bermaksud?", ["Zon Aman, Bebas dan Berkecuali", "Zon Perdagangan Bebas", "Zon Ekonomi", "Zon Ketenteraan"], 0),
+                Q("Malaysia menyeru agar kuasa besar tidak campur tangan dalam isu?", ["Vietnam", "Kemboja", "Thailand", "Myanmar"], 0),
+                Q("Kerjasama ekonomi ASEAN melalui?", ["AIP", "AEC", "AFTA", "ZOPFAN"], 0),
+                Q("Sukan SEA dianjurkan untuk?", ["Menjalinkan kerjasama dalam sukan", "Perang", "Permusuhan", "Persaingan"], 0),
+                Q("Logo ASEAN menunjukkan?", ["10 tangkai padi", "Bintang", "Bulan", "Matahari"], 0),
+                Q("Moto ASEAN?", ["Keamanan, kestabilan, kemakmuran", "Perang, pengasingan", "Persaingan, permusuhan", "Kekayaan, kuasa"], 0),
+                Q("10 tangkai padi melambangkan?", ["10 negara ASEAN", "10 tahun", "10 pemimpin", "10 dasar"], 0),
+                Q("Kerjasama sosial ASEAN dalam bidang?", ["Pendidikan, pertukaran pelajar", "Ketenteraan", "Perang", "Pengasingan"], 0),
+                Q("Konflik Kemboja diselesaikan melalui?", ["Pilihan raya 1993", "Perang", "Rundingan", "Pengasingan"], 0),
+                Q("Malaysia menghantar pasukan pengaman di bawah?", ["PBB (UNTAC)", "NATO", "ASEAN", "OIC"], 0)
+              ]
+            }
+          ],
+          challenge: [
+            Q("ASEAN ditubuhkan pada?", ["8 Ogos 1967", "31 Ogos 1957", "16 September 1963", "1 Januari 1960"], 0),
+            Q("Ibu pejabat ASEAN?", ["Jakarta", "KL", "Bangkok", "Manila"], 0),
+            Q("OIC bermaksud?", ["Pertubuhan Kerjasama Islam", "Persatuan Islam", "Organisasi Islam", "Pertubuhan Islam"], 0),
+            Q("PBB bermaksud?", ["Pertubuhan Bangsa-Bangsa Bersatu", "Persatuan Bangsa", "Pertubuhan Bebas", "Persatuan Dunia"], 0),
+            Q("Faedah hubungan antarabangsa?", ["Kerjasama ekonomi, pendidikan, keselamatan", "Perang", "Pengasingan", "Permusuhan"], 0)
+          ]
+        }
+      ]
+    }
+  };
 })();

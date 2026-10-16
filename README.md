@@ -32,5 +32,3 @@ git clone https://github.com/hadeef14/uasa-plus.git
 cd uasa-plus
 python3 -m http.server 8000
 # open http://localhost:8000
-
-https://img.shields.io/badge/License-MIT-yellow.svg

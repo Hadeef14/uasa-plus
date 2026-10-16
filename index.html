@@ -1,466 +1,884 @@
 <!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>UASA+ Repair</title>
-    <style>
-      :root {
-        --bg: #f4ede0;
-        --card: #fffaf3;
-        --ink: #1f1d1a;
-        --muted: #605a52;
-        --accent: #d97706;
-        --accent-strong: #b45309;
-        --good: #0f766e;
-        --bad: #b91c1c;
-        --line: rgba(25, 24, 23, 0.12);
-      }
-      * { box-sizing: border-box; }
-      body {
-        margin: 0;
-        font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
-        background: linear-gradient(180deg, #f8f1e5 0%, #f3eadb 100%);
-        color: var(--ink);
-      }
-      .wrap {
-        max-width: 720px;
-        margin: 48px auto;
-        padding: 24px;
-      }
-      .card {
-        background: rgba(255,255,255,0.7);
-        border: 1px solid var(--line);
-        border-radius: 20px;
-        box-shadow: 0 8px 24px rgba(41, 31, 18, 0.08);
-        padding: 24px;
-      }
-      .logo {
-        font-size: clamp(2rem, 4vw, 3rem);
-        font-weight: 900;
-        letter-spacing: -0.08em;
-        margin-bottom: 8px;
-      }
-      .logo span { color: var(--accent); }
-      .tagline {
-        margin: 0 0 20px;
-        color: var(--muted);
-        font-weight: 600;
-      }
-      .tabs {
-        display: flex;
-        gap: 10px;
-        margin-bottom: 16px;
-      }
-      .tab {
-        flex: 1;
-        padding: 12px 16px;
-        border: 1px solid var(--line);
-        background: transparent;
-        border-radius: 12px;
-        cursor: pointer;
-        font-weight: 700;
-      }
-      .tab.active {
-        background: var(--ink);
-        color: #fff;
-        border-color: var(--ink);
-      }
-      form {
-        display: grid;
-        gap: 10px;
-      }
-      label {
-        display: grid;
-        gap: 6px;
-        font-size: 0.95rem;
-        font-weight: 600;
-      }
-      input, select, button {
-        font: inherit;
-      }
-      input, select {
-        width: 100%;
-        padding: 12px 14px;
-        border-radius: 12px;
-        border: 1px solid var(--line);
-        background: rgba(255,255,255,0.78);
-        color: var(--ink);
-      }
-      button {
-        cursor: pointer;
-        border: none;
-        border-radius: 12px;
-        padding: 12px 16px;
-        font-weight: 800;
-      }
-      .primary {
-        background: linear-gradient(180deg, var(--accent) 0%, var(--accent-strong) 100%);
-        color: white;
-      }
-      .ghost {
-        background: rgba(17, 24, 39, 0.04);
-        color: var(--ink);
-      }
-      .muted {
-        color: var(--muted);
-        font-size: 0.92rem;
-      }
-      .hidden { display: none !important; }
-      .status {
-        min-height: 22px;
-        margin-top: 8px;
-        font-weight: 600;
-      }
-      .status.error { color: var(--bad); }
-      .status.success { color: var(--good); }
-      .small { font-size: 0.85rem; }
-      .app-shell {
-        margin-top: 18px;
-        background: rgba(255,255,255,0.7);
-        border: 1px solid var(--line);
-        border-radius: 20px;
-        padding: 24px;
-      }
-      .hero {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        flex-wrap: wrap;
-        gap: 12px;
-        margin-bottom: 16px;
-      }
-      .pill {
-        display: inline-flex;
-        align-items: center;
-        gap: 6px;
-        border-radius: 999px;
-        padding: 8px 12px;
-        background: rgba(217, 119, 6, 0.12);
-        color: var(--accent-strong);
-        font-weight: 700;
-      }
-      .grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-        gap: 12px;
-      }
-      .tile {
-        padding: 18px;
-        border-radius: 16px;
-        background: rgba(17, 24, 39, 0.03);
-        border: 1px solid var(--line);
-      }
-      .tile strong { display: block; font-size: 1.6rem; margin-top: 8px; }
-    </style>
-  </head>
-  <body>
-    <div class="wrap">
-      <div id="authView" class="card">
-        <div class="logo">UASA<span>+</span></div>
-        <p class="tagline">Revision tool · Learn, practice, level up.</p>
+<html lang="en"><head><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E🎓%3C/text%3E%3C/svg%3E">
+<link rel="manifest" href="manifest.json">
+<link rel="apple-touch-icon" href="icon-192.png">
+<meta name="theme-color" content="#f4ede0">
+<meta name="theme-color" content="#14100c" media="(prefers-color-scheme: dark)">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="UASA+">
+<meta name="application-name" content="UASA+">
+<meta name="description" content="UASA+ is only a revision tool. Learn, practice and level up for UASA.">
+<link rel="canonical" href="https://hadeef14.github.io/uasa-plus/">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="UASA+">
+<meta property="og:title" content="UASA+ — Learn. Practice. Level up.">
+<meta property="og:description" content="Free revision tool for UASA: lessons, quizzes, mock exams, streaks and rewards. Made by Hadeef.">
+<meta property="og:url" content="https://hadeef14.github.io/uasa-plus/">
+<meta property="og:image" content="https://hadeef14.github.io/uasa-plus/icon-512.png">
+<meta name="twitter:card" content="summary">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght,SOFT,WONK@0,9..144,400..900,0..100,0..1&family=Geist:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+<style>
+.qbit-preview,.qz-av,.hl-av,.hero-av,.lbr-av,.finish-av{display:inline-block;color:var(--ink)}
+.qbit-preview svg,.qz-av svg,.hl-av svg,.hero-av svg,.lbr-av svg,.finish-av svg{width:100%;height:100%;display:block;overflow:visible}
+.qbit-preview{width:150px;height:180px;margin:0 auto 16px;transition:transform .4s var(--ease-spring)}
+.qbit-preview:hover{transform:scale(1.04) rotate(-2deg)}
+.qbit-body{animation:qbitBob 3s ease-in-out infinite;transform-origin:50% 85%}
+@keyframes qbitBob{0%,100%{transform:translateY(0)}50%{transform:translateY(-2px)}}
+@keyframes qbitHappy{0%{transform:scale(1)}40%{transform:scale(1.15) rotate(-5deg)}100%{transform:scale(1)}}
+@keyframes qbitSad{0%,100%{transform:translateX(0)}25%{transform:translateX(-4px)}75%{transform:translateX(4px)}}
+@keyframes qbitCelebrate{0%,100%{transform:translateY(0) rotate(0)}30%{transform:translateY(-10px) rotate(8deg)}60%{transform:translateY(-4px) rotate(-4deg)}}
+.qbit-preview.mood-happy,.qz-av.mood-happy{animation:qbitHappy .5s var(--ease-spring)}
+.qbit-preview.mood-sad,.qz-av.mood-sad{animation:qbitSad .4s var(--ease-spring)}
+.qbit-preview.mood-celebrate,.finish-av.mood-celebrate{animation:qbitCelebrate .7s var(--ease-spring)}
+.qbit-aura-glow{animation:qbitAuraPulse 2.5s ease-in-out infinite;transform-origin:50px 60px}
+@keyframes qbitAuraPulse{0%,100%{opacity:.2;transform:scale(1)}50%{opacity:.4;transform:scale(1.08)}}
+.qbit-aura-sparks .qbit-spark{animation:qbitSparkOrbit 3s linear infinite;transform-origin:50px 60px}
+.qbit-aura-sparks .qbit-spark:nth-child(2){animation-delay:-1s}
+.qbit-aura-sparks .qbit-spark:nth-child(3){animation-delay:-2s}
+@keyframes qbitSparkOrbit{from{transform:rotate(0)}to{transform:rotate(360deg)}}
+.qbit-aura-flames .qbit-flame{animation:qbitFlameFlicker .9s ease-in-out infinite alternate;transform-origin:center bottom}
+.qbit-aura-flames .qbit-flame:nth-child(2){animation-delay:.2s}
+.qbit-aura-flames .qbit-flame:nth-child(3){animation-delay:.4s}
+@keyframes qbitFlameFlicker{from{transform:scaleY(.9);opacity:.75}to{transform:scaleY(1.15);opacity:1}}
+.qbit-aura-galaxy .qbit-star{animation:qbitStarTwinkle 2s ease-in-out infinite}
+.qbit-aura-galaxy .qbit-star:nth-child(2){animation-delay:.5s}
+.qbit-aura-galaxy .qbit-star:nth-child(3){animation-delay:1s}
+.qbit-aura-galaxy .qbit-star:nth-child(4){animation-delay:1.5s}
+@keyframes qbitStarTwinkle{0%,100%{opacity:.5;transform:scale(.9)}50%{opacity:1;transform:scale(1.2)}}
+.qbit-aura-bubbles .qbit-bubble{animation:qbitBubbleRise 2.5s ease-in infinite}
+.qbit-aura-bubbles .qbit-bubble:nth-child(2){animation-delay:.8s}
+.qbit-aura-bubbles .qbit-bubble:nth-child(3){animation-delay:1.6s}
+@keyframes qbitBubbleRise{0%{transform:translateY(0);opacity:0}20%{opacity:.8}100%{transform:translateY(-60px);opacity:0}}
+@media(max-width:700px){.qbit-preview{width:120px;height:144px}}
+</style>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.49.1"></script>
+<script>
+window.Q=(q,options,answer,img)=>({q,options,answer,img});
+window.W=(w,_e,min,max,to,from,subject)=>({w,min,max,to,from,subject});
+window.P=(...t)=>t.map(x=>"<p>"+x+"</p>").join("");
+</script>
+<script src="curriculum.js"></script>
+</head><body>
+<section id="auth"><div class="box card">
+<div class="logo">UASA<span>+</span></div>
+<p class="tagline">Revision Tool · Made by Hadeef</p>
+<p class="auth-disclaimer">⚠️ This is only a revision tool. It does not replace school lessons, teachers, or official UASA papers.</p>
+<div class="tabs"><button class="btn" id="tl" data-a="auth" data-r="l">Login</button><button class="btn g" id="ts" data-a="auth" data-r="s">Sign Up</button></div>
+<form id="lf" novalidate>
+<label for="lu">Username</label><input id="lu" autocomplete="username" placeholder="e.g. ahmad">
+<label for="lp">Password</label><input id="lp" type="password" autocomplete="current-password" placeholder="••••••••">
+<button class="btn" style="width:100%">LOGIN</button>
+<button type="button" class="lk" style="margin-top:12px;display:block" data-a="showForgot">Forgot password?</button>
+</form>
+<form id="ff" class="hidden" novalidate>
+<p class="mu" style="margin-top:0">Enter your username. If you saved a recovery email, we'll send a 6-digit code.</p>
+<label for="fu">Username</label><input id="fu" autocomplete="username">
+<button class="btn" style="width:100%">SEND CODE</button>
+<button type="button" class="lk" style="margin-top:8px" data-a="showLogin">← Back to login</button>
+</form>
+<form id="cf" class="hidden" novalidate>
+<p class="mu" style="margin-top:0">Check your email for the 6-digit code.</p>
+<label for="cu">Username</label><input id="cu" autocomplete="username">
+<label for="cc">6-digit code</label><input id="cc" inputmode="numeric" maxlength="6">
+<label for="cn">New password (8+ chars)</label><input id="cn" type="password" autocomplete="new-password">
+<button class="btn" style="width:100%">SET NEW PASSWORD</button>
+<button type="button" class="lk" style="margin-top:8px" data-a="showLogin">← Back to login</button>
+</form>
+<form id="sf" class="hidden" novalidate>
+<label for="su">Username (3-20 lowercase, numbers, . - _)</label><input id="su" autocomplete="username" placeholder="e.g. ahmad">
+<label for="sp">Password (8+ characters)</label><input id="sp" type="password" autocomplete="new-password">
+<label for="sy">Year</label>
+<select id="sy"><option>Year 4</option><option>Year 5</option><option>Year 6</option><option>Form 1</option><option>Form 2</option></select>
+<label for="sc">Class code (optional)</label><input id="sc" maxlength="6" placeholder="e.g. K7M2PQ" autocomplete="off">
+<label for="sr">Recovery email</label><input id="sr" type="email" placeholder="yourname@gmail.com" autocomplete="email">
+<button class="btn" style="width:100%">CREATE ACCOUNT</button>
+</form>
+<label><input type="checkbox" id="pw" style="width:auto"> Show password</label>
+<div id="am" role="status"></div></div></section>
+<div id="app" class="hidden">
+<header><div class="hl"><span class="hl-av"></span>UASA<span>+</span></div>
+<div><span class="chip hidden" id="hrole"></span><span class="chip" id="hs"></span><span class="chip" id="hx"></span><span class="chip hearts" id="hh">❤️❤️❤️❤️❤️</span><span class="chip" id="cs">☁️ Saved</span><button class="chip" id="theme" type="button" aria-label="Toggle theme">🌙</button></div>
+<nav id="nv"></nav></header>
+<nav id="tb" class="tabbar"></nav>
+<main id="main"></main>
+<div id="installBanner" class="hidden" role="dialog" aria-label="Install UASA+">
+<span class="ib-txt">📱 Install UASA+ for offline use</span>
+<button class="ib-btn" id="installBtn">INSTALL</button>
+<button class="ib-x" id="installX" aria-label="Dismiss">✕</button>
+</div></div>
+<script>
+(function(){
+if(window.__UASA_APP__)return;window.__UASA_APP__=true;
+const SUPABASE_URL="https://bmjnloqqagzwgrwdvbgw.supabase.co";
+const SUPABASE_KEY="sb_publishable_WE5lAYz1a5pAvP3btNaM5Q_7EzA2DN4";
+const sb=window.supabase?window.supabase.createClient(SUPABASE_URL,SUPABASE_KEY):null;
+const cloudEmail=n=>n.toLowerCase()+"@uasa.plus";
+const SUBJ=window.SUBJ||[["Bahasa Melayu","🇲🇾"],["English","🇬🇧"],["Mathematics","➗"],["Science","🔬"],["Sejarah","📜"]];
+const CURRICULUM=window.CURRICULUM||{};
+const $=id=>document.getElementById(id);
+const esc=t=>String(t==null?"":t).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const safeImg=h=>String(h||"").replace(/<script[\s\S]*?<\/script>/gi,"").replace(/\son\w+\s*=\s*(?:"[^"]*"|'[^']*'|[^\s>]+)/gi,"").replace(/javascript:/gi,"");
+const normalizeUsername=v=>String(v||"").trim().toLowerCase();
+const isValidUsername=v=>/^[a-z0-9_.-]{3,20}$/.test(v);
+const simpleHash=str=>{let h=2166136261>>>0;for(let i=0;i<str.length;i++){h^=str.charCodeAt(i);h=Math.imul(h,16777619)>>>0}return h.toString(36)};
+const mem={},st={get:k=>{try{const v=localStorage.getItem(k);if(v!==null)return v}catch(e){}return k in mem?mem[k]:null},set:(k,v)=>{mem[k]=v;try{localStorage.setItem(k,v)}catch(e){}},del:k=>{delete mem[k];try{localStorage.removeItem(k)}catch(e){}}};
+const KL="Asia/Kuala_Lumpur";
+const dayKey=o=>{const d=new Date(Date.now()+(o||0)*864e5);return new Intl.DateTimeFormat("en-CA",{timeZone:KL,year:"numeric",month:"2-digit",day:"2-digit"}).format(d)};
+const today=()=>dayKey(0),yest=()=>dayKey(-1);
+let USER=null,NAV={s:"",u:0,l:0},R=null;
+let EXAM_TIMER=null,EXAM_TIME_LEFT=0;
+window.TEACHER_LESSONS=window.TEACHER_LESSONS||[];
+window._tq=window._tq||[];
+const roleTag=r=>r==="admin"?'<span class="roletag rt-admin">🛡️ ADMIN</span>':r==="teacher"?'<span class="roletag rt-teacher">🎓 TEACHER</span>':"";
+const shuf=a=>{a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.random()*(i+1)|0;[a[i],a[j]]=[a[j],a[i]]}return a};
+const sq=q=>{if(q.w)return q;const o=shuf(q.options.map((t,i)=>[t,i]));return{q:q.q,img:q.img,options:o.map(x=>x[0]),answer:o.findIndex(x=>x[1]===q.answer),_subj:q._subj}};
+const lvl=()=>Math.floor(USER.xp/350)+1;
+const streakNow=()=>USER.lastActive&&![today(),yest()].includes(USER.lastActive)?0:USER.streak;
+const bar=p=>'<div class="bar"><i style="width:'+Math.round(p)+'%"></i></div>';
+function trackWeak(subj){if(!subj||!USER)return;const k="uasa_weak_"+USER.id;const d=JSON.parse(st.get(k)||"{}");d[subj]=(d[subj]||0)+1;st.set(k,JSON.stringify(d))}
+function getWeak(){if(!USER)return[];const k="uasa_weak_"+USER.id;const d=JSON.parse(st.get(k)||"{}");return Object.entries(d).sort((a,b)=>b[1]-a[1]).slice(0,3)}
+function clearWeak(){if(!USER)return;st.del("uasa_weak_"+USER.id)}
+const AVATAR_PARTS = {
+  head: [
+    { id: "round",  label: "Round",  svg: "" },
+    { id: "oval",   label: "Oval",   svg: "" },
+    { id: "square", label: "Square", svg: "" }
+  ],
+  skin: [
+    { id: "warm",  label: "Warm",  color: "#f4c7a1" },
+    { id: "tan",   label: "Tan",   color: "#e0a87c" },
+    { id: "deep",  label: "Deep",  color: "#a86b3c" },
+    { id: "olive", label: "Olive", color: "#c9985a" },
+    { id: "fair",  label: "Fair",  color: "#fbdcc0" },
+    { id: "cocoa", label: "Cocoa", color: "#8a5232" }
+  ],
+  eyes: [
+    { id: "dot",     label: "Dot",     svg: '<circle cx="42" cy="30" r="4.5" fill="#1a1614"/><circle cx="58" cy="30" r="4.5" fill="#1a1614"/><circle cx="40.5" cy="28.5" r="1.7" fill="#fff"/><circle cx="56.5" cy="28.5" r="1.7" fill="#fff"/>' },
+    { id: "wide",    label: "Wide",    svg: '<circle cx="42" cy="30" r="6" fill="#1a1614"/><circle cx="58" cy="30" r="6" fill="#1a1614"/><circle cx="40" cy="28" r="2.2" fill="#fff"/><circle cx="56" cy="28" r="2.2" fill="#fff"/>' },
+    { id: "happy",   label: "Happy",   svg: '<path d="M36 31 Q42 24 48 31" stroke="#1a1614" stroke-width="3.5" fill="none" stroke-linecap="round"/><path d="M52 31 Q58 24 64 31" stroke="#1a1614" stroke-width="3.5" fill="none" stroke-linecap="round"/>' },
+    { id: "closed",  label: "Closed",  svg: '<line x1="37" y1="30" x2="47" y2="30" stroke="#1a1614" stroke-width="3.5" stroke-linecap="round"/><line x1="53" y1="30" x2="63" y2="30" stroke="#1a1614" stroke-width="3.5" stroke-linecap="round"/>' },
+    { id: "sleepy",  label: "Sleepy",  svg: '<path d="M36 29 Q42 35 48 29" stroke="#1a1614" stroke-width="3.5" fill="none" stroke-linecap="round"/><path d="M52 29 Q58 35 64 29" stroke="#1a1614" stroke-width="3.5" fill="none" stroke-linecap="round"/>' },
+    { id: "wink",    label: "Wink",    svg: '<circle cx="42" cy="30" r="4.5" fill="#1a1614"/><circle cx="40.5" cy="28.5" r="1.7" fill="#fff"/><path d="M52 30 Q58 36 64 30" stroke="#1a1614" stroke-width="3.5" fill="none" stroke-linecap="round"/>' },
+    { id: "star",    label: "Star",    svg: '<path d="M42 22 L44 28 L50 29 L45 33 L46.5 39 L42 35.5 L37.5 39 L39 33 L34 29 L40 28 Z" fill="#1a1614"/><path d="M58 22 L60 28 L66 29 L61 33 L62.5 39 L58 35.5 L53.5 39 L55 33 L50 29 L56 28 Z" fill="#1a1614"/>' },
+    { id: "heart",   label: "Heart",   svg: '<path d="M36 28 Q36 22 41 22 Q43.5 22 43.5 25.5 Q43.5 22 46 22 Q51 22 51 28 Q51 34 43.5 38 Q36 34 36 28 Z" fill="#1a1614"/><path d="M49 28 Q49 22 54 22 Q56.5 22 56.5 25.5 Q56.5 22 59 22 Q64 22 64 28 Q64 34 56.5 38 Q49 34 49 28 Z" fill="#1a1614"/>' },
+    { id: "sparkle", label: "Sparkle", svg: '<path d="M42 21 L44.5 28 L51.5 30 L44.5 32 L42 39 L39.5 32 L32.5 30 L39.5 28 Z" fill="#1a1614"/><path d="M58 21 L60.5 28 L67.5 30 L60.5 32 L58 39 L55.5 32 L48.5 30 L55.5 28 Z" fill="#1a1614"/>' }
+  ],
+  brows: [
+    { id: "none",   label: "None",   svg: "" },
+    { id: "soft",   label: "Soft",   svg: '<path d="M37 22 Q42 20 47 22" stroke="#1a1614" stroke-width="2" fill="none" stroke-linecap="round"/><path d="M53 22 Q58 20 63 22" stroke="#1a1614" stroke-width="2" fill="none" stroke-linecap="round"/>' },
+    { id: "raised", label: "Raised", svg: '<path d="M37 20 Q42 16 47 20" stroke="#1a1614" stroke-width="2" fill="none" stroke-linecap="round"/><path d="M53 20 Q58 16 63 20" stroke="#1a1614" stroke-width="2" fill="none" stroke-linecap="round"/>' },
+    { id: "angry",  label: "Angry",  svg: '<path d="M37 19 L47 23" stroke="#1a1614" stroke-width="2.5" fill="none" stroke-linecap="round"/><path d="M53 23 L63 19" stroke="#1a1614" stroke-width="2.5" fill="none" stroke-linecap="round"/>' },
+    { id: "sad",    label: "Sad",    svg: '<path d="M37 24 L47 20" stroke="#1a1614" stroke-width="2" fill="none" stroke-linecap="round"/><path d="M53 20 L63 24" stroke="#1a1614" stroke-width="2" fill="none" stroke-linecap="round"/>' }
+  ],
+  blush: [
+    { id: "none",   label: "None",   svg: "" },
+    { id: "soft",   label: "Soft",   svg: '<ellipse cx="34" cy="38" rx="4.5" ry="3" fill="#f472b6" opacity="0.5"/><ellipse cx="66" cy="38" rx="4.5" ry="3" fill="#f472b6" opacity="0.5"/>' },
+    { id: "bright", label: "Bright", svg: '<ellipse cx="34" cy="38" rx="5.5" ry="3.5" fill="#ec4899" opacity="0.7"/><ellipse cx="66" cy="38" rx="5.5" ry="3.5" fill="#ec4899" opacity="0.7"/>' },
+    { id: "freckle",label: "Freckles",svg: '<circle cx="32" cy="38" r="0.9" fill="#a8714f"/><circle cx="35" cy="40" r="0.9" fill="#a8714f"/><circle cx="38" cy="37" r="0.9" fill="#a8714f"/><circle cx="33" cy="35" r="0.9" fill="#a8714f"/><circle cx="62" cy="38" r="0.9" fill="#a8714f"/><circle cx="65" cy="40" r="0.9" fill="#a8714f"/><circle cx="68" cy="37" r="0.9" fill="#a8714f"/><circle cx="67" cy="35" r="0.9" fill="#a8714f"/>' }
+  ],
+  mouth: [
+    { id: "smile",  label: "Smile",  svg: '<path d="M44 42 Q50 48 56 42" stroke="#1a1614" stroke-width="3" fill="none" stroke-linecap="round"/>' },
+    { id: "grin",   label: "Grin",   svg: '<path d="M42 40 Q50 50 58 40 Z" fill="#1a1614"/><path d="M45 41 L45 44 M48 41 L48 46 M52 41 L52 46 M55 41 L55 44" stroke="#fff" stroke-width="1" opacity="0.6"/>' },
+    { id: "laugh",  label: "Laugh",  svg: '<path d="M42 38 Q50 52 58 38 Z" fill="#1a1614"/><path d="M46 41 Q50 46 54 41 Z" fill="#e879a0"/>' },
+    { id: "flat",   label: "Flat",   svg: '<path d="M44 44 L56 44" stroke="#1a1614" stroke-width="3" stroke-linecap="round"/>' },
+    { id: "sad",    label: "Sad",    svg: '<path d="M44 46 Q50 40 56 46" stroke="#1a1614" stroke-width="3" fill="none" stroke-linecap="round"/>' },
+    { id: "o",      label: "O",      svg: '<ellipse cx="50" cy="44" rx="3.5" ry="4.5" fill="none" stroke="#1a1614" stroke-width="3"/>' },
+    { id: "smirk",  label: "Smirk",  svg: '<path d="M44 44 Q50 49 57 42" stroke="#1a1614" stroke-width="3" fill="none" stroke-linecap="round"/>' },
+    { id: "tongue", label: "Tongue", svg: '<path d="M44 42 Q50 48 56 42" stroke="#1a1614" stroke-width="3" fill="none" stroke-linecap="round"/><path d="M47 44 Q50 50 53 44 Z" fill="#e879a0"/>' }
+  ],
+  hair: [
+    { id: "none",    label: "None",    svg: "" },
+    { id: "short",   label: "Short",   svg: '<path d="M28 28 Q28 8 50 8 Q72 8 72 28 Q68 20 60 18 Q54 20 50 18 Q46 20 40 18 Q32 20 28 28 Z" fill="currentColor"/>' },
+    { id: "fringe",  label: "Fringe",  svg: '<path d="M28 28 Q28 8 50 8 Q72 8 72 28 Q68 18 62 22 Q58 16 52 22 Q48 14 40 22 Q34 16 28 24 Z" fill="currentColor"/>' },
+    { id: "bun",     label: "Bun",     svg: '<circle cx="50" cy="4" r="7" fill="currentColor"/><path d="M28 28 Q28 10 50 8 Q72 10 72 28 Q68 20 60 18 Q54 20 50 18 Q46 20 40 18 Q32 20 28 28 Z" fill="currentColor"/>' },
+    { id: "long",    label: "Long",    svg: '<path d="M26 28 Q26 6 50 6 Q74 6 74 28 L74 56 Q72 59 68 56 L68 30 Q66 22 58 18 Q54 20 50 18 Q46 20 42 18 Q34 22 32 30 L32 56 Q28 59 26 56 Z" fill="currentColor"/>' },
+    { id: "ponytail",label: "Ponytail",svg: '<path d="M28 28 Q28 8 50 8 Q72 8 72 28 Q68 20 60 18 Q54 20 50 18 Q46 20 40 18 Q32 20 28 28 Z" fill="currentColor"/><ellipse cx="78" cy="32" rx="5.5" ry="11" transform="rotate(-20 78 32)" fill="currentColor"/>' },
+    { id: "curly",   label: "Curly",   svg: '<circle cx="32" cy="18" r="7" fill="currentColor"/><circle cx="43" cy="10" r="8" fill="currentColor"/><circle cx="57" cy="10" r="8" fill="currentColor"/><circle cx="68" cy="18" r="7" fill="currentColor"/><circle cx="24" cy="30" r="6" fill="currentColor"/><circle cx="76" cy="30" r="6" fill="currentColor"/>' },
+    { id: "bowl",    label: "Bowl",    svg: '<path d="M26 28 Q26 8 50 8 Q74 8 74 28 Q70 20 64 22 Q56 18 50 18 Q44 18 36 22 Q30 20 26 28 Z" fill="currentColor"/>' },
+    { id: "spiky",   label: "Spiky",   svg: '<path d="M26 26 L30 12 L36 20 L40 6 L46 18 L50 4 L54 18 L60 6 L64 20 L70 12 L74 26 Q70 18 64 16 Q56 14 50 14 Q44 14 36 16 Q30 18 26 26 Z" fill="currentColor"/>' },
+    { id: "bob",     label: "Bob",     svg: '<path d="M26 28 Q26 6 50 6 Q74 6 74 28 L74 44 Q72 47 68 44 L68 30 Q66 20 58 16 Q54 18 50 16 Q46 18 42 16 Q34 20 32 30 L32 44 Q28 47 26 44 Z" fill="currentColor"/>' },
+    { id: "buzz",    label: "Buzz",    svg: '<path d="M30 26 Q30 12 50 10 Q70 12 70 26 Q68 18 62 16 Q56 14 50 14 Q44 14 38 16 Q32 18 30 26 Z" fill="currentColor"/>' }
+  ],
+  clothes: [
+    { id: "tee",     label: "Tee",     cost: 0,   svg: '<path d="M38 46 Q38 44 42 44 L58 44 Q62 44 62 46 L64 72 Q64 74 62 74 L38 74 Q36 74 36 72 Z" fill="var(--qbit-cloth)"/>' },
+    { id: "hoodie",  label: "Hoodie",  cost: 200, svg: '<path d="M38 46 Q38 44 42 44 L58 44 Q62 44 62 46 L64 72 Q64 74 62 74 L38 74 Q36 74 36 72 Z" fill="var(--qbit-cloth)"/><path d="M44 44 Q50 50 56 44" stroke="currentColor" stroke-width="2" fill="none" stroke-linejoin="round"/><circle cx="45" cy="62" r="1.5" fill="currentColor"/><circle cx="55" cy="62" r="1.5" fill="currentColor"/>' },
+    { id: "sweater", label: "Sweater", cost: 150, svg: '<path d="M38 46 Q38 44 42 44 L58 44 Q62 44 62 46 L64 72 Q64 74 62 74 L38 74 Q36 74 36 72 Z" fill="var(--qbit-cloth)"/><path d="M36 64 L64 64" stroke="currentColor" stroke-width="1.5" opacity="0.4"/>' },
+    { id: "jacket",  label: "Jacket",  cost: 300, svg: '<path d="M38 46 Q38 44 42 44 L58 44 Q62 44 62 46 L64 72 Q64 74 62 74 L38 74 Q36 74 36 72 Z" fill="var(--qbit-cloth)"/><line x1="50" y1="44" x2="50" y2="74" stroke="currentColor" stroke-width="2"/>' },
+    { id: "dress",   label: "Dress",   cost: 400, svg: '<path d="M40 44 Q40 42 44 42 L56 42 Q60 42 60 44 L68 74 Q68 76 66 76 L34 76 Q32 76 32 74 Z" fill="var(--qbit-cloth)"/><path d="M46 42 Q50 48 54 42" stroke="currentColor" stroke-width="2" fill="none"/>' },
+    { id: "uniform", label: "Uniform", cost: 350, svg: '<path d="M38 46 Q38 44 42 44 L50 52 L58 44 Q62 44 62 46 L64 72 Q64 74 62 74 L38 74 Q36 74 36 72 Z" fill="var(--qbit-cloth)"/><path d="M50 52 L48 58 L50 68 L52 58 Z" fill="#dc2626" stroke="currentColor" stroke-width="1.5"/>' }
+  ],
+  acc: [
+    { id: "none",       label: "None",       cost: 0,   svg: "" },
+    { id: "glasses",    label: "Glasses",    cost: 150, svg: '<circle cx="42" cy="30" r="7" fill="none" stroke="currentColor" stroke-width="2.5"/><circle cx="58" cy="30" r="7" fill="none" stroke="currentColor" stroke-width="2.5"/><line x1="49" y1="30" x2="51" y2="30" stroke="currentColor" stroke-width="2.5"/>' },
+    { id: "cap",        label: "Cap",        cost: 200, svg: '<path d="M26 24 Q26 10 50 10 Q74 10 74 24 Z" fill="currentColor"/><path d="M74 20 Q84 20 84 26 L74 26 Z" fill="currentColor"/>' },
+    { id: "earpods",    label: "Earpods",    cost: 250, svg: '<rect x="20" y="26" width="6" height="10" rx="3" fill="currentColor"/><rect x="74" y="26" width="6" height="10" rx="3" fill="currentColor"/>' },
+    { id: "headphones", label: "Headphones", cost: 350, svg: '<path d="M24 30 Q24 6 50 6 Q76 6 76 30" stroke="currentColor" stroke-width="3.5" fill="none"/><rect x="18" y="26" width="10" height="14" rx="4" fill="currentColor"/><rect x="72" y="26" width="10" height="14" rx="4" fill="currentColor"/>' },
+    { id: "bow",        label: "Bow",        cost: 180, svg: '<path d="M38 12 L44 6 L48 12 L48 18 L44 24 L38 18 Z" fill="#ec4899" stroke="currentColor" stroke-width="2"/><path d="M62 12 L56 6 L52 12 L52 18 L56 24 L62 18 Z" fill="#ec4899" stroke="currentColor" stroke-width="2"/><circle cx="50" cy="15" r="3" fill="#ec4899" stroke="currentColor" stroke-width="2"/>' },
+    { id: "crown",      label: "Crown",      cost: 600, svg: '<path d="M34 20 L40 8 L46 16 L50 4 L54 16 L60 8 L66 20 Z" fill="var(--saffron)" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><circle cx="40" cy="9" r="2" fill="#dc2626"/><circle cx="50" cy="6" r="2" fill="#3b82f6"/><circle cx="60" cy="9" r="2" fill="#dc2626"/>' },
+    { id: "mask",       label: "Mask",       cost: 220, svg: '<path d="M32 36 Q50 34 68 36 L66 48 Q58 50 50 50 Q42 50 34 48 Z" fill="var(--paper)" stroke="currentColor" stroke-width="2.5" stroke-linejoin="round"/>' }
+  ]
+};
+const AVATAR_AURAS = [
+  { id: "none",    label: "None",    type: null,     color: null,      earn: "Default" },
+  { id: "saffron", label: "Glow",    type: "glow",   color: "#f59e0b", earn: "7-day streak" },
+  { id: "jade",    label: "Jade",    type: "glow",   color: "#059669", earn: "30 lessons" },
+  { id: "indigo",  label: "Sparks",  type: "sparks", color: "#6366f1", earn: "Level 10" },
+  { id: "clay",    label: "Flames",  type: "flames", color: "#dc2626", earn: "50 correct" },
+  { id: "galaxy",  label: "Galaxy",  type: "galaxy", color: "#9333ea", earn: "100 lessons" },
+  { id: "sky",     label: "Bubbles", type: "bubbles",color: "#0ea5e9", earn: "50 lessons" }
+];
+const DEFAULT_AVATAR = { head: "round", skin: "warm", eyes: "dot", brows: "soft", blush: "soft", mouth: "smile", hair: "short", clothes: "tee", acc: "none", aura: "none" };
+const isStaff = () => USER && (USER.role === "admin" || USER.role === "teacher");
+function earnedAuras(){
+  if(!USER)return["none"];
+  const earned=["none"];
+  const days=streakNow();
+  const lessons=SUBJ.reduce((a,s)=>a+sDone(s[0]),0);
+  const level=lvl();
+  if(days>=7)earned.push("saffron");
+  if(days>=30)earned.push("indigo");
+  if(lessons>=30)earned.push("jade");
+  if(lessons>=50)earned.push("sky");
+  if(lessons>=100)earned.push("galaxy");
+  if(level>=10)earned.push("indigo");
+  return [...new Set(earned)];
+}
+function auraSVG(aura){
+  if(!aura||!aura.color)return "";
+  const c=aura.color;
+  if(aura.type==="glow")return `<circle cx="50" cy="60" r="52" fill="${c}" opacity="0.2" class="qbit-aura qbit-aura-glow"/>`;
+  if(aura.type==="sparks")return `<g class="qbit-aura qbit-aura-sparks" fill="${c}"><circle class="qbit-spark" cx="100" cy="60" r="3.5"/><circle class="qbit-spark" cx="0" cy="60" r="3.5"/><circle class="qbit-spark" cx="50" cy="120" r="3.5"/></g>`;
+  if(aura.type==="flames")return `<g class="qbit-aura qbit-aura-flames"><path class="qbit-flame" d="M32 118 q4 -11 11 -6 q-2 -7 2 -11 q5 6 2 13 q4 -2 6 4 q2 6 -9 6 Z" fill="${c}" opacity="0.9"/><path class="qbit-flame" d="M56 118 q4 -11 11 -6 q-2 -7 2 -11 q5 6 2 13 q4 -2 6 4 q2 6 -9 6 Z" fill="${c}" opacity="0.9"/><path class="qbit-flame" d="M45 119 q3 -8 7 -4 q-1 -5 2 -8 q3 5 1 10 q3 -2 5 3 q1 5 -7 5 Z" fill="${c}" opacity="0.75"/></g>`;
+  if(aura.type==="galaxy")return `<g class="qbit-aura qbit-aura-galaxy" fill="${c}"><circle class="qbit-star" cx="14" cy="24" r="2"/><circle class="qbit-star" cx="86" cy="18" r="1.8"/><circle class="qbit-star" cx="8" cy="82" r="1.8"/><circle class="qbit-star" cx="92" cy="88" r="2"/></g>`;
+  if(aura.type==="bubbles")return `<g class="qbit-aura qbit-aura-bubbles" fill="none" stroke="${c}" stroke-width="2"><circle class="qbit-bubble" cx="20" cy="110" r="4"/><circle class="qbit-bubble" cx="80" cy="114" r="3"/><circle class="qbit-bubble" cx="50" cy="118" r="3.5"/></g>`;
+  return "";
+}
+function renderAvatar(cfg, size, mood) {
+  cfg = { ...DEFAULT_AVATAR, ...(cfg || {}) };
+  const moodMap = {
+    happy:     { eyes: "happy",   mouth: "grin",  brows: "raised" },
+    sad:       { eyes: "sleepy",  mouth: "sad",   brows: "sad"    },
+    thinking:  { eyes: "closed",  mouth: "flat",  brows: "soft"   },
+    celebrate: { eyes: "star",    mouth: "laugh", brows: "raised" }
+  };
+  if (mood && moodMap[mood]) Object.assign(cfg, moodMap[mood]);
+  const head  = AVATAR_PARTS.head.find(x => x.id === cfg.head)   || AVATAR_PARTS.head[0];
+  const skin  = AVATAR_PARTS.skin.find(x => x.id === cfg.skin)   || AVATAR_PARTS.skin[0];
+  const eyes  = AVATAR_PARTS.eyes.find(x => x.id === cfg.eyes)   || AVATAR_PARTS.eyes[0];
+  const brows = AVATAR_PARTS.brows.find(x => x.id === cfg.brows) || AVATAR_PARTS.brows[0];
+  const blush = AVATAR_PARTS.blush.find(x => x.id === cfg.blush) || AVATAR_PARTS.blush[0];
+  const mouth = AVATAR_PARTS.mouth.find(x => x.id === cfg.mouth) || AVATAR_PARTS.mouth[0];
+  const hair  = AVATAR_PARTS.hair.find(x => x.id === cfg.hair)   || AVATAR_PARTS.hair[0];
+  const cloth = AVATAR_PARTS.clothes.find(x => x.id === cfg.clothes) || AVATAR_PARTS.clothes[0];
+  const acc   = AVATAR_PARTS.acc.find(x => x.id === cfg.acc)     || AVATAR_PARTS.acc[0];
+  const aura  = AVATAR_AURAS.find(x => x.id === cfg.aura)        || AVATAR_AURAS[0];
+  const sizeAttr = size ? `width="${size}" height="${size}"` : `width="100%" height="100%"`;
+  const sc = skin.color;
 
-        <div class="tabs">
-          <button class="tab active" type="button" data-mode="login">Login</button>
-          <button class="tab" type="button" data-mode="signup">Sign up</button>
-        </div>
+  let headShape = "";
+  if (head.id === "round")  headShape = `<circle cx="50" cy="30" r="20" fill="${sc}" stroke="currentColor" stroke-width="3"/>`;
+  if (head.id === "oval")   headShape = `<ellipse cx="50" cy="30" rx="17" ry="22" fill="${sc}" stroke="currentColor" stroke-width="3"/>`;
+  if (head.id === "square") headShape = `<rect x="30" y="10" width="40" height="40" rx="14" fill="${sc}" stroke="currentColor" stroke-width="3"/>`;
 
-        <form id="loginForm">
-          <label>
-            Username
-            <input id="loginUsername" autocomplete="username" placeholder="e.g. ahmad" />
-          </label>
-          <label>
-            Password
-            <input id="loginPassword" type="password" autocomplete="current-password" placeholder="••••••••" />
-          </label>
-          <button class="primary" type="submit">Login</button>
-        </form>
+  return `<svg viewBox="0 0 100 120" ${sizeAttr} xmlns="http://www.w3.org/2000/svg" class="qbit" style="--qbit-skin:${sc};--qbit-cloth:${sc}">
+    ${auraSVG(aura)}
+    <g class="qbit-body">
 
-        <form id="signupForm" class="hidden">
-          <label>
-            Username
-            <input id="signupUsername" autocomplete="username" placeholder="3-20 lowercase" />
-          </label>
-          <label>
-            Password
-            <input id="signupPassword" type="password" autocomplete="new-password" placeholder="8+ characters" />
-          </label>
-          <label>
-            Year
-            <select id="signupYear">
-              <option>Year 4</option>
-              <option>Year 5</option>
-              <option>Year 6</option>
-              <option>Form 1</option>
-              <option>Form 2</option>
-            </select>
-          </label>
-          <button class="primary" type="submit">Create account</button>
-        </form>
+      <rect x="39" y="86" width="9" height="20" rx="4" fill="${sc}" stroke="currentColor" stroke-width="3"/>
+      <rect x="52" y="86" width="9" height="20" rx="4" fill="${sc}" stroke="currentColor" stroke-width="3"/>
 
-        <div id="status" class="status" aria-live="polite"></div>
+      <rect x="33" y="104" width="16" height="9" rx="3" fill="#1a1614" stroke="currentColor" stroke-width="2.5"/>
+      <rect x="51" y="104" width="16" height="9" rx="3" fill="#1a1614" stroke="currentColor" stroke-width="2.5"/>
+
+      <rect x="22" y="56" width="14" height="26" rx="7" fill="${sc}" stroke="currentColor" stroke-width="3"/>
+      <rect x="64" y="56" width="14" height="26" rx="7" fill="${sc}" stroke="currentColor" stroke-width="3"/>
+
+      <circle cx="29" cy="84" r="6" fill="${sc}" stroke="currentColor" stroke-width="2.5"/>
+      <circle cx="71" cy="84" r="6" fill="${sc}" stroke="currentColor" stroke-width="2.5"/>
+
+      <rect x="44" y="44" width="12" height="16" fill="${sc}" stroke="currentColor" stroke-width="2.5"/>
+
+      <g class="qbit-clothes" transform="translate(0, 12)">${cloth.svg}</g>
+
+      ${headShape}
+
+      <g class="qbit-hair">${hair.svg}</g>
+
+      <g class="qbit-brows" fill="none">${brows.svg}</g>
+      <g class="qbit-blush">${blush.svg}</g>
+      <g class="qbit-eyes" fill="none">${eyes.svg}</g>
+      <g class="qbit-mouth" fill="none">${mouth.svg}</g>
+
+      <g class="qbit-acc" fill="none">${acc.svg}</g>
+
+    </g>
+  </svg>`;
+}
+const SHOP_ITEMS=[
+{id:"freeze",icon:"🔥",name:"Streak Freeze",desc:"Protect your streak for 1 missed day",cost:200},
+{id:"hearts",icon:"❤️",name:"Heart Refill",desc:"Refill all 5 hearts instantly",cost:150},
+{id:"ocean",icon:"🌊",name:"Ocean Theme",desc:"Cool blue colour theme",cost:300,type:"theme"},
+{id:"sakura",icon:"🌸",name:"Sakura Theme",desc:"Soft pink colour theme",cost:300,type:"theme"},
+{id:"forest",icon:"🌿",name:"Forest Theme",desc:"Natural green colour theme",cost:300,type:"theme"}
+];
+const CUSTOM_THEMES={
+ocean:{"--saffron":"#3b82f6","--saffron-deep":"#1d4ed8","--accent":"#3b82f6","--accent-deep":"#1d4ed8","--gl":"#3b82f6"},
+sakura:{"--saffron":"#ec4899","--saffron-deep":"#be185d","--accent":"#ec4899","--accent-deep":"#be185d","--gl":"#ec4899"},
+forest:{"--saffron":"#22c55e","--saffron-deep":"#15803d","--accent":"#22c55e","--accent-deep":"#15803d","--gl":"#22c55e"}
+};
+function getOwned(){return JSON.parse(st.get("uasa_shop_"+USER.id)||"[]")}
+function setOwned(arr){st.set("uasa_shop_"+USER.id,JSON.stringify(arr))}
+function applyCustomTheme(name){const t=CUSTOM_THEMES[name];if(!t)return;const r=document.documentElement;Object.entries(t).forEach(([k,v])=>r.style.setProperty(k,v));st.set("uasa_custom_theme_"+USER.id,name)}
+function clearCustomTheme(){const r=document.documentElement;Object.keys(CUSTOM_THEMES.ocean).forEach(k=>r.style.removeProperty(k));st.del("uasa_custom_theme_"+USER.id)}
+function loadSavedTheme(){if(!USER)return;const t=st.get("uasa_custom_theme_"+USER.id);if(t&&CUSTOM_THEMES[t])applyCustomTheme(t)}
+function toast(m){const t=document.createElement("div");t.className="toast";t.setAttribute("role","status");t.textContent=m;document.body.appendChild(t);setTimeout(()=>t.remove(),2400)}
+function pop(n){const d=document.createElement("div");d.className="pop";d.textContent="+"+n+" XP";document.body.appendChild(d);setTimeout(()=>d.remove(),1300)}
+function setSaveState(s){const el=$("cs");if(!el)return;const m={saving:["☁️ Saving…",""],saved:["☁️ Saved","save-ok"],error:["⚠️ Not saved","save-bad"]};const a=m[s]||m.saved;el.textContent=a[0];el.className="chip "+a[1]}
+function heartsUI(){const h=USER.hearts??5;let s="";for(let i=0;i<5;i++)s+=i<h?"❤️":'<span class="empty">🤍</span>';$("hh").innerHTML=s}
+function hdr(){$("hs").textContent="🔥 "+streakNow();$("hx").textContent="⭐ "+USER.xp+" XP";
+const hr=$("hrole");if(hr){if(USER.role==="admin"){hr.innerHTML="🛡️ ADMIN";hr.className="chip rolechip-admin";}else if(USER.role==="teacher"){hr.innerHTML="🎓 TEACHER";hr.className="chip rolechip-teacher";}else{hr.className="chip hidden";hr.innerHTML="";}}
+heartsUI();setSaveState("saved");updateHeaderAvatar()}
+function updateHeaderAvatar(){const box=document.querySelector(".hl-av");if(box)box.innerHTML=renderAvatar(USER&&USER.avatar,34)}
+async function refreshUserStats(){
+const r=await sb.from("profiles").select("xp,streak,last_active,streak_freezes,hearts,daily_xp,daily_xp_date").eq("id",USER.id).single();
+if(r.error)throw r.error;const before=USER.xp,d=today();
+USER.xp=+r.data.xp||0;USER.streak=+r.data.streak||0;USER.lastActive=r.data.last_active;
+USER.streakFreezes=+r.data.streak_freezes||0;USER.hearts=r.data.hearts??5;
+USER.dailyXpDate=r.data.daily_xp_date||null;USER.dailyXp=USER.dailyXpDate===d?(+r.data.daily_xp||0):0;
+hdr();const delta=USER.xp-before;
+if(delta>0){pop(delta);if(lvl()>Math.floor(before/350)+1)toast("🎉 Level "+lvl()+" reached!")}}
+async function refreshHearts(){try{const r=await sb.rpc("refill_hearts");if(!r.error&&typeof r.data==="number"){USER.hearts=r.data;heartsUI()}}catch(e){}}
+async function loseHeart(){try{const r=await sb.rpc("deduct_heart");if(!r.error&&typeof r.data==="number"){USER.hearts=r.data;heartsUI()}}catch(e){}}
+async function award(score,maxScore,bonus,k){
+setSaveState("saving");try{
+if(k){const r=await sb.from("progress").insert({user_id:USER.id,lesson_key:k,score:score|0,max_score:maxScore|0,bonus:bonus|0});if(r.error&&r.error.code!=="23505")throw r.error;USER.progress[k]=1}
+const g=(score|0)*10+(bonus|0);if(g>0){try{await sb.rpc("bump_daily_xp",{amount:g})}catch(e){}}
+await refreshUserStats();setSaveState("saved");
+}catch(e){setSaveState("error");toast("⚠️ Cloud save failed.");console.error(e)}}
+const localUnits=s=>Array.from((CURRICULUM[s]||{}).units||[],(x,i)=>x?{...x,i,ls:Array.from(x.lessons||[],(y,j)=>y&&y.questions&&y.questions.length?{...y,j}:null).filter(Boolean)}:null).filter(Boolean);
+const normQ=q=>{if(!q)return null;if(q.w)return W(q.w,"",Number(q.min)||30,Number(q.max)||80,q.to||"",q.from||"",q.subject||"");if(Array.isArray(q.options))return Q(q.q||"",q.options.map(String),Number.isInteger(q.answer)?q.answer:0,q.img||"");return null};
+const teacherUnits=s=>{
+const mine=USER&&USER.classCode;
+const list=(window.TEACHER_LESSONS||[]).filter(x=>x&&x.published&&x.subject===s&&Array.isArray(x.questions)&&x.questions.length&&(!x.class_code||x.class_code===mine));
+const groups=new Map();list.forEach(x=>{const t=x.unit_title||"Teacher Unit";if(!groups.has(t))groups.set(t,[]);groups.get(t).push(x)});
+const base=localUnits(s).length;
+return Array.from(groups.entries()).map(([title,rows],di)=>({title,i:base+di,_teacher:true,challenge:[],ls:rows.map((r,idx)=>({title:r.lesson_title||("Lesson "+(idx+1)),learn:r.learn_text?("<p>"+esc(r.learn_text).replace(/\n/g,"<br>")+"</p>"):"<p>Teacher lesson.</p>",questions:r.questions.map(normQ).filter(Boolean),j:"T"+r.id})).filter(l=>l.questions.length)})).filter(u=>u.ls.length)};
+const U=s=>localUnits(s).concat(teacherUnits(s));
+const key=(s,u,l)=>s+"|"+u+"|"+l,done=k=>!!(USER&&USER.progress&&USER.progress[k]),ut=u=>u.title||"Unit "+(u.i+1);
+const nDone=(s,u)=>u.ls.filter(l=>done(key(s,u.i,l.j))).length;
+const sTot=s=>U(s).reduce((a,u)=>a+u.ls.length,0),sDone=s=>U(s).reduce((a,u)=>a+nDone(s,u),0);
+const unlocked=(s,u,x)=>x===0||done(key(s,u.i,u.ls[x-1].j)),chOpen=(s,u)=>u.ls.length>0&&nDone(s,u)===u.ls.length;
+const pool=s=>{const o=[];(s?[s]:SUBJ.map(x=>x[0])).forEach(n=>U(n).forEach(u=>{u.ls.forEach(l=>o.push(...l.questions.filter(q=>!q.w).map(q=>({...q,_subj:n}))));o.push(...(u.challenge||[]).filter(q=>!q.w).map(q=>({...q,_subj:n})))}));return o};
+const unitYear=t=>{const m=/Unit (\d+)/.exec(t||"");if(!m)return 0;const n=+m[1];return n<=5?4:n<=10?5:6};
+const poolForYear=y=>{const n={"Year 4":4,"Year 5":5,"Year 6":6,"Form 1":6,"Form 2":6}[y]||6;const o=[];SUBJ.forEach(s=>U(s[0]).forEach(u=>{const uy=unitYear(u.title);if(uy!==0&&uy!==n)return;u.ls.forEach(l=>o.push(...l.questions.filter(q=>!q.w).map(q=>({...q,_subj:s[0]}))));o.push(...(u.challenge||[]).filter(q=>!q.w).map(q=>({...q,_subj:s[0]})))}));return o};
+const view=h=>{$("main").innerHTML=h;scrollTo(0,0)};
+const lk=(a,r,t)=>'<button class="lk" data-a="'+a+'" data-r="'+esc(r)+'">'+t+'</button>';
+async function loadTeacherLessons(){if(!USER||!sb)return;try{const r=await sb.from("teacher_lessons").select("id,teacher_id,subject,unit_title,lesson_title,learn_text,questions,published,class_code,created_at").order("created_at",{ascending:true}).limit(1000);if(!r.error)window.TEACHER_LESSONS=r.data||[]}catch(e){}}
+let AV_TEMP = null;
+let AV_TAB = "body";
+function avLoad() { AV_TEMP = { ...DEFAULT_AVATAR, ...(USER.avatar || {}) }; }
+function avPick(key, id) {
+  if (!AV_TEMP) avLoad();
+  const isAura = key === "aura";
+  const list = isAura ? AVATAR_AURAS : AVATAR_PARTS[key];
+  if (!list) return;
+  const item = list.find(x => x.id === id);
+  if (!item) return;
+  if (isAura) {
+    const earned = earnedAuras();
+    const has = isStaff() || earned.includes(id);
+    if (!has) { toast("🔒 Earn this aura: " + item.earn); return; }
+    AV_TEMP.aura = id; avRedraw(); return;
+  }
+  if (["head","skin","eyes","brows","blush","mouth","hair"].includes(key)) {
+    AV_TEMP[key] = id; avRedraw(); return;
+  }
+  const ownedKey = "av_" + key + "_" + id;
+  const isOwned = isStaff() || !item.cost || item.cost === 0 || getOwned().includes(ownedKey);
+  if (!isOwned) {
+    if (USER.xp < item.cost) { toast("You need " + item.cost + " XP (you have " + USER.xp + ")."); return; }
+    if (!confirm("Unlock " + item.label + " for " + item.cost + " XP?")) return;
+    spendXP(item.cost).then(ok => {
+      if (!ok) return;
+      const owned = getOwned(); owned.push(ownedKey); setOwned(owned);
+      toast("✅ " + item.label + " unlocked!");
+      AV_TEMP[key] = id; avRedraw();
+    });
+    return;
+  }
+  AV_TEMP[key] = id; avRedraw();
+}
+function avRedraw() {
+  const box = document.querySelector(".qbit-preview");
+  if (box) box.innerHTML = renderAvatar(AV_TEMP);
+  document.querySelectorAll(".av-opt").forEach(b => {
+    const [k, v] = b.dataset.v.split(":");
+    b.classList.toggle("on", AV_TEMP[k] === v);
+  });
+}
+function avRandom() {
+  if (!AV_TEMP) avLoad();
+  const pick = arr => arr[Math.floor(Math.random() * arr.length)].id;
+  AV_TEMP = { ...AV_TEMP,
+    head: pick(AVATAR_PARTS.head), skin: pick(AVATAR_PARTS.skin),
+    eyes: pick(AVATAR_PARTS.eyes), brows: pick(AVATAR_PARTS.brows),
+    blush: pick(AVATAR_PARTS.blush), mouth: pick(AVATAR_PARTS.mouth),
+    hair: pick(AVATAR_PARTS.hair) };
+  avRedraw();
+}
+function avTab(t) { AV_TAB = t; const w = document.querySelector(".av-builder"); if (w) w.outerHTML = avatarBuilderHTML(AV_TEMP); }
+async function avSave() {
+  if (!AV_TEMP) return;
+  setSaveState("saving");
+  const r = await sb.from("profiles").update({ avatar: AV_TEMP }).eq("id", USER.id);
+  if (r.error) { setSaveState("error"); toast("⚠️ Could not save avatar"); return; }
+  USER.avatar = { ...AV_TEMP };
+  setSaveState("saved"); toast("🎨 Qbit saved!");
+  const msg = $("avMsg"); if (msg) msg.textContent = "✓ Saved";
+  updateHeaderAvatar();
+}
+function avatarBuilderHTML(cfg) {
+  cfg = { ...DEFAULT_AVATAR, ...(cfg || {}) };
+  const optBtn = (key, o, isAura) => {
+    const ownedKey = "av_" + key + "_" + o.id;
+    const free = ["head","skin","eyes","brows","blush","mouth","hair"].includes(key);
+    const earned = isAura ? (isStaff() || earnedAuras().includes(o.id)) : (isStaff() || free || !o.cost || o.cost === 0 || getOwned().includes(ownedKey));
+    const cls = "av-opt " + (cfg[key] === o.id ? "on " : "") + (isAura && earned && o.id !== "none" ? "earned " : "") + (earned ? "" : "locked");
+    return `<button class="${cls}" data-a="avPick" data-v="${key}:${o.id}" type="button" title="${o.label}${o.earn ? ' · ' + o.earn : ''}">
+      ${o.color
+        ? `<span class="av-swatch" style="background:${o.color}"></span>`
+        : o.svg
+          ? `<svg viewBox="0 0 100 120" width="34" height="40"><g fill="none" stroke="currentColor" stroke-width="2.5">${o.svg}</g></svg>`
+          : `<span class="av-label">${o.label}</span>`}
+      ${earned ? "" : (isAura ? `<span class="av-lock">🔒</span>` : `<span class="av-lock">🔒</span><span class="av-cost">${o.cost}</span>`)}
+    </button>`;
+  };
+  const optsRow = (key, list, label, isAura) => `
+    <div class="av-row">
+      <label>${label}</label>
+      <div class="av-opts">${list.map(o => optBtn(key, o, isAura)).join("")}</div>
+    </div>`;
+  const tabs = [
+    { id: "body",  icon: "🧑", label: "Body" },
+    { id: "face",  icon: "👀", label: "Face" },
+    { id: "style", icon: "🎩", label: "Style" },
+    { id: "aura",  icon: "✨", label: "Aura" }
+  ];
+  let controls = "";
+  if (AV_TAB === "body") {
+    controls = optsRow("head", AVATAR_PARTS.head, "Head shape") + optsRow("skin", AVATAR_PARTS.skin, "Skin");
+  } else if (AV_TAB === "face") {
+    controls = optsRow("eyes", AVATAR_PARTS.eyes, "Eyes") +
+               optsRow("brows", AVATAR_PARTS.brows, "Eyebrows") +
+               optsRow("blush", AVATAR_PARTS.blush, "Blush") +
+               optsRow("mouth", AVATAR_PARTS.mouth, "Mouth");
+  } else if (AV_TAB === "style") {
+    controls = optsRow("hair", AVATAR_PARTS.hair, "Hair") +
+               optsRow("clothes", AVATAR_PARTS.clothes, "Outfit") +
+               optsRow("acc", AVATAR_PARTS.acc, "Accessory");
+  } else if (AV_TAB === "aura") {
+    controls = `<p class="mu" style="text-align:center;margin:0 0 12px">Auras are earned, not bought. Keep practising!</p>` +
+               optsRow("aura", AVATAR_AURAS, "Aura", true);
+  }
+  return `
+    <div class="card av-builder">
+      <h2>🎨 My Qbit ${isStaff() ? '<span class="staff-free">STAFF · FREE</span>' : ""}</h2>
+      <div class="qbit-preview">${renderAvatar(cfg)}</div>
+      <div class="av-tabs">
+        ${tabs.map(t => `<button class="av-tab ${AV_TAB === t.id ? "on" : ""}" data-a="avTab" data-r="${t.id}" type="button"><span class="t-ic">${t.icon}</span>${t.label}</button>`).join("")}
       </div>
-
-      <div id="appView" class="app-shell hidden">
-        <div class="hero">
-          <div>
-            <div class="pill">Welcome back</div>
-            <h2 id="welcomeName" style="margin: 10px 0 0;">Student</h2>
-          </div>
-          <button id="logoutBtn" class="ghost" type="button">Logout</button>
-        </div>
-        <div class="grid">
-          <div class="tile"><span class="muted">XP</span><strong id="xpValue">0</strong></div>
-          <div class="tile"><span class="muted">Streak</span><strong id="streakValue">0</strong></div>
-          <div class="tile"><span class="muted">Hearts</span><strong id="heartsValue">5</strong></div>
-        </div>
+      <div class="av-controls">${controls}</div>
+      <div class="av-actions">
+        <button class="btn g sm" data-a="avRandom" type="button">🎲 Random</button>
+        <button class="btn sm" data-a="avSave" type="button">SAVE QBIT</button>
+        <span id="avMsg" class="mu" style="margin-left:10px"></span>
       </div>
-    </div>
-
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.49.1"></script>
-    <script>
-      (function () {
-        const SUPABASE_URL = "https://bmjnloqqagzwgrwdvbgw.supabase.co";
-        const SUPABASE_KEY = "sb_publishable_WE5lAYz1a5pAvP3btNaM5Q_7EzA2DN4";
-        const sb = window.supabase ? window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY) : null;
-        const authView = document.getElementById('authView');
-        const appView = document.getElementById('appView');
-        const statusEl = document.getElementById('status');
-        let USER = null;
-
-        function setStatus(message, type) {
-          statusEl.textContent = message || '';
-          statusEl.className = 'status';
-          if (type) statusEl.classList.add(type);
-        }
-
-        function showMode(mode) {
-          const loginForm = document.getElementById('loginForm');
-          const signupForm = document.getElementById('signupForm');
-          const tabs = document.querySelectorAll('.tab');
-          const isLogin = mode === 'login';
-          loginForm.classList.toggle('hidden', !isLogin);
-          signupForm.classList.toggle('hidden', isLogin);
-          tabs.forEach((tab) => tab.classList.toggle('active', tab.dataset.mode === mode));
-        }
-
-        function cloudEmail(username) {
-          return ((username || '').trim().toLowerCase()) + '@uasa.plus';
-        }
-
-        function normalizeUsername(value) {
-          return String(value || '').trim().toLowerCase();
-        }
-
-        function isValidUsername(value) {
-          return /^[a-z0-9_.-]{3,20}$/.test(String(value || ''));
-        }
-
-        async function ensureProfileForUser(user, metadata = {}) {
-          if (!sb || !user) return null;
-
-          const { data: existing, error: readErr } = await sb
-            .from('profiles')
-            .select('*')
-            .eq('id', user.id)
-            .maybeSingle();
-
-          if (readErr && readErr.code !== 'PGRST116') throw readErr;
-          if (existing) return existing;
-
-          const username = normalizeUsername(
-            metadata.username ||
-            (user.email || '').split('@')[0] ||
-            'student'
-          );
-
-          const profile = {
-            id: user.id,
-            username,
-            display_name: metadata.display_name || username,
-            role: metadata.role || 'student',
-            year: metadata.year || 'Year 6',
-            class_code: metadata.class_code || null,
-            recovery_email: metadata.recovery_email || null,
-            xp: 0,
-            streak: 0,
-            hearts: 5,
-            daily_xp: 0,
-            daily_xp_date: null,
-            leaderboard_opt_out: false,
-            last_active: null
-          };
-
-          const { data, error: insertErr } = await sb
-            .from('profiles')
-            .upsert(profile, { onConflict: 'id' })
-            .select()
-            .single();
-
-          if (insertErr) throw insertErr;
-          return data || profile;
-        }
-
-        async function loadUserFromAuth(authUser) {
-          if (!authUser) return null;
-          const profile = await ensureProfileForUser(authUser, {
-            username: authUser.user_metadata?.username || authUser.email?.split('@')[0] || 'student',
-            display_name: authUser.user_metadata?.display_name || authUser.email?.split('@')[0] || 'student',
-            year: authUser.user_metadata?.year || 'Year 6'
-          });
-
-          USER = {
-            id: authUser.id,
-            username: profile?.username || authUser.email?.split('@')[0] || 'student',
-            display_name: profile?.display_name || authUser.email?.split('@')[0] || 'student',
-            role: profile?.role || 'student',
-            xp: Number(profile?.xp || 0),
-            streak: Number(profile?.streak || 0),
-            hearts: Number(profile?.hearts || 5),
-            year: profile?.year || 'Year 6'
-          };
-
-          const welcomeName = document.getElementById('welcomeName');
-          const xpValue = document.getElementById('xpValue');
-          const streakValue = document.getElementById('streakValue');
-          const heartsValue = document.getElementById('heartsValue');
-          if (welcomeName) welcomeName.textContent = USER.display_name;
-          if (xpValue) xpValue.textContent = USER.xp;
-          if (streakValue) streakValue.textContent = USER.streak;
-          if (heartsValue) heartsValue.textContent = USER.hearts;
-
-          return USER;
-        }
-
-        function showApp() {
-          authView.classList.add('hidden');
-          appView.classList.remove('hidden');
-        }
-
-        function showAuth() {
-          appView.classList.add('hidden');
-          authView.classList.remove('hidden');
-        }
-
-        async function login(username, password) {
-          if (!sb) {
-            setStatus('Supabase client failed to load.', 'error');
-            return;
-          }
-          if (!username || !password) {
-            setStatus('Enter both username and password.', 'error');
-            return;
-          }
-
-          setStatus('Logging in…', '');
-          try {
-            const { data, error } = await sb.auth.signInWithPassword({
-              email: cloudEmail(username),
-              password
-            });
-            if (error) throw error;
-
-            await loadUserFromAuth(data.user);
-            setStatus('Logged in successfully.', 'success');
-            showApp();
-          } catch (err) {
-            setStatus('Wrong username or password.', 'error');
-            console.error(err);
-          }
-        }
-
-        async function signup(username, password, year) {
-          if (!sb) {
-            setStatus('Supabase client failed to load.', 'error');
-            return;
-          }
-          if (!isValidUsername(username)) {
-            setStatus('Username must be 3-20 lowercase letters, numbers, . - _', 'error');
-            return;
-          }
-          if (password.length < 8) {
-            setStatus('Password must be at least 8 characters.', 'error');
-            return;
-          }
-
-          setStatus('Creating your account…', '');
-          try {
-            const { data, error } = await sb.auth.signUp({
-              email: cloudEmail(username),
-              password,
-              options: { data: { year } }
-            });
-            if (error) throw error;
-
-            let authUser = data.user;
-            if (!data.session) {
-              const second = await sb.auth.signInWithPassword({
-                email: cloudEmail(username),
-                password
-              });
-              if (second.error) throw second.error;
-              authUser = second.data.user;
-            }
-
-            await loadUserFromAuth(authUser);
-            setStatus('Account created successfully.', 'success');
-            showApp();
-          } catch (err) {
-            const message = (err && err.message) || 'Sign-up failed.';
-            setStatus(/registered|exists|already/i.test(message) ? 'Username already taken.' : 'Sign-up failed.', 'error');
-            console.error(err);
-          }
-        }
-
-        document.querySelectorAll('.tab').forEach((tab) => {
-          tab.addEventListener('click', () => showMode(tab.dataset.mode));
-        });
-
-        document.getElementById('loginForm').addEventListener('submit', async (event) => {
-          event.preventDefault();
-          const username = normalizeUsername(document.getElementById('loginUsername').value);
-          const password = document.getElementById('loginPassword').value;
-          await login(username, password);
-        });
-
-        document.getElementById('signupForm').addEventListener('submit', async (event) => {
-          event.preventDefault();
-          const username = normalizeUsername(document.getElementById('signupUsername').value);
-          const password = document.getElementById('signupPassword').value;
-          const year = document.getElementById('signupYear').value;
-          await signup(username, password, year);
-        });
-
-        document.getElementById('logoutBtn').addEventListener('click', async () => {
-          if (!sb) return showAuth();
-          try { await sb.auth.signOut(); } catch (err) { console.error(err); }
-          USER = null;
-          showAuth();
-          setStatus('', '');
-        });
-
-        async function restoreSession() {
-          if (!sb) {
-            showAuth();
-            return;
-          }
-          try {
-            const { data, error } = await sb.auth.getSession();
-            if (error) throw error;
-            if (data && data.session) {
-              await loadUserFromAuth(data.session.user);
-              showApp();
-              return;
-            }
-          } catch (err) {
-            console.error(err);
-          }
-          showAuth();
-        }
-
-        restoreSession();
-      })();
-    </script>
-  </body>
+    </div>`;
+}
+function nav(p){
+const role=(USER&&USER.role)||"student";let items;
+if(role==="admin")items=[["admin","🛡️ Admin"],["teacher","🎓 Studio"],["subjects","📚 Subjects"],["exam","📝 Exam"],["shop","🛒 Shop"],["leaderboard","🏆 Board"],["profile","👤 Profile"]];
+else if(role==="teacher")items=[["teacher","🎓 Studio"],["leaderboard","🏆 Board"],["profile","👤 Profile"]];
+else items=[["home","🏠 Home"],["subjects","📚 Subjects"],["exam","📝 Exam"],["review","✨ Review"],["shop","🛒 Shop"],["leaderboard","🏆 Board"],["profile","👤 Profile"]];
+$("nv").innerHTML=items.map(x=>'<button class="'+(x[0]===p?"on":"")+'" data-a="page" data-r="'+x[0]+'">'+x[1]+'</button>').join("")+'<button data-a="logout">🚪 Logout</button>';
+const tb=$("tb");if(tb){let tabs;
+if(role==="admin")tabs=[["admin","🛡️","Admin"],["teacher","🎓","Studio"],["subjects","📚","Learn"],["exam","📝","Exam"],["profile","👤","Me"]];
+else if(role==="teacher")tabs=[["teacher","🎓","Studio"],["leaderboard","🏆","Board"],["profile","👤","Me"]];
+else tabs=[["home","🏠","Home"],["subjects","📚","Learn"],["exam","📝","Exam"],["shop","🛒","Shop"],["profile","👤","Me"]];
+tb.innerHTML=tabs.map(x=>'<button class="'+(x[0]===p?"on":"")+'" data-a="page" data-r="'+x[0]+'"><span class="ti">'+x[1]+'</span>'+x[2]+'</button>').join("")}}
+const PAGES={
+home(){const n=SUBJ.reduce((a,s)=>a+sDone(s[0]),0),into=USER.xp%350,goal=50,prog=Math.min(USER.dailyXp||0,goal),pct=prog/goal*100;
+const weak=getWeak();
+let weakHtml="";
+if(weak.length){weakHtml='<div class="card"><h2>🧠 Focus Areas</h2><p class="mu">Topics you got wrong most often. Practise these to improve faster.</p>'+weak.map(w=>'<div class="weak-item"><span>'+esc(w[0])+'</span><span class="weak-count">'+w[1]+' missed</span></div>').join("")+'<button class="btn" data-a="smartReview" style="margin-top:12px">🎯 Smart Review</button><button class="btn g sm" data-a="clearWeak" style="margin-top:12px">Reset tracking</button></div>'}
+return '<div class="hero"><div class="hero-row"><div class="hero-av">'+renderAvatar(USER.avatar,80)+'</div><div><h1>Welcome, '+esc(USER.display_name||USER.username)+'!'+roleTag(USER.role)+'</h1><p>Learn. Practice. Level up.</p></div></div><button class="btn" data-a="page" data-r="subjects">START LEARNING</button><button class="btn" data-a="page" data-r="exam">📝 EXAM MODE</button><button class="btn" data-a="mix" data-r="">🎲 MIXED QUIZ</button><button class="btn g" data-a="daily">'+(USER.dailyDone===today()?"✅ DAILY DONE":"🎯 DAILY CHALLENGE")+'</button></div><div class="card" style="border-color:var(--clay);background:color-mix(in srgb,var(--clay) 10%,var(--pn))"><b>⚠️ This is only a revision tool.</b><p class="mu" style="margin:8px 0 0">It helps you practise. It does not replace school lessons, teachers, or official UASA papers.</p></div>'+weakHtml+'<div id="chHome"></div><div class="card"><h2>📅 Daily Goal</h2>'+bar(pct)+'<small>'+prog+' / '+goal+' XP today'+(prog>=goal?" — goal reached! 🎉":"")+'</small></div><div class="stats">'+[[USER.xp,"XP"],[lvl(),"Level"],[streakNow()+(USER.streakFreezes?" ❄️"+USER.streakFreezes:""),"Day streak"],[n,"Lessons done"]].map(x=>'<div class="card"><div class="n">'+x[0]+'</div><small>'+x[1]+'</small></div>').join("")+'</div><div class="card"><h2>Level progress</h2>'+bar(into/3.5)+'<small>'+into+' / 350 XP to Level '+(lvl()+1)+'</small></div>';},
+subjects(){return '<h1>📚 Subjects</h1><button class="btn g" data-a="mix" data-r="">🎲 Mixed quiz: all subjects</button><div class="grid" style="margin-top:12px">'+SUBJ.map(s=>{const d=sDone(s[0]),t=sTot(s[0]);return '<button class="card tap" data-a="subj" data-r="'+esc(s[0])+'"><h2>'+s[1]+' '+esc(s[0])+'</h2>'+bar(t?d/t*100:0)+'<small>'+d+' / '+t+' lessons</small></button>'}).join("")+'</div>'},
+exam(){return '<h1>📝 Exam Mode</h1><div class="card"><h2>Mock UASA Exam</h2><p class="mu">Simulate real exam conditions. Timer counts down, no hints, no hearts lost. Test yourself!</p><label for="examCount">Number of questions</label><select id="examCount"><option value="10">10 questions</option><option value="20" selected>20 questions</option><option value="30">30 questions</option></select><label for="examTime">Time limit</label><select id="examTime"><option value="15">15 minutes</option><option value="30" selected>30 minutes</option><option value="45">45 minutes</option></select><button class="btn" data-a="startExam" style="margin-top:14px">🚀 START EXAM</button></div><div class="card"><h2>How it works</h2><p class="mu">• Questions are pulled from all subjects based on your year.<br>• The timer counts down. When it hits zero, the exam ends automatically.<br>• No hints or explanations during the exam.<br>• You get a grade (A–E) and score at the end.<br>• Hearts are NOT lost during exams.</p></div>'},
+review(){return '<h1>✨ Review</h1><p class="mu">Repeat a finished lesson. <b>+5 XP</b> first time each.</p><div id="rv"><p class="mu">Loading…</p></div>'},
+shop(){
+const owned=getOwned();
+return '<h1>🛒 Reward Shop</h1><p class="mu">Spend your XP on power-ups and themes. You have <b>⭐ '+USER.xp+' XP</b>.</p><div class="shop-grid">'+SHOP_ITEMS.map(it=>{
+const has=isStaff()||owned.includes(it.id);
+const afford=isStaff()||USER.xp>=it.cost;
+return '<div class="card shop-item'+(has&&it.type==="theme"?" owned":"")+'"><div class="si-icon">'+it.icon+'</div><b>'+it.name+'</b><p class="mu" style="font-size:13px;margin:6px 0">'+it.desc+'</p><div class="si-cost">⭐ '+it.cost+' XP</div>'+(has?(it.type==="theme"?'<button class="btn g sm" data-a="applyTheme" data-v="'+it.id+'">Apply</button>':'<span class="mu">✓ Owned</span>'):'<button class="btn sm" data-a="buyItem" data-v="'+it.id+'"'+(afford?"":" disabled")+'>Buy</button>')+'</div>'}).join("")+'</div>'+(owned.some(id=>SHOP_ITEMS.find(i=>i.id===id&&i.type==="theme"))?'<button class="btn g" data-a="clearTheme" style="margin-top:12px">Reset to default theme</button>':"")},
+leaderboard(){return '<h1>🏆 Leaderboard</h1><div class="card" id="lb"><p class="mu">Loading…</p></div>'},
+profile(){return '<h1>👤 '+esc(USER.display_name||USER.username)+roleTag(USER.role)+'</h1><div class="card"><small class="mu">@'+esc(USER.username)+' · '+esc(USER.role||"student")+(USER.year?" · "+esc(USER.year):"")+'</small><label for="edn">Display name</label><input id="edn" value="'+esc(USER.display_name||USER.username)+'" maxlength="24"><label for="eyr">Year</label><select id="eyr">'+["Year 4","Year 5","Year 6","Form 1","Form 2"].map(y=>'<option'+(y===USER.year?" selected":"")+'>'+y+'</option>').join("")+'</select><label for="ecc">Class code</label><input id="ecc" maxlength="6" value="'+esc(USER.classCode||"")+'" placeholder="e.g. K7M2PQ" autocomplete="off"><label for="ere">Recovery email</label><input id="ere" type="email" value="'+esc(USER.recoveryEmail||"")+'" placeholder="yourname@gmail.com" autocomplete="email"><small class="mu">Used for "Forgot password".</small><label><input type="checkbox" id="elb" style="width:auto"'+(USER.leaderboardOptOut?" checked":"")+'> Hide me from the leaderboard</label><button class="btn" data-a="saveProfile">SAVE PROFILE</button><span id="pmsg" class="mu" style="margin-left:10px"></span></div>'+avatarBuilderHTML(USER.avatar)+'<div class="card"><p>Level <b>'+lvl()+'</b> · '+USER.xp+' XP · 🔥 '+streakNow()+'-day streak'+(USER.streakFreezes?" · ❄️ "+USER.streakFreezes+" freeze"+(USER.streakFreezes>1?"s":""):"")+'</p>'+SUBJ.map(s=>{const d=sDone(s[0]),t=sTot(s[0]);return '<div>'+s[1]+' '+esc(s[0])+' <small>'+d+' / '+t+' lessons</small>'+bar(t?d/t*100:0)+'</div>'}).join("")+'</div>'}};
+PAGES.teacher=()=>'<h1>🎓 Teacher Studio'+roleTag("teacher")+'</h1><p class="mu">Create lessons, set challenges, and monitor your class.</p><div class="card"><h2>➕ Create lesson</h2><label for="tsSubject">Subject</label><select id="tsSubject">'+SUBJ.map(x=>'<option value="'+esc(x[0])+'">'+x[1]+' '+esc(x[0])+'</option>').join("")+'</select><label for="tsClass">Class code (optional)</label><input id="tsClass" maxlength="6" placeholder="Blank = visible to everyone"><label for="tsUnit">Unit title</label><input id="tsUnit" placeholder="e.g. Unit 1: Kata Ganti Nama"><label for="tsLesson">Lesson title</label><input id="tsLesson" placeholder="e.g. Kata Ganti Nama Diri"><label for="tsLearn">Teaching text</label><textarea id="tsLearn" rows="5" placeholder="Explain the topic here…"></textarea><h3>Questions</h3><div id="tsQuestions"><p class="mu">No questions yet.</p></div><button class="btn g" data-a="addQ">+ Add multiple choice</button><div style="margin-top:14px"><button class="btn" data-a="saveLesson" data-v="true">PUBLISH</button><button class="btn g" data-a="saveLesson" data-v="false">SAVE DRAFT</button><span id="tsMsg" class="mu" style="margin-left:10px"></span></div></div><div class="card"><h2>📚 My lessons</h2><div id="tsMine"><p class="mu">Loading…</p></div></div><div class="card"><h2>🏅 Class Challenge</h2><label for="chTitle">Title</label><input id="chTitle" placeholder="e.g. Week 1 Revision Sprint"><label for="chDesc">Description</label><input id="chDesc" placeholder="e.g. Complete 5 lessons this week"><label for="chTarget">Target lessons</label><input id="chTarget" type="number" value="5" min="1"><label for="chXP">XP reward</label><input id="chXP" type="number" value="100" min="10"><button class="btn" data-a="createChallenge" style="margin-top:10px">Create Challenge</button><span id="chMsg" class="mu" style="margin-left:10px"></span></div><div class="card"><h2>🏫 My class</h2><div id="ccard"><p class="mu">Loading…</p></div></div><button class="btn g" data-a="report">📄 Generate weekly report</button><div id="td"><p class="mu">Loading students…</p></div>';
+PAGES.admin=()=>'<h1>🛡️ Admin Control'+roleTag("admin")+'</h1><div class="card"><h2>🏆 Leaderboard</h2><p class="mu">Turn the global leaderboard on or off for everyone.</p><label><input id="admLbEnabled" type="checkbox" style="width:auto"> Leaderboard enabled</label><button class="btn" data-a="adminSaveSettings">SAVE SETTINGS</button><span id="admMsg" class="mu" style="margin-left:10px"></span></div><div class="card"><h2>👥 Users</h2><input id="admSearch" placeholder="Search username, name, class or year…"><div id="admUsers"><p class="mu">Loading users…</p></div></div><div class="card"><h2>🧾 Recent admin activity</h2><div id="admLogs"><p class="mu">Loading…</p></div></div>';
+async function getSettings(){try{const r=await sb.rpc("get_app_settings");if(!r.error&&r.data&&r.data[0])return r.data[0]}catch(e){}try{const r=await sb.from("app_settings").select("leaderboard_enabled").eq("id",1).maybeSingle();if(!r.error&&r.data)return r.data}catch(e){}return{leaderboard_enabled:true}}
+async function loadLeaderboard(){
+const box=$("lb");if(!box)return;const isAdmin=USER&&USER.role==="admin";
+const settings=await getSettings();const enabled=settings.leaderboard_enabled!==false;
+if(!enabled&&!isAdmin){box.innerHTML='<div class="card"><p class="mu">🏆 Leaderboard is currently disabled by an admin.</p></div>';return}
+let rows=null;try{const r=await sb.rpc("get_leaderboard",{p_limit:100,p_include_hidden:isAdmin});if(!r.error)rows=r.data||[]}catch(e){}
+if(!rows){const{data,error}=await sb.from("profiles").select("username,display_name,xp,role,leaderboard_opt_out,avatar").eq("leaderboard_opt_out",false).order("xp",{ascending:false}).limit(100);if(error){box.innerHTML="<p>Could not load leaderboard.</p>";return}rows=data||[]}
+const m=["🥇","🥈","🥉"];
+box.innerHTML=rows.map((u,i)=>'<div class="lbr '+(u.username===USER.username?"me":"")+'"><div class="lbr-left"><div class="lbr-av">'+renderAvatar(u.avatar,32)+'</div><span>'+(m[i]||"#"+(i+1))+' '+esc(u.display_name||u.username)+roleTag(u.role)+(u.leaderboard_opt_out?' <small class="mu">hidden</small>':"")+'</span></div><b>'+(+u.xp||0)+' XP</b></div>').join("")||"<p>No players yet.</p>"}
+async function loadHomeChallenges(){
+const box=$("chHome");if(!box)return;
+try{
+const r=await sb.from("class_challenges").select("*").order("created_at",{ascending:false}).limit(5);
+if(r.error||!r.data||!r.data.length){box.innerHTML="";return}
+const prog=USER.progress?Object.keys(USER.progress).length:0;
+box.innerHTML=r.data.map(c=>{
+const claimed=st.get("uasa_ch_claimed_"+USER.id+"_"+c.id)==="1";
+const met=prog>=(c.target_lessons||0);
+return '<div class="card challenge-card"><h2>🏅 '+esc(c.title)+'</h2><p class="mu">'+esc(c.description||"")+'</p><small class="mu">Target: '+c.target_lessons+' lessons · Your progress: '+prog+' lessons</small><br>'+(claimed?'<span class="gd" style="font-weight:800">✅ Reward claimed!</span>':met?'<button class="btn sm" data-a="claimChallenge" data-r="'+c.id+'" data-v="'+c.xp_reward+'">🎁 Claim +'+c.xp_reward+' XP</button>':'<span class="challenge-reward">Reward: +'+c.xp_reward+' XP</span>')+'</div>'}).join("");
+}catch(e){box.innerHTML=""}}
+async function claimChallenge(id,xp){
+const k="uasa_ch_claimed_"+USER.id+"_"+id;
+if(st.get(k)==="1"){toast("Already claimed!");return}
+st.set(k,"1");
+try{await sb.rpc("bump_daily_xp",{amount:+xp||0})}catch(e){}
+await refreshUserStats();
+toast("🎁 +"+xp+" XP claimed!");
+loadHomeChallenges();
+}
+async function loadReview(){const box=$("rv");if(!box)return;const r=await sb.from("reviews").select("lesson_key").eq("user_id",USER.id);const rv=new Set((r.data||[]).map(x=>x.lesson_key));const items=[];SUBJ.forEach(s=>U(s[0]).forEach(u=>u.ls.forEach(l=>{const k=key(s[0],u.i,l.j);if(done(k))items.push({s:s[0],icon:s[1],u:ut(u),l:l.title,j:l.j,k,reviewed:rv.has(k)})})));
+if(!items.length){box.innerHTML='<div class="card"><p class="mu">Finish a lesson first, then review it here.</p></div>';return}
+const dc=items.filter(x=>x.reviewed).length;
+box.innerHTML='<div class="card"><b>'+dc+'</b> / '+items.length+' lessons reviewed</div>'+items.map(x=>'<button class="card tap" data-a="rv" data-r="'+esc(x.k)+'" data-s="'+esc(x.s)+'" data-u="'+esc(x.u)+'" data-l="'+esc(x.l)+'"><b>'+x.icon+' '+esc(x.s)+'</b>'+(x.reviewed?"":'<span class="rvbadge">+5 XP</span>')+'<br><small class="mu">'+esc(x.u)+' · '+esc(x.l)+(x.reviewed?" · ✅ reviewed":"")+'</small></button>').join("")}
+async function startReview(k,s,u,l){const parts=k.split("|");const un=U(s).find(x=>String(x.i)===parts[1]);if(!un)return;const les=un.ls.find(x=>String(x.j)===parts[2]);if(!les)return;if((USER.hearts??5)<=0){toast("💔 No hearts.");return}quiz(les.questions,{title:"✨ Review: "+l,key:null,bonus:0,kind:"review",reviewKey:k,back:()=>go("review")})}
+async function completeReview(k){try{const r=await sb.from("reviews").insert({user_id:USER.id,lesson_key:k});if(r.error&&r.error.code!=="23505")throw r.error;if(!r.error){try{await sb.rpc("bump_daily_xp",{amount:5})}catch(e){}}await refreshUserStats()}catch(e){console.error(e)}}
+function smartReview(){
+const weak=getWeak();
+if(!weak.length){toast("No weak topics tracked yet. Do some quizzes first!");return}
+const subj=weak[0][0];
+const p=pool(subj);
+if(!p.length){toast("No questions for "+subj);return}
+quiz(shuf(p).slice(0,10),{title:"🧠 Smart Review: "+subj,key:null,bonus:0,kind:"smart",back:()=>go("home")});
+}
+async function go(p){const role=(USER&&USER.role)||"student";
+if(role==="teacher"&&["home","review","exam","shop"].includes(p))p="teacher";
+if(role==="admin"&&p==="home"&&PAGES.admin)p="admin";
+if(!PAGES[p])p=role==="teacher"?"teacher":"home";
+clearInterval(EXAM_TIMER);
+R=null;nav(p);view(PAGES[p]());
+if(p==="leaderboard")await loadLeaderboard();
+if(p==="teacher")await loadTeacher();
+if(p==="review")await loadReview();
+if(p==="admin")await loadAdmin();
+if(p==="home")await loadHomeChallenges();
+if(p==="profile")avLoad();
+}
+function subj(s){R=null;NAV={s,u:0,l:0};nav("subjects");view('<div class="mu">'+lk("page","subjects","Subjects")+' › '+esc(s)+'</div><h1>'+esc(s)+'</h1><button class="btn g" data-a="mix" data-r="'+esc(s)+'">🎲 Mixed quiz: '+esc(s)+'</button><div class="grid" style="margin-top:12px">'+(U(s).map(u=>'<button class="card tap" data-a="unit" data-r="'+u.i+'"><h2>'+esc(ut(u))+'</h2>'+bar(u.ls.length?nDone(s,u)/u.ls.length*100:0)+'<small>'+nDone(s,u)+' / '+u.ls.length+' lessons</small></button>').join("")||"<p class='mu'>No lessons yet.</p>")+'</div>')}
+function unit(i){R=null;NAV.u=i;NAV.l=0;nav("subjects");const s=NAV.s,u=U(s).find(x=>String(x.i)===String(i));if(!u){subj(s);return}
+const d=nDone(s,u),hasCh=(u.challenge||[]).length>0,ck=key(s,i,"chest"),cd=done(ck),allDone=d===u.ls.length;
+view('<div class="mu">'+lk("page","subjects","Subjects")+' › '+lk("subj",s,esc(s))+'</div><h1>'+esc(ut(u))+'</h1>'+bar(u.ls.length?d/u.ls.length*100:0)+'<small>'+d+' / '+u.ls.length+' lessons</small><div class="map" style="margin-top:16px">'+u.ls.map((l,x)=>{const dn=done(key(s,i,l.j)),op=unlocked(s,u,x);return '<button class="node '+(dn?"done":op?"":"lock")+'" data-a="les" data-r="'+esc(String(l.j))+'" '+(op?"":'aria-disabled="true"')+'><span>'+(dn?"✓":op?x+1:"🔒")+'</span><span><b>'+esc(l.title||"Lesson "+(x+1))+'</b><br><small>'+(dn?"Completed":op?"Ready":"Finish the previous lesson first")+'</small></span></button>'}).join("")+(hasCh?'<button class="node '+(cd?"done":!allDone?"lock":"")+'" data-a="chest" data-r="'+i+'" '+(allDone&&!cd?"":'aria-disabled="true"')+'><span>'+(cd?"✓":allDone?"🎁":"🔒")+'</span><span><b>Reward Chest</b><br><small>'+(cd?"Opened":allDone?"+25 XP":"Finish all lessons")+'</small></span></button><button class="node '+(done(key(s,i,"c"))?"done":chOpen(s,u)?"":"lock")+'" data-a="startCh" '+(chOpen(s,u)?"":'aria-disabled="true"')+'><span>'+(done(key(s,i,"c"))?"✓":chOpen(s,u)?"🏅":"🔒")+'</span><span><b>Unit Challenge</b><br><small>'+(done(key(s,i,"c"))?"Completed":chOpen(s,u)?"+50 XP":"Finish all lessons")+'</small></span></button>':"")+'</div>')}
+function claimChest(idx){const s=NAV.s,u=U(s).find(x=>String(x.i)===String(idx));if(!u)return;const ck=key(s,idx,"chest");if(done(ck)){toast("Already opened!");return}if(nDone(s,u)!==u.ls.length){toast("🔒 Finish all lessons first.");return}toast("🎁 +25 XP");award(0,0,25,ck);unit(idx)}
+function lesson(j){const s=NAV.s,u=U(s).find(x=>String(x.i)===String(NAV.u)),x=u?u.ls.findIndex(l=>String(l.j)===String(j)):-1;if(x<0)return;if(!unlocked(s,u,x)){toast("🔒 Finish the previous lesson first.");return}NAV.l=j;const l=u.ls[x];view('<div class="mu">'+lk("page","subjects","Subjects")+' › '+lk("subj",s,esc(s))+' › '+lk("unit",u.i,esc(ut(u)))+'</div><h1>'+esc(l.title||"Lesson "+(x+1))+' '+(done(key(s,u.i,j))?"✓":"")+'</h1><div class="card learn">'+(l.learn||"<p>Practice this lesson's questions.</p>")+'</div><button class="btn" data-a="startLes">START '+l.questions.length+' QUESTIONS</button><button class="btn g" data-a="unit" data-r="'+u.i+'">← Back</button>')}
+function startLes(){const s=NAV.s,u=U(s).find(x=>String(x.i)===String(NAV.u)),x=u?u.ls.findIndex(l=>String(l.j)===String(NAV.l)):-1;if(x<0||!unlocked(s,u,x))return;const l=u.ls[x];quiz(l.questions,{title:l.title||"Lesson",key:key(s,u.i,l.j),bonus:20,kind:"lesson",back:()=>unit(u.i)})}
+function startCh(){const s=NAV.s,u=U(s).find(x=>String(x.i)===String(NAV.u));if(!u||!chOpen(s,u)||!(u.challenge||[]).length){toast("🔒 Finish all lessons first.");return}if((USER.hearts??5)<=0){toast("💔 No hearts.");return}quiz(u.challenge,{title:"Unit Challenge",key:key(s,u.i,"c"),bonus:50,kind:"challenge",back:()=>unit(u.i)})}
+function startMix(s){const p=pool(s||"");if(!p.length){toast("No questions yet.");return}if((USER.hearts??5)<=0){toast("💔 No hearts.");return}quiz(shuf(p).slice(0,10),{title:s?"Mixed: "+s:"Mixed quiz",key:null,bonus:0,kind:"mix",back:()=>s?subj(s):go("home")})}
+function startExam(){
+const count=+($("examCount")?$("examCount").value:20);
+const mins=+($("examTime")?$("examTime").value:30);
+const p=poolForYear(USER.year);
+if(!p.length){toast("No questions yet.");return}
+const qs=shuf(p).slice(0,count);
+EXAM_TIME_LEFT=mins*60;
+clearInterval(EXAM_TIMER);
+EXAM_TIMER=setInterval(()=>{
+EXAM_TIME_LEFT--;
+const el=$("examTimerDisplay");
+if(el){
+const m=Math.floor(EXAM_TIME_LEFT/60),s=EXAM_TIME_LEFT%60;
+el.textContent=m+":"+String(s).padStart(2,"0");
+if(EXAM_TIME_LEFT<=60)el.classList.add("danger");
+}
+if(EXAM_TIME_LEFT<=0){clearInterval(EXAM_TIMER);if(R&&!R.a){R.a=true}if(R)finish();}
+},1000);
+quiz(qs,{title:"📝 Exam Mode",key:null,bonus:0,kind:"exam",back:()=>{clearInterval(EXAM_TIMER);go("home")}});
+}
+function quiz(qs,ctx){R={raw:qs,qs:qs.map(sq),i:0,c:0,a:false,ctx};draw()}
+function draw(){const q=R.qs[R.i];const isExam=R.ctx.kind==="exam";
+if(q.w&&!isExam){view('<div class="qz"><div class="qz-head"><div class="qz-av">'+renderAvatar(USER.avatar,56,"thinking")+'</div><div class="qz-meta"><div class="row"><button class="btn g" data-a="back" aria-label="Quit">✕</button>'+bar(R.i/R.qs.length*100)+'</div><small>'+esc(R.ctx.title)+' · Writing '+(R.i+1)+' of '+R.qs.length+'</small></div></div>'+(q.to?'<div class="card" style="margin:8px 0;font-size:15px"><div><b>To:</b> '+esc(q.to)+'</div><div><b>From:</b> '+esc(q.from||"")+'</div><div><b>Subject:</b> '+esc(q.subject||"")+'</div></div>':"")+'<h2>'+esc(q.w)+'</h2><p class="mu">Write between <b>'+q.min+'</b> and <b>'+q.max+'</b> words.</p><textarea id="wt" rows="8" placeholder="Write your answer here..."></textarea><p id="wc" class="mu">0 words</p><button class="btn" data-a="submitW">SUBMIT</button><div id="wfb" role="status"></div><button id="nx" class="btn hidden" data-a="next">'+(R.i+1<R.qs.length?"CONTINUE":"FINISH")+'</button></div>');
+const ta=$("wt"),wcEl=$("wc"),dk="draft_"+USER.id+"_"+R.i+"_"+(R.ctx.key||"x"),saved=st.get(dk);if(saved)ta.value=saved;
+const uwc=()=>{const n=(ta.value.trim().match(/\S+/g)||[]).length;wcEl.textContent=n+" words";wcEl.style.color=(n>=q.min&&n<=q.max)?"var(--gd)":"var(--mu)"};
+ta.addEventListener("input",()=>{uwc();st.set(dk,ta.value)});uwc();ta.focus();return}
+const timerHtml=isExam?'<div class="exam-timer" id="examTimerDisplay">--:--</div>':"";
+view('<div class="qz"><div class="qz-head"><div class="qz-av" id="qzAv">'+renderAvatar(USER.avatar,56)+'</div><div class="qz-meta"><div class="row"><button class="btn g" data-a="back" aria-label="Quit quiz">✕</button>'+bar(R.i/R.qs.length*100)+timerHtml+'</div><small>'+esc(R.ctx.title)+' · Question '+(R.i+1)+' of '+R.qs.length+'</small></div></div><h2>'+esc(q.q)+'</h2>'+(q.img?'<div class="qimg">'+safeImg(q.img)+'</div>':"")+'<div id="an" role="group" aria-label="Answer choices">'+q.options.map((o,k)=>'<button class="ans" data-a="ans" data-r="'+k+'"><b>'+("ABCD"[k]||k+1)+'</b><span>'+esc(o)+'</span></button>').join("")+'</div><div id="fb" role="status"></div><button id="nx" class="btn hidden" data-a="next">'+(R.i+1<R.qs.length?"CONTINUE":"FINISH")+'</button></div>');
+if(isExam){const el=$("examTimerDisplay");if(el){const m=Math.floor(EXAM_TIME_LEFT/60),s=EXAM_TIME_LEFT%60;el.textContent=m+":"+String(s).padStart(2,"0");if(EXAM_TIME_LEFT<=60)el.classList.add("danger")}}
+}
+function setAvatarMood(mood){const el=$("qzAv");if(!el)return;el.innerHTML=renderAvatar(USER.avatar,56,mood);el.className="qz-av mood-"+mood}
+async function answer(k){if(!R||R.a||!$("an"))return;const q=R.qs[R.i];if(k<0||k>=q.options.length)return;
+R.a=true;const ok=k===q.answer;if(ok)R.c++;
+const isExam=R.ctx.kind==="exam";
+const practice=R.ctx.kind==="mix"||R.ctx.kind==="daily"||R.ctx.kind==="review"||R.ctx.kind==="challenge"||R.ctx.kind==="smart";
+if(!ok&&practice)await loseHeart();
+if(!ok&&q._subj)trackWeak(q._subj);
+setAvatarMood(ok?"happy":"sad");
+document.querySelectorAll("#an .ans").forEach((b,x)=>{b.disabled=true;if(x===q.answer)b.classList.add("ok");else if(x===k)b.classList.add("no")});
+const cl="ABCD"[q.answer]||q.answer+1,ct=q.options[q.answer];
+$("fb").innerHTML='<div class="fb">'+(ok?"✅ Correct!":"❌ Not quite. Correct: "+cl+") "+esc(ct))+'</div>'+(ok||isExam?"":'<div class="fb why" id="whyBox">💡 Loading explanation…</div>');
+$("nx").classList.remove("hidden");$("nx").focus();
+if(!ok&&!isExam)await loadWhy(q,cl,ct,k)}
+async function loadWhy(q,cl,ct,wi){const box=$("whyBox");if(!box)return;const ck="why_"+simpleHash(String(q.q||""));const cached=st.get(ck);if(cached){box.innerHTML="💡 <b>Why:</b> "+esc(cached);return}
+try{const res=await sb.functions.invoke("explain-answer",{body:{question:q.q,correct:ct,chosen:q.options[wi]}});if(res.error)throw res.error;const why=(res.data&&res.data.why)||"";if(why){st.set(ck,why);box.innerHTML="💡 <b>Why:</b> "+esc(why)}else box.innerHTML="💡 <b>Why:</b> <span class='mu'>Not available.</span>"}catch(e){box.innerHTML="💡 <b>Why:</b> <span class='mu'>Not available.</span>"}}
+async function submitW(){if(!R||R.a)return;const q=R.qs[R.i],ta=$("wt");if(!ta)return;const n=(ta.value.trim().match(/\S+/g)||[]).length;
+if(n<q.min||n>q.max){$("wfb").innerHTML='<div class="fb no">Write between '+q.min+' and '+q.max+' words. You wrote '+n+'.</div>';return}
+const btn=document.querySelector('[data-a="submitW"]');btn.disabled=true;btn.textContent="CHECKING...";$("wfb").innerHTML='<div class="fb">📝 Marking…</div>';
+try{const res=await sb.functions.invoke("grade-essay",{body:{essay:ta.value.trim(),prompt:q.w,min:q.min,max:q.max}});if(res.error)throw res.error;
+const d=res.data||{},score=+d.score||0,pass=score>=5;let html='<div class="fb '+(pass?"ok":"no")+'">Score: <b>'+score+'/10</b><br>'+esc(d.feedback||"")+'</div>';
+if(Array.isArray(d.improvements)&&d.improvements.length)html+='<div class="fb">💡 '+d.improvements.map(esc).join("<br>💡 ")+'</div>';
+$("wfb").innerHTML=html;st.del("draft_"+USER.id+"_"+R.i+"_"+(R.ctx.key||"x"));
+sb.from("essays").insert({user_id:USER.id,lesson_key:R.ctx.key||null,prompt:q.w,essay:ta.value.trim(),score,feedback:String(d.feedback||""),improvements:Array.isArray(d.improvements)?d.improvements:[],word_count:n}).then(r=>{if(r.error)console.error(r.error)});
+if(pass){R.a=true;R.c++;btn.classList.add("hidden");$("nx").classList.remove("hidden");$("nx").focus()}else{btn.disabled=false;btn.textContent="TRY AGAIN"}}
+catch(e){$("wfb").innerHTML='<div class="fb no">⚠️ Could not mark.</div>';btn.disabled=false;btn.textContent="SUBMIT"}}
+function next(){if(!R||!R.a)return;R.i++;R.a=false;R.i<R.qs.length?draw():finish()}
+async function finish(){const{c,qs,ctx}=R,ratio=c/qs.length,pass=ratio>=.7;let xp=0;
+clearInterval(EXAM_TIMER);
+if(ctx.kind==="exam"){
+const pct=Math.round(ratio*100);
+const grade=pct>=90?"A":pct>=80?"B":pct>=70?"C":pct>=60?"D":"E";
+const gColor=pct>=70?"var(--gd)":pct>=60?"var(--saffron)":"var(--clay)";
+const msg=pct>=90?"Outstanding! 🌟":pct>=80?"Great job! 🎉":pct>=70?"Well done! 👍":pct>=60?"You passed. Keep going!":"Keep practising. You'll get there! 💪";
+view('<div class="qz card c"><div class="exam-grade" style="color:'+gColor+'">'+grade+'</div><h2>'+msg+'</h2><p>Score: <b>'+c+' / '+qs.length+'</b> ('+pct+'%)</p><p class="mu">Exam mode does not award XP. It tests your readiness.</p><button class="btn" data-a="page" data-r="exam">Try Again</button><button class="btn g" data-a="page" data-r="home">Home</button></div>');
+return}
+if(ctx.kind==="review"){if(pass&&ctx.reviewKey)await completeReview(ctx.reviewKey)}
+else if(ctx.kind==="daily"){if(pass&&USER.dailyDone!==today()){xp=ratio===1?150:100;await awardDaily(c,qs.length,xp)}}
+else if(ctx.kind==="smart"){if(pass){xp=c*5;try{await sb.rpc("bump_daily_xp",{amount:xp})}catch(e){}await refreshUserStats()}}
+else if(ctx.key&&pass&&!done(ctx.key)){xp=c*10+ctx.bonus;award(c,qs.length,ctx.bonus,ctx.key)}
+const stars=ratio===1?3:ratio>=.9?2:pass?1:0;let nb="";
+if(pass&&ctx.kind==="lesson"){const s=NAV.s,u=U(s).find(x=>String(x.i)===String(NAV.u)),x=u.ls.findIndex(l=>String(l.j)===String(NAV.l)),n=u.ls[x+1];nb=n?'<button class="btn" data-a="les" data-r="'+esc(String(n.j))+'">NEXT LESSON</button>':(chOpen(s,u)&&(u.challenge||[]).length?'<button class="btn" data-a="startCh">UNIT CHALLENGE</button>':"")}
+const msg=ctx.kind==="review"?(pass?"✨ Review complete! +5 XP":"Need 70%."):ctx.kind==="daily"?(pass?"🎯 Daily complete!":"Need 70%."):ctx.kind==="smart"?(pass?"🧠 Smart review done!":"Need 70%."):ctx.kind==="mix"?"Nice practice!":pass?"You passed! 🎉":"Almost. Need 70%.";
+const mood = pass ? "celebrate" : "thinking";
+view('<div class="qz card c"><div class="finish-av mood-'+mood+'" style="width:120px;height:144px;margin:0 auto 8px">'+renderAvatar(USER.avatar,120,mood)+'</div><div class="stars">'+'⭐'.repeat(stars)+'☆'.repeat(3-stars)+'</div><h2>'+msg+'</h2><p>Score: <b>'+c+' / '+qs.length+'</b></p>'+(xp?'<div class="n gd">+'+xp+' XP</div>':"")+nb+(pass||ctx.kind==="mix"||ctx.kind==="daily"||ctx.kind==="review"||ctx.kind==="smart"?"":'<button class="btn" data-a="retry">TRY AGAIN</button>')+'<button class="btn g" data-a="back">Back</button></div>')}
+function seededShuffle(arr,seed){let s=2166136261>>>0;for(let i=0;i<seed.length;i++){s^=seed.charCodeAt(i);s=Math.imul(s,16777619)>>>0}const rand=()=>{s^=s<<13;s>>>=0;s^=s>>17;s^=s<<5;s>>>=0;return s/4294967296};const a=arr.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(rand()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a}
+async function startDaily(){if(USER.dailyDone===today()){toast("✅ Already done today!");return}const p=poolForYear(USER.year);if(!p.length){toast("No questions yet.");return}if((USER.hearts??5)<=0){toast("💔 No hearts.");return}quiz(seededShuffle(p,today()).slice(0,10),{title:"🎯 Daily — "+today(),key:null,bonus:0,kind:"daily",back:()=>go("home")})}
+async function awardDaily(score,total,xpOv){setSaveState("saving");try{const xp=typeof xpOv==="number"?xpOv:(score===total?150:100);const r=await sb.from("daily_completions").insert({user_id:USER.id,day:today(),score,total});if(r.error&&r.error.code!=="23505")throw r.error;if(!r.error){USER.dailyDone=today();try{await sb.rpc("bump_daily_xp",{amount:xp})}catch(e){}}await refreshUserStats();setSaveState("saved")}catch(e){setSaveState("error");toast("⚠️ Could not save daily.")}}
+async function spendXP(amount){
+if(USER.xp<amount){toast("Not enough XP! You need "+amount+" but have "+USER.xp+".");return false}
+const r=await sb.from("profiles").update({xp:USER.xp-amount}).eq("id",USER.id);
+if(r.error){toast("Purchase failed.");return false}
+USER.xp-=amount;
+await refreshUserStats();
+return true;
+}
+async function buyItem(id){
+const item=SHOP_ITEMS.find(x=>x.id===id);if(!item)return;
+const owned=getOwned();
+if(item.type!=="theme"&&owned.includes(id)){toast("Already owned!");return}
+if(!await spendXP(item.cost))return;
+if(id==="freeze"){
+const r=await sb.from("profiles").update({streak_freezes:Math.min(3,(USER.streakFreezes||0)+1)}).eq("id",USER.id);
+if(!r.error){USER.streakFreezes=Math.min(3,(USER.streakFreezes||0)+1)}
+toast("🔥 Streak freeze added!")
+}else if(id==="hearts"){
+const r=await sb.from("profiles").update({hearts:5}).eq("id",USER.id);
+if(!r.error){USER.hearts=5;heartsUI()}
+toast("❤️ Hearts refilled!")
+}else if(item.type==="theme"){
+owned.push(id);setOwned(owned);
+applyCustomTheme(id);
+toast(item.icon+" "+item.name+" unlocked & applied!")
+}
+go("shop");
+}
+async function saveProfile(){const name=$("edn")?$("edn").value.trim():"";if(name.length<2||name.length>24){$("pmsg").textContent="Name must be 2-24 chars.";return}
+const year=$("eyr")?$("eyr").value:USER.year,optOut=$("elb")?$("elb").checked:false,cc=$("ecc")?$("ecc").value.trim().toUpperCase():"",re=$("ere")?$("ere").value.trim().toLowerCase():"";
+if(re&&!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(re)){$("pmsg").textContent="Invalid email.";return}
+setSaveState("saving");$("pmsg").textContent="Saving…";
+if(cc){let check=await sb.from("valid_class_codes").select("code").eq("code",cc).maybeSingle();if(check.error)check=await sb.from("classes").select("code").eq("code",cc).maybeSingle();if(!check.data){setSaveState("error");$("pmsg").textContent="Code '"+cc+"' not found.";return}}
+const r=await sb.from("profiles").update({display_name:name,year,leaderboard_opt_out:optOut,class_code:cc||null,recovery_email:re||null}).eq("id",USER.id);
+if(r.error){setSaveState("error");$("pmsg").textContent="Error: "+r.error.message;return}
+USER.display_name=name;USER.year=year;USER.leaderboardOptOut=optOut;USER.classCode=cc;USER.recoveryEmail=re;setSaveState("saved");$("pmsg").textContent="✓ Saved";setTimeout(()=>go("profile"),600)}
+function tsMsg(t){const m=$("tsMsg");if(m)m.textContent=t}
+function adminMsg(t){const m=$("admMsg");if(m)m.textContent=t}
+function renderTQ(){const wrap=$("tsQuestions");if(!wrap)return;window._tq=window._tq||[];
+if(!window._tq.length){wrap.innerHTML='<p class="mu">No questions yet.</p>';return}
+wrap.innerHTML=window._tq.map((q,i)=>'<div class="card" style="padding:14px;margin:10px 0"><b>Question '+(i+1)+'</b><input data-tq="q" data-i="'+i+'" value="'+esc(q.q||"")+'" placeholder="Question text"><label>A</label><input data-tq="opt" data-i="'+i+'" data-o="0" value="'+esc(q.options[0]||"")+'"><label>B</label><input data-tq="opt" data-i="'+i+'" data-o="1" value="'+esc(q.options[1]||"")+'"><label>C</label><input data-tq="opt" data-i="'+i+'" data-o="2" value="'+esc(q.options[2]||"")+'"><label>D</label><input data-tq="opt" data-i="'+i+'" data-o="3" value="'+esc(q.options[3]||"")+'"><label>Correct</label><select data-tq="ans" data-i="'+i+'">'+[0,1,2,3].map(o=>'<option value="'+o+'"'+((q.answer||0)===o?" selected":"")+'>'+"ABCD"[o]+'</option>').join("")+'</select><button class="btn g sm" data-a="removeQ" data-r="'+i+'">Remove</button></div>').join("");
+wrap.querySelectorAll("[data-tq]").forEach(el=>{const sync=()=>{const i=+el.dataset.i,a=window._tq[i];if(!a)return;if(el.dataset.tq==="q")a.q=el.value;else if(el.dataset.tq==="opt")a.options[+el.dataset.o]=el.value;else if(el.dataset.tq==="ans")a.answer=+el.value};el.addEventListener("input",sync);el.addEventListener("change",sync)})}
+function addTQ(){window._tq=window._tq||[];window._tq.push({q:"",options:["","","",""],answer:0});renderTQ()}
+function removeTQ(i){(window._tq||[]).splice(i,1);renderTQ()}
+function collectTQ(){return(window._tq||[]).map(q=>{const opts=(q.options||[]).map(o=>String(o||"").trim());if(!String(q.q||"").trim()||opts.filter(Boolean).length<2)return null;let a=Number(q.answer)||0;if(!opts[a])a=opts.findIndex(Boolean);return{q:String(q.q).trim(),options:opts,answer:a}}).filter(Boolean)}
+async function saveLesson(publish){const subject=$("tsSubject")?$("tsSubject").value:SUBJ[0][0],cc=$("tsClass")?$("tsClass").value.trim().toUpperCase():"",utl=$("tsUnit")?$("tsUnit").value.trim():"",ltl=$("tsLesson")?$("tsLesson").value.trim():"",learn=$("tsLearn")?$("tsLearn").value.trim():"",questions=collectTQ();
+if(!utl||!ltl){tsMsg("Unit and lesson title required.");return}if(!questions.length){tsMsg("Add at least one valid question.");return}
+tsMsg("Saving…");const r=await sb.from("teacher_lessons").insert({teacher_id:USER.id,class_code:cc||null,subject,unit_title:utl,lesson_title:ltl,learn_text:learn,questions,published:!!publish});
+if(r.error){tsMsg("Error: "+r.error.message);return}
+tsMsg(publish?"Published ✓":"Draft saved ✓");toast(publish?"✅ Published":"💾 Draft saved");
+["tsUnit","tsLesson","tsLearn","tsClass"].forEach(id=>{const el=$(id);if(el)el.value=""});window._tq=[];renderTQ();await loadTeacherLessons();loadMyLessons()}
+async function loadMyLessons(){const box=$("tsMine");if(!box)return;const r=await sb.from("teacher_lessons").select("id,subject,unit_title,lesson_title,published,class_code,created_at,questions").eq("teacher_id",USER.id).order("created_at",{ascending:false}).limit(100);
+if(r.error){box.innerHTML="<p class='mu'>Could not load. Run SQL setup first.</p>";return}
+const rows=r.data||[];
+box.innerHTML=rows.length?rows.map(x=>'<div class="card" style="padding:14px;margin:10px 0"><div style="display:flex;justify-content:space-between;gap:8px;flex-wrap:wrap"><div><b>'+esc(x.lesson_title)+'</b><br><small class="mu">'+esc(x.subject)+' · '+esc(x.unit_title)+' · '+(x.class_code?"class "+esc(x.class_code):"all")+' · '+(x.questions||[]).length+' Q</small></div><span class="chip '+(x.published?"save-ok":"")+'">'+(x.published?"Published":"Draft")+'</span></div><div class="adm-actions"><button class="btn g sm" data-a="tpublish" data-r="'+x.id+'" data-v="'+(x.published?"false":"true")+'">'+(x.published?"Unpublish":"Publish")+'</button><button class="btn g sm" data-a="tdelete" data-r="'+x.id+'">Delete</button></div></div>').join(""):'<p class="mu">No lessons yet.</p>'}
+async function setLessonPublished(id,pub){const r=await sb.from("teacher_lessons").update({published:!!pub,updated_at:new Date().toISOString()}).eq("id",id).eq("teacher_id",USER.id);if(r.error){toast("Error");return}toast(pub?"Published":"Unpublished");await loadTeacherLessons();loadMyLessons()}
+async function deleteLesson(id){if(!confirm("Delete this lesson?"))return;const r=await sb.from("teacher_lessons").delete().eq("id",id).eq("teacher_id",USER.id);if(r.error){toast("Error");return}toast("Deleted");await loadTeacherLessons();loadMyLessons()}
+async function createChallenge(){
+const title=$("chTitle")?$("chTitle").value.trim():"";
+const desc=$("chDesc")?$("chDesc").value.trim():"";
+const target=Math.max(1,+($("chTarget")?$("chTarget").value:5));
+const xp=Math.max(10,+($("chXP")?$("chXP").value:100));
+const msg=$("chMsg");
+if(!title){if(msg)msg.textContent="Title required.";return}
+if(msg)msg.textContent="Creating…";
+const cls=await sb.from("classes").select("code").eq("teacher_id",USER.id).maybeSingle();
+const r=await sb.from("class_challenges").insert({teacher_id:USER.id,class_code:cls.data?cls.data.code:null,title,description:desc,target_lessons:target,xp_reward:xp});
+if(r.error){if(msg)msg.textContent="Error: "+r.error.message;return}
+if(msg)msg.textContent="Challenge created ✓";
+toast("🏅 Challenge created!");
+["chTitle","chDesc"].forEach(id=>{const el=$(id);if(el)el.value=""});
+}
+async function loadTeacher(){const box=$("td");if(!box)return;window._tq=[];renderTQ();loadMyLessons();box.innerHTML='<p class="mu">Loading class…</p>';
+const cls=await sb.from("classes").select("code,name").eq("teacher_id",USER.id).maybeSingle();
+const myCode=cls.data?cls.data.code:null;const cbox=$("ccard");
+if(cbox)cbox.innerHTML=myCode?'<b>Class:</b> '+esc(cls.data.name||"Class")+' — <span style="font-family:monospace;font-size:20px;background:var(--p2);padding:4px 10px;border-radius:8px">'+esc(myCode)+'</span><br><small class="mu">Students enter this on their Profile page.</small>':'<button class="btn" data-a="createClass">+ Create class</button> <small class="mu">Students join with a 6-character code.</small>';
+if(!myCode){box.innerHTML='<div class="card"><p class="mu">Create a class first. Students appear here after joining.</p></div>';return}
+const r=await sb.from("profiles").select("id,username,display_name,role,year,xp,streak,last_active,avatar").eq("class_code",myCode).order("xp",{ascending:false}).limit(200);
+if(r.error){box.innerHTML="<p>Could not load students.</p>";return}
+const data=r.data||[];if(!data.length){box.innerHTML='<div class="card"><p class="mu">No students yet.</p></div>';return}
+const avg=Math.round(data.reduce((a,s)=>a+(+s.xp||0),0)/data.length),active=data.filter(s=>s.last_active===today()).length;
+box.innerHTML='<div class="stats" style="margin-bottom:12px"><div class="card"><div class="n">'+data.length+'</div><small>Students</small></div><div class="card"><div class="n">'+avg+'</div><small>Avg XP</small></div><div class="card"><div class="n">'+active+'</div><small>Active today</small></div></div><div class="card"><input id="tsearch" placeholder="Search username…"><div style="overflow-x:auto;margin-top:8px"><table class="tbl" id="ttbl"><thead><tr><th>Student</th><th>Year</th><th>XP</th><th>Streak</th><th>Last active</th></tr></thead><tbody>'+data.map(s=>'<tr data-a="student" data-r="'+s.id+'"><td><div style="display:flex;align-items:center;gap:8px"><div style="width:28px;height:34px;flex:none;color:var(--ink)">'+renderAvatar(s.avatar,28)+'</div><div>'+esc(s.display_name||s.username)+roleTag(s.role)+' <small class="mu">@'+esc(s.username)+'</small></div></div></td><td>'+esc(s.year||"—")+'</td><td><b>'+(+s.xp||0)+'</b></td><td>🔥 '+(+s.streak||0)+'</td><td>'+(s.last_active?esc(s.last_active):"—")+'</td></tr>').join("")+'</tbody></table></div></div>';
+const inp=$("tsearch");if(inp)inp.addEventListener("input",()=>{const q=inp.value.trim().toLowerCase();document.querySelectorAll("#ttbl tbody tr").forEach(tr=>{tr.style.display=tr.textContent.toLowerCase().includes(q)?"":"none"})})}
+const genCode=()=>{const c="ABCDEFGHJKMNPQRSTUVWXYZ23456789";let s="";for(let i=0;i<6;i++)s+=c[Math.floor(Math.random()*c.length)];return s};
+async function createClass(){const name=prompt("Class name:");if(!name)return;const code=genCode();const r=await sb.from("classes").insert({code,teacher_id:USER.id,name});if(r.error){toast("⚠️ "+r.error.message);return}toast("✅ Class: "+code);loadTeacher()}
+async function generateReport(){const cls=await sb.from("classes").select("code,name").eq("teacher_id",USER.id).maybeSingle();
+if(cls.error||!cls.data){toast("Create a class first.");return}
+const r=await sb.from("profiles").select("username,display_name,year,xp,streak,last_active").eq("class_code",cls.data.code).order("xp",{ascending:false});
+if(r.error){toast("Could not load report.");return}
+const data=r.data||[],t=today(),weekAgo=dayKey(-7);
+const active=data.filter(s=>s.last_active&&s.last_active>=weekAgo),stuck=data.filter(s=>!s.last_active||s.last_active<weekAgo);
+const lines=["Weekly report — "+(cls.data.name||"Class")+" ("+cls.data.code+")","Date: "+t,"Total students: "+data.length,"Active this week: "+active.length,"Average XP: "+Math.round(data.reduce((a,s)=>a+(+s.xp||0),0)/Math.max(data.length,1)),"","Top 5:"].concat(data.length?data.slice(0,5).map((s,i)=>"  "+(i+1)+". "+(s.display_name||s.username)+" — "+(+s.xp||0)+" XP"):["  (none)"],["","Needs attention:"]).concat(stuck.length?stuck.slice(0,20).map(s=>"  · "+(s.display_name||s.username)+" — last: "+(s.last_active||"never")):["  (none)"]);
+view('<div class="mu">'+lk("page","teacher","🎓 Teacher")+' › Report</div><h1>📄 Weekly report</h1><div class="card"><pre style="white-space:pre-wrap;font-size:14px;margin:0">'+esc(lines.join("\n"))+'</pre></div><button class="btn g" data-a="page" data-r="teacher">← Back</button>')}
+async function openStudent(uid){R=null;view('<div class="mu">'+lk("page","teacher","🎓 Teacher")+' › Student</div><h1>Loading…</h1>');
+const[r,e,pr]=await Promise.all([sb.from("profiles").select("id,username,display_name,role,year,xp,streak,last_active,avatar").eq("id",uid).maybeSingle(),sb.from("essays").select("*").eq("user_id",uid).order("created_at",{ascending:false}).limit(50),sb.from("progress").select("lesson_key").eq("user_id",uid)]);
+if(r.error||!r.data){view("<p>Could not load student.</p>");return}
+const s=r.data,essays=e.data||[],keys=new Set((pr.data||[]).map(x=>x.lesson_key));
+view('<div class="mu">'+lk("page","teacher","🎓 Teacher")+' › '+esc(s.display_name||s.username)+'</div><div class="card"><div style="display:flex;gap:14px;align-items:center"><div style="width:72px;height:86px;flex:none;color:var(--ink)">'+renderAvatar(s.avatar,72)+'</div><div><b>'+esc(s.display_name||s.username)+'</b>'+roleTag(s.role)+' <small class="mu">@'+esc(s.username)+'</small><br><small class="mu">'+esc(s.year||"")+' · '+(+s.xp||0)+' XP · 🔥 '+(+s.streak||0)+'-day streak'+(s.last_active?" · last active "+esc(s.last_active):"")+'</small></div></div></div><h2>📊 Progress by subject</h2>'+SUBJ.map(sub=>{const subj=sub[0],units=U(subj),dn=units.reduce((a,u)=>a+u.ls.filter(l=>keys.has(subj+"|"+u.i+"|"+l.j)).length,0),tot=units.reduce((a,u)=>a+u.ls.length,0);return '<div class="card"><b>'+sub[1]+' '+esc(subj)+'</b> <small class="mu">'+dn+' / '+tot+'</small>'+bar(tot?dn/tot*100:0)+'</div>'}).join("")+'<h2>📝 Essays ('+essays.length+')</h2>'+(essays.length?essays.map(x=>'<div class="card"><div style="display:flex;justify-content:space-between;gap:8px;flex-wrap:wrap"><small class="mu">'+esc(new Date(x.created_at).toLocaleString("en-MY",{timeZone:KL}))+'</small><b>'+(x.score==null?"—":x.score+"/10")+'</b></div><p style="margin:8px 0"><b>Prompt:</b> '+esc(x.prompt)+'</p><div class="essay">'+esc(x.essay)+'</div>'+(x.feedback?'<p><b>Feedback:</b> '+esc(x.feedback)+'</p>':"")+'</div>').join(""):'<div class="card"><p class="mu">No essays.</p></div>')+'<div class="card"><button class="btn g" data-a="resetStudent" data-r="'+uid+'">🔄 Reset progress</button></div><button class="btn g" data-a="page" data-r="teacher">← Back</button>')}
+async function resetStudent(uid){if(!confirm("Reset ALL progress for this student?"))return;setSaveState("saving");
+const rpc=await sb.rpc("teacher_reset_student",{p_student_id:uid});
+if(!rpc.error){setSaveState("saved");toast("✅ Reset.");openStudent(uid);return}
+const[a,b,c,d]=await Promise.all([sb.from("progress").delete().eq("user_id",uid),sb.from("daily_completions").delete().eq("user_id",uid),sb.from("reviews").delete().eq("user_id",uid),sb.from("profiles").update({xp:0,streak:0,daily_xp:0,daily_xp_date:null,hearts:5,last_active:null}).eq("id",uid)]);
+if(a.error||b.error||c.error||d.error){setSaveState("error");toast("⚠️ Could not reset.");return}
+setSaveState("saved");toast("✅ Reset.");openStudent(uid)}
+async function loadAdmin(){if(!USER||USER.role!=="admin"){view("<p>Forbidden.</p>");return}
+const ub=$("admUsers"),lb=$("admLogs");if(ub)ub.innerHTML='<p class="mu">Loading…</p>';if(lb)lb.innerHTML='<p class="mu">Loading…</p>';
+try{const settings=await getSettings();const cb=$("admLbEnabled");if(cb)cb.checked=settings.leaderboard_enabled!==false;
+const r=await sb.from("profiles").select("id,username,display_name,role,year,xp,streak,hearts,streak_freezes,leaderboard_opt_out,class_code,last_active,avatar").order("xp",{ascending:false}).limit(500);
+if(r.error)throw r.error;const users=r.data||[];
+if(ub)ub.innerHTML=(users.map(u=>{const hay=((u.username||"")+" "+(u.display_name||"")+" "+(u.class_code||"")+" "+(u.year||"")).toLowerCase();
+return '<div class="card adm-user" data-search="'+esc(hay)+'" style="padding:14px;margin:10px 0"><div style="display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap"><div style="display:flex;gap:10px;align-items:center"><div style="width:36px;height:44px;flex:none;color:var(--ink)">'+renderAvatar(u.avatar,36)+'</div><div><b>'+esc(u.display_name||u.username)+'</b>'+roleTag(u.role)+' <small class="mu">@'+esc(u.username)+'</small><br><small class="mu">'+esc(u.year||"—")+' · class '+esc(u.class_code||"—")+' · ❤️'+(u.hearts??5)+' · 🔥'+(+u.streak||0)+' · ❄️'+(u.streak_freezes||0)+' · '+(+u.xp||0)+' XP · '+(u.last_active?esc(u.last_active):"never")+'</small></div></div><div><label for="role_'+u.id+'">Role</label><select id="role_'+u.id+'" class="adm-role" data-id="'+u.id+'">'+["student","teacher","admin"].map(ro=>'<option value="'+ro+'"'+(u.role===ro?" selected":"")+'>'+ro+'</option>').join("")+'</select></div></div><div class="adm-actions"><button class="btn g sm" data-a="adminHide" data-r="'+u.id+'" data-v="'+(u.leaderboard_opt_out?"0":"1")+'">'+(u.leaderboard_opt_out?"Show on board":"Hide from board")+'</button><button class="btn g sm" data-a="adminAdjust" data-r="'+u.id+'" data-v="xp">Adjust XP</button><button class="btn g sm" data-a="adminAdjust" data-r="'+u.id+'" data-v="hearts">Set hearts</button><button class="btn g sm" data-a="adminAdjust" data-r="'+u.id+'" data-v="streak">Fix streak</button><button class="btn g sm" data-a="adminAdjust" data-r="'+u.id+'" data-v="freezes">Set freezes</button><button class="btn g sm" data-a="adminRepairStreak" data-r="'+u.id+'">🔧 Repair streak</button><button class="btn g sm" data-a="adminReset" data-r="'+u.id+'">Reset progress</button></div></div>'}).join(""))||'<p class="mu">No users.</p>';
+const inp=$("admSearch");if(inp)inp.addEventListener("input",()=>{const q=inp.value.trim().toLowerCase();document.querySelectorAll("#admUsers .adm-user").forEach(el=>{el.style.display=el.dataset.search.includes(q)?"":"none"})});
+document.querySelectorAll("#admUsers .adm-role").forEach(sel=>sel.addEventListener("change",e=>adminSetRole(e.target.dataset.id,e.target.value)));
+if(lb){try{const lg=await sb.from("admin_audit").select("action,target_id,created_at").order("created_at",{ascending:false}).limit(20);lb.innerHTML=(lg.data||[]).map(x=>'<div class="lbr"><span>'+esc(x.action)+(x.target_id?" · "+esc(String(x.target_id).slice(0,8)):"")+'</span><small class="mu">'+esc(new Date(x.created_at).toLocaleString("en-MY",{timeZone:KL}))+'</small></div>').join("")||'<p class="mu">No activity.</p>'}catch(e){lb.innerHTML='<p class="mu">Audit log unavailable.</p>'}}
+}catch(e){console.error(e);if(ub)ub.innerHTML='<p class="mu">Error: '+esc(e.message||String(e))+'</p>'}}
+async function adminSaveSettings(){const cb=$("admLbEnabled"),en=!!(cb&&cb.checked);adminMsg("Saving…");
+try{const r=await sb.rpc("admin_set_leaderboard_enabled",{p_enabled:en});if(r.error)throw r.error;adminMsg("Saved ✓")}catch(e){try{await sb.from("app_settings").update({leaderboard_enabled:en,updated_at:new Date().toISOString()}).eq("id",1);adminMsg("Saved ✓")}catch(e2){adminMsg("Error")}}}
+async function adminSetRole(uid,role){if(uid===USER.id&&role!=="admin"&&!confirm("Remove your own admin access?"))return;adminMsg("Saving role…");
+try{const r=await sb.rpc("admin_update_profile",{p_user_id:uid,p_role:role});if(r.error)throw r.error;adminMsg("Role updated ✓")}catch(e){adminMsg("Error: "+(e.message||e));return}await loadAdmin()}
+async function adminToggleHide(uid,hide){adminMsg(hide?"Hiding…":"Showing…");
+try{const r=await sb.rpc("admin_update_profile",{p_user_id:uid,p_leaderboard_hidden:hide});if(r.error)throw r.error;adminMsg("Updated ✓")}catch(e){adminMsg("Error");return}await loadAdmin()}
+async function adminAdjust(uid,field){const map={xp:"p_xp",hearts:"p_hearts",streak:"p_streak",freezes:"p_freezes"};
+const label={xp:"Enter new total XP",hearts:"Enter hearts (0-5)",streak:"Enter new streak",freezes:"Enter freezes (0-3)"}[field];
+if(!map[field]||!label)return;const raw=prompt(label);if(raw===null)return;const n=Math.floor(Number(raw));if(!Number.isFinite(n)){alert("Enter a number");return}
+const payload={p_user_id:uid};payload[map[field]]=n;adminMsg("Saving…");
+try{const r=await sb.rpc("admin_update_profile",payload);if(r.error)throw r.error;adminMsg("Updated ✓")}catch(e){adminMsg("Error");return}await loadAdmin()}
+async function adminRepairStreak(uid){adminMsg("Repairing streak…");
+try{const r=await sb.from("profiles").update({last_active:today()}).eq("id",uid);if(r.error)throw r.error;adminMsg("Streak repaired ✓");toast("🔧 Streak repaired")}catch(e){adminMsg("Error");return}await loadAdmin()}
+async function adminResetProgress(uid){if(!confirm("Reset ALL progress for this user?"))return;adminMsg("Resetting…");
+try{const r=await sb.rpc("admin_reset_progress",{p_user_id:uid});if(r.error)throw r.error;adminMsg("Progress reset ✓")}catch(e){try{await Promise.all([sb.from("progress").delete().eq("user_id",uid),sb.from("daily_completions").delete().eq("user_id",uid),sb.from("reviews").delete().eq("user_id",uid)]);await sb.from("profiles").update({xp:0,streak:0,daily_xp:0,daily_xp_date:null,hearts:5,last_active:null}).eq("id",uid);adminMsg("Progress reset ✓")}catch(e2){adminMsg("Error");return}}await loadAdmin()}
+const authMsg=t=>{$("am").textContent=t};
+function authTab(r){const l=r==="l",s=r==="s",f=r==="f",c=r==="c";$("lf").classList.toggle("hidden",!l);$("sf").classList.toggle("hidden",!s);$("ff").classList.toggle("hidden",!f);$("cf").classList.toggle("hidden",!c);$("tl").className="btn"+(l?"":" g");$("ts").className="btn"+(s?"":" g");authMsg("")}
+function applyTheme(){const t=st.get("uasaTheme")||"auto";if(t==="dark")document.documentElement.dataset.theme="dark";else if(t==="light")document.documentElement.dataset.theme="light";else delete document.documentElement.dataset.theme;const b=$("theme");if(b)b.textContent=t==="dark"?"☀️":t==="light"?"🌙":"🌓"}
+function toggleTheme(){const cur=st.get("uasaTheme")||"auto";st.set("uasaTheme",cur==="auto"?"dark":cur==="dark"?"light":"auto");applyTheme()}
+async function loadUser(au){let r=await sb.from("profiles").select("username,display_name,role,xp,streak,year,last_active,leaderboard_opt_out,streak_freezes,class_code,hearts,daily_xp,daily_xp_date,recovery_email,avatar").eq("id",au.id).maybeSingle();
+if(r.error)throw r.error;let p=r.data;
+if(!p){const name=(au.email||"user").split("@")[0],yr=(au.user_metadata&&au.user_metadata.year)||"Year 6";const ins=await sb.from("profiles").upsert({id:au.id,username:name,display_name:name,year:yr,xp:0,streak:0,last_active:null},{onConflict:"id"});if(ins.error)throw ins.error;p={username:name,display_name:name,role:"student",year:yr,class_code:"",xp:0,streak:0,last_active:null}}
+const g=await sb.from("progress").select("lesson_key").eq("user_id",au.id);if(g.error)throw g.error;
+const prog={};(g.data||[]).forEach(x=>{if(x.lesson_key)prog[x.lesson_key]=1});
+const dxd=p.daily_xp_date||null;
+USER={id:au.id,username:p.username,display_name:p.display_name||p.username,role:p.role||"student",year:p.year||"",classCode:p.class_code||"",recoveryEmail:p.recovery_email||"",xp:+p.xp||0,streak:+p.streak||0,lastActive:p.last_active||null,leaderboardOptOut:!!p.leaderboard_opt_out,streakFreezes:+p.streak_freezes||0,hearts:p.hearts??5,dailyXp:dxd===today()?(+p.daily_xp||0):0,dailyXpDate:dxd,progress:prog,dailyDone:null,avatar:p.avatar||null};
+try{const d=await sb.from("daily_completions").select("day").eq("user_id",au.id).eq("day",today()).maybeSingle();if(d.data)USER.dailyDone=today()}catch(e){}
+await refreshHearts();await refreshUserStats();await loadTeacherLessons();loadSavedTheme()}
+function enter(){$("auth").classList.add("hidden");$("app").classList.remove("hidden");hdr();updateHeaderAvatar();const role=(USER&&USER.role)||"student";go(role==="teacher"?"teacher":role==="admin"?"admin":"home")}
+async function logout(){try{await sb.auth.signOut()}catch(e){}clearInterval(EXAM_TIMER);USER=null;R=null;AV_TEMP=null;window.TEACHER_LESSONS=[];window._tq=[];clearCustomTheme();$("app").classList.add("hidden");$("auth").classList.remove("hidden");authTab("l")}
+async function signup(){if(!sb){authMsg("Could not load Supabase.");return}
+const n=normalizeUsername($("su").value),pw=$("sp").value,yr=$("sy").value;
+if(!isValidUsername(n)){authMsg("Username: 3-20 lowercase letters, numbers, . - _");return}
+if(pw.length<8){authMsg("Password must be 8+ characters.");return}
+authMsg("Creating…");const cc=$("sc")?$("sc").value.trim().toUpperCase():"",re=$("sr")?$("sr").value.trim().toLowerCase():"";
+if(re&&!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(re)){authMsg("Invalid email.");return}
+const{data,error}=await sb.auth.signUp({email:cloudEmail(n),password:pw,options:{data:{year:yr}}});
+if(error){authMsg(/registered|exists/i.test(error.message)?"Username taken.":"Sign up failed.");return}
+let au=data.user;if(!data.session){const s2=await sb.auth.signInWithPassword({email:cloudEmail(n),password:pw});if(s2.error){authMsg("Turn off email confirm in Supabase.");return}au=s2.data.user}
+const ins=await sb.from("profiles").upsert({id:au.id,username:n,display_name:n,year:yr,class_code:cc||null,recovery_email:re||null,xp:0,streak:0,last_active:null},{onConflict:"id"});
+if(ins.error){authMsg("Profile failed.");return}
+await loadUser(au);enter();toast("🎉 Welcome, "+n+"!")}
+async function login(){if(!sb){authMsg("Could not load Supabase.");return}
+const n=normalizeUsername($("lu").value),pw=$("lp").value;if(!n||!pw){authMsg("Enter username and password.");return}
+authMsg("Logging in…");const{data,error}=await sb.auth.signInWithPassword({email:cloudEmail(n),password:pw});
+if(error){authMsg("Wrong username or password.");return}await loadUser(data.user);enter()}
+async function requestReset(){const n=normalizeUsername($("fu").value);if(!n){authMsg("Enter username.");return}authMsg("Sending…");
+try{const res=await sb.functions.invoke("request-password-reset",{body:{username:n}});if(res.error)throw res.error;if(res.data&&res.data.error){authMsg(res.data.error);return}$("cu").value=n;authMsg("");authTab("c");toast("📧 Check email")}catch(e){authMsg("Could not send code.")}}
+async function confirmReset(){const n=normalizeUsername($("cu").value),code=$("cc").value.trim(),np=$("cn").value;
+if(!n||!code){authMsg("Enter username and code.");return}if(np.length<8){authMsg("Password 8+ chars.");return}authMsg("Resetting…");
+try{const res=await sb.functions.invoke("confirm-password-reset",{body:{username:n,code,new_password:np}});if(res.error)throw res.error;if(res.data&&res.data.error){authMsg(res.data.error);return}authMsg("");toast("✅ Changed!");$("lu").value=n;$("lp").value="";authTab("l")}catch(e){authMsg("Could not reset.")}}
+[["lf",login],["sf",signup],["ff",requestReset],["cf",confirmReset]].forEach(([id,fn])=>$(id).addEventListener("submit",async e=>{e.preventDefault();const b=e.target.querySelector("button");b.disabled=true;try{await fn()}catch(err){authMsg("Error: "+(err.message||err))}b.disabled=false}));
+$("pw").addEventListener("change",e=>{const t=e.target.checked?"text":"password";["lp","sp","cn"].forEach(id=>{const el=$(id);if(el)el.type=t})});
+applyTheme();$("theme")?.addEventListener("click",toggleTheme);
+document.addEventListener("click",e=>{const t=e.target.closest("[data-a]");if(!t)return;const r=t.dataset.r,F={
+auth:()=>authTab(r),page:()=>go(r),logout,mix:()=>startMix(r),subj:()=>subj(r),
+showForgot:()=>authTab("f"),showLogin:()=>authTab("l"),
+avPick:()=>{const[a,b]=t.dataset.v.split(":");avPick(a,b)},avRandom,avSave,avTab:()=>avTab(r),
+unit:()=>unit(isNaN(+r)?r:+r),les:()=>lesson(r),startLes,startCh,ans:()=>answer(+r),
+next,retry:()=>R&&quiz(R.raw,R.ctx),back:()=>R&&R.ctx.back(),
+chest:()=>claimChest(+r),submitW,daily:startDaily,student:()=>openStudent(r),
+saveProfile,resetStudent:()=>resetStudent(r),createClass,report:generateReport,
+rv:()=>startReview(r,t.dataset.s,t.dataset.u,t.dataset.l),
+addQ:addTQ,removeQ:()=>removeTQ(+r),saveLesson:()=>saveLesson(t.dataset.v==="true"),
+tpublish:()=>setLessonPublished(r,t.dataset.v==="true"),tdelete:()=>deleteLesson(r),
+adminSaveSettings,adminHide:()=>adminToggleHide(r,t.dataset.v==="1"),
+adminAdjust:()=>adminAdjust(r,t.dataset.v),adminRepairStreak:()=>adminRepairStreak(r),
+adminReset:()=>adminResetProgress(r),
+startExam,smartReview,clearWeak:()=>{clearWeak();toast("Weak topic tracking reset.");go("home")},
+buyItem:()=>buyItem(t.dataset.v),
+applyTheme:()=>{applyCustomTheme(t.dataset.v);toast("Theme applied!")},
+clearTheme:()=>{clearCustomTheme();toast("Default theme restored.");go("shop")},
+createChallenge,claimChallenge:()=>claimChallenge(r,t.dataset.v)};
+if(F[t.dataset.a])F[t.dataset.a]()});
+document.addEventListener("keydown",e=>{if(R&&$("an")&&/^[1-9]$/.test(e.key)&&!/INPUT|TEXTAREA|SELECT/.test(e.target.tagName))answer(+e.key-1)});
+(async()=>{if(!sb){authMsg("Could not load Supabase library.");return}
+try{
+  const{data,error}=await sb.auth.getSession();
+  if(error)throw error;
+  if(data.session){await loadUser(data.session.user);enter()}
+}catch(e){
+  try{await sb.auth.signOut()}catch(_){}
+  try{Object.keys(localStorage).filter(k=>k.toLowerCase().includes("supabase")||k.toLowerCase().includes("sb-")||k.toLowerCase().includes("auth-token")).forEach(k=>localStorage.removeItem(k))}catch(_){}
+}})();
+if("serviceWorker" in navigator){window.addEventListener("load",()=>{navigator.serviceWorker.register("sw.js").catch(()=>{})})}
+let _installEvt=null;const installBanner=document.getElementById("installBanner"),installBtn=document.getElementById("installBtn"),installX=document.getElementById("installX");
+window.addEventListener("beforeinstallprompt",e=>{e.preventDefault();_installEvt=e;if(installBanner&&localStorage.getItem("uasaInstallDismissed")!=="1")installBanner.classList.remove("hidden")});
+installBtn?.addEventListener("click",async()=>{if(!_installEvt)return;_installEvt.prompt();const c=await _installEvt.userChoice;installBanner?.classList.add("hidden");if(c.outcome==="accepted")_installEvt=null});
+installX?.addEventListener("click",()=>{installBanner?.classList.add("hidden");try{localStorage.setItem("uasaInstallDismissed","1")}catch(e){}});
+window.addEventListener("appinstalled",()=>{installBanner?.classList.add("hidden");_installEvt=null;toast("🎉 Installed!")});
+})();
+</script>
+</body>
 </html>

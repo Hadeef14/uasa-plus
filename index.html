@@ -23,7 +23,48 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght,SOFT,WONK@0,9..144,400..900,0..100,0..1&family=Geist:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;700;800&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="styles.css">
-<title>UASA+ — Made by Hadeef</title>
+<style>
+/* ============ QBIT AVATAR ============ */
+.qbit-preview,.qz-av,.hl-av,.hero-av,.lbr-av,.finish-av{display:inline-block;color:var(--ink)}
+.qbit-preview svg,.qz-av svg,.hl-av svg,.hero-av svg,.lbr-av svg,.finish-av svg{width:100%;height:100%;display:block;overflow:visible}
+.qbit-preview{width:150px;height:180px;margin:0 auto 16px;transition:transform .4s var(--ease-spring)}
+.qbit-preview:hover{transform:scale(1.04) rotate(-2deg)}
+.qbit-body{animation:qbitBob 3s ease-in-out infinite;transform-origin:50% 80%}
+@keyframes qbitBob{0%,100%{transform:translateY(0)}50%{transform:translateY(-3px)}}
+@keyframes qbitHappy{0%{transform:scale(1)}40%{transform:scale(1.15) rotate(-5deg)}100%{transform:scale(1)}}
+@keyframes qbitSad{0%,100%{transform:translateX(0)}25%{transform:translateX(-4px)}75%{transform:translateX(4px)}}
+@keyframes qbitCelebrate{0%,100%{transform:translateY(0) rotate(0)}30%{transform:translateY(-10px) rotate(8deg)}60%{transform:translateY(-4px) rotate(-4deg)}}
+.qbit-preview.mood-happy,.qz-av.mood-happy{animation:qbitHappy .5s var(--ease-spring)}
+.qbit-preview.mood-sad,.qz-av.mood-sad{animation:qbitSad .4s var(--ease-spring)}
+.qbit-preview.mood-celebrate,.finish-av.mood-celebrate{animation:qbitCelebrate .7s var(--ease-spring)}
+.qbit-aura-glow{animation:qbitAuraPulse 2.5s ease-in-out infinite;transform-origin:50px 56px}
+@keyframes qbitAuraPulse{0%,100%{opacity:.2;transform:scale(1)}50%{opacity:.4;transform:scale(1.08)}}
+.qbit-aura-sparks .qbit-spark{animation:qbitSparkOrbit 3s linear infinite;transform-origin:50px 56px}
+.qbit-aura-sparks .qbit-spark:nth-child(2){animation-delay:-1s}
+.qbit-aura-sparks .qbit-spark:nth-child(3){animation-delay:-2s}
+@keyframes qbitSparkOrbit{from{transform:rotate(0)}to{transform:rotate(360deg)}}
+.qbit-aura-flames .qbit-flame{animation:qbitFlameFlicker .9s ease-in-out infinite alternate;transform-origin:center bottom}
+.qbit-aura-flames .qbit-flame:nth-child(2){animation-delay:.2s}
+.qbit-aura-flames .qbit-flame:nth-child(3){animation-delay:.4s}
+@keyframes qbitFlameFlicker{from{transform:scaleY(.9);opacity:.75}to{transform:scaleY(1.15);opacity:1}}
+.qbit-aura-galaxy .qbit-star{animation:qbitStarTwinkle 2s ease-in-out infinite}
+.qbit-aura-galaxy .qbit-star:nth-child(2){animation-delay:.5s}
+.qbit-aura-galaxy .qbit-star:nth-child(3){animation-delay:1s}
+.qbit-aura-galaxy .qbit-star:nth-child(4){animation-delay:1.5s}
+@keyframes qbitStarTwinkle{0%,100%{opacity:.5;transform:scale(.9)}50%{opacity:1;transform:scale(1.2)}}
+.qbit-aura-bubbles .qbit-bubble{animation:qbitBubbleRise 2.5s ease-in infinite}
+.qbit-aura-bubbles .qbit-bubble:nth-child(2){animation-delay:.8s}
+.qbit-aura-bubbles .qbit-bubble:nth-child(3){animation-delay:1.6s}
+@keyframes qbitBubbleRise{0%{transform:translateY(0);opacity:0}20%{opacity:.8}100%{transform:translateY(-60px);opacity:0}}
+@media(max-width:700px){.qbit-preview{width:120px;height:144px}}
+</style>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.49.1"></script>
+<script>
+window.Q=(q,options,answer,img)=>({q,options,answer,img});
+window.W=(w,_e,min,max,to,from,subject)=>({w,min,max,to,from,subject});
+window.P=(...t)=>t.map(x=>"<p>"+x+"</p>").join("");
+</script>
+<script src="curriculum.js"></script>
 </head><body>
 <section id="auth"><div class="box card">
 <div class="logo">UASA<span>+</span></div>
@@ -72,13 +113,6 @@
 <button class="ib-btn" id="installBtn">INSTALL</button>
 <button class="ib-x" id="installX" aria-label="Dismiss">✕</button>
 </div></div>
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.49.1"></script>
-<script>
-window.Q=(q,options,answer,img)=>({q,options,answer,img});
-window.W=(w,_e,min,max,to,from,subject)=>({w,min,max,to,from,subject});
-window.P=(...t)=>t.map(x=>"<p>"+x+"</p>").join("");
-</script>
-<script src="curriculum.js"></script>
 <script>
 (function(){
 if(window.__UASA_APP__)return;window.__UASA_APP__=true;
@@ -111,145 +145,95 @@ const bar=p=>'<div class="bar"><i style="width:'+Math.round(p)+'%"></i></div>';
 function trackWeak(subj){if(!subj||!USER)return;const k="uasa_weak_"+USER.id;const d=JSON.parse(st.get(k)||"{}");d[subj]=(d[subj]||0)+1;st.set(k,JSON.stringify(d))}
 function getWeak(){if(!USER)return[];const k="uasa_weak_"+USER.id;const d=JSON.parse(st.get(k)||"{}");return Object.entries(d).sort((a,b)=>b[1]-a[1]).slice(0,3)}
 function clearWeak(){if(!USER)return;st.del("uasa_weak_"+USER.id)}
+/* ============ QBIT AVATAR ============ */
 const AVATAR_PARTS = {
-  head: [
-    { id: "round",  label: "Round",  path: "M50 14 A28 28 0 1 1 49.9 14 Z" },
-    { id: "oval",   label: "Oval",   path: "M50 12 A24 30 0 1 1 49.9 12 Z" },
-    { id: "wide",   label: "Wide",   path: "M50 16 A30 26 0 1 1 49.9 16 Z" },
-    { id: "chubby", label: "Chubby", path: "M50 12 Q84 12 84 44 Q84 72 50 72 Q16 72 16 44 Q16 12 50 12 Z" },
-    { id: "heart",  label: "Heart",  path: "M50 12 Q82 18 82 44 Q82 70 50 72 Q18 70 18 44 Q18 18 50 12 Z" }
+  body: [
+    { id: "cube",    label: "Cube",    svg: '<rect x="20" y="24" width="60" height="62" rx="18" fill="var(--qbit-color)" stroke="currentColor" stroke-width="3"/>' },
+    { id: "round",   label: "Round",   svg: '<rect x="20" y="24" width="60" height="62" rx="26" fill="var(--qbit-color)" stroke="currentColor" stroke-width="3"/>' },
+    { id: "pill",    label: "Pill",    svg: '<rect x="22" y="24" width="56" height="62" rx="28" fill="var(--qbit-color)" stroke="currentColor" stroke-width="3"/>' },
+    { id: "hex",     label: "Hex",     svg: '<path d="M50 24 L78 40 L78 70 L50 86 L22 70 L22 40 Z" fill="var(--qbit-color)" stroke="currentColor" stroke-width="3" stroke-linejoin="round"/>' },
+    { id: "egg",     label: "Egg",     svg: '<path d="M50 20 Q80 22 80 56 Q80 88 50 88 Q20 88 20 56 Q20 22 50 20 Z" fill="var(--qbit-color)" stroke="currentColor" stroke-width="3" stroke-linejoin="round"/>' }
   ],
-  skin: [
-    { id: "warm",  label: "Warm",  color: "#f4c7a1" },
-    { id: "tan",   label: "Tan",   color: "#e0a87c" },
-    { id: "deep",  label: "Deep",  color: "#a86b3c" },
-    { id: "olive", label: "Olive", color: "#c9985a" },
-    { id: "fair",  label: "Fair",  color: "#fbdcc0" },
-    { id: "pale",  label: "Pale",  color: "#fce4d0" },
-    { id: "cocoa", label: "Cocoa", color: "#8a5232" }
-  ],
-  ears: [
-    { id: "round",  label: "Round",  svg: '<ellipse cx="21" cy="44" rx="4" ry="6" fill="var(--skin)" stroke="currentColor" stroke-width="2"/><ellipse cx="79" cy="44" rx="4" ry="6" fill="var(--skin)" stroke="currentColor" stroke-width="2"/>' },
-    { id: "pointy", label: "Pointy", svg: '<path d="M18 40 L22 50 L20 52 L16 46 Z" fill="var(--skin)" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><path d="M82 40 L78 50 L80 52 L84 46 Z" fill="var(--skin)" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>' },
-    { id: "none",   label: "None",   svg: "" }
-  ],
-  eyebrows: [
-    { id: "none",   label: "None",   svg: "" },
-    { id: "soft",   label: "Soft",   svg: '<path d="M32 33 Q38 29 44 33" stroke="currentColor" stroke-width="2.5" fill="none" stroke-linecap="round"/><path d="M56 33 Q62 29 68 33" stroke="currentColor" stroke-width="2.5" fill="none" stroke-linecap="round"/>' },
-    { id: "raised", label: "Raised", svg: '<path d="M32 29 Q38 24 44 29" stroke="currentColor" stroke-width="2.5" fill="none" stroke-linecap="round"/><path d="M56 29 Q62 24 68 29" stroke="currentColor" stroke-width="2.5" fill="none" stroke-linecap="round"/>' },
-    { id: "angry",  label: "Angry",  svg: '<path d="M32 28 L44 34" stroke="currentColor" stroke-width="3" fill="none" stroke-linecap="round"/><path d="M56 34 L68 28" stroke="currentColor" stroke-width="3" fill="none" stroke-linecap="round"/>' },
-    { id: "sad",    label: "Sad",    svg: '<path d="M32 35 L44 30" stroke="currentColor" stroke-width="2.5" fill="none" stroke-linecap="round"/><path d="M56 30 L68 35" stroke="currentColor" stroke-width="2.5" fill="none" stroke-linecap="round"/>' },
-    { id: "thick",  label: "Thick",  svg: '<rect x="32" y="31" width="12" height="4" rx="2" fill="currentColor"/><rect x="56" y="31" width="12" height="4" rx="2" fill="currentColor"/>' },
-    { id: "thin",   label: "Thin",   svg: '<line x1="33" y1="32" x2="43" y2="32" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><line x1="57" y1="32" x2="67" y2="32" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>' },
-    { id: "bushy",  label: "Bushy",  svg: '<path d="M30 32 Q32 27 38 28 Q44 27 46 32 Q44 34 38 34 Q32 34 30 32 Z" fill="currentColor"/><path d="M54 32 Q56 27 62 28 Q68 27 70 32 Q68 34 62 34 Q56 34 54 32 Z" fill="currentColor"/>' },
-    { id: "one_up", label: "One up", svg: '<path d="M32 29 Q38 24 44 29" stroke="currentColor" stroke-width="2.5" fill="none" stroke-linecap="round"/><line x1="57" y1="32" x2="67" y2="32" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>' }
+  color: [
+    { id: "saffron", label: "Saffron", color: "#f59e0b" },
+    { id: "jade",    label: "Jade",    color: "#059669" },
+    { id: "indigo",  label: "Indigo",  color: "#6366f1" },
+    { id: "teal",    label: "Teal",    color: "#0d9488" },
+    { id: "clay",    label: "Clay",    color: "#dc2626" },
+    { id: "plum",    label: "Plum",    color: "#9333ea" },
+    { id: "sky",     label: "Sky",     color: "#0ea5e9" },
+    { id: "lime",    label: "Lime",    color: "#65a30d" },
+    { id: "rose",    label: "Rose",    color: "#ec4899" },
+    { id: "slate",   label: "Slate",   color: "#64748b" }
   ],
   eyes: [
-    { id: "normal",   label: "Normal",   svg: '<ellipse cx="38" cy="42" rx="4.5" ry="6" fill="currentColor"/><ellipse cx="62" cy="42" rx="4.5" ry="6" fill="currentColor"/><circle cx="36.5" cy="40" r="1.7" fill="#fff"/><circle cx="60.5" cy="40" r="1.7" fill="#fff"/><circle cx="39" cy="44" r="0.9" fill="#fff" opacity="0.8"/><circle cx="63" cy="44" r="0.9" fill="#fff" opacity="0.8"/>' },
-    { id: "happy",    label: "Happy",    svg: '<path d="M32 43 Q38 35 44 43" stroke="currentColor" stroke-width="3" fill="none" stroke-linecap="round"/><path d="M56 43 Q62 35 68 43" stroke="currentColor" stroke-width="3" fill="none" stroke-linecap="round"/>' },
-    { id: "closed",   label: "Closed",   svg: '<path d="M32 42 L44 42" stroke="currentColor" stroke-width="3" stroke-linecap="round"/><path d="M56 42 L68 42" stroke="currentColor" stroke-width="3" stroke-linecap="round"/><path d="M32 42 Q33 44 35 44" stroke="currentColor" stroke-width="1.5" fill="none" stroke-linecap="round"/><path d="M65 44 Q67 44 68 42" stroke="currentColor" stroke-width="1.5" fill="none" stroke-linecap="round"/>' },
-    { id: "sleepy",   label: "Sleepy",   svg: '<path d="M32 42 Q38 47 44 42" stroke="currentColor" stroke-width="3" fill="none" stroke-linecap="round"/><path d="M56 42 Q62 47 68 42" stroke="currentColor" stroke-width="3" fill="none" stroke-linecap="round"/>' },
-    { id: "wide",     label: "Shocked",  svg: '<circle cx="38" cy="42" r="6" fill="currentColor"/><circle cx="62" cy="42" r="6" fill="currentColor"/><circle cx="36" cy="39.5" r="2" fill="#fff"/><circle cx="60" cy="39.5" r="2" fill="#fff"/>' },
-    { id: "wink",     label: "Wink",     svg: '<ellipse cx="38" cy="42" rx="4.5" ry="6" fill="currentColor"/><circle cx="36.5" cy="40" r="1.7" fill="#fff"/><path d="M56 43 Q62 47 68 43" stroke="currentColor" stroke-width="3" fill="none" stroke-linecap="round"/>' },
-    { id: "star",     label: "Star",     svg: '<path d="M38 35 L40 40 L45 40.5 L41 43.5 L42.5 48 L38 45.5 L33.5 48 L35 43.5 L31 40.5 L36 40 Z" fill="currentColor"/><path d="M62 35 L64 40 L69 40.5 L65 43.5 L66.5 48 L62 45.5 L57.5 48 L59 43.5 L55 40.5 L60 40 Z" fill="currentColor"/>' },
-    { id: "heart",    label: "Heart",    svg: '<path d="M32 40 Q32 35 36.5 35 Q38.5 35 38.5 38 Q38.5 35 40.5 35 Q45 35 45 40 Q45 46 38.5 49.5 Q32 46 32 40 Z" fill="currentColor"/><path d="M55 40 Q55 35 59.5 35 Q61.5 35 61.5 38 Q61.5 35 63.5 35 Q68 35 68 40 Q68 46 61.5 49.5 Q55 46 55 40 Z" fill="currentColor"/>' },
-    { id: "sparkle",  label: "Sparkle",  svg: '<path d="M38 34 L40 40 L46 42 L40 44 L38 50 L36 44 L30 42 L36 40 Z" fill="currentColor"/><path d="M62 34 L64 40 L70 42 L64 44 L62 50 L60 44 L54 42 L60 40 Z" fill="currentColor"/>' },
-    { id: "lashes",   label: "Lashes",   svg: '<ellipse cx="38" cy="43" rx="4.5" ry="6" fill="currentColor"/><ellipse cx="62" cy="43" rx="4.5" ry="6" fill="currentColor"/><circle cx="36.5" cy="41" r="1.7" fill="#fff"/><circle cx="60.5" cy="41" r="1.7" fill="#fff"/><line x1="33" y1="37" x2="31" y2="34" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><line x1="43" y1="37" x2="45" y2="34" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><line x1="57" y1="37" x2="55" y2="34" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><line x1="67" y1="37" x2="69" y2="34" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>' }
-  ],
-  blush: [
-    { id: "none",   label: "None",   svg: "" },
-    { id: "soft",   label: "Soft",   svg: '<ellipse cx="29" cy="52" rx="5" ry="3.5" fill="#f472b6" opacity="0.5"/><ellipse cx="71" cy="52" rx="5" ry="3.5" fill="#f472b6" opacity="0.5"/>' },
-    { id: "bright", label: "Bright", svg: '<ellipse cx="29" cy="52" rx="6" ry="4" fill="#ec4899" opacity="0.7"/><ellipse cx="71" cy="52" rx="6" ry="4" fill="#ec4899" opacity="0.7"/>' },
-    { id: "dots",   label: "Freckles",svg: '<circle cx="27" cy="52" r="0.9" fill="#a8714f" opacity="0.75"/><circle cx="30" cy="54" r="0.9" fill="#a8714f" opacity="0.75"/><circle cx="33" cy="51" r="0.9" fill="#a8714f" opacity="0.75"/><circle cx="28" cy="49" r="0.9" fill="#a8714f" opacity="0.75"/><circle cx="67" cy="52" r="0.9" fill="#a8714f" opacity="0.75"/><circle cx="70" cy="54" r="0.9" fill="#a8714f" opacity="0.75"/><circle cx="73" cy="51" r="0.9" fill="#a8714f" opacity="0.75"/><circle cx="72" cy="49" r="0.9" fill="#a8714f" opacity="0.75"/>' },
-    { id: "full",   label: "Full",   svg: '<ellipse cx="29" cy="52" rx="6" ry="4" fill="#f472b6" opacity="0.5"/><ellipse cx="71" cy="52" rx="6" ry="4" fill="#f472b6" opacity="0.5"/><circle cx="27" cy="52" r="0.9" fill="#a8714f" opacity="0.75"/><circle cx="30" cy="54" r="0.9" fill="#a8714f" opacity="0.75"/><circle cx="33" cy="51" r="0.9" fill="#a8714f" opacity="0.75"/><circle cx="67" cy="52" r="0.9" fill="#a8714f" opacity="0.75"/><circle cx="70" cy="54" r="0.9" fill="#a8714f" opacity="0.75"/><circle cx="73" cy="51" r="0.9" fill="#a8714f" opacity="0.75"/>' }
-  ],
-  nose: [
-    { id: "none",   label: "None",   svg: "" },
-    { id: "dot",    label: "Dot",    svg: '<circle cx="50" cy="51" r="1.6" fill="currentColor"/>' },
-    { id: "curve",  label: "Curve",  svg: '<path d="M47 51 Q50 54 53 51" stroke="currentColor" stroke-width="2.5" fill="none" stroke-linecap="round"/>' },
-    { id: "button", label: "Button", svg: '<ellipse cx="50" cy="52" rx="3" ry="2" fill="currentColor" opacity="0.35"/><ellipse cx="50" cy="51.5" rx="2" ry="1.2" fill="currentColor" opacity="0.5"/>' },
-    { id: "hook",   label: "Hook",   svg: '<path d="M49 48 Q52 52 49 54 Q48 55 47 54" stroke="currentColor" stroke-width="2.2" fill="none" stroke-linecap="round" stroke-linejoin="round"/>' }
+    { id: "dot",     label: "Dot",     svg: '<circle cx="38" cy="50" r="7" fill="#1a1614"/><circle cx="62" cy="50" r="7" fill="#1a1614"/><circle cx="35.5" cy="47" r="2.5" fill="#fff"/><circle cx="59.5" cy="47" r="2.5" fill="#fff"/>' },
+    { id: "wide",    label: "Wide",    svg: '<circle cx="38" cy="50" r="8.5" fill="#1a1614"/><circle cx="62" cy="50" r="8.5" fill="#1a1614"/><circle cx="35" cy="46.5" r="3" fill="#fff"/><circle cx="59" cy="46.5" r="3" fill="#fff"/>' },
+    { id: "happy",   label: "Happy",   svg: '<path d="M31 51 Q38 40 45 51" stroke="#1a1614" stroke-width="4" fill="none" stroke-linecap="round"/><path d="M55 51 Q62 40 69 51" stroke="#1a1614" stroke-width="4" fill="none" stroke-linecap="round"/>' },
+    { id: "closed",  label: "Closed",  svg: '<line x1="32" y1="50" x2="44" y2="50" stroke="#1a1614" stroke-width="4" stroke-linecap="round"/><line x1="56" y1="50" x2="68" y2="50" stroke="#1a1614" stroke-width="4" stroke-linecap="round"/>' },
+    { id: "sleepy",  label: "Sleepy",  svg: '<path d="M31 49 Q38 55 45 49" stroke="#1a1614" stroke-width="4" fill="none" stroke-linecap="round"/><path d="M55 49 Q62 55 69 49" stroke="#1a1614" stroke-width="4" fill="none" stroke-linecap="round"/>' },
+    { id: "wink",    label: "Wink",    svg: '<circle cx="38" cy="50" r="7" fill="#1a1614"/><circle cx="35.5" cy="47" r="2.5" fill="#fff"/><path d="M55 50 Q62 57 69 50" stroke="#1a1614" stroke-width="4" fill="none" stroke-linecap="round"/>' },
+    { id: "star",    label: "Star",    svg: '<path d="M38 41 L40.5 48 L48 49 L42 53 L44 60 L38 56.5 L32 60 L34 53 L28 49 L35.5 48 Z" fill="#1a1614"/><path d="M62 41 L64.5 48 L72 49 L66 53 L68 60 L62 56.5 L56 60 L58 53 L52 49 L59.5 48 Z" fill="#1a1614"/>' },
+    { id: "heart",   label: "Heart",   svg: '<path d="M32 48 Q32 41 37 41 Q39.5 41 39.5 44.5 Q39.5 41 42 41 Q47 41 47 48 Q47 54 39.5 58.5 Q32 54 32 48 Z" fill="#1a1614"/><path d="M53 48 Q53 41 58 41 Q60.5 41 60.5 44.5 Q60.5 41 63 41 Q68 41 68 48 Q68 54 60.5 58.5 Q53 54 53 48 Z" fill="#1a1614"/>' },
+    { id: "sparkle", label: "Sparkle", svg: '<path d="M38 40 L41 48 L49 50 L41 52 L38 60 L35 52 L27 50 L35 48 Z" fill="#1a1614"/><path d="M62 40 L65 48 L73 50 L65 52 L62 60 L59 52 L51 50 L59 48 Z" fill="#1a1614"/>' },
+    { id: "pupil",   label: "Pupil",   svg: '<circle cx="38" cy="50" r="8" fill="#fff" stroke="#1a1614" stroke-width="2.5"/><circle cx="62" cy="50" r="8" fill="#fff" stroke="#1a1614" stroke-width="2.5"/><circle cx="39" cy="51" r="3.5" fill="#1a1614"/><circle cx="63" cy="51" r="3.5" fill="#1a1614"/><circle cx="37.5" cy="49" r="1.2" fill="#fff"/><circle cx="61.5" cy="49" r="1.2" fill="#fff"/>' }
   ],
   mouth: [
-    { id: "smile",       label: "Smile",     svg: '<path d="M43 57 Q50 63 57 57" stroke="currentColor" stroke-width="3" fill="none" stroke-linecap="round"/>' },
-    { id: "grin",        label: "Grin",      svg: '<path d="M42 55 Q50 66 58 55 Z" fill="currentColor"/><path d="M44 56 L44 58 M48 56 L48 59 M52 56 L52 59 M56 56 L56 58" stroke="var(--paper)" stroke-width="1" opacity="0.6"/>' },
-    { id: "laugh",       label: "Laugh",     svg: '<path d="M42 54 Q50 67 58 54 Z" fill="currentColor"/><path d="M45 56 Q50 62 55 56 Z" fill="#e879a0"/>' },
-    { id: "neutral",     label: "Neutral",   svg: '<path d="M44 59 L56 59" stroke="currentColor" stroke-width="3" fill="none" stroke-linecap="round"/>' },
-    { id: "sad",         label: "Sad",       svg: '<path d="M44 61 Q50 55 56 61" stroke="currentColor" stroke-width="3" fill="none" stroke-linecap="round"/>' },
-    { id: "surprised",   label: "Surprised", svg: '<ellipse cx="50" cy="59" rx="3" ry="4.5" fill="none" stroke="currentColor" stroke-width="2.5"/>' },
-    { id: "smirk",       label: "Smirk",     svg: '<path d="M43 58 Q49 63 57 55" stroke="currentColor" stroke-width="3" fill="none" stroke-linecap="round"/>' },
-    { id: "tiny",        label: "Tiny",      svg: '<circle cx="50" cy="59" r="1.9" fill="currentColor"/>' },
-    { id: "tongue",      label: "Tongue",    svg: '<path d="M43 57 Q50 62 57 57" stroke="currentColor" stroke-width="3" fill="none" stroke-linecap="round"/><path d="M46 59 Q50 64 54 59 Z" fill="#e879a0"/>' },
-    { id: "cat",         label: "Cat",       svg: '<path d="M46 57 Q50 61 54 57" stroke="currentColor" stroke-width="2.5" fill="none" stroke-linecap="round"/><path d="M42 58 Q44 56 46 57 M54 57 Q56 56 58 58" stroke="currentColor" stroke-width="2.5" fill="none" stroke-linecap="round"/>' },
-    { id: "smile_teeth", label: "Smile+",    svg: '<path d="M43 56 Q50 64 57 56 Z" fill="currentColor"/><rect x="46" y="56" width="8" height="3" fill="#fff"/>' }
+    { id: "smile",  label: "Smile",  svg: '<path d="M42 66 Q50 73 58 66" stroke="#1a1614" stroke-width="3.5" fill="none" stroke-linecap="round"/>' },
+    { id: "grin",   label: "Grin",   svg: '<path d="M40 64 Q50 76 60 64 Z" fill="#1a1614"/><path d="M44 65 L44 68 M48 65 L48 70 M52 65 L52 70 M56 65 L56 68" stroke="#fff" stroke-width="1.2" opacity="0.7"/>' },
+    { id: "laugh",  label: "Laugh",  svg: '<path d="M40 62 Q50 78 60 62 Z" fill="#1a1614"/><path d="M45 65 Q50 71 55 65 Z" fill="#e879a0"/>' },
+    { id: "flat",   label: "Flat",   svg: '<path d="M42 68 L58 68" stroke="#1a1614" stroke-width="3.5" fill="none" stroke-linecap="round"/>' },
+    { id: "sad",    label: "Sad",    svg: '<path d="M42 71 Q50 64 58 71" stroke="#1a1614" stroke-width="3.5" fill="none" stroke-linecap="round"/>' },
+    { id: "o",      label: "O",      svg: '<ellipse cx="50" cy="68" rx="4.5" ry="5.5" fill="none" stroke="#1a1614" stroke-width="3.5"/>' },
+    { id: "tiny",   label: "Tiny",   svg: '<circle cx="50" cy="68" r="2.8" fill="#1a1614"/>' },
+    { id: "smirk",  label: "Smirk",  svg: '<path d="M42 68 Q50 74 58 65" stroke="#1a1614" stroke-width="3.5" fill="none" stroke-linecap="round"/>' },
+    { id: "tongue", label: "Tongue", svg: '<path d="M42 66 Q50 73 58 66" stroke="#1a1614" stroke-width="3.5" fill="none" stroke-linecap="round"/><path d="M46 68 Q50 75 54 68 Z" fill="#e879a0"/>' },
+    { id: "cat",    label: "Cat",    svg: '<path d="M44 66 Q50 71 56 66" stroke="#1a1614" stroke-width="3" fill="none" stroke-linecap="round"/><path d="M40 67 Q42 65 44 66 M56 66 Q58 65 60 67" stroke="#1a1614" stroke-width="3" fill="none" stroke-linecap="round"/>' }
   ],
   hair: [
-    { id: "none",     label: "None",      svg: "" },
-    { id: "short",    label: "Short",     svg: '<path d="M24 42 Q22 16 50 14 Q78 16 76 42 Q74 34 68 32 Q60 34 54 32 Q46 34 40 32 Q30 34 24 42 Z" fill="currentColor"/>' },
-    { id: "fringe",   label: "Fringe",    svg: '<path d="M24 42 Q22 16 50 14 Q78 16 76 42 Q74 32 68 36 Q64 28 58 34 Q54 26 46 34 Q40 28 34 36 Q28 32 24 42 Z" fill="currentColor"/>' },
-    { id: "bun",      label: "Bun",       svg: '<circle cx="50" cy="11" r="10" fill="currentColor"/><path d="M24 42 Q22 22 50 20 Q78 22 76 42 Q74 34 68 32 Q60 34 54 32 Q46 34 40 32 Q30 34 24 42 Z" fill="currentColor"/>' },
-    { id: "long",     label: "Long",      svg: '<path d="M22 42 Q20 14 50 12 Q80 14 78 42 L78 82 Q76 85 72 82 L72 44 Q70 36 62 32 Q54 34 50 32 Q46 34 38 32 Q30 36 28 44 L28 82 Q24 85 22 82 Z" fill="currentColor"/>' },
-    { id: "ponytail", label: "Ponytail",  svg: '<path d="M24 42 Q22 16 50 14 Q78 16 76 42 Q74 34 68 32 Q60 34 54 32 Q46 34 40 32 Q30 34 24 42 Z" fill="currentColor"/><ellipse cx="83" cy="50" rx="7" ry="15" transform="rotate(-20 83 50)" fill="currentColor"/>' },
-    { id: "twin",     label: "Twin tails",svg: '<path d="M24 42 Q22 16 50 14 Q78 16 76 42 Q74 34 68 32 Q60 34 54 32 Q46 34 40 32 Q30 34 24 42 Z" fill="currentColor"/><circle cx="18" cy="50" r="7" fill="currentColor"/><circle cx="82" cy="50" r="7" fill="currentColor"/>' },
-    { id: "hijab",    label: "Hijab",     svg: '<path d="M22 38 Q24 12 50 12 Q76 12 78 38 Q80 50 78 62 Q76 65 72 62 Q74 50 74 42 Q74 32 68 28 Q60 26 50 26 Q40 26 32 28 Q26 32 26 42 Q26 50 28 62 Q24 65 22 62 Q20 50 22 38 Z" fill="currentColor"/>' },
-    { id: "curly",    label: "Curly",     svg: '<circle cx="30" cy="28" r="8" fill="currentColor"/><circle cx="42" cy="18" r="9" fill="currentColor"/><circle cx="58" cy="18" r="9" fill="currentColor"/><circle cx="70" cy="28" r="8" fill="currentColor"/><circle cx="22" cy="40" r="7" fill="currentColor"/><circle cx="78" cy="40" r="7" fill="currentColor"/>' },
-    { id: "bob",      label: "Bob",       svg: '<path d="M22 42 Q20 14 50 12 Q80 14 78 42 L78 62 Q76 66 72 64 L72 44 Q70 34 62 30 Q54 32 50 30 Q46 32 38 30 Q30 34 28 44 L28 64 Q24 66 22 62 Z" fill="currentColor"/>' },
-    { id: "buzz",     label: "Buzz",      svg: '<path d="M26 40 Q26 22 50 20 Q74 22 74 40 Q72 32 66 30 Q58 28 50 28 Q42 28 34 30 Q28 32 26 40 Z" fill="currentColor"/>' },
-    { id: "mohawk",   label: "Mohawk",    svg: '<path d="M46 6 L54 6 L52 32 L48 32 Z" fill="currentColor"/><path d="M26 40 Q26 22 50 20 Q74 22 74 40 Q72 32 66 30 Q58 28 50 28 Q42 28 34 30 Q28 32 26 40 Z" fill="currentColor"/>' },
-    { id: "wavy",     label: "Wavy",      svg: '<path d="M24 42 Q20 16 50 14 Q80 16 76 42 Q78 34 72 32 Q68 38 62 34 Q58 40 52 34 Q46 40 40 34 Q34 38 28 32 Q22 34 24 42 Z" fill="currentColor"/>' },
-    { id: "side",     label: "Side part", svg: '<path d="M24 42 Q22 16 50 14 Q78 16 76 42 Q74 32 68 30 Q60 32 50 30 Q42 26 36 30 Q28 34 24 42 Z" fill="currentColor"/>' },
-    { id: "spiky",    label: "Spiky",     svg: '<path d="M22 40 L26 22 L32 30 L36 16 L42 28 L48 12 L54 28 L60 16 L64 30 L70 22 L74 40 Q72 32 66 30 Q58 28 50 28 Q42 28 34 30 Q28 32 22 40 Z" fill="currentColor"/>' },
-    { id: "undercut", label: "Undercut",  svg: '<path d="M24 42 Q22 16 50 14 Q78 16 76 42 Q74 28 60 26 Q48 26 42 30 Q32 34 24 42 Z" fill="currentColor"/><path d="M22 42 Q24 34 30 36 L30 42 Z" fill="currentColor" opacity="0.6"/><path d="M70 36 Q76 34 78 42 L70 42 Z" fill="currentColor" opacity="0.6"/>' },
-    { id: "braids",   label: "Braids",    svg: '<path d="M24 42 Q22 16 50 14 Q78 16 76 42 Q74 34 68 32 Q60 34 54 32 Q46 34 40 32 Q30 34 24 42 Z" fill="currentColor"/><ellipse cx="16" cy="56" rx="4" ry="14" fill="currentColor"/><ellipse cx="84" cy="56" rx="4" ry="14" fill="currentColor"/><circle cx="16" cy="72" r="2.5" fill="var(--saffron)"/><circle cx="84" cy="72" r="2.5" fill="var(--saffron)"/>' },
-    { id: "bowl",     label: "Bowl",      svg: '<path d="M22 42 Q22 14 50 14 Q78 14 78 42 Q74 32 68 34 Q60 30 50 30 Q40 30 32 34 Q26 32 22 42 Z" fill="currentColor"/>' }
+    { id: "none",    label: "None",    svg: "" },
+    { id: "tuft",    label: "Tuft",    svg: '<path d="M46 24 Q50 12 58 18" stroke="currentColor" stroke-width="4.5" fill="none" stroke-linecap="round"/>' },
+    { id: "mohawk",  label: "Mohawk",  svg: '<path d="M40 26 L43 14 L48 20 L50 8 L52 20 L57 14 L60 26 Z" fill="currentColor" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>' },
+    { id: "antenna", label: "Antenna", svg: '<line x1="50" y1="24" x2="50" y2="12" stroke="currentColor" stroke-width="3.5" stroke-linecap="round"/><circle cx="50" cy="9" r="4.5" fill="var(--saffron)" stroke="currentColor" stroke-width="2.5"/>' },
+    { id: "bow",     label: "Bow",     svg: '<path d="M34 20 L40 12 L46 18 L46 28 L40 34 L34 26 Z" fill="#ec4899" stroke="currentColor" stroke-width="2.5" stroke-linejoin="round"/><path d="M66 20 L60 12 L54 18 L54 28 L60 34 L66 26 Z" fill="#ec4899" stroke="currentColor" stroke-width="2.5" stroke-linejoin="round"/><circle cx="50" cy="23" r="4" fill="#ec4899" stroke="currentColor" stroke-width="2.5"/>' },
+    { id: "crown",   label: "Crown",   svg: '<path d="M30 26 L36 12 L42 20 L50 6 L58 20 L64 12 L70 26 Z" fill="var(--saffron)" stroke="currentColor" stroke-width="2.5" stroke-linejoin="round"/><circle cx="36" cy="13" r="2" fill="#dc2626"/><circle cx="50" cy="9" r="2.5" fill="#3b82f6"/><circle cx="64" cy="13" r="2" fill="#dc2626"/>' },
+    { id: "cap",     label: "Cap",     svg: '<path d="M22 32 Q22 16 50 16 Q78 16 78 32 Z" fill="currentColor"/><path d="M78 28 Q90 28 90 34 L78 34 Z" fill="currentColor"/><line x1="22" y1="32" x2="78" y2="32" stroke="currentColor" stroke-width="2"/>' },
+    { id: "beanie",  label: "Beanie",  svg: '<path d="M24 34 Q24 12 50 12 Q76 12 76 34 Z" fill="currentColor"/><rect x="22" y="32" width="56" height="8" rx="3" fill="currentColor"/><circle cx="50" cy="10" r="3.5" fill="var(--saffron)"/>' }
   ],
   clothes: [
-    { id: "tee",      label: "Tee",      cost: 0,   svg: '<path d="M30 72 Q30 68 34 68 L42 68 Q46 72 50 72 Q54 72 58 68 L66 68 Q70 68 70 72 L70 108 Q70 112 66 112 L34 112 Q30 112 30 108 Z" fill="var(--saffron)"/>' },
-    { id: "hoodie",   label: "Hoodie",   cost: 250, svg: '<path d="M30 72 Q30 68 34 68 L42 68 Q46 72 50 72 Q54 72 58 68 L66 68 Q70 68 70 72 L70 108 Q70 112 66 112 L34 112 Q30 112 30 108 Z" fill="var(--saffron)"/><path d="M42 68 Q50 80 58 68" stroke="currentColor" stroke-width="2.5" fill="none" stroke-linejoin="round"/><circle cx="46" cy="86" r="2" fill="currentColor"/><circle cx="54" cy="86" r="2" fill="currentColor"/>' },
-    { id: "jacket",   label: "Jacket",   cost: 350, svg: '<path d="M30 72 Q30 68 34 68 L42 68 Q46 72 50 72 Q54 72 58 68 L66 68 Q70 68 70 72 L70 108 Q70 112 66 112 L34 112 Q30 112 30 108 Z" fill="var(--saffron)"/><line x1="50" y1="72" x2="50" y2="112" stroke="currentColor" stroke-width="2.5"/>' },
-    { id: "dress",    label: "Dress",    cost: 450, svg: '<path d="M34 68 Q34 64 38 64 L44 64 Q48 68 50 68 Q52 68 56 64 L62 64 Q66 64 66 68 L78 112 Q78 115 74 115 L26 115 Q22 115 22 112 Z" fill="var(--saffron)"/><path d="M42 64 Q50 74 58 64" stroke="currentColor" stroke-width="2.5" fill="none"/>' },
-    { id: "uniform",  label: "Uniform",  cost: 400, svg: '<path d="M30 72 Q30 68 34 68 L42 68 L50 78 L58 68 L66 68 Q70 68 70 72 L70 108 Q70 112 66 112 L34 112 Q30 112 30 108 Z" fill="var(--saffron)"/><path d="M46 70 L50 78 L54 70" stroke="currentColor" stroke-width="2.5" fill="none"/><path d="M50 78 L48 84 L50 96 L52 84 Z" fill="#dc2626" stroke="currentColor" stroke-width="2"/>' },
-    { id: "jersey",   label: "Jersey",   cost: 380, svg: '<path d="M30 72 Q30 68 34 68 L42 68 Q46 72 50 72 Q54 72 58 68 L66 68 Q70 68 70 72 L70 108 Q70 112 66 112 L34 112 Q30 112 30 108 Z" fill="var(--saffron)"/><text x="50" y="98" text-anchor="middle" font-family="Fraunces, Georgia, serif" font-weight="900" font-size="20" fill="currentColor">7</text>' },
-    { id: "sweater",  label: "Sweater",  cost: 150, svg: '<path d="M30 72 Q30 68 34 68 L42 68 Q46 76 50 76 Q54 76 58 68 L66 68 Q70 68 70 72 L70 108 Q70 112 66 112 L34 112 Q30 112 30 108 Z" fill="var(--saffron)"/><path d="M42 68 Q50 76 58 68" stroke="currentColor" stroke-width="2" fill="none"/><path d="M30 100 L70 100" stroke="currentColor" stroke-width="1.5" opacity="0.4"/><path d="M30 106 L70 106" stroke="currentColor" stroke-width="1.5" opacity="0.4"/>' },
-    { id: "suit",     label: "Suit",     cost: 600, svg: '<path d="M30 72 Q30 68 34 68 L42 68 L50 80 L58 68 L66 68 Q70 68 70 72 L70 108 Q70 112 66 112 L34 112 Q30 112 30 108 Z" fill="#1a1614"/><path d="M42 68 L50 80 L58 68" stroke="var(--paper)" stroke-width="1.5" fill="none"/><path d="M46 80 L50 84 L54 80 L52 90 L48 90 Z" fill="#dc2626"/>' },
-    { id: "kimono",   label: "Kimono",   cost: 500, svg: '<path d="M30 72 Q30 68 34 68 L42 68 L50 78 L58 68 L66 68 Q70 68 70 72 L70 108 Q70 112 66 112 L34 112 Q30 112 30 108 Z" fill="var(--saffron)"/><path d="M42 68 L50 78 L58 68" stroke="currentColor" stroke-width="2.5" fill="none"/><rect x="34" y="86" width="32" height="8" fill="#dc2626" opacity="0.7"/>' },
-    { id: "jumper",   label: "Jumper",   cost: 320, svg: '<path d="M30 72 Q30 68 34 68 L42 68 Q46 74 50 74 Q54 74 58 68 L66 68 Q70 68 70 72 L70 108 Q70 112 66 112 L34 112 Q30 112 30 108 Z" fill="var(--saffron)"/><line x1="30" y1="90" x2="70" y2="90" stroke="currentColor" stroke-width="2" opacity="0.4"/>' },
-    { id: "overalls", label: "Overalls", cost: 480, svg: '<path d="M30 72 Q30 68 34 68 L42 68 Q46 72 50 72 Q54 72 58 68 L66 68 Q70 68 70 72 L70 112 Q70 115 66 115 L34 115 Q30 115 30 112 Z" fill="#3b82f6"/><rect x="44" y="80" width="12" height="14" fill="#2563eb"/><circle cx="44" cy="78" r="1.5" fill="var(--saffron)"/><circle cx="56" cy="78" r="1.5" fill="var(--saffron)"/>' },
-    { id: "striped",  label: "Striped",  cost: 280, svg: '<path d="M30 72 Q30 68 34 68 L42 68 Q46 72 50 72 Q54 72 58 68 L66 68 Q70 68 70 72 L70 108 Q70 112 66 112 L34 112 Q30 112 30 108 Z" fill="var(--paper)"/><rect x="30" y="76" width="40" height="4" fill="var(--saffron)"/><rect x="30" y="86" width="40" height="4" fill="var(--saffron)"/><rect x="30" y="96" width="40" height="4" fill="var(--saffron)"/><rect x="30" y="106" width="40" height="4" fill="var(--saffron)"/>' }
+    { id: "none",     label: "None",     cost: 0,   svg: "" },
+    { id: "scarf",    label: "Scarf",    cost: 150, svg: '<path d="M28 76 Q50 88 72 76" stroke="#dc2626" stroke-width="6" fill="none" stroke-linecap="round"/><rect x="46" y="84" width="8" height="16" rx="3" fill="#dc2626" stroke="currentColor" stroke-width="2.5"/>' },
+    { id: "backpack", label: "Backpack", cost: 250, svg: '<rect x="14" y="34" width="10" height="42" rx="4" fill="#3b82f6" stroke="currentColor" stroke-width="2.5"/><rect x="76" y="34" width="10" height="42" rx="4" fill="#3b82f6" stroke="currentColor" stroke-width="2.5"/>' },
+    { id: "hoodie",   label: "Hoodie",   cost: 300, svg: '<path d="M28 74 Q50 86 72 74" stroke="currentColor" stroke-width="4.5" fill="none" stroke-linecap="round"/><path d="M40 80 L40 92 M60 80 L60 92" stroke="currentColor" stroke-width="3" stroke-linecap="round"/><circle cx="46" cy="96" r="2" fill="currentColor"/><circle cx="54" cy="96" r="2" fill="currentColor"/>' },
+    { id: "armor",    label: "Armor",    cost: 500, svg: '<path d="M26 30 L32 26 L36 36 L44 30 L50 40 L56 30 L64 36 L68 26 L74 30 L70 60 L66 64 L34 64 L30 60 Z" fill="#64748b" stroke="currentColor" stroke-width="2.5" stroke-linejoin="round"/><path d="M50 40 L50 60" stroke="currentColor" stroke-width="1.5" opacity="0.6"/>' },
+    { id: "apron",    label: "Apron",    cost: 220, svg: '<path d="M34 44 L66 44 L70 88 L30 88 Z" fill="var(--paper)" stroke="currentColor" stroke-width="2.5" stroke-linejoin="round"/><path d="M40 44 Q50 38 60 44" stroke="currentColor" stroke-width="2.5" fill="none"/>' },
+    { id: "vest",     label: "Vest",     cost: 380, svg: '<path d="M28 34 L38 30 L38 78 L28 78 Z" fill="#059669" stroke="currentColor" stroke-width="2.5" stroke-linejoin="round"/><path d="M72 34 L62 30 L62 78 L72 78 Z" fill="#059669" stroke="currentColor" stroke-width="2.5" stroke-linejoin="round"/>' },
+    { id: "sweater",  label: "Sweater",  cost: 200, svg: '<path d="M28 74 Q50 86 72 74" stroke="var(--saffron)" stroke-width="6" fill="none" stroke-linecap="round"/><path d="M28 82 L72 82" stroke="var(--saffron)" stroke-width="2.5" stroke-dasharray="4 3"/>' },
+    { id: "cape",     label: "Cape",     cost: 450, svg: '<path d="M22 30 Q8 66 16 100 Q30 92 50 92 Q70 92 84 100 Q92 66 78 30 Z" fill="#dc2626" stroke="currentColor" stroke-width="2.5" stroke-linejoin="round" opacity="0.85"/>' }
   ],
   acc: [
     { id: "none",       label: "None",       cost: 0,   svg: "" },
-    { id: "glasses",    label: "Glasses",    cost: 200, svg: '<circle cx="38" cy="42" r="9" fill="none" stroke="currentColor" stroke-width="2.5"/><circle cx="62" cy="42" r="9" fill="none" stroke="currentColor" stroke-width="2.5"/><line x1="46" y1="42" x2="54" y2="42" stroke="currentColor" stroke-width="2.5"/><line x1="28" y1="40" x2="22" y2="38" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><line x1="72" y1="40" x2="78" y2="38" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>' },
-    { id: "sunglasses", label: "Shades",     cost: 280, svg: '<path d="M26 38 L44 38 L46 46 Q44 50 36 50 Q28 50 26 46 Z" fill="#1a1614" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><path d="M56 38 L74 38 L74 46 Q72 50 64 50 Q56 50 54 46 Z" fill="#1a1614" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><line x1="44" y1="42" x2="56" y2="42" stroke="currentColor" stroke-width="2"/>' },
-    { id: "cap",        label: "Cap",        cost: 300, svg: '<path d="M24 34 Q26 14 50 14 Q74 14 76 34 L76 38 Q74 32 68 30 Q60 28 50 28 Q40 28 32 30 Q26 32 24 38 Z" fill="currentColor"/><path d="M76 32 Q86 32 86 40 L86 42 Q78 40 76 38 Z" fill="currentColor"/>' },
-    { id: "beanie",     label: "Beanie",     cost: 320, svg: '<path d="M24 38 Q24 12 50 12 Q76 12 76 38 Z" fill="currentColor"/><rect x="22" y="36" width="56" height="8" rx="3" fill="currentColor" stroke="currentColor" stroke-width="1.5"/><circle cx="50" cy="10" r="3" fill="currentColor"/>' },
-    { id: "headphones", label: "Headphones", cost: 400, svg: '<path d="M20 42 Q20 14 50 14 Q80 14 80 42" stroke="currentColor" stroke-width="3.5" fill="none"/><rect x="14" y="40" width="10" height="16" rx="4" fill="currentColor"/><rect x="76" y="40" width="10" height="16" rx="4" fill="currentColor"/>' },
-    { id: "earpods",    label: "Earpods",    cost: 350, svg: '<rect x="20" y="40" width="6" height="12" rx="3" fill="currentColor"/><rect x="74" y="40" width="6" height="12" rx="3" fill="currentColor"/>' },
-    { id: "scarf",      label: "Scarf",      cost: 250, svg: '<path d="M30 68 Q50 78 70 68 L70 74 Q50 84 30 74 Z" fill="currentColor"/><path d="M44 78 L44 96 Q50 100 56 96 L56 78 Z" fill="currentColor"/><path d="M48 96 L52 96 M48 100 L52 100" stroke="var(--paper)" stroke-width="1.2" opacity="0.6"/>' },
-    { id: "earrings",   label: "Earrings",   cost: 180, svg: '<circle cx="22" cy="52" r="2.5" fill="var(--saffron)" stroke="currentColor" stroke-width="1.5"/><circle cx="78" cy="52" r="2.5" fill="var(--saffron)" stroke="currentColor" stroke-width="1.5"/>' },
-    { id: "backpack",   label: "Backpack",   cost: 450, svg: '<path d="M22 74 Q22 62 34 62 L38 60 L62 60 L66 62 Q78 62 78 74 L78 92 Q72 96 66 94 L66 78 L34 78 L34 94 Q28 96 22 92 Z" fill="currentColor"/><rect x="42" y="86" width="16" height="8" rx="2" fill="var(--paper)" opacity="0.4"/>' },
-    { id: "mask",       label: "Mask",       cost: 220, svg: '<path d="M28 50 Q50 48 72 50 L70 60 Q62 62 50 62 Q38 62 30 60 Z" fill="var(--paper)" stroke="currentColor" stroke-width="2.5" stroke-linejoin="round"/><path d="M30 54 L70 54" stroke="currentColor" stroke-width="1" opacity="0.5"/>' },
-    { id: "bow",        label: "Bow",        cost: 240, svg: '<path d="M38 16 L42 14 L46 16 L46 24 L42 26 L38 24 Z" fill="#ec4899"/><path d="M54 16 L58 14 L62 16 L62 24 L58 26 L54 24 Z" fill="#ec4899"/><circle cx="50" cy="20" r="3" fill="#ec4899"/>' },
-    { id: "crown",      label: "Crown",      cost: 800, svg: '<path d="M28 22 L34 8 L42 16 L50 6 L58 16 L66 8 L72 22 Z" fill="var(--saffron)" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><circle cx="34" cy="10" r="2" fill="#dc2626"/><circle cx="50" cy="8" r="2" fill="#3b82f6"/><circle cx="66" cy="10" r="2" fill="#dc2626"/>' }
-  ],
-  held: [
-    { id: "none",   label: "None",   svg: "" },
-    { id: "book",   label: "Book",   svg: '<rect x="70" y="82" width="16" height="12" rx="1.5" fill="currentColor"/><line x1="78" y1="82" x2="78" y2="94" stroke="var(--paper)" stroke-width="1.2"/>' },
-    { id: "pencil", label: "Pencil", svg: '<rect x="74" y="76" width="4" height="20" rx="1" fill="var(--saffron)" stroke="currentColor" stroke-width="1.5"/><polygon points="74,96 76,103 78,96" fill="currentColor"/>' },
-    { id: "phone",  label: "Phone",  svg: '<rect x="71" y="78" width="11" height="18" rx="2.5" fill="currentColor"/><rect x="73" y="80" width="7" height="12" rx="1" fill="var(--paper)" opacity="0.3"/>' },
-    { id: "cup",    label: "Cup",    svg: '<path d="M70 82 L84 82 L82 98 L72 98 Z" fill="currentColor"/><path d="M84 85 Q88 85 88 88 Q88 91 84 91" fill="none" stroke="currentColor" stroke-width="2"/>' },
-    { id: "cat",    label: "Cat",    svg: '<ellipse cx="78" cy="92" rx="9" ry="7" fill="currentColor"/><circle cx="72" cy="86" r="5" fill="currentColor"/><circle cx="70" cy="85" r="1" fill="var(--paper)"/><circle cx="74" cy="85" r="1" fill="var(--paper)"/><path d="M69 82 L68 79 L71 81 Z M75 82 L76 79 L73 81 Z" fill="currentColor"/>' }
+    { id: "glasses",    label: "Glasses",    cost: 200, svg: '<circle cx="38" cy="50" r="10" fill="none" stroke="currentColor" stroke-width="3"/><circle cx="62" cy="50" r="10" fill="none" stroke="currentColor" stroke-width="3"/><line x1="48" y1="50" x2="52" y2="50" stroke="currentColor" stroke-width="3"/>' },
+    { id: "shades",     label: "Shades",     cost: 280, svg: '<path d="M26 42 L48 42 L50 54 Q48 62 38 62 Q28 62 24 54 Z" fill="#1a1614" stroke="currentColor" stroke-width="2.5" stroke-linejoin="round"/><path d="M52 42 L74 42 L76 54 Q72 62 62 62 Q52 62 50 54 Z" fill="#1a1614" stroke="currentColor" stroke-width="2.5" stroke-linejoin="round"/><line x1="48" y1="50" x2="52" y2="50" stroke="currentColor" stroke-width="2.5"/>' },
+    { id: "earpods",    label: "Earpods",    cost: 300, svg: '<rect x="14" y="44" width="8" height="14" rx="4" fill="currentColor"/><rect x="78" y="44" width="8" height="14" rx="4" fill="currentColor"/>' },
+    { id: "headphones", label: "Headphones", cost: 400, svg: '<path d="M18 52 Q18 12 50 12 Q82 12 82 52" stroke="currentColor" stroke-width="4.5" fill="none"/><rect x="12" y="46" width="12" height="20" rx="5" fill="currentColor"/><rect x="76" y="46" width="12" height="20" rx="5" fill="currentColor"/>' },
+    { id: "mask",       label: "Mask",       cost: 220, svg: '<path d="M30 58 Q50 56 70 58 L68 72 Q60 74 50 74 Q40 74 32 72 Z" fill="var(--paper)" stroke="currentColor" stroke-width="2.5" stroke-linejoin="round"/>' },
+    { id: "watch",      label: "Watch",      cost: 250, svg: '<circle cx="88" cy="84" r="7" fill="none" stroke="currentColor" stroke-width="2.5"/><line x1="88" y1="80" x2="88" y2="85" stroke="currentColor" stroke-width="2"/><line x1="88" y1="85" x2="91" y2="87" stroke="currentColor" stroke-width="2"/>' },
+    { id: "wings",      label: "Wings",      cost: 650, svg: '<path d="M20 36 Q0 22 8 6 Q24 10 30 26 Z" fill="var(--paper)" stroke="currentColor" stroke-width="2.5" stroke-linejoin="round"/><path d="M80 36 Q100 22 92 6 Q76 10 70 26 Z" fill="var(--paper)" stroke="currentColor" stroke-width="2.5" stroke-linejoin="round"/>' },
+    { id: "halo",       label: "Halo",       cost: 700, svg: '<ellipse cx="50" cy="12" rx="16" ry="4.5" fill="none" stroke="var(--saffron)" stroke-width="3.5"/><ellipse cx="50" cy="12" rx="16" ry="4.5" fill="none" stroke="currentColor" stroke-width="1" opacity="0.4"/>' },
+    { id: "bowtie",     label: "Bow tie",    cost: 260, svg: '<path d="M40 80 L30 74 L30 86 Z" fill="#dc2626" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><path d="M60 80 L70 74 L70 86 Z" fill="#dc2626" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><circle cx="50" cy="80" r="3.5" fill="#dc2626" stroke="currentColor" stroke-width="2"/>' }
   ]
 };
 const AVATAR_AURAS = [
   { id: "none",    label: "None",    type: null,     color: null,      earn: "Default" },
   { id: "saffron", label: "Glow",    type: "glow",   color: "#f59e0b", earn: "7-day streak" },
   { id: "jade",    label: "Jade",    type: "glow",   color: "#059669", earn: "30 lessons" },
-  { id: "indigo",  label: "Sparks",  type: "sparks", color: "#4338ca", earn: "Level 10" },
+  { id: "indigo",  label: "Sparks",  type: "sparks", color: "#6366f1", earn: "Level 10" },
   { id: "clay",    label: "Flames",  type: "flames", color: "#dc2626", earn: "50 correct" },
-  { id: "galaxy",  label: "Galaxy",  type: "galaxy", color: "#7c3aed", earn: "100 lessons" }
+  { id: "galaxy",  label: "Galaxy",  type: "galaxy", color: "#9333ea", earn: "100 lessons" },
+  { id: "sky",     label: "Bubbles", type: "bubbles",color: "#0ea5e9", earn: "50 lessons" }
 ];
-const DEFAULT_AVATAR = { head: "round", skin: "warm", ears: "round", eyebrows: "soft", eyes: "normal", blush: "soft", nose: "none", mouth: "smile", hair: "short", clothes: "tee", acc: "none", held: "none", aura: "none" };
+const DEFAULT_AVATAR = { body: "cube", color: "saffron", eyes: "dot", mouth: "smile", hair: "none", clothes: "none", acc: "none", aura: "none" };
 const isStaff = () => USER && (USER.role === "admin" || USER.role === "teacher");
 function earnedAuras(){
   if(!USER)return["none"];
@@ -260,6 +244,7 @@ function earnedAuras(){
   if(days>=7)earned.push("saffron");
   if(days>=30)earned.push("indigo");
   if(lessons>=30)earned.push("jade");
+  if(lessons>=50)earned.push("sky");
   if(lessons>=100)earned.push("galaxy");
   if(level>=10)earned.push("indigo");
   return [...new Set(earned)];
@@ -267,52 +252,48 @@ function earnedAuras(){
 function auraSVG(aura){
   if(!aura||!aura.color)return "";
   const c=aura.color;
-  if(aura.type==="glow")return `<circle cx="50" cy="52" r="46" fill="${c}" opacity="0.18" class="av-aura av-aura-glow"/>`;
-  if(aura.type==="sparks")return `<g class="av-aura av-aura-sparks" fill="${c}"><circle class="av-spark" cx="94" cy="52" r="3"/><circle class="av-spark" cx="6" cy="52" r="3"/><circle class="av-spark" cx="50" cy="108" r="3"/></g>`;
-  if(aura.type==="flames")return `<g class="av-aura av-aura-flames"><path class="av-flame" d="M28 108 q4 -10 10 -6 q-2 -6 2 -10 q4 6 2 12 q4 -2 6 4 q2 6 -8 6 Z" fill="${c}" opacity="0.85"/><path class="av-flame" d="M62 108 q4 -10 10 -6 q-2 -6 2 -10 q4 6 2 12 q4 -2 6 4 q2 6 -8 6 Z" fill="${c}" opacity="0.85"/><path class="av-flame" d="M45 110 q3 -8 7 -4 q-1 -5 2 -8 q3 5 1 10 q3 -2 5 3 q1 5 -7 5 Z" fill="${c}" opacity="0.7"/></g>`;
-  if(aura.type==="galaxy")return `<g class="av-aura av-aura-galaxy" fill="${c}"><circle class="av-star" cx="18" cy="24" r="1.8"/><circle class="av-star" cx="82" cy="18" r="1.5"/><circle class="av-star" cx="12" cy="76" r="1.5"/><circle class="av-star" cx="88" cy="86" r="1.8"/></g>`;
+  if(aura.type==="glow")return `<circle cx="50" cy="56" r="52" fill="${c}" opacity="0.2" class="qbit-aura qbit-aura-glow"/>`;
+  if(aura.type==="sparks")return `<g class="qbit-aura qbit-aura-sparks" fill="${c}"><circle class="qbit-spark" cx="100" cy="56" r="3.5"/><circle class="qbit-spark" cx="0" cy="56" r="3.5"/><circle class="qbit-spark" cx="50" cy="112" r="3.5"/></g>`;
+  if(aura.type==="flames")return `<g class="qbit-aura qbit-aura-flames"><path class="qbit-flame" d="M28 106 q4 -11 11 -6 q-2 -7 2 -11 q5 6 2 13 q4 -2 6 4 q2 6 -9 6 Z" fill="${c}" opacity="0.9"/><path class="qbit-flame" d="M62 106 q4 -11 11 -6 q-2 -7 2 -11 q5 6 2 13 q4 -2 6 4 q2 6 -9 6 Z" fill="${c}" opacity="0.9"/><path class="qbit-flame" d="M45 108 q3 -8 7 -4 q-1 -5 2 -8 q3 5 1 10 q3 -2 5 3 q1 5 -7 5 Z" fill="${c}" opacity="0.75"/></g>`;
+  if(aura.type==="galaxy")return `<g class="qbit-aura qbit-aura-galaxy" fill="${c}"><circle class="qbit-star" cx="14" cy="20" r="2"/><circle class="qbit-star" cx="86" cy="16" r="1.8"/><circle class="qbit-star" cx="8" cy="76" r="1.8"/><circle class="qbit-star" cx="92" cy="82" r="2"/></g>`;
+  if(aura.type==="bubbles")return `<g class="qbit-aura qbit-aura-bubbles" fill="none" stroke="${c}" stroke-width="2"><circle class="qbit-bubble" cx="20" cy="100" r="4"/><circle class="qbit-bubble" cx="80" cy="104" r="3"/><circle class="qbit-bubble" cx="50" cy="108" r="3.5"/></g>`;
   return "";
 }
 function renderAvatar(cfg, size, mood) {
   cfg = { ...DEFAULT_AVATAR, ...(cfg || {}) };
   const moodMap = {
-    happy:     { eyes: "star",    mouth: "grin",  eyebrows: "raised" },
-    sad:       { eyes: "sleepy",  mouth: "sad",   eyebrows: "sad" },
-    thinking:  { eyes: "closed",  mouth: "flat",  eyebrows: "flat" },
-    celebrate: { eyes: "sparkle", mouth: "laugh", eyebrows: "raised" }
+    happy:     { eyes: "happy",   mouth: "grin"  },
+    sad:       { eyes: "sleepy",  mouth: "sad"   },
+    thinking:  { eyes: "dot",     mouth: "flat"  },
+    celebrate: { eyes: "sparkle", mouth: "laugh" }
   };
   if (mood && moodMap[mood]) Object.assign(cfg, moodMap[mood]);
-  const head  = AVATAR_PARTS.head.find(x => x.id === cfg.head)   || AVATAR_PARTS.head[0];
-  const skin  = AVATAR_PARTS.skin.find(x => x.id === cfg.skin)   || AVATAR_PARTS.skin[0];
-  const ears  = AVATAR_PARTS.ears.find(x => x.id === cfg.ears)   || AVATAR_PARTS.ears[0];
-  const brows = AVATAR_PARTS.eyebrows.find(x => x.id === cfg.eyebrows) || AVATAR_PARTS.eyebrows[0];
+  const body  = AVATAR_PARTS.body.find(x => x.id === cfg.body)   || AVATAR_PARTS.body[0];
+  const color = AVATAR_PARTS.color.find(x => x.id === cfg.color) || AVATAR_PARTS.color[0];
   const eyes  = AVATAR_PARTS.eyes.find(x => x.id === cfg.eyes)   || AVATAR_PARTS.eyes[0];
-  const blush = AVATAR_PARTS.blush.find(x => x.id === cfg.blush) || AVATAR_PARTS.blush[0];
-  const nose  = AVATAR_PARTS.nose.find(x => x.id === cfg.nose)   || AVATAR_PARTS.nose[0];
   const mouth = AVATAR_PARTS.mouth.find(x => x.id === cfg.mouth) || AVATAR_PARTS.mouth[0];
   const hair  = AVATAR_PARTS.hair.find(x => x.id === cfg.hair)   || AVATAR_PARTS.hair[0];
   const cloth = AVATAR_PARTS.clothes.find(x => x.id === cfg.clothes) || AVATAR_PARTS.clothes[0];
   const acc   = AVATAR_PARTS.acc.find(x => x.id === cfg.acc)     || AVATAR_PARTS.acc[0];
-  const held  = AVATAR_PARTS.held.find(x => x.id === cfg.held)   || AVATAR_PARTS.held[0];
   const aura  = AVATAR_AURAS.find(x => x.id === cfg.aura)        || AVATAR_AURAS[0];
   const sizeAttr = size ? `width="${size}" height="${size}"` : `width="100%" height="100%"`;
-  return `<svg viewBox="0 0 100 120" ${sizeAttr} xmlns="http://www.w3.org/2000/svg" class="av">
+  return `<svg viewBox="0 0 100 120" ${sizeAttr} xmlns="http://www.w3.org/2000/svg" class="qbit" style="--qbit-color:${color.color};--qbit-cloth:${color.color}">
     ${auraSVG(aura)}
-    <g class="av-body">
-      <g class="av-ears" style="--skin:${skin.color}" fill="${skin.color}" stroke="currentColor" stroke-width="2">${ears.svg}</g>
-      <path class="av-head" d="${head.path}" fill="${skin.color}" stroke="currentColor" stroke-width="2.5" stroke-linejoin="round"/>
-      <g class="av-hair" fill="currentColor">${hair.svg}</g>
-      <g class="av-brows" fill="none">${brows.svg}</g>
-      <g class="av-blush">${blush.svg}</g>
-      <g class="av-face" fill="currentColor">${eyes.svg}</g>
-      <g class="av-nose" fill="none">${nose.svg}</g>
-      <g class="av-mouth" fill="none">${mouth.svg}</g>
-      <g class="av-clothes" fill="var(--saffron)" stroke="currentColor" stroke-width="2.5" stroke-linejoin="round">${cloth.svg}</g>
-      <g class="av-acc" fill="none" stroke="currentColor" stroke-width="2.5">${acc.svg}</g>
-      <g class="av-held" stroke="currentColor" stroke-width="1.5">${held.svg}</g>
+    <g class="qbit-body">
+      <rect x="8" y="50" width="16" height="16" rx="8" fill="var(--qbit-color)" stroke="currentColor" stroke-width="3"/>
+      <rect x="76" y="50" width="16" height="16" rx="8" fill="var(--qbit-color)" stroke="currentColor" stroke-width="3"/>
+      <rect x="34" y="80" width="12" height="20" rx="6" fill="var(--qbit-color)" stroke="currentColor" stroke-width="3"/>
+      <rect x="54" y="80" width="12" height="20" rx="6" fill="var(--qbit-color)" stroke="currentColor" stroke-width="3"/>
+      ${body.svg}
+      <g class="qbit-hair">${hair.svg}</g>
+      <g class="qbit-eyes" fill="none">${eyes.svg}</g>
+      <g class="qbit-mouth" fill="none">${mouth.svg}</g>
+      <g class="qbit-clothes" fill="none">${cloth.svg}</g>
+      <g class="qbit-acc" fill="none">${acc.svg}</g>
     </g>
   </svg>`;
 }
+/* ============ SHOP ============ */
 const SHOP_ITEMS=[
 {id:"freeze",icon:"🔥",name:"Streak Freeze",desc:"Protect your streak for 1 missed day",cost:200},
 {id:"hearts",icon:"❤️",name:"Heart Refill",desc:"Refill all 5 hearts instantly",cost:150},
@@ -330,6 +311,7 @@ function setOwned(arr){st.set("uasa_shop_"+USER.id,JSON.stringify(arr))}
 function applyCustomTheme(name){const t=CUSTOM_THEMES[name];if(!t)return;const r=document.documentElement;Object.entries(t).forEach(([k,v])=>r.style.setProperty(k,v));st.set("uasa_custom_theme_"+USER.id,name)}
 function clearCustomTheme(){const r=document.documentElement;Object.keys(CUSTOM_THEMES.ocean).forEach(k=>r.style.removeProperty(k));st.del("uasa_custom_theme_"+USER.id)}
 function loadSavedTheme(){if(!USER)return;const t=st.get("uasa_custom_theme_"+USER.id);if(t&&CUSTOM_THEMES[t])applyCustomTheme(t)}
+/* ============ UI HELPERS ============ */
 function toast(m){const t=document.createElement("div");t.className="toast";t.setAttribute("role","status");t.textContent=m;document.body.appendChild(t);setTimeout(()=>t.remove(),2400)}
 function pop(n){const d=document.createElement("div");d.className="pop";d.textContent="+"+n+" XP";document.body.appendChild(d);setTimeout(()=>d.remove(),1300)}
 function setSaveState(s){const el=$("cs");if(!el)return;const m={saving:["☁️ Saving…",""],saved:["☁️ Saved","save-ok"],error:["⚠️ Not saved","save-bad"]};const a=m[s]||m.saved;el.textContent=a[0];el.className="chip "+a[1]}
@@ -373,8 +355,9 @@ const poolForYear=y=>{const n={"Year 4":4,"Year 5":5,"Year 6":6,"Form 1":6,"Form
 const view=h=>{$("main").innerHTML=h;scrollTo(0,0)};
 const lk=(a,r,t)=>'<button class="lk" data-a="'+a+'" data-r="'+esc(r)+'">'+t+'</button>';
 async function loadTeacherLessons(){if(!USER||!sb)return;try{const r=await sb.from("teacher_lessons").select("id,teacher_id,subject,unit_title,lesson_title,learn_text,questions,published,class_code,created_at").order("created_at",{ascending:true}).limit(1000);if(!r.error)window.TEACHER_LESSONS=r.data||[]}catch(e){}}
+/* ============ QBIT BUILDER ============ */
 let AV_TEMP = null;
-let AV_TAB = "face";
+let AV_TAB = "body";
 function avLoad() { AV_TEMP = { ...DEFAULT_AVATAR, ...(USER.avatar || {}) }; }
 function avPick(key, id) {
   if (!AV_TEMP) avLoad();
@@ -387,10 +370,9 @@ function avPick(key, id) {
     const earned = earnedAuras();
     const has = isStaff() || earned.includes(id);
     if (!has) { toast("🔒 Earn this aura: " + item.earn); return; }
-    AV_TEMP.aura = id;
-    avRedraw();
-    return;
+    AV_TEMP.aura = id; avRedraw(); return;
   }
+  if (key === "color") { AV_TEMP.color = id; avRedraw(); return; }
   const ownedKey = "av_" + key + "_" + id;
   const isOwned = isStaff() || !item.cost || item.cost === 0 || getOwned().includes(ownedKey);
   if (!isOwned) {
@@ -407,7 +389,7 @@ function avPick(key, id) {
   AV_TEMP[key] = id; avRedraw();
 }
 function avRedraw() {
-  const box = document.querySelector(".av-preview");
+  const box = document.querySelector(".qbit-preview");
   if (box) box.innerHTML = renderAvatar(AV_TEMP);
   document.querySelectorAll(".av-opt").forEach(b => {
     const [k, v] = b.dataset.v.split(":");
@@ -418,10 +400,9 @@ function avRandom() {
   if (!AV_TEMP) avLoad();
   const pick = arr => arr[Math.floor(Math.random() * arr.length)].id;
   AV_TEMP = { ...AV_TEMP,
-    head: pick(AVATAR_PARTS.head), skin: pick(AVATAR_PARTS.skin), ears: pick(AVATAR_PARTS.ears),
-    eyebrows: pick(AVATAR_PARTS.eyebrows), eyes: pick(AVATAR_PARTS.eyes),
-    blush: pick(AVATAR_PARTS.blush), nose: pick(AVATAR_PARTS.nose),
-    mouth: pick(AVATAR_PARTS.mouth), hair: pick(AVATAR_PARTS.hair) };
+    body: pick(AVATAR_PARTS.body), color: pick(AVATAR_PARTS.color),
+    eyes: pick(AVATAR_PARTS.eyes), mouth: pick(AVATAR_PARTS.mouth),
+    hair: pick(AVATAR_PARTS.hair) };
   avRedraw();
 }
 function avTab(t) { AV_TAB = t; const w = document.querySelector(".av-builder"); if (w) w.outerHTML = avatarBuilderHTML(AV_TEMP); }
@@ -439,13 +420,14 @@ function avatarBuilderHTML(cfg) {
   cfg = { ...DEFAULT_AVATAR, ...(cfg || {}) };
   const optBtn = (key, o, isAura) => {
     const ownedKey = "av_" + key + "_" + o.id;
-    const earned = isAura ? (isStaff() || earnedAuras().includes(o.id)) : (isStaff() || !o.cost || o.cost === 0 || getOwned().includes(ownedKey));
+    const free = key === "body" || key === "color";
+    const earned = isAura ? (isStaff() || earnedAuras().includes(o.id)) : (isStaff() || free || !o.cost || o.cost === 0 || getOwned().includes(ownedKey));
     const cls = "av-opt " + (cfg[key] === o.id ? "on " : "") + (isAura && earned && o.id !== "none" ? "earned " : "") + (earned ? "" : "locked");
     return `<button class="${cls}" data-a="avPick" data-v="${key}:${o.id}" type="button" title="${o.label}${o.earn ? ' · ' + o.earn : ''}">
       ${o.color
         ? `<span class="av-swatch" style="background:${o.color}"></span>`
         : o.svg
-          ? `<svg viewBox="0 0 100 120" width="34" height="40"><g fill="currentColor" stroke="currentColor" stroke-width="2.5">${o.svg}</g></svg>`
+          ? `<svg viewBox="0 0 100 120" width="34" height="40"><g fill="none" stroke="currentColor" stroke-width="2.5">${o.svg}</g></svg>`
           : `<span class="av-label">${o.label}</span>`}
       ${earned ? "" : (isAura ? `<span class="av-lock">🔒</span>` : `<span class="av-lock">🔒</span><span class="av-cost">${o.cost}</span>`)}
     </button>`;
@@ -456,46 +438,40 @@ function avatarBuilderHTML(cfg) {
       <div class="av-opts">${list.map(o => optBtn(key, o, isAura)).join("")}</div>
     </div>`;
   const tabs = [
-    { id: "face",  icon: "👤", label: "Face" },
-    { id: "hair",  icon: "💇", label: "Hair" },
-    { id: "body",  icon: "👕", label: "Body" },
-    { id: "extra", icon: "✨", label: "Extra" }
+    { id: "body",  icon: "🎛️", label: "Body" },
+    { id: "face",  icon: "👀", label: "Face" },
+    { id: "style", icon: "🎩", label: "Style" },
+    { id: "aura",  icon: "✨", label: "Aura" }
   ];
   let controls = "";
-  if (AV_TAB === "face") {
-    controls = optsRow("head", AVATAR_PARTS.head, "Head") +
-               optsRow("skin", AVATAR_PARTS.skin, "Skin") +
-               optsRow("ears", AVATAR_PARTS.ears, "Ears") +
-               optsRow("eyebrows", AVATAR_PARTS.eyebrows, "Eyebrows") +
-               optsRow("eyes", AVATAR_PARTS.eyes, "Eyes") +
-               optsRow("blush", AVATAR_PARTS.blush, "Blush") +
-               optsRow("nose", AVATAR_PARTS.nose, "Nose") +
-               optsRow("mouth", AVATAR_PARTS.mouth, "Mouth");
-  } else if (AV_TAB === "hair") {
-    controls = optsRow("hair", AVATAR_PARTS.hair, "Hair");
-  } else if (AV_TAB === "body") {
-    controls = optsRow("clothes", AVATAR_PARTS.clothes, "Clothes") +
-               optsRow("acc", AVATAR_PARTS.acc, "Accessory") +
-               optsRow("held", AVATAR_PARTS.held, "Held item");
-  } else if (AV_TAB === "extra") {
+  if (AV_TAB === "body") {
+    controls = optsRow("body", AVATAR_PARTS.body, "Shape") + optsRow("color", AVATAR_PARTS.color, "Color");
+  } else if (AV_TAB === "face") {
+    controls = optsRow("eyes", AVATAR_PARTS.eyes, "Eyes") + optsRow("mouth", AVATAR_PARTS.mouth, "Mouth");
+  } else if (AV_TAB === "style") {
+    controls = optsRow("hair", AVATAR_PARTS.hair, "Top") +
+               optsRow("clothes", AVATAR_PARTS.clothes, "Outfit") +
+               optsRow("acc", AVATAR_PARTS.acc, "Accessory");
+  } else if (AV_TAB === "aura") {
     controls = `<p class="mu" style="text-align:center;margin:0 0 12px">Auras are earned, not bought. Keep practising!</p>` +
                optsRow("aura", AVATAR_AURAS, "Aura", true);
   }
   return `
     <div class="card av-builder">
-      <h2>🎨 My Avatar ${isStaff() ? '<span class="staff-free">STAFF · FREE</span>' : ""}</h2>
-      <div class="av-stage"><div class="av-preview">${renderAvatar(cfg)}</div></div>
+      <h2>🎨 My Qbit ${isStaff() ? '<span class="staff-free">STAFF · FREE</span>' : ""}</h2>
+      <div class="qbit-preview">${renderAvatar(cfg)}</div>
       <div class="av-tabs">
         ${tabs.map(t => `<button class="av-tab ${AV_TAB === t.id ? "on" : ""}" data-a="avTab" data-r="${t.id}" type="button"><span class="t-ic">${t.icon}</span>${t.label}</button>`).join("")}
       </div>
       <div class="av-controls">${controls}</div>
       <div class="av-actions">
         <button class="btn g sm" data-a="avRandom" type="button">🎲 Random</button>
-        <button class="btn sm" data-a="avSave" type="button">SAVE AVATAR</button>
+        <button class="btn sm" data-a="avSave" type="button">SAVE QBIT</button>
         <span id="avMsg" class="mu" style="margin-left:10px"></span>
       </div>
     </div>`;
 }
+/* ============ NAV ============ */
 function nav(p){
 const role=(USER&&USER.role)||"student";let items;
 if(role==="admin")items=[["admin","🛡️ Admin"],["teacher","🎓 Studio"],["subjects","📚 Subjects"],["exam","📝 Exam"],["shop","🛒 Shop"],["leaderboard","🏆 Board"],["profile","👤 Profile"]];
@@ -507,6 +483,7 @@ if(role==="admin")tabs=[["admin","🛡️","Admin"],["teacher","🎓","Studio"],
 else if(role==="teacher")tabs=[["teacher","🎓","Studio"],["leaderboard","🏆","Board"],["profile","👤","Me"]];
 else tabs=[["home","🏠","Home"],["subjects","📚","Learn"],["exam","📝","Exam"],["shop","🛒","Shop"],["profile","👤","Me"]];
 tb.innerHTML=tabs.map(x=>'<button class="'+(x[0]===p?"on":"")+'" data-a="page" data-r="'+x[0]+'"><span class="ti">'+x[1]+'</span>'+x[2]+'</button>').join("")}}
+/* ============ PAGES ============ */
 const PAGES={
 home(){const n=SUBJ.reduce((a,s)=>a+sDone(s[0]),0),into=USER.xp%350,goal=50,prog=Math.min(USER.dailyXp||0,goal),pct=prog/goal*100;
 const weak=getWeak();
@@ -621,11 +598,7 @@ const timerHtml=isExam?'<div class="exam-timer" id="examTimerDisplay">--:--</div
 view('<div class="qz"><div class="qz-head"><div class="qz-av" id="qzAv">'+renderAvatar(USER.avatar,56)+'</div><div class="qz-meta"><div class="row"><button class="btn g" data-a="back" aria-label="Quit quiz">✕</button>'+bar(R.i/R.qs.length*100)+timerHtml+'</div><small>'+esc(R.ctx.title)+' · Question '+(R.i+1)+' of '+R.qs.length+'</small></div></div><h2>'+esc(q.q)+'</h2>'+(q.img?'<div class="qimg">'+safeImg(q.img)+'</div>':"")+'<div id="an" role="group" aria-label="Answer choices">'+q.options.map((o,k)=>'<button class="ans" data-a="ans" data-r="'+k+'"><b>'+("ABCD"[k]||k+1)+'</b><span>'+esc(o)+'</span></button>').join("")+'</div><div id="fb" role="status"></div><button id="nx" class="btn hidden" data-a="next">'+(R.i+1<R.qs.length?"CONTINUE":"FINISH")+'</button></div>');
 if(isExam){const el=$("examTimerDisplay");if(el){const m=Math.floor(EXAM_TIME_LEFT/60),s=EXAM_TIME_LEFT%60;el.textContent=m+":"+String(s).padStart(2,"0");if(EXAM_TIME_LEFT<=60)el.classList.add("danger")}}
 }
-function setAvatarMood(mood){
-  const el=$("qzAv");if(!el)return;
-  el.innerHTML=renderAvatar(USER.avatar,56,mood);
-  el.className="qz-av mood-"+mood;
-}
+function setAvatarMood(mood){const el=$("qzAv");if(!el)return;el.innerHTML=renderAvatar(USER.avatar,56,mood);el.className="qz-av mood-"+mood}
 async function answer(k){if(!R||R.a||!$("an"))return;const q=R.qs[R.i];if(k<0||k>=q.options.length)return;
 R.a=true;const ok=k===q.answer;if(ok)R.c++;
 const isExam=R.ctx.kind==="exam";
@@ -668,7 +641,7 @@ const stars=ratio===1?3:ratio>=.9?2:pass?1:0;let nb="";
 if(pass&&ctx.kind==="lesson"){const s=NAV.s,u=U(s).find(x=>String(x.i)===String(NAV.u)),x=u.ls.findIndex(l=>String(l.j)===String(NAV.l)),n=u.ls[x+1];nb=n?'<button class="btn" data-a="les" data-r="'+esc(String(n.j))+'">NEXT LESSON</button>':(chOpen(s,u)&&(u.challenge||[]).length?'<button class="btn" data-a="startCh">UNIT CHALLENGE</button>':"")}
 const msg=ctx.kind==="review"?(pass?"✨ Review complete! +5 XP":"Need 70%."):ctx.kind==="daily"?(pass?"🎯 Daily complete!":"Need 70%."):ctx.kind==="smart"?(pass?"🧠 Smart review done!":"Need 70%."):ctx.kind==="mix"?"Nice practice!":pass?"You passed! 🎉":"Almost. Need 70%.";
 const mood = pass ? "celebrate" : "thinking";
-view('<div class="qz card c"><div class="finish-av">'+renderAvatar(USER.avatar,120,mood)+'</div><div class="stars">'+'⭐'.repeat(stars)+'☆'.repeat(3-stars)+'</div><h2>'+msg+'</h2><p>Score: <b>'+c+' / '+qs.length+'</b></p>'+(xp?'<div class="n gd">+'+xp+' XP</div>':"")+nb+(pass||ctx.kind==="mix"||ctx.kind==="daily"||ctx.kind==="review"||ctx.kind==="smart"?"":'<button class="btn" data-a="retry">TRY AGAIN</button>')+'<button class="btn g" data-a="back">Back</button></div>')}
+view('<div class="qz card c"><div class="finish-av mood-'+mood+'" style="width:120px;height:144px;margin:0 auto 8px">'+renderAvatar(USER.avatar,120,mood)+'</div><div class="stars">'+'⭐'.repeat(stars)+'☆'.repeat(3-stars)+'</div><h2>'+msg+'</h2><p>Score: <b>'+c+' / '+qs.length+'</b></p>'+(xp?'<div class="n gd">+'+xp+' XP</div>':"")+nb+(pass||ctx.kind==="mix"||ctx.kind==="daily"||ctx.kind==="review"||ctx.kind==="smart"?"":'<button class="btn" data-a="retry">TRY AGAIN</button>')+'<button class="btn g" data-a="back">Back</button></div>')}
 function seededShuffle(arr,seed){let s=2166136261>>>0;for(let i=0;i<seed.length;i++){s^=seed.charCodeAt(i);s=Math.imul(s,16777619)>>>0}const rand=()=>{s^=s<<13;s>>>=0;s^=s>>17;s^=s<<5;s>>>=0;return s/4294967296};const a=arr.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(rand()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a}
 async function startDaily(){if(USER.dailyDone===today()){toast("✅ Already done today!");return}const p=poolForYear(USER.year);if(!p.length){toast("No questions yet.");return}if((USER.hearts??5)<=0){toast("💔 No hearts.");return}quiz(seededShuffle(p,today()).slice(0,10),{title:"🎯 Daily — "+today(),key:null,bonus:0,kind:"daily",back:()=>go("home")})}
 async function awardDaily(score,total,xpOv){setSaveState("saving");try{const xp=typeof xpOv==="number"?xpOv:(score===total?150:100);const r=await sb.from("daily_completions").insert({user_id:USER.id,day:today(),score,total});if(r.error&&r.error.code!=="23505")throw r.error;if(!r.error){USER.dailyDone=today();try{await sb.rpc("bump_daily_xp",{amount:xp})}catch(e){}}await refreshUserStats();setSaveState("saved")}catch(e){setSaveState("error");toast("⚠️ Could not save daily.")}}

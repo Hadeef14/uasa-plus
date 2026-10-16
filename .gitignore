@@ -1,0 +1,28 @@
+# Dependencies
+node_modules/
+package-lock.json
+yarn.lock
+
+# Editor
+.vscode/
+.idea/
+*.swp
+*.swo
+.DS_Store
+Thumbs.db
+
+# Env / secrets
+.env
+.env.local
+.env.*.local
+
+# Build / temp
+dist/
+build/
+.cache/
+*.log
+npm-debug.log*
+
+# Supabase local
+supabase/.branches/
+supabase/.temp/

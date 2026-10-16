@@ -24,7 +24,6 @@
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght,SOFT,WONK@0,9..144,400..900,0..100,0..1&family=Geist:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;700;800&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="styles.css">
 <style>
-/* ============ QBIT AVATAR ============ */
 .qbit-preview,.qz-av,.hl-av,.hero-av,.lbr-av,.finish-av{display:inline-block;color:var(--ink)}
 .qbit-preview svg,.qz-av svg,.hl-av svg,.hero-av svg,.lbr-av svg,.finish-av svg{width:100%;height:100%;display:block;overflow:visible}
 .qbit-preview{width:150px;height:180px;margin:0 auto 16px;transition:transform .4s var(--ease-spring)}
@@ -37,9 +36,9 @@
 .qbit-preview.mood-happy,.qz-av.mood-happy{animation:qbitHappy .5s var(--ease-spring)}
 .qbit-preview.mood-sad,.qz-av.mood-sad{animation:qbitSad .4s var(--ease-spring)}
 .qbit-preview.mood-celebrate,.finish-av.mood-celebrate{animation:qbitCelebrate .7s var(--ease-spring)}
-.qbit-aura-glow{animation:qbitAuraPulse 2.5s ease-in-out infinite;transform-origin:50px 50px}
+.qbit-aura-glow{animation:qbitAuraPulse 2.5s ease-in-out infinite;transform-origin:50px 60px}
 @keyframes qbitAuraPulse{0%,100%{opacity:.2;transform:scale(1)}50%{opacity:.4;transform:scale(1.08)}}
-.qbit-aura-sparks .qbit-spark{animation:qbitSparkOrbit 3s linear infinite;transform-origin:50px 50px}
+.qbit-aura-sparks .qbit-spark{animation:qbitSparkOrbit 3s linear infinite;transform-origin:50px 60px}
 .qbit-aura-sparks .qbit-spark:nth-child(2){animation-delay:-1s}
 .qbit-aura-sparks .qbit-spark:nth-child(3){animation-delay:-2s}
 @keyframes qbitSparkOrbit{from{transform:rotate(0)}to{transform:rotate(360deg)}}
@@ -145,7 +144,6 @@ const bar=p=>'<div class="bar"><i style="width:'+Math.round(p)+'%"></i></div>';
 function trackWeak(subj){if(!subj||!USER)return;const k="uasa_weak_"+USER.id;const d=JSON.parse(st.get(k)||"{}");d[subj]=(d[subj]||0)+1;st.set(k,JSON.stringify(d))}
 function getWeak(){if(!USER)return[];const k="uasa_weak_"+USER.id;const d=JSON.parse(st.get(k)||"{}");return Object.entries(d).sort((a,b)=>b[1]-a[1]).slice(0,3)}
 function clearWeak(){if(!USER)return;st.del("uasa_weak_"+USER.id)}
-/* ============ QBIT AVATAR ============ */
 const AVATAR_PARTS = {
   head: [
     { id: "round",  label: "Round",  svg: "" },
@@ -254,11 +252,11 @@ function earnedAuras(){
 function auraSVG(aura){
   if(!aura||!aura.color)return "";
   const c=aura.color;
-  if(aura.type==="glow")return `<circle cx="50" cy="50" r="52" fill="${c}" opacity="0.2" class="qbit-aura qbit-aura-glow"/>`;
-  if(aura.type==="sparks")return `<g class="qbit-aura qbit-aura-sparks" fill="${c}"><circle class="qbit-spark" cx="100" cy="50" r="3.5"/><circle class="qbit-spark" cx="0" cy="50" r="3.5"/><circle class="qbit-spark" cx="50" cy="112" r="3.5"/></g>`;
-  if(aura.type==="flames")return `<g class="qbit-aura qbit-aura-flames"><path class="qbit-flame" d="M28 104 q4 -11 11 -6 q-2 -7 2 -11 q5 6 2 13 q4 -2 6 4 q2 6 -9 6 Z" fill="${c}" opacity="0.9"/><path class="qbit-flame" d="M62 104 q4 -11 11 -6 q-2 -7 2 -11 q5 6 2 13 q4 -2 6 4 q2 6 -9 6 Z" fill="${c}" opacity="0.9"/><path class="qbit-flame" d="M45 106 q3 -8 7 -4 q-1 -5 2 -8 q3 5 1 10 q3 -2 5 3 q1 5 -7 5 Z" fill="${c}" opacity="0.75"/></g>`;
-  if(aura.type==="galaxy")return `<g class="qbit-aura qbit-aura-galaxy" fill="${c}"><circle class="qbit-star" cx="14" cy="20" r="2"/><circle class="qbit-star" cx="86" cy="16" r="1.8"/><circle class="qbit-star" cx="8" cy="76" r="1.8"/><circle class="qbit-star" cx="92" cy="82" r="2"/></g>`;
-  if(aura.type==="bubbles")return `<g class="qbit-aura qbit-aura-bubbles" fill="none" stroke="${c}" stroke-width="2"><circle class="qbit-bubble" cx="20" cy="100" r="4"/><circle class="qbit-bubble" cx="80" cy="104" r="3"/><circle class="qbit-bubble" cx="50" cy="108" r="3.5"/></g>`;
+  if(aura.type==="glow")return `<circle cx="50" cy="60" r="52" fill="${c}" opacity="0.2" class="qbit-aura qbit-aura-glow"/>`;
+  if(aura.type==="sparks")return `<g class="qbit-aura qbit-aura-sparks" fill="${c}"><circle class="qbit-spark" cx="100" cy="60" r="3.5"/><circle class="qbit-spark" cx="0" cy="60" r="3.5"/><circle class="qbit-spark" cx="50" cy="120" r="3.5"/></g>`;
+  if(aura.type==="flames")return `<g class="qbit-aura qbit-aura-flames"><path class="qbit-flame" d="M32 118 q4 -11 11 -6 q-2 -7 2 -11 q5 6 2 13 q4 -2 6 4 q2 6 -9 6 Z" fill="${c}" opacity="0.9"/><path class="qbit-flame" d="M56 118 q4 -11 11 -6 q-2 -7 2 -11 q5 6 2 13 q4 -2 6 4 q2 6 -9 6 Z" fill="${c}" opacity="0.9"/><path class="qbit-flame" d="M45 119 q3 -8 7 -4 q-1 -5 2 -8 q3 5 1 10 q3 -2 5 3 q1 5 -7 5 Z" fill="${c}" opacity="0.75"/></g>`;
+  if(aura.type==="galaxy")return `<g class="qbit-aura qbit-aura-galaxy" fill="${c}"><circle class="qbit-star" cx="14" cy="24" r="2"/><circle class="qbit-star" cx="86" cy="18" r="1.8"/><circle class="qbit-star" cx="8" cy="82" r="1.8"/><circle class="qbit-star" cx="92" cy="88" r="2"/></g>`;
+  if(aura.type==="bubbles")return `<g class="qbit-aura qbit-aura-bubbles" fill="none" stroke="${c}" stroke-width="2"><circle class="qbit-bubble" cx="20" cy="110" r="4"/><circle class="qbit-bubble" cx="80" cy="114" r="3"/><circle class="qbit-bubble" cx="50" cy="118" r="3.5"/></g>`;
   return "";
 }
 function renderAvatar(cfg, size, mood) {
@@ -281,45 +279,47 @@ function renderAvatar(cfg, size, mood) {
   const acc   = AVATAR_PARTS.acc.find(x => x.id === cfg.acc)     || AVATAR_PARTS.acc[0];
   const aura  = AVATAR_AURAS.find(x => x.id === cfg.aura)        || AVATAR_AURAS[0];
   const sizeAttr = size ? `width="${size}" height="${size}"` : `width="100%" height="100%"`;
-  const skinColor = skin.color;
+  const sc = skin.color;
 
   let headShape = "";
-  if (head.id === "round")  headShape = `<circle cx="50" cy="32" r="22" fill="${skinColor}" stroke="currentColor" stroke-width="3"/>`;
-  if (head.id === "oval")   headShape = `<ellipse cx="50" cy="32" rx="19" ry="24" fill="${skinColor}" stroke="currentColor" stroke-width="3"/>`;
-  if (head.id === "square") headShape = `<rect x="28" y="12" width="44" height="44" rx="18" fill="${skinColor}" stroke="currentColor" stroke-width="3"/>`;
+  if (head.id === "round")  headShape = `<circle cx="50" cy="30" r="20" fill="${sc}" stroke="currentColor" stroke-width="3"/>`;
+  if (head.id === "oval")   headShape = `<ellipse cx="50" cy="30" rx="17" ry="22" fill="${sc}" stroke="currentColor" stroke-width="3"/>`;
+  if (head.id === "square") headShape = `<rect x="30" y="10" width="40" height="40" rx="14" fill="${sc}" stroke="currentColor" stroke-width="3"/>`;
 
-  return `<svg viewBox="0 0 100 120" ${sizeAttr} xmlns="http://www.w3.org/2000/svg" class="qbit" style="--qbit-skin:${skinColor};--qbit-cloth:${skinColor}">
+  return `<svg viewBox="0 0 100 120" ${sizeAttr} xmlns="http://www.w3.org/2000/svg" class="qbit" style="--qbit-skin:${sc};--qbit-cloth:${sc}">
     ${auraSVG(aura)}
     <g class="qbit-body">
-      <g class="qbit-legs" fill="${skinColor}" stroke="currentColor" stroke-width="3">
-        <rect x="40" y="74" width="8" height="16" rx="3"/>
-        <rect x="52" y="74" width="8" height="16" rx="3"/>
-      </g>
-      <g class="qbit-shoes" fill="#1a1614" stroke="currentColor" stroke-width="2.5">
-        <rect x="37" y="88" width="14" height="8" rx="3"/>
-        <rect x="49" y="88" width="14" height="8" rx="3"/>
-      </g>
-      <g class="qbit-arms" fill="${skinColor}" stroke="currentColor" stroke-width="3">
-        <rect x="24" y="48" width="8" height="22" rx="4"/>
-        <rect x="68" y="48" width="8" height="22" rx="4"/>
-      </g>
-      <g class="qbit-hands" fill="${skinColor}" stroke="currentColor" stroke-width="2.5">
-        <circle cx="28" cy="70" r="5"/>
-        <circle cx="72" cy="70" r="5"/>
-      </g>
-      <rect x="46" y="50" width="8" height="6" fill="${skinColor}" stroke="currentColor" stroke-width="2"/>
-      <g class="qbit-clothes">${cloth.svg}</g>
+
+      <rect x="39" y="86" width="9" height="20" rx="4" fill="${sc}" stroke="currentColor" stroke-width="3"/>
+      <rect x="52" y="86" width="9" height="20" rx="4" fill="${sc}" stroke="currentColor" stroke-width="3"/>
+
+      <rect x="33" y="104" width="16" height="9" rx="3" fill="#1a1614" stroke="currentColor" stroke-width="2.5"/>
+      <rect x="51" y="104" width="16" height="9" rx="3" fill="#1a1614" stroke="currentColor" stroke-width="2.5"/>
+
+      <rect x="22" y="56" width="14" height="26" rx="7" fill="${sc}" stroke="currentColor" stroke-width="3"/>
+      <rect x="64" y="56" width="14" height="26" rx="7" fill="${sc}" stroke="currentColor" stroke-width="3"/>
+
+      <circle cx="29" cy="84" r="6" fill="${sc}" stroke="currentColor" stroke-width="2.5"/>
+      <circle cx="71" cy="84" r="6" fill="${sc}" stroke="currentColor" stroke-width="2.5"/>
+
+      <rect x="44" y="44" width="12" height="16" fill="${sc}" stroke="currentColor" stroke-width="2.5"/>
+
+      <g class="qbit-clothes" transform="translate(0, 12)">${cloth.svg}</g>
+
       ${headShape}
+
       <g class="qbit-hair">${hair.svg}</g>
+
       <g class="qbit-brows" fill="none">${brows.svg}</g>
       <g class="qbit-blush">${blush.svg}</g>
       <g class="qbit-eyes" fill="none">${eyes.svg}</g>
       <g class="qbit-mouth" fill="none">${mouth.svg}</g>
+
       <g class="qbit-acc" fill="none">${acc.svg}</g>
+
     </g>
   </svg>`;
 }
-/* ============ SHOP ============ */
 const SHOP_ITEMS=[
 {id:"freeze",icon:"🔥",name:"Streak Freeze",desc:"Protect your streak for 1 missed day",cost:200},
 {id:"hearts",icon:"❤️",name:"Heart Refill",desc:"Refill all 5 hearts instantly",cost:150},
@@ -337,7 +337,6 @@ function setOwned(arr){st.set("uasa_shop_"+USER.id,JSON.stringify(arr))}
 function applyCustomTheme(name){const t=CUSTOM_THEMES[name];if(!t)return;const r=document.documentElement;Object.entries(t).forEach(([k,v])=>r.style.setProperty(k,v));st.set("uasa_custom_theme_"+USER.id,name)}
 function clearCustomTheme(){const r=document.documentElement;Object.keys(CUSTOM_THEMES.ocean).forEach(k=>r.style.removeProperty(k));st.del("uasa_custom_theme_"+USER.id)}
 function loadSavedTheme(){if(!USER)return;const t=st.get("uasa_custom_theme_"+USER.id);if(t&&CUSTOM_THEMES[t])applyCustomTheme(t)}
-/* ============ UI HELPERS ============ */
 function toast(m){const t=document.createElement("div");t.className="toast";t.setAttribute("role","status");t.textContent=m;document.body.appendChild(t);setTimeout(()=>t.remove(),2400)}
 function pop(n){const d=document.createElement("div");d.className="pop";d.textContent="+"+n+" XP";document.body.appendChild(d);setTimeout(()=>d.remove(),1300)}
 function setSaveState(s){const el=$("cs");if(!el)return;const m={saving:["☁️ Saving…",""],saved:["☁️ Saved","save-ok"],error:["⚠️ Not saved","save-bad"]};const a=m[s]||m.saved;el.textContent=a[0];el.className="chip "+a[1]}
@@ -381,7 +380,6 @@ const poolForYear=y=>{const n={"Year 4":4,"Year 5":5,"Year 6":6,"Form 1":6,"Form
 const view=h=>{$("main").innerHTML=h;scrollTo(0,0)};
 const lk=(a,r,t)=>'<button class="lk" data-a="'+a+'" data-r="'+esc(r)+'">'+t+'</button>';
 async function loadTeacherLessons(){if(!USER||!sb)return;try{const r=await sb.from("teacher_lessons").select("id,teacher_id,subject,unit_title,lesson_title,learn_text,questions,published,class_code,created_at").order("created_at",{ascending:true}).limit(1000);if(!r.error)window.TEACHER_LESSONS=r.data||[]}catch(e){}}
-/* ============ QBIT BUILDER ============ */
 let AV_TEMP = null;
 let AV_TAB = "body";
 function avLoad() { AV_TEMP = { ...DEFAULT_AVATAR, ...(USER.avatar || {}) }; }
@@ -398,7 +396,7 @@ function avPick(key, id) {
     if (!has) { toast("🔒 Earn this aura: " + item.earn); return; }
     AV_TEMP.aura = id; avRedraw(); return;
   }
-  if (key === "head" || key === "skin" || key === "eyes" || key === "brows" || key === "blush" || key === "mouth" || key === "hair") {
+  if (["head","skin","eyes","brows","blush","mouth","hair"].includes(key)) {
     AV_TEMP[key] = id; avRedraw(); return;
   }
   const ownedKey = "av_" + key + "_" + id;
@@ -503,7 +501,6 @@ function avatarBuilderHTML(cfg) {
       </div>
     </div>`;
 }
-/* ============ NAV ============ */
 function nav(p){
 const role=(USER&&USER.role)||"student";let items;
 if(role==="admin")items=[["admin","🛡️ Admin"],["teacher","🎓 Studio"],["subjects","📚 Subjects"],["exam","📝 Exam"],["shop","🛒 Shop"],["leaderboard","🏆 Board"],["profile","👤 Profile"]];
@@ -515,7 +512,6 @@ if(role==="admin")tabs=[["admin","🛡️","Admin"],["teacher","🎓","Studio"],
 else if(role==="teacher")tabs=[["teacher","🎓","Studio"],["leaderboard","🏆","Board"],["profile","👤","Me"]];
 else tabs=[["home","🏠","Home"],["subjects","📚","Learn"],["exam","📝","Exam"],["shop","🛒","Shop"],["profile","👤","Me"]];
 tb.innerHTML=tabs.map(x=>'<button class="'+(x[0]===p?"on":"")+'" data-a="page" data-r="'+x[0]+'"><span class="ti">'+x[1]+'</span>'+x[2]+'</button>').join("")}}
-/* ============ PAGES ============ */
 const PAGES={
 home(){const n=SUBJ.reduce((a,s)=>a+sDone(s[0]),0),into=USER.xp%350,goal=50,prog=Math.min(USER.dailyXp||0,goal),pct=prog/goal*100;
 const weak=getWeak();

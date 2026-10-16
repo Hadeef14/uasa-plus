@@ -29,17 +29,17 @@
 .qbit-preview svg,.qz-av svg,.hl-av svg,.hero-av svg,.lbr-av svg,.finish-av svg{width:100%;height:100%;display:block;overflow:visible}
 .qbit-preview{width:150px;height:180px;margin:0 auto 16px;transition:transform .4s var(--ease-spring)}
 .qbit-preview:hover{transform:scale(1.04) rotate(-2deg)}
-.qbit-body{animation:qbitBob 3s ease-in-out infinite;transform-origin:50% 80%}
-@keyframes qbitBob{0%,100%{transform:translateY(0)}50%{transform:translateY(-3px)}}
+.qbit-body{animation:qbitBob 3s ease-in-out infinite;transform-origin:50% 85%}
+@keyframes qbitBob{0%,100%{transform:translateY(0)}50%{transform:translateY(-2px)}}
 @keyframes qbitHappy{0%{transform:scale(1)}40%{transform:scale(1.15) rotate(-5deg)}100%{transform:scale(1)}}
 @keyframes qbitSad{0%,100%{transform:translateX(0)}25%{transform:translateX(-4px)}75%{transform:translateX(4px)}}
 @keyframes qbitCelebrate{0%,100%{transform:translateY(0) rotate(0)}30%{transform:translateY(-10px) rotate(8deg)}60%{transform:translateY(-4px) rotate(-4deg)}}
 .qbit-preview.mood-happy,.qz-av.mood-happy{animation:qbitHappy .5s var(--ease-spring)}
 .qbit-preview.mood-sad,.qz-av.mood-sad{animation:qbitSad .4s var(--ease-spring)}
 .qbit-preview.mood-celebrate,.finish-av.mood-celebrate{animation:qbitCelebrate .7s var(--ease-spring)}
-.qbit-aura-glow{animation:qbitAuraPulse 2.5s ease-in-out infinite;transform-origin:50px 56px}
+.qbit-aura-glow{animation:qbitAuraPulse 2.5s ease-in-out infinite;transform-origin:50px 50px}
 @keyframes qbitAuraPulse{0%,100%{opacity:.2;transform:scale(1)}50%{opacity:.4;transform:scale(1.08)}}
-.qbit-aura-sparks .qbit-spark{animation:qbitSparkOrbit 3s linear infinite;transform-origin:50px 56px}
+.qbit-aura-sparks .qbit-spark{animation:qbitSparkOrbit 3s linear infinite;transform-origin:50px 50px}
 .qbit-aura-sparks .qbit-spark:nth-child(2){animation-delay:-1s}
 .qbit-aura-sparks .qbit-spark:nth-child(3){animation-delay:-2s}
 @keyframes qbitSparkOrbit{from{transform:rotate(0)}to{transform:rotate(360deg)}}
@@ -147,81 +147,83 @@ function getWeak(){if(!USER)return[];const k="uasa_weak_"+USER.id;const d=JSON.p
 function clearWeak(){if(!USER)return;st.del("uasa_weak_"+USER.id)}
 /* ============ QBIT AVATAR ============ */
 const AVATAR_PARTS = {
-  body: [
-    { id: "cube",    label: "Cube",    svg: '<rect x="20" y="24" width="60" height="62" rx="18" fill="var(--qbit-color)" stroke="currentColor" stroke-width="3"/>' },
-    { id: "round",   label: "Round",   svg: '<rect x="20" y="24" width="60" height="62" rx="26" fill="var(--qbit-color)" stroke="currentColor" stroke-width="3"/>' },
-    { id: "pill",    label: "Pill",    svg: '<rect x="22" y="24" width="56" height="62" rx="28" fill="var(--qbit-color)" stroke="currentColor" stroke-width="3"/>' },
-    { id: "hex",     label: "Hex",     svg: '<path d="M50 24 L78 40 L78 70 L50 86 L22 70 L22 40 Z" fill="var(--qbit-color)" stroke="currentColor" stroke-width="3" stroke-linejoin="round"/>' },
-    { id: "egg",     label: "Egg",     svg: '<path d="M50 20 Q80 22 80 56 Q80 88 50 88 Q20 88 20 56 Q20 22 50 20 Z" fill="var(--qbit-color)" stroke="currentColor" stroke-width="3" stroke-linejoin="round"/>' }
+  head: [
+    { id: "round",  label: "Round",  svg: "" },
+    { id: "oval",   label: "Oval",   svg: "" },
+    { id: "square", label: "Square", svg: "" }
   ],
-  color: [
-    { id: "saffron", label: "Saffron", color: "#f59e0b" },
-    { id: "jade",    label: "Jade",    color: "#059669" },
-    { id: "indigo",  label: "Indigo",  color: "#6366f1" },
-    { id: "teal",    label: "Teal",    color: "#0d9488" },
-    { id: "clay",    label: "Clay",    color: "#dc2626" },
-    { id: "plum",    label: "Plum",    color: "#9333ea" },
-    { id: "sky",     label: "Sky",     color: "#0ea5e9" },
-    { id: "lime",    label: "Lime",    color: "#65a30d" },
-    { id: "rose",    label: "Rose",    color: "#ec4899" },
-    { id: "slate",   label: "Slate",   color: "#64748b" }
+  skin: [
+    { id: "warm",  label: "Warm",  color: "#f4c7a1" },
+    { id: "tan",   label: "Tan",   color: "#e0a87c" },
+    { id: "deep",  label: "Deep",  color: "#a86b3c" },
+    { id: "olive", label: "Olive", color: "#c9985a" },
+    { id: "fair",  label: "Fair",  color: "#fbdcc0" },
+    { id: "cocoa", label: "Cocoa", color: "#8a5232" }
   ],
   eyes: [
-    { id: "dot",     label: "Dot",     svg: '<circle cx="38" cy="50" r="7" fill="#1a1614"/><circle cx="62" cy="50" r="7" fill="#1a1614"/><circle cx="35.5" cy="47" r="2.5" fill="#fff"/><circle cx="59.5" cy="47" r="2.5" fill="#fff"/>' },
-    { id: "wide",    label: "Wide",    svg: '<circle cx="38" cy="50" r="8.5" fill="#1a1614"/><circle cx="62" cy="50" r="8.5" fill="#1a1614"/><circle cx="35" cy="46.5" r="3" fill="#fff"/><circle cx="59" cy="46.5" r="3" fill="#fff"/>' },
-    { id: "happy",   label: "Happy",   svg: '<path d="M31 51 Q38 40 45 51" stroke="#1a1614" stroke-width="4" fill="none" stroke-linecap="round"/><path d="M55 51 Q62 40 69 51" stroke="#1a1614" stroke-width="4" fill="none" stroke-linecap="round"/>' },
-    { id: "closed",  label: "Closed",  svg: '<line x1="32" y1="50" x2="44" y2="50" stroke="#1a1614" stroke-width="4" stroke-linecap="round"/><line x1="56" y1="50" x2="68" y2="50" stroke="#1a1614" stroke-width="4" stroke-linecap="round"/>' },
-    { id: "sleepy",  label: "Sleepy",  svg: '<path d="M31 49 Q38 55 45 49" stroke="#1a1614" stroke-width="4" fill="none" stroke-linecap="round"/><path d="M55 49 Q62 55 69 49" stroke="#1a1614" stroke-width="4" fill="none" stroke-linecap="round"/>' },
-    { id: "wink",    label: "Wink",    svg: '<circle cx="38" cy="50" r="7" fill="#1a1614"/><circle cx="35.5" cy="47" r="2.5" fill="#fff"/><path d="M55 50 Q62 57 69 50" stroke="#1a1614" stroke-width="4" fill="none" stroke-linecap="round"/>' },
-    { id: "star",    label: "Star",    svg: '<path d="M38 41 L40.5 48 L48 49 L42 53 L44 60 L38 56.5 L32 60 L34 53 L28 49 L35.5 48 Z" fill="#1a1614"/><path d="M62 41 L64.5 48 L72 49 L66 53 L68 60 L62 56.5 L56 60 L58 53 L52 49 L59.5 48 Z" fill="#1a1614"/>' },
-    { id: "heart",   label: "Heart",   svg: '<path d="M32 48 Q32 41 37 41 Q39.5 41 39.5 44.5 Q39.5 41 42 41 Q47 41 47 48 Q47 54 39.5 58.5 Q32 54 32 48 Z" fill="#1a1614"/><path d="M53 48 Q53 41 58 41 Q60.5 41 60.5 44.5 Q60.5 41 63 41 Q68 41 68 48 Q68 54 60.5 58.5 Q53 54 53 48 Z" fill="#1a1614"/>' },
-    { id: "sparkle", label: "Sparkle", svg: '<path d="M38 40 L41 48 L49 50 L41 52 L38 60 L35 52 L27 50 L35 48 Z" fill="#1a1614"/><path d="M62 40 L65 48 L73 50 L65 52 L62 60 L59 52 L51 50 L59 48 Z" fill="#1a1614"/>' },
-    { id: "pupil",   label: "Pupil",   svg: '<circle cx="38" cy="50" r="8" fill="#fff" stroke="#1a1614" stroke-width="2.5"/><circle cx="62" cy="50" r="8" fill="#fff" stroke="#1a1614" stroke-width="2.5"/><circle cx="39" cy="51" r="3.5" fill="#1a1614"/><circle cx="63" cy="51" r="3.5" fill="#1a1614"/><circle cx="37.5" cy="49" r="1.2" fill="#fff"/><circle cx="61.5" cy="49" r="1.2" fill="#fff"/>' }
+    { id: "dot",     label: "Dot",     svg: '<circle cx="42" cy="30" r="4.5" fill="#1a1614"/><circle cx="58" cy="30" r="4.5" fill="#1a1614"/><circle cx="40.5" cy="28.5" r="1.7" fill="#fff"/><circle cx="56.5" cy="28.5" r="1.7" fill="#fff"/>' },
+    { id: "wide",    label: "Wide",    svg: '<circle cx="42" cy="30" r="6" fill="#1a1614"/><circle cx="58" cy="30" r="6" fill="#1a1614"/><circle cx="40" cy="28" r="2.2" fill="#fff"/><circle cx="56" cy="28" r="2.2" fill="#fff"/>' },
+    { id: "happy",   label: "Happy",   svg: '<path d="M36 31 Q42 24 48 31" stroke="#1a1614" stroke-width="3.5" fill="none" stroke-linecap="round"/><path d="M52 31 Q58 24 64 31" stroke="#1a1614" stroke-width="3.5" fill="none" stroke-linecap="round"/>' },
+    { id: "closed",  label: "Closed",  svg: '<line x1="37" y1="30" x2="47" y2="30" stroke="#1a1614" stroke-width="3.5" stroke-linecap="round"/><line x1="53" y1="30" x2="63" y2="30" stroke="#1a1614" stroke-width="3.5" stroke-linecap="round"/>' },
+    { id: "sleepy",  label: "Sleepy",  svg: '<path d="M36 29 Q42 35 48 29" stroke="#1a1614" stroke-width="3.5" fill="none" stroke-linecap="round"/><path d="M52 29 Q58 35 64 29" stroke="#1a1614" stroke-width="3.5" fill="none" stroke-linecap="round"/>' },
+    { id: "wink",    label: "Wink",    svg: '<circle cx="42" cy="30" r="4.5" fill="#1a1614"/><circle cx="40.5" cy="28.5" r="1.7" fill="#fff"/><path d="M52 30 Q58 36 64 30" stroke="#1a1614" stroke-width="3.5" fill="none" stroke-linecap="round"/>' },
+    { id: "star",    label: "Star",    svg: '<path d="M42 22 L44 28 L50 29 L45 33 L46.5 39 L42 35.5 L37.5 39 L39 33 L34 29 L40 28 Z" fill="#1a1614"/><path d="M58 22 L60 28 L66 29 L61 33 L62.5 39 L58 35.5 L53.5 39 L55 33 L50 29 L56 28 Z" fill="#1a1614"/>' },
+    { id: "heart",   label: "Heart",   svg: '<path d="M36 28 Q36 22 41 22 Q43.5 22 43.5 25.5 Q43.5 22 46 22 Q51 22 51 28 Q51 34 43.5 38 Q36 34 36 28 Z" fill="#1a1614"/><path d="M49 28 Q49 22 54 22 Q56.5 22 56.5 25.5 Q56.5 22 59 22 Q64 22 64 28 Q64 34 56.5 38 Q49 34 49 28 Z" fill="#1a1614"/>' },
+    { id: "sparkle", label: "Sparkle", svg: '<path d="M42 21 L44.5 28 L51.5 30 L44.5 32 L42 39 L39.5 32 L32.5 30 L39.5 28 Z" fill="#1a1614"/><path d="M58 21 L60.5 28 L67.5 30 L60.5 32 L58 39 L55.5 32 L48.5 30 L55.5 28 Z" fill="#1a1614"/>' }
+  ],
+  brows: [
+    { id: "none",   label: "None",   svg: "" },
+    { id: "soft",   label: "Soft",   svg: '<path d="M37 22 Q42 20 47 22" stroke="#1a1614" stroke-width="2" fill="none" stroke-linecap="round"/><path d="M53 22 Q58 20 63 22" stroke="#1a1614" stroke-width="2" fill="none" stroke-linecap="round"/>' },
+    { id: "raised", label: "Raised", svg: '<path d="M37 20 Q42 16 47 20" stroke="#1a1614" stroke-width="2" fill="none" stroke-linecap="round"/><path d="M53 20 Q58 16 63 20" stroke="#1a1614" stroke-width="2" fill="none" stroke-linecap="round"/>' },
+    { id: "angry",  label: "Angry",  svg: '<path d="M37 19 L47 23" stroke="#1a1614" stroke-width="2.5" fill="none" stroke-linecap="round"/><path d="M53 23 L63 19" stroke="#1a1614" stroke-width="2.5" fill="none" stroke-linecap="round"/>' },
+    { id: "sad",    label: "Sad",    svg: '<path d="M37 24 L47 20" stroke="#1a1614" stroke-width="2" fill="none" stroke-linecap="round"/><path d="M53 20 L63 24" stroke="#1a1614" stroke-width="2" fill="none" stroke-linecap="round"/>' }
+  ],
+  blush: [
+    { id: "none",   label: "None",   svg: "" },
+    { id: "soft",   label: "Soft",   svg: '<ellipse cx="34" cy="38" rx="4.5" ry="3" fill="#f472b6" opacity="0.5"/><ellipse cx="66" cy="38" rx="4.5" ry="3" fill="#f472b6" opacity="0.5"/>' },
+    { id: "bright", label: "Bright", svg: '<ellipse cx="34" cy="38" rx="5.5" ry="3.5" fill="#ec4899" opacity="0.7"/><ellipse cx="66" cy="38" rx="5.5" ry="3.5" fill="#ec4899" opacity="0.7"/>' },
+    { id: "freckle",label: "Freckles",svg: '<circle cx="32" cy="38" r="0.9" fill="#a8714f"/><circle cx="35" cy="40" r="0.9" fill="#a8714f"/><circle cx="38" cy="37" r="0.9" fill="#a8714f"/><circle cx="33" cy="35" r="0.9" fill="#a8714f"/><circle cx="62" cy="38" r="0.9" fill="#a8714f"/><circle cx="65" cy="40" r="0.9" fill="#a8714f"/><circle cx="68" cy="37" r="0.9" fill="#a8714f"/><circle cx="67" cy="35" r="0.9" fill="#a8714f"/>' }
   ],
   mouth: [
-    { id: "smile",  label: "Smile",  svg: '<path d="M42 66 Q50 73 58 66" stroke="#1a1614" stroke-width="3.5" fill="none" stroke-linecap="round"/>' },
-    { id: "grin",   label: "Grin",   svg: '<path d="M40 64 Q50 76 60 64 Z" fill="#1a1614"/><path d="M44 65 L44 68 M48 65 L48 70 M52 65 L52 70 M56 65 L56 68" stroke="#fff" stroke-width="1.2" opacity="0.7"/>' },
-    { id: "laugh",  label: "Laugh",  svg: '<path d="M40 62 Q50 78 60 62 Z" fill="#1a1614"/><path d="M45 65 Q50 71 55 65 Z" fill="#e879a0"/>' },
-    { id: "flat",   label: "Flat",   svg: '<path d="M42 68 L58 68" stroke="#1a1614" stroke-width="3.5" fill="none" stroke-linecap="round"/>' },
-    { id: "sad",    label: "Sad",    svg: '<path d="M42 71 Q50 64 58 71" stroke="#1a1614" stroke-width="3.5" fill="none" stroke-linecap="round"/>' },
-    { id: "o",      label: "O",      svg: '<ellipse cx="50" cy="68" rx="4.5" ry="5.5" fill="none" stroke="#1a1614" stroke-width="3.5"/>' },
-    { id: "tiny",   label: "Tiny",   svg: '<circle cx="50" cy="68" r="2.8" fill="#1a1614"/>' },
-    { id: "smirk",  label: "Smirk",  svg: '<path d="M42 68 Q50 74 58 65" stroke="#1a1614" stroke-width="3.5" fill="none" stroke-linecap="round"/>' },
-    { id: "tongue", label: "Tongue", svg: '<path d="M42 66 Q50 73 58 66" stroke="#1a1614" stroke-width="3.5" fill="none" stroke-linecap="round"/><path d="M46 68 Q50 75 54 68 Z" fill="#e879a0"/>' },
-    { id: "cat",    label: "Cat",    svg: '<path d="M44 66 Q50 71 56 66" stroke="#1a1614" stroke-width="3" fill="none" stroke-linecap="round"/><path d="M40 67 Q42 65 44 66 M56 66 Q58 65 60 67" stroke="#1a1614" stroke-width="3" fill="none" stroke-linecap="round"/>' }
+    { id: "smile",  label: "Smile",  svg: '<path d="M44 42 Q50 48 56 42" stroke="#1a1614" stroke-width="3" fill="none" stroke-linecap="round"/>' },
+    { id: "grin",   label: "Grin",   svg: '<path d="M42 40 Q50 50 58 40 Z" fill="#1a1614"/><path d="M45 41 L45 44 M48 41 L48 46 M52 41 L52 46 M55 41 L55 44" stroke="#fff" stroke-width="1" opacity="0.6"/>' },
+    { id: "laugh",  label: "Laugh",  svg: '<path d="M42 38 Q50 52 58 38 Z" fill="#1a1614"/><path d="M46 41 Q50 46 54 41 Z" fill="#e879a0"/>' },
+    { id: "flat",   label: "Flat",   svg: '<path d="M44 44 L56 44" stroke="#1a1614" stroke-width="3" stroke-linecap="round"/>' },
+    { id: "sad",    label: "Sad",    svg: '<path d="M44 46 Q50 40 56 46" stroke="#1a1614" stroke-width="3" fill="none" stroke-linecap="round"/>' },
+    { id: "o",      label: "O",      svg: '<ellipse cx="50" cy="44" rx="3.5" ry="4.5" fill="none" stroke="#1a1614" stroke-width="3"/>' },
+    { id: "smirk",  label: "Smirk",  svg: '<path d="M44 44 Q50 49 57 42" stroke="#1a1614" stroke-width="3" fill="none" stroke-linecap="round"/>' },
+    { id: "tongue", label: "Tongue", svg: '<path d="M44 42 Q50 48 56 42" stroke="#1a1614" stroke-width="3" fill="none" stroke-linecap="round"/><path d="M47 44 Q50 50 53 44 Z" fill="#e879a0"/>' }
   ],
   hair: [
     { id: "none",    label: "None",    svg: "" },
-    { id: "tuft",    label: "Tuft",    svg: '<path d="M46 24 Q50 12 58 18" stroke="currentColor" stroke-width="4.5" fill="none" stroke-linecap="round"/>' },
-    { id: "mohawk",  label: "Mohawk",  svg: '<path d="M40 26 L43 14 L48 20 L50 8 L52 20 L57 14 L60 26 Z" fill="currentColor" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>' },
-    { id: "antenna", label: "Antenna", svg: '<line x1="50" y1="24" x2="50" y2="12" stroke="currentColor" stroke-width="3.5" stroke-linecap="round"/><circle cx="50" cy="9" r="4.5" fill="var(--saffron)" stroke="currentColor" stroke-width="2.5"/>' },
-    { id: "bow",     label: "Bow",     svg: '<path d="M34 20 L40 12 L46 18 L46 28 L40 34 L34 26 Z" fill="#ec4899" stroke="currentColor" stroke-width="2.5" stroke-linejoin="round"/><path d="M66 20 L60 12 L54 18 L54 28 L60 34 L66 26 Z" fill="#ec4899" stroke="currentColor" stroke-width="2.5" stroke-linejoin="round"/><circle cx="50" cy="23" r="4" fill="#ec4899" stroke="currentColor" stroke-width="2.5"/>' },
-    { id: "crown",   label: "Crown",   svg: '<path d="M30 26 L36 12 L42 20 L50 6 L58 20 L64 12 L70 26 Z" fill="var(--saffron)" stroke="currentColor" stroke-width="2.5" stroke-linejoin="round"/><circle cx="36" cy="13" r="2" fill="#dc2626"/><circle cx="50" cy="9" r="2.5" fill="#3b82f6"/><circle cx="64" cy="13" r="2" fill="#dc2626"/>' },
-    { id: "cap",     label: "Cap",     svg: '<path d="M22 32 Q22 16 50 16 Q78 16 78 32 Z" fill="currentColor"/><path d="M78 28 Q90 28 90 34 L78 34 Z" fill="currentColor"/><line x1="22" y1="32" x2="78" y2="32" stroke="currentColor" stroke-width="2"/>' },
-    { id: "beanie",  label: "Beanie",  svg: '<path d="M24 34 Q24 12 50 12 Q76 12 76 34 Z" fill="currentColor"/><rect x="22" y="32" width="56" height="8" rx="3" fill="currentColor"/><circle cx="50" cy="10" r="3.5" fill="var(--saffron)"/>' }
+    { id: "short",   label: "Short",   svg: '<path d="M28 28 Q28 8 50 8 Q72 8 72 28 Q68 20 60 18 Q54 20 50 18 Q46 20 40 18 Q32 20 28 28 Z" fill="currentColor"/>' },
+    { id: "fringe",  label: "Fringe",  svg: '<path d="M28 28 Q28 8 50 8 Q72 8 72 28 Q68 18 62 22 Q58 16 52 22 Q48 14 40 22 Q34 16 28 24 Z" fill="currentColor"/>' },
+    { id: "bun",     label: "Bun",     svg: '<circle cx="50" cy="4" r="7" fill="currentColor"/><path d="M28 28 Q28 10 50 8 Q72 10 72 28 Q68 20 60 18 Q54 20 50 18 Q46 20 40 18 Q32 20 28 28 Z" fill="currentColor"/>' },
+    { id: "long",    label: "Long",    svg: '<path d="M26 28 Q26 6 50 6 Q74 6 74 28 L74 56 Q72 59 68 56 L68 30 Q66 22 58 18 Q54 20 50 18 Q46 20 42 18 Q34 22 32 30 L32 56 Q28 59 26 56 Z" fill="currentColor"/>' },
+    { id: "ponytail",label: "Ponytail",svg: '<path d="M28 28 Q28 8 50 8 Q72 8 72 28 Q68 20 60 18 Q54 20 50 18 Q46 20 40 18 Q32 20 28 28 Z" fill="currentColor"/><ellipse cx="78" cy="32" rx="5.5" ry="11" transform="rotate(-20 78 32)" fill="currentColor"/>' },
+    { id: "curly",   label: "Curly",   svg: '<circle cx="32" cy="18" r="7" fill="currentColor"/><circle cx="43" cy="10" r="8" fill="currentColor"/><circle cx="57" cy="10" r="8" fill="currentColor"/><circle cx="68" cy="18" r="7" fill="currentColor"/><circle cx="24" cy="30" r="6" fill="currentColor"/><circle cx="76" cy="30" r="6" fill="currentColor"/>' },
+    { id: "bowl",    label: "Bowl",    svg: '<path d="M26 28 Q26 8 50 8 Q74 8 74 28 Q70 20 64 22 Q56 18 50 18 Q44 18 36 22 Q30 20 26 28 Z" fill="currentColor"/>' },
+    { id: "spiky",   label: "Spiky",   svg: '<path d="M26 26 L30 12 L36 20 L40 6 L46 18 L50 4 L54 18 L60 6 L64 20 L70 12 L74 26 Q70 18 64 16 Q56 14 50 14 Q44 14 36 16 Q30 18 26 26 Z" fill="currentColor"/>' },
+    { id: "bob",     label: "Bob",     svg: '<path d="M26 28 Q26 6 50 6 Q74 6 74 28 L74 44 Q72 47 68 44 L68 30 Q66 20 58 16 Q54 18 50 16 Q46 18 42 16 Q34 20 32 30 L32 44 Q28 47 26 44 Z" fill="currentColor"/>' },
+    { id: "buzz",    label: "Buzz",    svg: '<path d="M30 26 Q30 12 50 10 Q70 12 70 26 Q68 18 62 16 Q56 14 50 14 Q44 14 38 16 Q32 18 30 26 Z" fill="currentColor"/>' }
   ],
   clothes: [
-    { id: "none",     label: "None",     cost: 0,   svg: "" },
-    { id: "scarf",    label: "Scarf",    cost: 150, svg: '<path d="M28 76 Q50 88 72 76" stroke="#dc2626" stroke-width="6" fill="none" stroke-linecap="round"/><rect x="46" y="84" width="8" height="16" rx="3" fill="#dc2626" stroke="currentColor" stroke-width="2.5"/>' },
-    { id: "backpack", label: "Backpack", cost: 250, svg: '<rect x="14" y="34" width="10" height="42" rx="4" fill="#3b82f6" stroke="currentColor" stroke-width="2.5"/><rect x="76" y="34" width="10" height="42" rx="4" fill="#3b82f6" stroke="currentColor" stroke-width="2.5"/>' },
-    { id: "hoodie",   label: "Hoodie",   cost: 300, svg: '<path d="M28 74 Q50 86 72 74" stroke="currentColor" stroke-width="4.5" fill="none" stroke-linecap="round"/><path d="M40 80 L40 92 M60 80 L60 92" stroke="currentColor" stroke-width="3" stroke-linecap="round"/><circle cx="46" cy="96" r="2" fill="currentColor"/><circle cx="54" cy="96" r="2" fill="currentColor"/>' },
-    { id: "armor",    label: "Armor",    cost: 500, svg: '<path d="M26 30 L32 26 L36 36 L44 30 L50 40 L56 30 L64 36 L68 26 L74 30 L70 60 L66 64 L34 64 L30 60 Z" fill="#64748b" stroke="currentColor" stroke-width="2.5" stroke-linejoin="round"/><path d="M50 40 L50 60" stroke="currentColor" stroke-width="1.5" opacity="0.6"/>' },
-    { id: "apron",    label: "Apron",    cost: 220, svg: '<path d="M34 44 L66 44 L70 88 L30 88 Z" fill="var(--paper)" stroke="currentColor" stroke-width="2.5" stroke-linejoin="round"/><path d="M40 44 Q50 38 60 44" stroke="currentColor" stroke-width="2.5" fill="none"/>' },
-    { id: "vest",     label: "Vest",     cost: 380, svg: '<path d="M28 34 L38 30 L38 78 L28 78 Z" fill="#059669" stroke="currentColor" stroke-width="2.5" stroke-linejoin="round"/><path d="M72 34 L62 30 L62 78 L72 78 Z" fill="#059669" stroke="currentColor" stroke-width="2.5" stroke-linejoin="round"/>' },
-    { id: "sweater",  label: "Sweater",  cost: 200, svg: '<path d="M28 74 Q50 86 72 74" stroke="var(--saffron)" stroke-width="6" fill="none" stroke-linecap="round"/><path d="M28 82 L72 82" stroke="var(--saffron)" stroke-width="2.5" stroke-dasharray="4 3"/>' },
-    { id: "cape",     label: "Cape",     cost: 450, svg: '<path d="M22 30 Q8 66 16 100 Q30 92 50 92 Q70 92 84 100 Q92 66 78 30 Z" fill="#dc2626" stroke="currentColor" stroke-width="2.5" stroke-linejoin="round" opacity="0.85"/>' }
+    { id: "tee",     label: "Tee",     cost: 0,   svg: '<path d="M38 46 Q38 44 42 44 L58 44 Q62 44 62 46 L64 72 Q64 74 62 74 L38 74 Q36 74 36 72 Z" fill="var(--qbit-cloth)"/>' },
+    { id: "hoodie",  label: "Hoodie",  cost: 200, svg: '<path d="M38 46 Q38 44 42 44 L58 44 Q62 44 62 46 L64 72 Q64 74 62 74 L38 74 Q36 74 36 72 Z" fill="var(--qbit-cloth)"/><path d="M44 44 Q50 50 56 44" stroke="currentColor" stroke-width="2" fill="none" stroke-linejoin="round"/><circle cx="45" cy="62" r="1.5" fill="currentColor"/><circle cx="55" cy="62" r="1.5" fill="currentColor"/>' },
+    { id: "sweater", label: "Sweater", cost: 150, svg: '<path d="M38 46 Q38 44 42 44 L58 44 Q62 44 62 46 L64 72 Q64 74 62 74 L38 74 Q36 74 36 72 Z" fill="var(--qbit-cloth)"/><path d="M36 64 L64 64" stroke="currentColor" stroke-width="1.5" opacity="0.4"/>' },
+    { id: "jacket",  label: "Jacket",  cost: 300, svg: '<path d="M38 46 Q38 44 42 44 L58 44 Q62 44 62 46 L64 72 Q64 74 62 74 L38 74 Q36 74 36 72 Z" fill="var(--qbit-cloth)"/><line x1="50" y1="44" x2="50" y2="74" stroke="currentColor" stroke-width="2"/>' },
+    { id: "dress",   label: "Dress",   cost: 400, svg: '<path d="M40 44 Q40 42 44 42 L56 42 Q60 42 60 44 L68 74 Q68 76 66 76 L34 76 Q32 76 32 74 Z" fill="var(--qbit-cloth)"/><path d="M46 42 Q50 48 54 42" stroke="currentColor" stroke-width="2" fill="none"/>' },
+    { id: "uniform", label: "Uniform", cost: 350, svg: '<path d="M38 46 Q38 44 42 44 L50 52 L58 44 Q62 44 62 46 L64 72 Q64 74 62 74 L38 74 Q36 74 36 72 Z" fill="var(--qbit-cloth)"/><path d="M50 52 L48 58 L50 68 L52 58 Z" fill="#dc2626" stroke="currentColor" stroke-width="1.5"/>' }
   ],
   acc: [
     { id: "none",       label: "None",       cost: 0,   svg: "" },
-    { id: "glasses",    label: "Glasses",    cost: 200, svg: '<circle cx="38" cy="50" r="10" fill="none" stroke="currentColor" stroke-width="3"/><circle cx="62" cy="50" r="10" fill="none" stroke="currentColor" stroke-width="3"/><line x1="48" y1="50" x2="52" y2="50" stroke="currentColor" stroke-width="3"/>' },
-    { id: "shades",     label: "Shades",     cost: 280, svg: '<path d="M26 42 L48 42 L50 54 Q48 62 38 62 Q28 62 24 54 Z" fill="#1a1614" stroke="currentColor" stroke-width="2.5" stroke-linejoin="round"/><path d="M52 42 L74 42 L76 54 Q72 62 62 62 Q52 62 50 54 Z" fill="#1a1614" stroke="currentColor" stroke-width="2.5" stroke-linejoin="round"/><line x1="48" y1="50" x2="52" y2="50" stroke="currentColor" stroke-width="2.5"/>' },
-    { id: "earpods",    label: "Earpods",    cost: 300, svg: '<rect x="14" y="44" width="8" height="14" rx="4" fill="currentColor"/><rect x="78" y="44" width="8" height="14" rx="4" fill="currentColor"/>' },
-    { id: "headphones", label: "Headphones", cost: 400, svg: '<path d="M18 52 Q18 12 50 12 Q82 12 82 52" stroke="currentColor" stroke-width="4.5" fill="none"/><rect x="12" y="46" width="12" height="20" rx="5" fill="currentColor"/><rect x="76" y="46" width="12" height="20" rx="5" fill="currentColor"/>' },
-    { id: "mask",       label: "Mask",       cost: 220, svg: '<path d="M30 58 Q50 56 70 58 L68 72 Q60 74 50 74 Q40 74 32 72 Z" fill="var(--paper)" stroke="currentColor" stroke-width="2.5" stroke-linejoin="round"/>' },
-    { id: "watch",      label: "Watch",      cost: 250, svg: '<circle cx="88" cy="84" r="7" fill="none" stroke="currentColor" stroke-width="2.5"/><line x1="88" y1="80" x2="88" y2="85" stroke="currentColor" stroke-width="2"/><line x1="88" y1="85" x2="91" y2="87" stroke="currentColor" stroke-width="2"/>' },
-    { id: "wings",      label: "Wings",      cost: 650, svg: '<path d="M20 36 Q0 22 8 6 Q24 10 30 26 Z" fill="var(--paper)" stroke="currentColor" stroke-width="2.5" stroke-linejoin="round"/><path d="M80 36 Q100 22 92 6 Q76 10 70 26 Z" fill="var(--paper)" stroke="currentColor" stroke-width="2.5" stroke-linejoin="round"/>' },
-    { id: "halo",       label: "Halo",       cost: 700, svg: '<ellipse cx="50" cy="12" rx="16" ry="4.5" fill="none" stroke="var(--saffron)" stroke-width="3.5"/><ellipse cx="50" cy="12" rx="16" ry="4.5" fill="none" stroke="currentColor" stroke-width="1" opacity="0.4"/>' },
-    { id: "bowtie",     label: "Bow tie",    cost: 260, svg: '<path d="M40 80 L30 74 L30 86 Z" fill="#dc2626" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><path d="M60 80 L70 74 L70 86 Z" fill="#dc2626" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><circle cx="50" cy="80" r="3.5" fill="#dc2626" stroke="currentColor" stroke-width="2"/>' }
+    { id: "glasses",    label: "Glasses",    cost: 150, svg: '<circle cx="42" cy="30" r="7" fill="none" stroke="currentColor" stroke-width="2.5"/><circle cx="58" cy="30" r="7" fill="none" stroke="currentColor" stroke-width="2.5"/><line x1="49" y1="30" x2="51" y2="30" stroke="currentColor" stroke-width="2.5"/>' },
+    { id: "cap",        label: "Cap",        cost: 200, svg: '<path d="M26 24 Q26 10 50 10 Q74 10 74 24 Z" fill="currentColor"/><path d="M74 20 Q84 20 84 26 L74 26 Z" fill="currentColor"/>' },
+    { id: "earpods",    label: "Earpods",    cost: 250, svg: '<rect x="20" y="26" width="6" height="10" rx="3" fill="currentColor"/><rect x="74" y="26" width="6" height="10" rx="3" fill="currentColor"/>' },
+    { id: "headphones", label: "Headphones", cost: 350, svg: '<path d="M24 30 Q24 6 50 6 Q76 6 76 30" stroke="currentColor" stroke-width="3.5" fill="none"/><rect x="18" y="26" width="10" height="14" rx="4" fill="currentColor"/><rect x="72" y="26" width="10" height="14" rx="4" fill="currentColor"/>' },
+    { id: "bow",        label: "Bow",        cost: 180, svg: '<path d="M38 12 L44 6 L48 12 L48 18 L44 24 L38 18 Z" fill="#ec4899" stroke="currentColor" stroke-width="2"/><path d="M62 12 L56 6 L52 12 L52 18 L56 24 L62 18 Z" fill="#ec4899" stroke="currentColor" stroke-width="2"/><circle cx="50" cy="15" r="3" fill="#ec4899" stroke="currentColor" stroke-width="2"/>' },
+    { id: "crown",      label: "Crown",      cost: 600, svg: '<path d="M34 20 L40 8 L46 16 L50 4 L54 16 L60 8 L66 20 Z" fill="var(--saffron)" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><circle cx="40" cy="9" r="2" fill="#dc2626"/><circle cx="50" cy="6" r="2" fill="#3b82f6"/><circle cx="60" cy="9" r="2" fill="#dc2626"/>' },
+    { id: "mask",       label: "Mask",       cost: 220, svg: '<path d="M32 36 Q50 34 68 36 L66 48 Q58 50 50 50 Q42 50 34 48 Z" fill="var(--paper)" stroke="currentColor" stroke-width="2.5" stroke-linejoin="round"/>' }
   ]
 };
 const AVATAR_AURAS = [
@@ -233,7 +235,7 @@ const AVATAR_AURAS = [
   { id: "galaxy",  label: "Galaxy",  type: "galaxy", color: "#9333ea", earn: "100 lessons" },
   { id: "sky",     label: "Bubbles", type: "bubbles",color: "#0ea5e9", earn: "50 lessons" }
 ];
-const DEFAULT_AVATAR = { body: "cube", color: "saffron", eyes: "dot", mouth: "smile", hair: "none", clothes: "none", acc: "none", aura: "none" };
+const DEFAULT_AVATAR = { head: "round", skin: "warm", eyes: "dot", brows: "soft", blush: "soft", mouth: "smile", hair: "short", clothes: "tee", acc: "none", aura: "none" };
 const isStaff = () => USER && (USER.role === "admin" || USER.role === "teacher");
 function earnedAuras(){
   if(!USER)return["none"];
@@ -252,9 +254,9 @@ function earnedAuras(){
 function auraSVG(aura){
   if(!aura||!aura.color)return "";
   const c=aura.color;
-  if(aura.type==="glow")return `<circle cx="50" cy="56" r="52" fill="${c}" opacity="0.2" class="qbit-aura qbit-aura-glow"/>`;
-  if(aura.type==="sparks")return `<g class="qbit-aura qbit-aura-sparks" fill="${c}"><circle class="qbit-spark" cx="100" cy="56" r="3.5"/><circle class="qbit-spark" cx="0" cy="56" r="3.5"/><circle class="qbit-spark" cx="50" cy="112" r="3.5"/></g>`;
-  if(aura.type==="flames")return `<g class="qbit-aura qbit-aura-flames"><path class="qbit-flame" d="M28 106 q4 -11 11 -6 q-2 -7 2 -11 q5 6 2 13 q4 -2 6 4 q2 6 -9 6 Z" fill="${c}" opacity="0.9"/><path class="qbit-flame" d="M62 106 q4 -11 11 -6 q-2 -7 2 -11 q5 6 2 13 q4 -2 6 4 q2 6 -9 6 Z" fill="${c}" opacity="0.9"/><path class="qbit-flame" d="M45 108 q3 -8 7 -4 q-1 -5 2 -8 q3 5 1 10 q3 -2 5 3 q1 5 -7 5 Z" fill="${c}" opacity="0.75"/></g>`;
+  if(aura.type==="glow")return `<circle cx="50" cy="50" r="52" fill="${c}" opacity="0.2" class="qbit-aura qbit-aura-glow"/>`;
+  if(aura.type==="sparks")return `<g class="qbit-aura qbit-aura-sparks" fill="${c}"><circle class="qbit-spark" cx="100" cy="50" r="3.5"/><circle class="qbit-spark" cx="0" cy="50" r="3.5"/><circle class="qbit-spark" cx="50" cy="112" r="3.5"/></g>`;
+  if(aura.type==="flames")return `<g class="qbit-aura qbit-aura-flames"><path class="qbit-flame" d="M28 104 q4 -11 11 -6 q-2 -7 2 -11 q5 6 2 13 q4 -2 6 4 q2 6 -9 6 Z" fill="${c}" opacity="0.9"/><path class="qbit-flame" d="M62 104 q4 -11 11 -6 q-2 -7 2 -11 q5 6 2 13 q4 -2 6 4 q2 6 -9 6 Z" fill="${c}" opacity="0.9"/><path class="qbit-flame" d="M45 106 q3 -8 7 -4 q-1 -5 2 -8 q3 5 1 10 q3 -2 5 3 q1 5 -7 5 Z" fill="${c}" opacity="0.75"/></g>`;
   if(aura.type==="galaxy")return `<g class="qbit-aura qbit-aura-galaxy" fill="${c}"><circle class="qbit-star" cx="14" cy="20" r="2"/><circle class="qbit-star" cx="86" cy="16" r="1.8"/><circle class="qbit-star" cx="8" cy="76" r="1.8"/><circle class="qbit-star" cx="92" cy="82" r="2"/></g>`;
   if(aura.type==="bubbles")return `<g class="qbit-aura qbit-aura-bubbles" fill="none" stroke="${c}" stroke-width="2"><circle class="qbit-bubble" cx="20" cy="100" r="4"/><circle class="qbit-bubble" cx="80" cy="104" r="3"/><circle class="qbit-bubble" cx="50" cy="108" r="3.5"/></g>`;
   return "";
@@ -262,33 +264,57 @@ function auraSVG(aura){
 function renderAvatar(cfg, size, mood) {
   cfg = { ...DEFAULT_AVATAR, ...(cfg || {}) };
   const moodMap = {
-    happy:     { eyes: "happy",   mouth: "grin"  },
-    sad:       { eyes: "sleepy",  mouth: "sad"   },
-    thinking:  { eyes: "dot",     mouth: "flat"  },
-    celebrate: { eyes: "sparkle", mouth: "laugh" }
+    happy:     { eyes: "happy",   mouth: "grin",  brows: "raised" },
+    sad:       { eyes: "sleepy",  mouth: "sad",   brows: "sad"    },
+    thinking:  { eyes: "closed",  mouth: "flat",  brows: "soft"   },
+    celebrate: { eyes: "star",    mouth: "laugh", brows: "raised" }
   };
   if (mood && moodMap[mood]) Object.assign(cfg, moodMap[mood]);
-  const body  = AVATAR_PARTS.body.find(x => x.id === cfg.body)   || AVATAR_PARTS.body[0];
-  const color = AVATAR_PARTS.color.find(x => x.id === cfg.color) || AVATAR_PARTS.color[0];
+  const head  = AVATAR_PARTS.head.find(x => x.id === cfg.head)   || AVATAR_PARTS.head[0];
+  const skin  = AVATAR_PARTS.skin.find(x => x.id === cfg.skin)   || AVATAR_PARTS.skin[0];
   const eyes  = AVATAR_PARTS.eyes.find(x => x.id === cfg.eyes)   || AVATAR_PARTS.eyes[0];
+  const brows = AVATAR_PARTS.brows.find(x => x.id === cfg.brows) || AVATAR_PARTS.brows[0];
+  const blush = AVATAR_PARTS.blush.find(x => x.id === cfg.blush) || AVATAR_PARTS.blush[0];
   const mouth = AVATAR_PARTS.mouth.find(x => x.id === cfg.mouth) || AVATAR_PARTS.mouth[0];
   const hair  = AVATAR_PARTS.hair.find(x => x.id === cfg.hair)   || AVATAR_PARTS.hair[0];
   const cloth = AVATAR_PARTS.clothes.find(x => x.id === cfg.clothes) || AVATAR_PARTS.clothes[0];
   const acc   = AVATAR_PARTS.acc.find(x => x.id === cfg.acc)     || AVATAR_PARTS.acc[0];
   const aura  = AVATAR_AURAS.find(x => x.id === cfg.aura)        || AVATAR_AURAS[0];
   const sizeAttr = size ? `width="${size}" height="${size}"` : `width="100%" height="100%"`;
-  return `<svg viewBox="0 0 100 120" ${sizeAttr} xmlns="http://www.w3.org/2000/svg" class="qbit" style="--qbit-color:${color.color};--qbit-cloth:${color.color}">
+  const skinColor = skin.color;
+
+  let headShape = "";
+  if (head.id === "round")  headShape = `<circle cx="50" cy="32" r="22" fill="${skinColor}" stroke="currentColor" stroke-width="3"/>`;
+  if (head.id === "oval")   headShape = `<ellipse cx="50" cy="32" rx="19" ry="24" fill="${skinColor}" stroke="currentColor" stroke-width="3"/>`;
+  if (head.id === "square") headShape = `<rect x="28" y="12" width="44" height="44" rx="18" fill="${skinColor}" stroke="currentColor" stroke-width="3"/>`;
+
+  return `<svg viewBox="0 0 100 120" ${sizeAttr} xmlns="http://www.w3.org/2000/svg" class="qbit" style="--qbit-skin:${skinColor};--qbit-cloth:${skinColor}">
     ${auraSVG(aura)}
     <g class="qbit-body">
-      <rect x="8" y="50" width="16" height="16" rx="8" fill="var(--qbit-color)" stroke="currentColor" stroke-width="3"/>
-      <rect x="76" y="50" width="16" height="16" rx="8" fill="var(--qbit-color)" stroke="currentColor" stroke-width="3"/>
-      <rect x="34" y="80" width="12" height="20" rx="6" fill="var(--qbit-color)" stroke="currentColor" stroke-width="3"/>
-      <rect x="54" y="80" width="12" height="20" rx="6" fill="var(--qbit-color)" stroke="currentColor" stroke-width="3"/>
-      ${body.svg}
+      <g class="qbit-legs" fill="${skinColor}" stroke="currentColor" stroke-width="3">
+        <rect x="40" y="74" width="8" height="16" rx="3"/>
+        <rect x="52" y="74" width="8" height="16" rx="3"/>
+      </g>
+      <g class="qbit-shoes" fill="#1a1614" stroke="currentColor" stroke-width="2.5">
+        <rect x="37" y="88" width="14" height="8" rx="3"/>
+        <rect x="49" y="88" width="14" height="8" rx="3"/>
+      </g>
+      <g class="qbit-arms" fill="${skinColor}" stroke="currentColor" stroke-width="3">
+        <rect x="24" y="48" width="8" height="22" rx="4"/>
+        <rect x="68" y="48" width="8" height="22" rx="4"/>
+      </g>
+      <g class="qbit-hands" fill="${skinColor}" stroke="currentColor" stroke-width="2.5">
+        <circle cx="28" cy="70" r="5"/>
+        <circle cx="72" cy="70" r="5"/>
+      </g>
+      <rect x="46" y="50" width="8" height="6" fill="${skinColor}" stroke="currentColor" stroke-width="2"/>
+      <g class="qbit-clothes">${cloth.svg}</g>
+      ${headShape}
       <g class="qbit-hair">${hair.svg}</g>
+      <g class="qbit-brows" fill="none">${brows.svg}</g>
+      <g class="qbit-blush">${blush.svg}</g>
       <g class="qbit-eyes" fill="none">${eyes.svg}</g>
       <g class="qbit-mouth" fill="none">${mouth.svg}</g>
-      <g class="qbit-clothes" fill="none">${cloth.svg}</g>
       <g class="qbit-acc" fill="none">${acc.svg}</g>
     </g>
   </svg>`;
@@ -372,7 +398,9 @@ function avPick(key, id) {
     if (!has) { toast("🔒 Earn this aura: " + item.earn); return; }
     AV_TEMP.aura = id; avRedraw(); return;
   }
-  if (key === "color") { AV_TEMP.color = id; avRedraw(); return; }
+  if (key === "head" || key === "skin" || key === "eyes" || key === "brows" || key === "blush" || key === "mouth" || key === "hair") {
+    AV_TEMP[key] = id; avRedraw(); return;
+  }
   const ownedKey = "av_" + key + "_" + id;
   const isOwned = isStaff() || !item.cost || item.cost === 0 || getOwned().includes(ownedKey);
   if (!isOwned) {
@@ -400,8 +428,9 @@ function avRandom() {
   if (!AV_TEMP) avLoad();
   const pick = arr => arr[Math.floor(Math.random() * arr.length)].id;
   AV_TEMP = { ...AV_TEMP,
-    body: pick(AVATAR_PARTS.body), color: pick(AVATAR_PARTS.color),
-    eyes: pick(AVATAR_PARTS.eyes), mouth: pick(AVATAR_PARTS.mouth),
+    head: pick(AVATAR_PARTS.head), skin: pick(AVATAR_PARTS.skin),
+    eyes: pick(AVATAR_PARTS.eyes), brows: pick(AVATAR_PARTS.brows),
+    blush: pick(AVATAR_PARTS.blush), mouth: pick(AVATAR_PARTS.mouth),
     hair: pick(AVATAR_PARTS.hair) };
   avRedraw();
 }
@@ -412,7 +441,7 @@ async function avSave() {
   const r = await sb.from("profiles").update({ avatar: AV_TEMP }).eq("id", USER.id);
   if (r.error) { setSaveState("error"); toast("⚠️ Could not save avatar"); return; }
   USER.avatar = { ...AV_TEMP };
-  setSaveState("saved"); toast("🎨 Avatar saved!");
+  setSaveState("saved"); toast("🎨 Qbit saved!");
   const msg = $("avMsg"); if (msg) msg.textContent = "✓ Saved";
   updateHeaderAvatar();
 }
@@ -420,7 +449,7 @@ function avatarBuilderHTML(cfg) {
   cfg = { ...DEFAULT_AVATAR, ...(cfg || {}) };
   const optBtn = (key, o, isAura) => {
     const ownedKey = "av_" + key + "_" + o.id;
-    const free = key === "body" || key === "color";
+    const free = ["head","skin","eyes","brows","blush","mouth","hair"].includes(key);
     const earned = isAura ? (isStaff() || earnedAuras().includes(o.id)) : (isStaff() || free || !o.cost || o.cost === 0 || getOwned().includes(ownedKey));
     const cls = "av-opt " + (cfg[key] === o.id ? "on " : "") + (isAura && earned && o.id !== "none" ? "earned " : "") + (earned ? "" : "locked");
     return `<button class="${cls}" data-a="avPick" data-v="${key}:${o.id}" type="button" title="${o.label}${o.earn ? ' · ' + o.earn : ''}">
@@ -438,18 +467,21 @@ function avatarBuilderHTML(cfg) {
       <div class="av-opts">${list.map(o => optBtn(key, o, isAura)).join("")}</div>
     </div>`;
   const tabs = [
-    { id: "body",  icon: "🎛️", label: "Body" },
+    { id: "body",  icon: "🧑", label: "Body" },
     { id: "face",  icon: "👀", label: "Face" },
     { id: "style", icon: "🎩", label: "Style" },
     { id: "aura",  icon: "✨", label: "Aura" }
   ];
   let controls = "";
   if (AV_TAB === "body") {
-    controls = optsRow("body", AVATAR_PARTS.body, "Shape") + optsRow("color", AVATAR_PARTS.color, "Color");
+    controls = optsRow("head", AVATAR_PARTS.head, "Head shape") + optsRow("skin", AVATAR_PARTS.skin, "Skin");
   } else if (AV_TAB === "face") {
-    controls = optsRow("eyes", AVATAR_PARTS.eyes, "Eyes") + optsRow("mouth", AVATAR_PARTS.mouth, "Mouth");
+    controls = optsRow("eyes", AVATAR_PARTS.eyes, "Eyes") +
+               optsRow("brows", AVATAR_PARTS.brows, "Eyebrows") +
+               optsRow("blush", AVATAR_PARTS.blush, "Blush") +
+               optsRow("mouth", AVATAR_PARTS.mouth, "Mouth");
   } else if (AV_TAB === "style") {
-    controls = optsRow("hair", AVATAR_PARTS.hair, "Top") +
+    controls = optsRow("hair", AVATAR_PARTS.hair, "Hair") +
                optsRow("clothes", AVATAR_PARTS.clothes, "Outfit") +
                optsRow("acc", AVATAR_PARTS.acc, "Accessory");
   } else if (AV_TAB === "aura") {

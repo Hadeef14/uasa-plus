@@ -6,7 +6,7 @@
 
 A free revision tool for UASA. Learn, practise and level up.
 
-Built by a solo developer from SK Bukit Damansara.
+Built by Hadeef Thaqif from SK Bukit Damansara.
 
 ---
 

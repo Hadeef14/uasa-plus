@@ -1,1 +1,466 @@
-...
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>UASA+ Repair</title>
+    <style>
+      :root {
+        --bg: #f4ede0;
+        --card: #fffaf3;
+        --ink: #1f1d1a;
+        --muted: #605a52;
+        --accent: #d97706;
+        --accent-strong: #b45309;
+        --good: #0f766e;
+        --bad: #b91c1c;
+        --line: rgba(25, 24, 23, 0.12);
+      }
+      * { box-sizing: border-box; }
+      body {
+        margin: 0;
+        font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+        background: linear-gradient(180deg, #f8f1e5 0%, #f3eadb 100%);
+        color: var(--ink);
+      }
+      .wrap {
+        max-width: 720px;
+        margin: 48px auto;
+        padding: 24px;
+      }
+      .card {
+        background: rgba(255,255,255,0.7);
+        border: 1px solid var(--line);
+        border-radius: 20px;
+        box-shadow: 0 8px 24px rgba(41, 31, 18, 0.08);
+        padding: 24px;
+      }
+      .logo {
+        font-size: clamp(2rem, 4vw, 3rem);
+        font-weight: 900;
+        letter-spacing: -0.08em;
+        margin-bottom: 8px;
+      }
+      .logo span { color: var(--accent); }
+      .tagline {
+        margin: 0 0 20px;
+        color: var(--muted);
+        font-weight: 600;
+      }
+      .tabs {
+        display: flex;
+        gap: 10px;
+        margin-bottom: 16px;
+      }
+      .tab {
+        flex: 1;
+        padding: 12px 16px;
+        border: 1px solid var(--line);
+        background: transparent;
+        border-radius: 12px;
+        cursor: pointer;
+        font-weight: 700;
+      }
+      .tab.active {
+        background: var(--ink);
+        color: #fff;
+        border-color: var(--ink);
+      }
+      form {
+        display: grid;
+        gap: 10px;
+      }
+      label {
+        display: grid;
+        gap: 6px;
+        font-size: 0.95rem;
+        font-weight: 600;
+      }
+      input, select, button {
+        font: inherit;
+      }
+      input, select {
+        width: 100%;
+        padding: 12px 14px;
+        border-radius: 12px;
+        border: 1px solid var(--line);
+        background: rgba(255,255,255,0.78);
+        color: var(--ink);
+      }
+      button {
+        cursor: pointer;
+        border: none;
+        border-radius: 12px;
+        padding: 12px 16px;
+        font-weight: 800;
+      }
+      .primary {
+        background: linear-gradient(180deg, var(--accent) 0%, var(--accent-strong) 100%);
+        color: white;
+      }
+      .ghost {
+        background: rgba(17, 24, 39, 0.04);
+        color: var(--ink);
+      }
+      .muted {
+        color: var(--muted);
+        font-size: 0.92rem;
+      }
+      .hidden { display: none !important; }
+      .status {
+        min-height: 22px;
+        margin-top: 8px;
+        font-weight: 600;
+      }
+      .status.error { color: var(--bad); }
+      .status.success { color: var(--good); }
+      .small { font-size: 0.85rem; }
+      .app-shell {
+        margin-top: 18px;
+        background: rgba(255,255,255,0.7);
+        border: 1px solid var(--line);
+        border-radius: 20px;
+        padding: 24px;
+      }
+      .hero {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        flex-wrap: wrap;
+        gap: 12px;
+        margin-bottom: 16px;
+      }
+      .pill {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        border-radius: 999px;
+        padding: 8px 12px;
+        background: rgba(217, 119, 6, 0.12);
+        color: var(--accent-strong);
+        font-weight: 700;
+      }
+      .grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+        gap: 12px;
+      }
+      .tile {
+        padding: 18px;
+        border-radius: 16px;
+        background: rgba(17, 24, 39, 0.03);
+        border: 1px solid var(--line);
+      }
+      .tile strong { display: block; font-size: 1.6rem; margin-top: 8px; }
+    </style>
+  </head>
+  <body>
+    <div class="wrap">
+      <div id="authView" class="card">
+        <div class="logo">UASA<span>+</span></div>
+        <p class="tagline">Revision tool · Learn, practice, level up.</p>
+
+        <div class="tabs">
+          <button class="tab active" type="button" data-mode="login">Login</button>
+          <button class="tab" type="button" data-mode="signup">Sign up</button>
+        </div>
+
+        <form id="loginForm">
+          <label>
+            Username
+            <input id="loginUsername" autocomplete="username" placeholder="e.g. ahmad" />
+          </label>
+          <label>
+            Password
+            <input id="loginPassword" type="password" autocomplete="current-password" placeholder="••••••••" />
+          </label>
+          <button class="primary" type="submit">Login</button>
+        </form>
+
+        <form id="signupForm" class="hidden">
+          <label>
+            Username
+            <input id="signupUsername" autocomplete="username" placeholder="3-20 lowercase" />
+          </label>
+          <label>
+            Password
+            <input id="signupPassword" type="password" autocomplete="new-password" placeholder="8+ characters" />
+          </label>
+          <label>
+            Year
+            <select id="signupYear">
+              <option>Year 4</option>
+              <option>Year 5</option>
+              <option>Year 6</option>
+              <option>Form 1</option>
+              <option>Form 2</option>
+            </select>
+          </label>
+          <button class="primary" type="submit">Create account</button>
+        </form>
+
+        <div id="status" class="status" aria-live="polite"></div>
+      </div>
+
+      <div id="appView" class="app-shell hidden">
+        <div class="hero">
+          <div>
+            <div class="pill">Welcome back</div>
+            <h2 id="welcomeName" style="margin: 10px 0 0;">Student</h2>
+          </div>
+          <button id="logoutBtn" class="ghost" type="button">Logout</button>
+        </div>
+        <div class="grid">
+          <div class="tile"><span class="muted">XP</span><strong id="xpValue">0</strong></div>
+          <div class="tile"><span class="muted">Streak</span><strong id="streakValue">0</strong></div>
+          <div class="tile"><span class="muted">Hearts</span><strong id="heartsValue">5</strong></div>
+        </div>
+      </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.49.1"></script>
+    <script>
+      (function () {
+        const SUPABASE_URL = "https://bmjnloqqagzwgrwdvbgw.supabase.co";
+        const SUPABASE_KEY = "sb_publishable_WE5lAYz1a5pAvP3btNaM5Q_7EzA2DN4";
+        const sb = window.supabase ? window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY) : null;
+        const authView = document.getElementById('authView');
+        const appView = document.getElementById('appView');
+        const statusEl = document.getElementById('status');
+        let USER = null;
+
+        function setStatus(message, type) {
+          statusEl.textContent = message || '';
+          statusEl.className = 'status';
+          if (type) statusEl.classList.add(type);
+        }
+
+        function showMode(mode) {
+          const loginForm = document.getElementById('loginForm');
+          const signupForm = document.getElementById('signupForm');
+          const tabs = document.querySelectorAll('.tab');
+          const isLogin = mode === 'login';
+          loginForm.classList.toggle('hidden', !isLogin);
+          signupForm.classList.toggle('hidden', isLogin);
+          tabs.forEach((tab) => tab.classList.toggle('active', tab.dataset.mode === mode));
+        }
+
+        function cloudEmail(username) {
+          return ((username || '').trim().toLowerCase()) + '@uasa.plus';
+        }
+
+        function normalizeUsername(value) {
+          return String(value || '').trim().toLowerCase();
+        }
+
+        function isValidUsername(value) {
+          return /^[a-z0-9_.-]{3,20}$/.test(String(value || ''));
+        }
+
+        async function ensureProfileForUser(user, metadata = {}) {
+          if (!sb || !user) return null;
+
+          const { data: existing, error: readErr } = await sb
+            .from('profiles')
+            .select('*')
+            .eq('id', user.id)
+            .maybeSingle();
+
+          if (readErr && readErr.code !== 'PGRST116') throw readErr;
+          if (existing) return existing;
+
+          const username = normalizeUsername(
+            metadata.username ||
+            (user.email || '').split('@')[0] ||
+            'student'
+          );
+
+          const profile = {
+            id: user.id,
+            username,
+            display_name: metadata.display_name || username,
+            role: metadata.role || 'student',
+            year: metadata.year || 'Year 6',
+            class_code: metadata.class_code || null,
+            recovery_email: metadata.recovery_email || null,
+            xp: 0,
+            streak: 0,
+            hearts: 5,
+            daily_xp: 0,
+            daily_xp_date: null,
+            leaderboard_opt_out: false,
+            last_active: null
+          };
+
+          const { data, error: insertErr } = await sb
+            .from('profiles')
+            .upsert(profile, { onConflict: 'id' })
+            .select()
+            .single();
+
+          if (insertErr) throw insertErr;
+          return data || profile;
+        }
+
+        async function loadUserFromAuth(authUser) {
+          if (!authUser) return null;
+          const profile = await ensureProfileForUser(authUser, {
+            username: authUser.user_metadata?.username || authUser.email?.split('@')[0] || 'student',
+            display_name: authUser.user_metadata?.display_name || authUser.email?.split('@')[0] || 'student',
+            year: authUser.user_metadata?.year || 'Year 6'
+          });
+
+          USER = {
+            id: authUser.id,
+            username: profile?.username || authUser.email?.split('@')[0] || 'student',
+            display_name: profile?.display_name || authUser.email?.split('@')[0] || 'student',
+            role: profile?.role || 'student',
+            xp: Number(profile?.xp || 0),
+            streak: Number(profile?.streak || 0),
+            hearts: Number(profile?.hearts || 5),
+            year: profile?.year || 'Year 6'
+          };
+
+          const welcomeName = document.getElementById('welcomeName');
+          const xpValue = document.getElementById('xpValue');
+          const streakValue = document.getElementById('streakValue');
+          const heartsValue = document.getElementById('heartsValue');
+          if (welcomeName) welcomeName.textContent = USER.display_name;
+          if (xpValue) xpValue.textContent = USER.xp;
+          if (streakValue) streakValue.textContent = USER.streak;
+          if (heartsValue) heartsValue.textContent = USER.hearts;
+
+          return USER;
+        }
+
+        function showApp() {
+          authView.classList.add('hidden');
+          appView.classList.remove('hidden');
+        }
+
+        function showAuth() {
+          appView.classList.add('hidden');
+          authView.classList.remove('hidden');
+        }
+
+        async function login(username, password) {
+          if (!sb) {
+            setStatus('Supabase client failed to load.', 'error');
+            return;
+          }
+          if (!username || !password) {
+            setStatus('Enter both username and password.', 'error');
+            return;
+          }
+
+          setStatus('Logging in…', '');
+          try {
+            const { data, error } = await sb.auth.signInWithPassword({
+              email: cloudEmail(username),
+              password
+            });
+            if (error) throw error;
+
+            await loadUserFromAuth(data.user);
+            setStatus('Logged in successfully.', 'success');
+            showApp();
+          } catch (err) {
+            setStatus('Wrong username or password.', 'error');
+            console.error(err);
+          }
+        }
+
+        async function signup(username, password, year) {
+          if (!sb) {
+            setStatus('Supabase client failed to load.', 'error');
+            return;
+          }
+          if (!isValidUsername(username)) {
+            setStatus('Username must be 3-20 lowercase letters, numbers, . - _', 'error');
+            return;
+          }
+          if (password.length < 8) {
+            setStatus('Password must be at least 8 characters.', 'error');
+            return;
+          }
+
+          setStatus('Creating your account…', '');
+          try {
+            const { data, error } = await sb.auth.signUp({
+              email: cloudEmail(username),
+              password,
+              options: { data: { year } }
+            });
+            if (error) throw error;
+
+            let authUser = data.user;
+            if (!data.session) {
+              const second = await sb.auth.signInWithPassword({
+                email: cloudEmail(username),
+                password
+              });
+              if (second.error) throw second.error;
+              authUser = second.data.user;
+            }
+
+            await loadUserFromAuth(authUser);
+            setStatus('Account created successfully.', 'success');
+            showApp();
+          } catch (err) {
+            const message = (err && err.message) || 'Sign-up failed.';
+            setStatus(/registered|exists|already/i.test(message) ? 'Username already taken.' : 'Sign-up failed.', 'error');
+            console.error(err);
+          }
+        }
+
+        document.querySelectorAll('.tab').forEach((tab) => {
+          tab.addEventListener('click', () => showMode(tab.dataset.mode));
+        });
+
+        document.getElementById('loginForm').addEventListener('submit', async (event) => {
+          event.preventDefault();
+          const username = normalizeUsername(document.getElementById('loginUsername').value);
+          const password = document.getElementById('loginPassword').value;
+          await login(username, password);
+        });
+
+        document.getElementById('signupForm').addEventListener('submit', async (event) => {
+          event.preventDefault();
+          const username = normalizeUsername(document.getElementById('signupUsername').value);
+          const password = document.getElementById('signupPassword').value;
+          const year = document.getElementById('signupYear').value;
+          await signup(username, password, year);
+        });
+
+        document.getElementById('logoutBtn').addEventListener('click', async () => {
+          if (!sb) return showAuth();
+          try { await sb.auth.signOut(); } catch (err) { console.error(err); }
+          USER = null;
+          showAuth();
+          setStatus('', '');
+        });
+
+        async function restoreSession() {
+          if (!sb) {
+            showAuth();
+            return;
+          }
+          try {
+            const { data, error } = await sb.auth.getSession();
+            if (error) throw error;
+            if (data && data.session) {
+              await loadUserFromAuth(data.session.user);
+              showApp();
+              return;
+            }
+          } catch (err) {
+            console.error(err);
+          }
+          showAuth();
+        }
+
+        restoreSession();
+      })();
+    </script>
+  </body>
+</html>

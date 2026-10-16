@@ -289,34 +289,23 @@ function renderAvatar(cfg, size, mood) {
   return `<svg viewBox="0 0 100 120" ${sizeAttr} xmlns="http://www.w3.org/2000/svg" class="qbit" style="--qbit-skin:${sc};--qbit-cloth:${sc}">
     ${auraSVG(aura)}
     <g class="qbit-body">
-
       <rect x="39" y="86" width="9" height="20" rx="4" fill="${sc}" stroke="currentColor" stroke-width="3"/>
       <rect x="52" y="86" width="9" height="20" rx="4" fill="${sc}" stroke="currentColor" stroke-width="3"/>
-
       <rect x="33" y="104" width="16" height="9" rx="3" fill="#1a1614" stroke="currentColor" stroke-width="2.5"/>
       <rect x="51" y="104" width="16" height="9" rx="3" fill="#1a1614" stroke="currentColor" stroke-width="2.5"/>
-
       <rect x="22" y="56" width="14" height="26" rx="7" fill="${sc}" stroke="currentColor" stroke-width="3"/>
       <rect x="64" y="56" width="14" height="26" rx="7" fill="${sc}" stroke="currentColor" stroke-width="3"/>
-
       <circle cx="29" cy="84" r="6" fill="${sc}" stroke="currentColor" stroke-width="2.5"/>
       <circle cx="71" cy="84" r="6" fill="${sc}" stroke="currentColor" stroke-width="2.5"/>
-
       <rect x="44" y="44" width="12" height="16" fill="${sc}" stroke="currentColor" stroke-width="2.5"/>
-
       <g class="qbit-clothes" transform="translate(0, 12)">${cloth.svg}</g>
-
       ${headShape}
-
       <g class="qbit-hair">${hair.svg}</g>
-
       <g class="qbit-brows" fill="none">${brows.svg}</g>
       <g class="qbit-blush">${blush.svg}</g>
       <g class="qbit-eyes" fill="none">${eyes.svg}</g>
       <g class="qbit-mouth" fill="none">${mouth.svg}</g>
-
       <g class="qbit-acc" fill="none">${acc.svg}</g>
-
     </g>
   </svg>`;
 }
@@ -808,8 +797,38 @@ function authTab(r){const l=r==="l",s=r==="s",f=r==="f",c=r==="c";$("lf").classL
 function applyTheme(){const t=st.get("uasaTheme")||"auto";if(t==="dark")document.documentElement.dataset.theme="dark";else if(t==="light")document.documentElement.dataset.theme="light";else delete document.documentElement.dataset.theme;const b=$("theme");if(b)b.textContent=t==="dark"?"☀️":t==="light"?"🌙":"🌓"}
 function toggleTheme(){const cur=st.get("uasaTheme")||"auto";st.set("uasaTheme",cur==="auto"?"dark":cur==="dark"?"light":"auto");applyTheme()}
 async function loadUser(au){let r=await sb.from("profiles").select("username,display_name,role,xp,streak,year,last_active,leaderboard_opt_out,streak_freezes,class_code,hearts,daily_xp,daily_xp_date,recovery_email,avatar").eq("id",au.id).maybeSingle();
-if(r.error)throw r.error;let p=r.data;
-if(!p){const name=(au.email||"user").split("@")[0],yr=(au.user_metadata&&au.user_metadata.year)||"Year 6";const ins=await sb.from("profiles").upsert({id:au.id,username:name,display_name:name,year:yr,xp:0,streak:0,last_active:null},{onConflict:"id"});if(ins.error)throw ins.error;p={username:name,display_name:name,role:"student",year:yr,class_code:"",xp:0,streak:0,last_active:null}}
+if(r.error&&r.error.code!=="PGRST116")throw r.error;
+let p=r.data;
+if(!p){
+  const meta=au.user_metadata||{};
+  const rawUsername=meta.username||(au.email||"").split("@")[0]||"student";
+  const name=normalizeUsername(rawUsername)||"student";
+  const yr=meta.year||"Year 6";
+  const ins=await sb.from("profiles").upsert({
+    id:au.id,
+    username:name,
+    display_name:meta.display_name||name,
+    role:"student",
+    year:yr,
+    class_code:meta.class_code||null,
+    recovery_email:meta.recovery_email||null,
+    xp:0,
+    streak:0,
+    hearts:5,
+    daily_xp:0,
+    daily_xp_date:null,
+    leaderboard_opt_out:false,
+    streak_freezes:0,
+    last_active:null,
+    avatar:null
+  },{onConflict:"id"}).select().maybeSingle();
+  if(ins.error)throw ins.error;
+  p=ins.data||{
+    username:name,display_name:name,role:"student",year:yr,
+    class_code:"",xp:0,streak:0,hearts:5,last_active:null,
+    leaderboard_opt_out:false,streak_freezes:0,avatar:null
+  };
+}
 const g=await sb.from("progress").select("lesson_key").eq("user_id",au.id);if(g.error)throw g.error;
 const prog={};(g.data||[]).forEach(x=>{if(x.lesson_key)prog[x.lesson_key]=1});
 const dxd=p.daily_xp_date||null;

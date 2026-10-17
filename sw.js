@@ -1,10 +1,12 @@
 /* UASA+ service worker */
-const VERSION = "uasa-v3";
-const RUNTIME = "uasa-runtime-v3";
+const VERSION = "uasa-v7";
+const RUNTIME = "uasa-runtime-v7";
 
 const PRECACHE = [
   "./",
   "./index.html",
+  "./styles.css",
+  "./curriculum.js",
   "./manifest.json",
   "./icon-192.png",
   "./icon-512.png",
@@ -26,7 +28,7 @@ self.addEventListener("activate", (event) => {
     caches.keys().then((keys) =>
       Promise.all(
         keys
-          .filter((k) => k !== VERSION && k !== RUNTIME)
+          .filter((k) => k.startsWith("uasa-") && k !== VERSION && k !== RUNTIME)
           .map((k) => caches.delete(k))
       )
     ).then(() => self.clients.claim())

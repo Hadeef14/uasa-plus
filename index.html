@@ -23,58 +23,6 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght,SOFT,WONK@0,9..144,400..900,0..100,0..1&family=Geist:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;700;800&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="styles.css">
-<style>
-/* ============ QBIT AVATAR SPECIFIC CSS ============ */
-.qbit-preview,.qz-av,.hl-av,.hero-av,.lbr-av,.finish-av{display:inline-block;color:var(--ink)}
-.qbit-preview svg,.qz-av svg,.hl-av svg,.hero-av svg,.lbr-av svg,.finish-av svg{width:100%;height:100%;display:block;overflow:visible}
-.qbit-preview{width:150px;height:180px;margin:0 auto 16px;transition:transform .4s var(--ease-spring)}
-.qbit-preview:hover{transform:scale(1.04) rotate(-2deg)}
-.qbit-body{animation:qbitBob 3s ease-in-out infinite;transform-origin:50% 85%}
-@keyframes qbitBob{0%,100%{transform:translateY(0)}50%{transform:translateY(-2px)}}
-@keyframes qbitHappy{0%{transform:scale(1)}40%{transform:scale(1.15) rotate(-5deg)}100%{transform:scale(1)}}
-@keyframes qbitSad{0%,100%{transform:translateX(0)}25%{transform:translateX(-4px)}75%{transform:translateX(4px)}}
-@keyframes qbitCelebrate{0%,100%{transform:translateY(0) rotate(0)}30%{transform:translateY(-10px) rotate(8deg)}60%{transform:translateY(-4px) rotate(-4deg)}}
-.qbit-preview.mood-happy,.qz-av.mood-happy{animation:qbitHappy .5s var(--ease-spring)}
-.qbit-preview.mood-sad,.qz-av.mood-sad{animation:qbitSad .4s var(--ease-spring)}
-.qbit-preview.mood-celebrate,.finish-av.mood-celebrate{animation:qbitCelebrate .7s var(--ease-spring)}
-.qbit-aura-glow{animation:qbitAuraPulse 2.5s ease-in-out infinite;transform-origin:50px 60px}
-@keyframes qbitAuraPulse{0%,100%{opacity:.2;transform:scale(1)}50%{opacity:.4;transform:scale(1.08)}}
-.qbit-aura-sparks .qbit-spark{animation:qbitSparkOrbit 3s linear infinite;transform-origin:50px 60px}
-.qbit-aura-sparks .qbit-spark:nth-child(2){animation-delay:-1s}
-.qbit-aura-sparks .qbit-spark:nth-child(3){animation-delay:-2s}
-@keyframes qbitSparkOrbit{from{transform:rotate(0)}to{transform:rotate(360deg)}}
-.qbit-aura-flames .qbit-flame{animation:qbitFlameFlicker .9s ease-in-out infinite alternate;transform-origin:center bottom}
-.qbit-aura-flames .qbit-flame:nth-child(2){animation-delay:.2s}
-.qbit-aura-flames .qbit-flame:nth-child(3){animation-delay:.4s}
-@keyframes qbitFlameFlicker{from{transform:scaleY(.9);opacity:.75}to{transform:scaleY(1.15);opacity:1}}
-.qbit-aura-galaxy .qbit-star{animation:qbitStarTwinkle 2s ease-in-out infinite}
-.qbit-aura-galaxy .qbit-star:nth-child(2){animation-delay:.5s}
-.qbit-aura-galaxy .qbit-star:nth-child(3){animation-delay:1s}
-.qbit-aura-galaxy .qbit-star:nth-child(4){animation-delay:1.5s}
-@keyframes qbitStarTwinkle{0%,100%{opacity:.5;transform:scale(.9)}50%{opacity:1;transform:scale(1.2)}}
-.qbit-aura-bubbles .qbit-bubble{animation:qbitBubbleRise 2.5s ease-in infinite}
-.qbit-aura-bubbles .qbit-bubble:nth-child(2){animation-delay:.8s}
-.qbit-aura-bubbles .qbit-bubble:nth-child(3){animation-delay:1.6s}
-@keyframes qbitBubbleRise{0%{transform:translateY(0);opacity:0}20%{opacity:.8}100%{transform:translateY(-60px);opacity:0}}
-@media(max-width:700px){.qbit-preview{width:120px;height:144px}}
-
-/* ============ INTRO / QBIT WELCOME ============ */
-#intro { min-height: 100vh; display: grid; place-items: center; padding: 24px; background: var(--paper); position: relative; }
-#intro::before { content: ""; position: absolute; inset: 0; background-image: radial-gradient(circle, var(--line) 1px, transparent 1px); background-size: 24px 24px; opacity: 0.35; pointer-events: none; }
-.intro-wrap { width: min(420px, 100%); position: relative; z-index: 1; text-align: center; }
-.intro-skip { position: absolute; top: -10px; right: 0; background: none; border: 0; color: var(--muted); font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase; padding: 10px 0; cursor: pointer; }
-.intro-skip:hover { color: var(--ink); }
-.intro-pane { animation: paneIn 0.3s var(--ease-spring); }
-@keyframes paneIn { from { opacity: 0; transform: translateY(10px); } }
-.intro-qbit { width: 120px; height: 144px; margin: 0 auto 16px; transition: transform 0.3s var(--ease-spring); }
-.intro-qbit:hover { transform: scale(1.05) rotate(-2deg); }
-.intro-pane h2 { font-family: 'Fraunces', serif; font-size: 28px; font-weight: 900; margin: 0 0 8px; color: var(--ink); line-height: 1.1; }
-.intro-pane p { font-size: 15px; line-height: 1.5; color: var(--muted); margin: 0 auto; max-width: 300px; }
-.intro-qbit.mood-happy { animation: qbitHappy 0.5s var(--ease-spring); }
-.intro-qbit.mood-sad { animation: qbitSad 0.4s var(--ease-spring); }
-.intro-qbit.mood-celebrate { animation: qbitCelebrate 0.7s var(--ease-spring); }
-.intro-trust { font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.04em; color: var(--muted); opacity: 0.75; }
-</style>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.49.1"></script>
 <script>
 window.Q=(q,options,answer,img)=>({q,options,answer,img});

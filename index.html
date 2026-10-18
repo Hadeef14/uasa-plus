@@ -150,9 +150,9 @@ function getWeak(){if(!USER)return[];const k="uasa_weak_"+USER.id;const d=JSON.p
 function clearWeak(){if(!USER)return;st.del("uasa_weak_"+USER.id)}
 const AVATAR_PARTS = {
   head: [
-    { id: "round",  label: "Round",  svg: "" },
-    { id: "oval",   label: "Oval",   svg: "" },
-    { id: "square", label: "Square", svg: "" }
+    { id: "round",  label: "Round",  svg: '<circle cx="50" cy="30" r="20" fill="#f4c7a1" stroke="#1a1614" stroke-width="3"/>' },
+    { id: "oval",   label: "Oval",   svg: '<ellipse cx="50" cy="30" rx="17" ry="22" fill="#f4c7a1" stroke="#1a1614" stroke-width="3"/>' },
+    { id: "square", label: "Square", svg: '<rect x="30" y="10" width="40" height="40" rx="14" fill="#f4c7a1" stroke="#1a1614" stroke-width="3"/>' }
   ],
   skin: [
     { id: "warm",  label: "Warm",  color: "#f4c7a1" },
@@ -248,7 +248,7 @@ const AVATAR_AURAS = [
   { id: "saffron", label: "Glow",    type: "glow",   color: "#f59e0b", earn: "7-day streak" },
   { id: "jade",    label: "Jade",    type: "glow",   color: "#059669", earn: "30 lessons" },
   { id: "indigo",  label: "Sparks",  type: "sparks", color: "#6366f1", earn: "Level 10" },
-  { id: "clay",    label: "Flames",  type: "flames", color: "#dc2626", earn: "50 correct" },
+  { id: "clay",    label: "Flames",  type: "flames", color: "#dc2626", earn: "Level 5" },
   { id: "galaxy",  label: "Galaxy",  type: "galaxy", color: "#9333ea", earn: "100 lessons" },
   { id: "sky",     label: "Bubbles", type: "bubbles",color: "#0ea5e9", earn: "50 lessons" }
 ];
@@ -265,6 +265,7 @@ function earnedAuras(){
   if(lessons>=30)earned.push("jade");
   if(lessons>=50)earned.push("sky");
   if(lessons>=100)earned.push("galaxy");
+  if(level>=5)earned.push("clay");
   if(level>=10)earned.push("indigo");
   return [...new Set(earned)];
 }
@@ -466,7 +467,7 @@ function avatarBuilderHTML(cfg) {
     return `<button class="${cls}" data-a="avPick" data-v="${key}:${o.id}" type="button" title="${o.label}${o.earn ? ' · ' + o.earn : ''}">
       ${o.color
         ? `<span class="av-swatch" style="background:${o.color}"></span>`
-        : o.svg
+        : (o.svg || o.id === "wings")
           ? `<svg viewBox="0 0 100 120" width="34" height="40"><g>${o.id === "wings" ? WINGS_SVG : o.svg}</g></svg>`
           : `<span class="av-label">${o.label}</span>`}
       ${earned ? "" : (isAura ? `<span class="av-lock">🔒</span>` : `<span class="av-lock">🔒</span><span class="av-cost">${o.cost}</span>`)}
@@ -671,7 +672,7 @@ if(!ok&&q._subj)trackWeak(q._subj);
 setAvatarMood(ok?"happy":"sad");
 document.querySelectorAll("#an .ans").forEach((b,x)=>{b.disabled=true;if(x===q.answer)b.classList.add("ok");else if(x===k)b.classList.add("no")});
 const cl="ABCD"[q.answer]||q.answer+1,ct=q.options[q.answer];
-$("fb").innerHTML='<div class="fb">'+(ok?"✅ Correct!":"❌ Not quite. Correct: "+cl+") "+esc(ct))+'</div>'+(ok||isExam?"":'<div class="fb why" id="whyBox">💡 Loading explanation…</div>');
+$("fb").innerHTML='<div class="fb">'+(ok?"✅ Correct!":"❌ Not quite. Correct: "+cl+" — "+esc(ct))+'</div>'+(ok||isExam?"":'<div class="fb why" id="whyBox">💡 Loading explanation…</div>');
 $("nx").classList.remove("hidden");$("nx").focus();
 if(!ok&&!isExam)await loadWhy(q,cl,ct,k)}
 async function loadWhy(q,cl,ct,wi){const box=$("whyBox");if(!box)return;const ck="why_"+simpleHash(String(q.q||""));const cached=st.get(ck);if(cached){box.innerHTML="💡 <b>Why:</b> "+esc(cached);return}

@@ -24,6 +24,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght,SOFT,WONK@0,9..144,400..900,0..100,0..1&family=Geist:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;700;800&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="styles.css">
 <style>
+/* ============ QBIT AVATAR SPECIFIC CSS ============ */
 .qbit-preview,.qz-av,.hl-av,.hero-av,.lbr-av,.finish-av{display:inline-block;color:var(--ink)}
 .qbit-preview svg,.qz-av svg,.hl-av svg,.hero-av svg,.lbr-av svg,.finish-av svg{width:100%;height:100%;display:block;overflow:visible}
 .qbit-preview{width:150px;height:180px;margin:0 auto 16px;transition:transform .4s var(--ease-spring)}
@@ -56,6 +57,23 @@
 .qbit-aura-bubbles .qbit-bubble:nth-child(3){animation-delay:1.6s}
 @keyframes qbitBubbleRise{0%{transform:translateY(0);opacity:0}20%{opacity:.8}100%{transform:translateY(-60px);opacity:0}}
 @media(max-width:700px){.qbit-preview{width:120px;height:144px}}
+
+/* ============ INTRO / QBIT WELCOME ============ */
+#intro { min-height: 100vh; display: grid; place-items: center; padding: 24px; background: var(--paper); position: relative; }
+#intro::before { content: ""; position: absolute; inset: 0; background-image: radial-gradient(circle, var(--line) 1px, transparent 1px); background-size: 24px 24px; opacity: 0.35; pointer-events: none; }
+.intro-wrap { width: min(420px, 100%); position: relative; z-index: 1; text-align: center; }
+.intro-skip { position: absolute; top: -10px; right: 0; background: none; border: 0; color: var(--muted); font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase; padding: 10px 0; cursor: pointer; }
+.intro-skip:hover { color: var(--ink); }
+.intro-pane { animation: paneIn 0.3s var(--ease-spring); }
+@keyframes paneIn { from { opacity: 0; transform: translateY(10px); } }
+.intro-qbit { width: 120px; height: 144px; margin: 0 auto 16px; transition: transform 0.3s var(--ease-spring); }
+.intro-qbit:hover { transform: scale(1.05) rotate(-2deg); }
+.intro-pane h2 { font-family: 'Fraunces', serif; font-size: 28px; font-weight: 900; margin: 0 0 8px; color: var(--ink); line-height: 1.1; }
+.intro-pane p { font-size: 15px; line-height: 1.5; color: var(--muted); margin: 0 auto; max-width: 300px; }
+.intro-qbit.mood-happy { animation: qbitHappy 0.5s var(--ease-spring); }
+.intro-qbit.mood-sad { animation: qbitSad 0.4s var(--ease-spring); }
+.intro-qbit.mood-celebrate { animation: qbitCelebrate 0.7s var(--ease-spring); }
+.intro-trust { font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.04em; color: var(--muted); opacity: 0.75; }
 </style>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.49.1"></script>
 <script>
@@ -65,7 +83,45 @@ window.P=(...t)=>t.map(x=>"<p>"+x+"</p>").join("");
 </script>
 <script src="curriculum.js"></script>
 </head><body>
-<section id="auth"><div class="box card">
+
+<section id="intro" class="hidden">
+  <div class="intro-wrap">
+    <button class="intro-skip" data-a="introSkip" type="button">Skip</button>
+    <div class="intro-pane" data-pane="hook">
+      <div class="qbit-preview intro-qbit" id="introQbitHook"></div>
+      <h2>Hey, I'm your Qbit.</h2>
+      <p>I'm here to help you crush UASA. Want to try a quick question?</p>
+      <button class="btn" data-a="introStart" style="margin-top: 20px;">LET'S GO →</button>
+    </div>
+    <div class="intro-pane hidden" data-pane="quiz">
+      <div class="qbit-preview intro-qbit" id="introQbitQuiz"></div>
+      <div class="card" style="margin-top: 16px; padding: 20px; text-align: left;">
+        <small class="mu" style="font-family: 'JetBrains Mono', monospace; letter-spacing: 0.1em;">QUICK PRACTICE</small>
+        <h3 style="margin: 8px 0 16px; font-size: 20px;">What is 25% of 80?</h3>
+        <div style="display: flex; flex-direction: column; gap: 8px;" id="introAnsWrap">
+          <button class="ans" data-a="introAns" data-r="0" style="margin-top: 0;"><b>A</b><span>15</span></button>
+          <button class="ans" data-a="introAns" data-r="1" style="margin-top: 0;"><b>B</b><span>20</span></button>
+          <button class="ans" data-a="introAns" data-r="2" style="margin-top: 0;"><b>C</b><span>25</span></button>
+          <button class="ans" data-a="introAns" data-r="3" style="margin-top: 0;"><b>D</b><span>40</span></button>
+        </div>
+      </div>
+      <div id="introFb" style="min-height: 40px;"></div>
+    </div>
+    <div class="intro-pane hidden" data-pane="result">
+      <div class="qbit-preview intro-qbit" id="introQbitResult"></div>
+      <h2 id="introResultTitle">Nice work!</h2>
+      <p id="introResultSub">You're ready to start. Create an account to save your XP, build streaks, and unlock new Qbit items.</p>
+      <div style="background: var(--paper-2); border: 2px dashed var(--line); border-radius: var(--r-md); padding: 16px; margin: 20px 0;">
+        <div style="font-family: 'JetBrains Mono', monospace; font-size: 24px; font-weight: 900; color: var(--saffron-deep);">+10 XP</div>
+        <small class="mu">Waiting for you inside</small>
+      </div>
+      <button class="btn intro-start" data-a="introSignup" type="button" style="width:100%;">CREATE FREE ACCOUNT →</button>
+      <p class="intro-trust" style="margin-top: 16px;">🆓 Free forever · 🇲🇾 Made in Malaysia · 🚫 No ads</p>
+    </div>
+  </div>
+</section>
+
+<section id="auth" class="hidden"><div class="box card">
 <div class="logo">UASA<span>+</span></div>
 <p class="tagline">Revision Tool · Made by Hadeef</p>
 <p class="auth-disclaimer">⚠️ This is only a revision tool. It does not replace school lessons, teachers, or official UASA papers.</p>
@@ -366,7 +422,8 @@ async function loseHeart(){try{const r=await sb.rpc("deduct_heart");if(!r.error&
 async function award(score,maxScore,bonus,k){
 setSaveState("saving");try{
 if(k){const r=await sb.from("progress").insert({user_id:USER.id,lesson_key:k,score:score|0,max_score:maxScore|0,bonus:bonus|0});if(r.error&&r.error.code!=="23505")throw r.error;USER.progress[k]=1}
-const g=(score|0)*10+(bonus|0);if(g>0){try{await sb.rpc("bump_daily_xp",{amount:g})}catch(e){}}
+const g=(score|0)*10+(bonus|0);
+if(g>0){const rpc=await sb.rpc("bump_daily_xp",{amount:g});if(rpc.error)throw rpc.error;}
 await refreshUserStats();setSaveState("saved");
 }catch(e){setSaveState("error");toast("⚠️ Cloud save failed.");console.error(e)}}
 const localUnits=s=>Array.from((CURRICULUM[s]||{}).units||[],(x,i)=>x?{...x,i,ls:Array.from(x.lessons||[],(y,j)=>y&&y.questions&&y.questions.length?{...y,j}:null).filter(Boolean)}:null).filter(Boolean);
@@ -423,7 +480,7 @@ function avPick(key, id) {
   AV_TEMP[key] = id; avRedraw();
 }
 function avRedraw() {
-  const box = document.querySelector(".qbit-preview");
+  const box = document.querySelector(".av-preview");
   if (box) box.innerHTML = renderAvatar(AV_TEMP);
   document.querySelectorAll(".av-opt").forEach(b => {
     const [k, v] = b.dataset.v.split(":");
@@ -497,7 +554,7 @@ function avatarBuilderHTML(cfg) {
   return `
     <div class="card av-builder">
       <h2>🎨 My Qbit ${isStaff() ? '<span class="staff-free">STAFF · FREE</span>' : ""}</h2>
-      <div class="qbit-preview">${renderAvatar(cfg)}</div>
+      <div class="av-preview">${renderAvatar(cfg)}</div>
       <div class="av-tabs">
         ${tabs.map(t => `<button class="av-tab ${AV_TAB === t.id ? "on" : ""}" data-a="avTab" data-r="${t.id}" type="button"><span class="t-ic">${t.icon}</span>${t.label}</button>`).join("")}
       </div>
@@ -525,7 +582,23 @@ home(){const n=SUBJ.reduce((a,s)=>a+sDone(s[0]),0),into=USER.xp%350,goal=50,prog
 const weak=getWeak();
 let weakHtml="";
 if(weak.length){weakHtml='<div class="card"><h2>🧠 Focus Areas</h2><p class="mu">Topics you got wrong most often. Practise these to improve faster.</p>'+weak.map(w=>'<div class="weak-item"><span>'+esc(w[0])+'</span><span class="weak-count">'+w[1]+' missed</span></div>').join("")+'<button class="btn" data-a="smartReview" style="margin-top:12px">🎯 Smart Review</button><button class="btn g sm" data-a="clearWeak" style="margin-top:12px">Reset tracking</button></div>'}
-return '<div class="hero"><div class="hero-row"><div class="hero-av">'+renderAvatar(USER.avatar,80)+'</div><div><h1>Welcome, '+esc(USER.display_name||USER.username)+'!'+roleTag(USER.role)+'</h1><p>Learn. Practice. Level up.</p></div></div><button class="btn" data-a="page" data-r="subjects">START LEARNING</button><button class="btn" data-a="page" data-r="exam">📝 EXAM MODE</button><button class="btn" data-a="mix" data-r="">🎲 MIXED QUIZ</button><button class="btn g" data-a="daily">'+(USER.dailyDone===today()?"✅ DAILY DONE":"🎯 DAILY CHALLENGE")+'</button></div><div class="card" style="border-color:var(--clay);background:color-mix(in srgb,var(--clay) 10%,var(--pn))"><b>⚠️ This is only a revision tool.</b><p class="mu" style="margin:8px 0 0">It helps you practise. It does not replace school lessons, teachers, or official UASA papers.</p></div>'+weakHtml+'<div id="chHome"></div><div class="card"><h2>📅 Daily Goal</h2>'+bar(pct)+'<small>'+prog+' / '+goal+' XP today'+(prog>=goal?" — goal reached! 🎉":"")+'</small></div><div class="stats">'+[[USER.xp,"XP"],[lvl(),"Level"],[streakNow()+(USER.streakFreezes?" ❄️"+USER.streakFreezes:""),"Day streak"],[n,"Lessons done"]].map(x=>'<div class="card"><div class="n">'+x[0]+'</div><small>'+x[1]+'</small></div>').join("")+'</div><div class="card"><h2>Level progress</h2>'+bar(into/3.5)+'<small>'+into+' / 350 XP to Level '+(lvl()+1)+'</small></div>';},
+const nextLesson = (function(){
+  for (const s of SUBJ) {
+    for (const u of U(s[0])) {
+      for (let x = 0; x < u.ls.length; x++) {
+        const k = key(s[0], u.i, u.ls[x].j);
+        if (!done(k) && unlocked(s, u, x)) {
+          return { subj: s[0], uIdx: u.i, j: u.ls[x].j, title: u.ls[x].title };
+        }
+      }
+    }
+  }
+  return null;
+})();
+const primaryBtn = nextLesson
+  ? '<button class="btn" data-a="introContinue" data-s="'+esc(nextLesson.subj)+'" data-u="'+nextLesson.uIdx+'" data-j="'+esc(String(nextLesson.j))+'" style="width:100%;padding:16px 22px;font-size:16px;margin:0 0 8px">▶ CONTINUE: '+esc(nextLesson.title)+'</button>'
+  : '<button class="btn" data-a="page" data-r="subjects" style="width:100%;padding:16px 22px;font-size:16px;margin:0 0 8px">▶ START LEARNING</button>';
+return '<div class="hero"><div class="hero-row"><div class="hero-av">'+renderAvatar(USER.avatar,80)+'</div><div><h1>Welcome, '+esc(USER.display_name||USER.username)+'!'+roleTag(USER.role)+'</h1><p>Learn. Practice. Level up.</p></div></div>'+primaryBtn+'<div style="display:flex;gap:6px;flex-wrap:wrap"><button class="btn g sm" data-a="page" data-r="exam">📝 Exam</button><button class="btn g sm" data-a="mix" data-r="">🎲 Mixed</button><button class="btn g sm" data-a="daily">'+(USER.dailyDone===today()?"✅ Daily done":"🎯 Daily")+'</button></div></div><div class="card" style="border-color:var(--clay);background:color-mix(in srgb,var(--clay) 10%,var(--pn))"><b>⚠️ This is only a revision tool.</b><p class="mu" style="margin:8px 0 0">It helps you practise. It does not replace school lessons, teachers, or official UASA papers.</p></div>'+weakHtml+'<div id="chHome"></div><div class="card"><h2>📅 Daily Goal</h2>'+bar(pct)+'<small>'+prog+' / '+goal+' XP today'+(prog>=goal?" — goal reached! 🎉":"")+'</small></div><div class="stats">'+[[USER.xp,"XP"],[lvl(),"Level"],[streakNow()+(USER.streakFreezes?" ❄️"+USER.streakFreezes:""),"Day streak"],[n,"Lessons done"]].map(x=>'<div class="card"><div class="n">'+x[0]+'</div><small>'+x[1]+'</small></div>').join("")+'</div><div class="card"><h2>Level progress</h2>'+bar(into/3.5)+'<small>'+into+' / 350 XP to Level '+(lvl()+1)+'</small></div>';},
 subjects(){return '<h1>📚 Subjects</h1><button class="btn g" data-a="mix" data-r="">🎲 Mixed quiz: all subjects</button><div class="grid" style="margin-top:12px">'+SUBJ.map(s=>{const d=sDone(s[0]),t=sTot(s[0]);return '<button class="card tap" data-a="subj" data-r="'+esc(s[0])+'"><h2>'+s[1]+' '+esc(s[0])+'</h2>'+bar(t?d/t*100:0)+'<small>'+d+' / '+t+' lessons</small></button>'}).join("")+'</div>'},
 exam(){return '<h1>📝 Exam Mode</h1><div class="card"><h2>Mock UASA Exam</h2><p class="mu">Simulate real exam conditions. Timer counts down, no hints, no hearts lost. Test yourself!</p><label for="examCount">Number of questions</label><select id="examCount"><option value="10">10 questions</option><option value="20" selected>20 questions</option><option value="30">30 questions</option></select><label for="examTime">Time limit</label><select id="examTime"><option value="15">15 minutes</option><option value="30" selected>30 minutes</option><option value="45">45 minutes</option></select><button class="btn" data-a="startExam" style="margin-top:14px">🚀 START EXAM</button></div><div class="card"><h2>How it works</h2><p class="mu">• Questions are pulled from all subjects based on your year.<br>• The timer counts down. When it hits zero, the exam ends automatically.<br>• No hints or explanations during the exam.<br>• You get a grade (A–E) and score at the end.<br>• Hearts are NOT lost during exams.</p></div>'},
 review(){return '<h1>✨ Review</h1><p class="mu">Repeat a finished lesson. <b>+5 XP</b> first time each.</p><div id="rv"><p class="mu">Loading…</p></div>'},
@@ -562,11 +635,17 @@ return '<div class="card challenge-card"><h2>🏅 '+esc(c.title)+'</h2><p class=
 async function claimChallenge(id,xp){
 const k="uasa_ch_claimed_"+USER.id+"_"+id;
 if(st.get(k)==="1"){toast("Already claimed!");return}
-st.set(k,"1");
-try{await sb.rpc("bump_daily_xp",{amount:+xp||0})}catch(e){}
-await refreshUserStats();
-toast("🎁 +"+xp+" XP claimed!");
-loadHomeChallenges();
+try{
+  const rpc=await sb.rpc("bump_daily_xp",{amount:+xp||0});
+  if(rpc.error)throw rpc.error;
+  st.set(k,"1");
+  await refreshUserStats();
+  toast("🎁 +"+xp+" XP claimed!");
+  loadHomeChallenges();
+}catch(e){
+  toast("⚠️ Could not claim. Try again.");
+  console.error(e);
+}
 }
 async function loadReview(){const box=$("rv");if(!box)return;const r=await sb.from("reviews").select("lesson_key").eq("user_id",USER.id);const rv=new Set((r.data||[]).map(x=>x.lesson_key));const items=[];SUBJ.forEach(s=>U(s[0]).forEach(u=>u.ls.forEach(l=>{const k=key(s[0],u.i,l.j);if(done(k))items.push({s:s[0],icon:s[1],u:ut(u),l:l.title,j:l.j,k,reviewed:rv.has(k)})})));
 if(!items.length){box.innerHTML='<div class="card"><p class="mu">Finish a lesson first, then review it here.</p></div>';return}
@@ -680,7 +759,7 @@ const mood = pass ? "celebrate" : "thinking";
 view('<div class="qz card c"><div class="finish-av mood-'+mood+'" style="width:120px;height:144px;margin:0 auto 8px">'+renderAvatar(USER.avatar,120,mood)+'</div><div class="stars">'+'⭐'.repeat(stars)+'☆'.repeat(3-stars)+'</div><h2>'+msg+'</h2><p>Score: <b>'+c+' / '+qs.length+'</b></p>'+(xp?'<div class="n gd">+'+xp+' XP</div>':"")+nb+(pass||ctx.kind==="mix"||ctx.kind==="daily"||ctx.kind==="review"||ctx.kind==="smart"?"":'<button class="btn" data-a="retry">TRY AGAIN</button>')+'<button class="btn g" data-a="back">Back</button></div>')}
 function seededShuffle(arr,seed){let s=2166136261>>>0;for(let i=0;i<seed.length;i++){s^=seed.charCodeAt(i);s=Math.imul(s,16777619)>>>0}const rand=()=>{s^=s<<13;s>>>=0;s^=s>>17;s^=s<<5;s>>>=0;return s/4294967296};const a=arr.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(rand()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a}
 async function startDaily(){if(USER.dailyDone===today()){toast("✅ Already done today!");return}const p=poolForYear(USER.year);if(!p.length){toast("No questions yet.");return}if((USER.hearts??5)<=0){toast("💔 No hearts.");return}quiz(seededShuffle(p,today()).slice(0,10),{title:"🎯 Daily — "+today(),key:null,bonus:0,kind:"daily",back:()=>go("home")})}
-async function awardDaily(score,total,xpOv){setSaveState("saving");try{const xp=typeof xpOv==="number"?xpOv:(score===total?150:100);const r=await sb.from("daily_completions").insert({user_id:USER.id,day:today(),score,total});if(r.error&&r.error.code!=="23505")throw r.error;if(!r.error){USER.dailyDone=today();try{await sb.rpc("bump_daily_xp",{amount:xp})}catch(e){}}await refreshUserStats();setSaveState("saved")}catch(e){setSaveState("error");toast("⚠️ Could not save daily.")}}
+async function awardDaily(score,total,xpOv){setSaveState("saving");try{const xp=typeof xpOv==="number"?xpOv:(score===total?150:100);const r=await sb.from("daily_completions").insert({user_id:USER.id,day:today(),score,total});if(r.error&&r.error.code!=="23505")throw r.error;USER.dailyDone=today();const rpc=await sb.rpc("bump_daily_xp",{amount:xp});if(rpc.error)throw rpc.error;await refreshUserStats();setSaveState("saved")}catch(e){setSaveState("error");toast("⚠️ Could not save daily.");console.error(e)}}
 async function spendXP(amount){
 if(USER.xp<amount){toast("Not enough XP! You need "+amount+" but have "+USER.xp+".");return false}
 const r=await sb.from("profiles").update({xp:USER.xp-amount}).eq("id",USER.id);
@@ -898,17 +977,80 @@ startExam,smartReview,clearWeak:()=>{clearWeak();toast("Weak topic tracking rese
 buyItem:()=>buyItem(t.dataset.v),
 applyTheme:()=>{applyCustomTheme(t.dataset.v);toast("Theme applied!")},
 clearTheme:()=>{clearCustomTheme();toast("Default theme restored.");go("shop")},
-createChallenge,claimChallenge:()=>claimChallenge(r,t.dataset.v)};
+createChallenge,claimChallenge:()=>claimChallenge(r,t.dataset.v),
+introStart,introAns:()=>introAns(+r),introSignup,introSkip,
+introContinue:()=>{NAV.s=t.dataset.s;NAV.u=isNaN(+t.dataset.u)?t.dataset.u:+t.dataset.u;NAV.l=t.dataset.j;nav("subjects");lesson(t.dataset.j);}
+};
 if(F[t.dataset.a])F[t.dataset.a]()});
 document.addEventListener("keydown",e=>{if(R&&$("an")&&/^[1-9]$/.test(e.key)&&!/INPUT|TEXTAREA|SELECT/.test(e.target.tagName))answer(+e.key-1)});
+
+/* Intro Logic */
+let INTRO_CFG = { ...DEFAULT_AVATAR, hair: "spiky", clothes: "hoodie", acc: "glasses" };
+function introRenderQbit(elId, mood) {
+  const el = $(elId);
+  if (el) {
+    el.innerHTML = renderAvatar(INTRO_CFG, 120, mood);
+    el.className = "qbit-preview intro-qbit" + (mood ? " mood-" + mood : "");
+  }
+}
+function introShow(pane) {
+  document.querySelectorAll(".intro-pane").forEach(p => p.classList.toggle("hidden", p.dataset.pane !== pane));
+  if (pane === "hook") introRenderQbit("introQbitHook", "happy");
+  if (pane === "quiz") introRenderQbit("introQbitQuiz", "thinking");
+  if (pane === "result") introRenderQbit("introQbitResult", "celebrate");
+}
+function introStart() { introShow("quiz"); }
+function introAns(k) {
+  const btns = document.querySelectorAll("#introAnsWrap .ans");
+  btns.forEach((b, i) => {
+    b.disabled = true;
+    if (i === 1) b.classList.add("ok");
+    else if (i === k) b.classList.add("no");
+  });
+  const ok = (k === 1);
+  introRenderQbit("introQbitQuiz", ok ? "happy" : "sad");
+  $("introFb").innerHTML = ok 
+    ? '<div class="fb ok" style="margin: 12px 0; animation: slideIn 0.3s;">✅ Correct! 25% of 80 is 20.</div>'
+    : '<div class="fb no" style="margin: 12px 0; animation: slideIn 0.3s;">❌ Not quite. 25% is 1/4. 80 ÷ 4 = 20.</div>';
+  setTimeout(() => {
+    introShow("result");
+    if (!ok) {
+      $("introResultTitle").textContent = "That's okay!";
+      $("introResultSub").textContent = "That's exactly why we're here. Create an account to practice and improve.";
+    }
+  }, 1800);
+}
+function introSignup() {
+  try { localStorage.setItem("uasaIntroSeen", "1"); } catch(e){}
+  $("intro").classList.add("hidden");
+  $("auth").classList.remove("hidden");
+  authTab("s");
+}
+function introSkip() {
+  try { localStorage.setItem("uasaIntroSeen", "1"); } catch(e){}
+  $("intro").classList.add("hidden");
+  $("auth").classList.remove("hidden");
+  authTab("s");
+}
+
 (async()=>{if(!sb){authMsg("Could not load Supabase library.");return}
 try{
   const{data,error}=await sb.auth.getSession();
   if(error)throw error;
   if(data.session){await loadUser(data.session.user);enter()}
+  else {
+    if(!localStorage.getItem("uasaIntroSeen")){ 
+      $("auth").classList.add("hidden"); 
+      $("intro").classList.remove("hidden"); 
+      introShow("hook"); 
+    } else {
+      $("auth").classList.remove("hidden");
+    }
+  }
 }catch(e){
   try{await sb.auth.signOut()}catch(_){}
   try{Object.keys(localStorage).filter(k=>k.toLowerCase().includes("supabase")||k.toLowerCase().includes("sb-")||k.toLowerCase().includes("auth-token")).forEach(k=>localStorage.removeItem(k))}catch(_){}
+  $("auth").classList.remove("hidden");
 }})();
 if("serviceWorker" in navigator){window.addEventListener("load",()=>{navigator.serviceWorker.register("sw.js").catch(()=>{})})}
 let _installEvt=null;const installBanner=document.getElementById("installBanner"),installBtn=document.getElementById("installBtn"),installX=document.getElementById("installX");

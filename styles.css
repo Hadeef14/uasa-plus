@@ -41,13 +41,13 @@
   --font-mono: 'JetBrains Mono', monospace;
 
   /* Fluid Type Scale */
-  --text-xs: 0.75rem;   /* 12px */
-  --text-sm: 0.875rem;  /* 14px */
-  --text-base: 1rem;    /* 16px */
-  --text-lg: 1.125rem;  /* 18px */
-  --text-xl: 1.25rem;   /* 20px */
-  --text-2xl: 1.5rem;   /* 24px */
-  --text-3xl: clamp(1.875rem, 5vw, 2.75rem); /* 30px - 44px */
+  --text-xs: 0.75rem;
+  --text-sm: 0.875rem;
+  --text-base: 1rem;
+  --text-lg: 1.125rem;
+  --text-xl: 1.25rem;
+  --text-2xl: 1.5rem;
+  --text-3xl: clamp(1.875rem, 5vw, 2.75rem);
 
   /* Spacing System */
   --sp-1: 4px;  --sp-2: 8px;  --sp-3: 12px; --sp-4: 16px;
@@ -56,7 +56,7 @@
   /* Border Radii */
   --r-xs: 6px; --r-sm: 10px; --r-md: 14px; --r-lg: 20px; --r-xl: 28px;
 
-  /* Layered Shadow System (Hard Ink + Soft Ambient) */
+  /* Layered Shadow System */
   --press-sm: 0 3px 0 var(--ink-2);
   --press-md: 0 5px 0 var(--ink-2);
   --shadow-soft: 0 12px 32px -18px rgba(26, 22, 20, 0.22), 0 2px 6px -2px rgba(26, 22, 20, 0.08);
@@ -69,7 +69,6 @@
   --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
 }
 
-/* Dark Mode Overrides */
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme=light]) {
     --paper: #14100c; --paper-2: #1c1712; --paper-3: #2a231b;
@@ -124,14 +123,12 @@ body {
   background-attachment: fixed;
 }
 
-/* Base Focus State */
 :focus-visible {
   outline: 3px solid var(--accent);
   outline-offset: 3px;
   border-radius: var(--r-xs);
 }
 
-/* Typography Base */
 h1, h2, h3, .logo, .hl, .n, .stars {
   font-family: var(--font-display);
   font-weight: 800;
@@ -364,6 +361,9 @@ header nav button:hover::after { transform: scaleX(0.6); }
 header nav button.on { font-weight: 800; }
 header nav button.on::after { transform: scaleX(1); height: 4px; }
 
+/* Tabbar is hidden on desktop; enabled in mobile media query */
+.tabbar { display: none; }
+
 /* ==========================================================================
    9. HERO & STATS
    ========================================================================== */
@@ -452,7 +452,6 @@ header nav button.on::after { transform: scaleX(1); height: 4px; }
 .ans:not(:disabled):active { transform: translateY(3px); box-shadow: 0 0 0 var(--ink-2); }
 .ans.dimmed { opacity: 0.15; filter: blur(1.2px); }
 
-/* WCAG AA Contrast Fix for Answers */
 .ans.ok, .fb.ok { background: var(--jade); color: #fff; text-shadow: 0 1px 0 rgba(0,0,0,0.15); border-color: var(--ink); }
 .ans.ok b, .fb.ok b { background: #fff; color: var(--jade); border-color: var(--ink); }
 .ans.no, .fb.no { background: var(--clay); color: #fff; text-shadow: 0 1px 0 rgba(0,0,0,0.15); border-color: var(--ink); animation: shake 0.45s var(--ease-spring); }
@@ -472,7 +471,6 @@ header nav button.on::after { transform: scaleX(1); height: 4px; }
 .stars span:nth-child(2) { animation-delay: 0.15s; } .stars span:nth-child(3) { animation-delay: 0.3s; }
 @keyframes popIn { from { transform: scale(0) rotate(-180deg); opacity: 0; } }
 
-/* Exam Mode */
 .exam-timer { font-family: var(--font-mono); font-size: 22px; font-weight: 900; color: var(--ink); background: var(--paper-2); border: 2px solid var(--ink); border-radius: var(--r-sm); padding: 6px 14px; box-shadow: var(--press-sm); min-width: 80px; text-align: center; }
 .exam-timer.danger { color: var(--clay); border-color: var(--clay); animation: pulse 1s infinite; }
 @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.5; } }
@@ -520,21 +518,18 @@ header nav button.on::after { transform: scaleX(1); height: 4px; }
 .adm-user { border-left: 6px solid var(--saffron); }
 .adm-actions { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 10px; }
 
-/* Shop */
 .shop-grid { display: grid; gap: var(--sp-3); grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); }
 .shop-item { text-align: center; padding: var(--sp-5) var(--sp-4); }
 .shop-item .si-icon { font-size: 42px; margin-bottom: var(--sp-2); }
 .shop-item .si-cost { font-family: var(--font-mono); font-weight: 900; color: var(--saffron-deep); font-size: 16px; margin: 6px 0; }
 .shop-item.owned { opacity: 0.6; border-style: dashed; }
 
-/* Weak Topics & Challenges */
 .weak-item { display: flex; justify-content: space-between; align-items: center; padding: 10px 0; border-bottom: 1px dashed var(--line); }
 .weak-item:last-child { border-bottom: 0; }
 .weak-count { font-family: var(--font-mono); font-weight: 800; color: var(--clay); font-size: 14px; }
 .challenge-card { border-left: 6px solid var(--teal); }
 .challenge-reward { font-family: var(--font-mono); font-weight: 900; color: var(--jade); font-size: 15px; }
 
-/* Install Banner */
 #installBanner { position: fixed; left: 50%; bottom: calc(16px + env(safe-area-inset-bottom, 0px)); transform: translateX(-50%); z-index: 40; display: flex; align-items: center; gap: 10px; padding: 10px 12px 10px 16px; background: var(--ink); color: var(--paper); border: 2px solid var(--ink); border-radius: 99px; box-shadow: 0 5px 0 var(--saffron), 0 14px 30px -14px rgba(0,0,0,0.5); max-width: min(560px, calc(100vw - 24px)); animation: ibIn 0.4s var(--ease-spring); }
 @keyframes ibIn { from { opacity: 0; transform: translate(-50%, 24px); } }
 .ib-txt { font-family: var(--font-mono); font-size: 12px; font-weight: 700; letter-spacing: 0.02em; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
@@ -549,7 +544,8 @@ header nav button.on::after { transform: scaleX(1); height: 4px; }
 .av-builder { text-align: center; }
 .av-stage { position: relative; width: 160px; height: 192px; margin: 0 auto var(--sp-4); display: grid; place-items: center; perspective: 600px; }
 .av-stage::before { content: ""; position: absolute; bottom: -4px; left: 50%; transform: translateX(-50%); width: 100px; height: 14px; background: radial-gradient(ellipse, rgba(26,22,20,0.18) 0%, transparent 70%); border-radius: 50%; }
-.av-preview { width: 100%; height: 100%; color: var(--ink); transition: transform 0.4s var(--ease-spring); }
+.av-preview { width: 160px; height: 192px; margin: 0 auto var(--sp-4); color: var(--ink); transition: transform 0.4s var(--ease-spring); }
+.av-preview svg { width: 100%; height: 100%; display: block; overflow: visible; }
 .av-stage:hover .av-preview { transform: rotateY(-12deg) rotateX(2deg) scale(1.04); }
 .av-controls { display: flex; flex-direction: column; gap: var(--sp-3); text-align: left; }
 .av-tabs { display: flex; flex-wrap: wrap; gap: 6px; justify-content: center; margin-bottom: var(--sp-3); background: var(--paper-2); border: 2px solid var(--ink); border-radius: var(--r-sm); padding: 6px; }
@@ -577,7 +573,6 @@ header nav button.on::after { transform: scaleX(1); height: 4px; }
 .av-actions { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; margin-top: var(--sp-4); }
 .staff-free { font-family: var(--font-mono); font-size: 9px; font-weight: 800; letter-spacing: 0.16em; background: var(--jade); color: #fff; border: 1.5px solid var(--ink); border-radius: 99px; padding: 2px 8px; margin-left: 8px; transform: rotate(-2deg); display: inline-block; box-shadow: 1px 1px 0 var(--ink-2); }
 
-/* Qbit Render Sizes */
 .qbit-preview, .qz-av, .hl-av, .hero-av, .lbr-av, .finish-av { display: inline-block; color: var(--ink); }
 .qbit-preview svg, .qz-av svg, .hl-av svg, .hero-av svg, .lbr-av svg, .finish-av svg { width: 100%; height: 100%; display: block; overflow: visible; }
 .qbit-preview { width: 150px; height: 180px; margin: 0 auto var(--sp-4); }
@@ -607,9 +602,11 @@ header nav button.on::after { transform: scaleX(1); height: 4px; }
 @keyframes qbitHappy { 0% { transform: scale(1); } 40% { transform: scale(1.15) rotate(-5deg); } 100% { transform: scale(1); } }
 @keyframes qbitSad { 0%, 100% { transform: translateX(0); } 25% { transform: translateX(-4px); } 75% { transform: translateX(4px); } }
 @keyframes qbitCelebrate { 0%, 100% { transform: translateY(0) rotate(0); } 30% { transform: translateY(-10px) rotate(8deg); } 60% { transform: translateY(-4px) rotate(-4deg); } }
+@keyframes qbitThink { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-1px) rotate(-1deg); } }
 .qbit-preview.mood-happy, .qz-av.mood-happy, .intro-qbit.mood-happy { animation: qbitHappy 0.5s var(--ease-spring); }
 .qbit-preview.mood-sad, .qz-av.mood-sad, .intro-qbit.mood-sad { animation: qbitSad 0.4s var(--ease-spring); }
 .qbit-preview.mood-celebrate, .finish-av.mood-celebrate, .intro-qbit.mood-celebrate { animation: qbitCelebrate 0.7s var(--ease-spring); }
+.qbit-preview.mood-thinking, .qz-av.mood-thinking, .finish-av.mood-thinking, .intro-qbit.mood-thinking { animation: qbitThink 2.4s ease-in-out infinite; }
 
 /* Auras */
 .qbit-aura-glow { animation: qbitAuraPulse 2.5s ease-in-out infinite; transform-origin: 50px 60px; }
@@ -699,7 +696,6 @@ header nav button.on::after { transform: scaleX(1); height: 4px; }
     transition-duration: 0.01ms !important;
     scroll-behavior: auto !important;
   }
-  /* Ensure Qbit specific overrides */
   .qbit-body, .qbit-aura-glow, .qbit-aura-sparks .qbit-spark,
   .qbit-aura-flames .qbit-flame, .qbit-aura-galaxy .qbit-star,
   .qbit-aura-bubbles .qbit-bubble, .hero-av, .hl-av {
